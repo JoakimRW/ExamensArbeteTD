@@ -3,16 +3,18 @@ package com.mygdx.game.states;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.mygdx.game.managers.GameStateManager;
 
 public class SplashState extends GameState {
 
 	float acc = 0f;
 	Texture tex;
-
+	Sprite sprite;
 	public SplashState(GameStateManager gsm) {
 		super(gsm);
-		tex = new Texture("assets/badlogic.jpg");
+		tex = new Texture("badlogic.jpg");
+		sprite = new Sprite(tex);
 	}
 
 	@Override
@@ -28,11 +30,12 @@ public class SplashState extends GameState {
 		Gdx.gl.glClearColor(0f, 1f, 1f, 1f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-//		batch.setProjectionMatrix(camera.combined);
-//		batch.begin();
+		batch.setProjectionMatrix(camera.combined);
+		batch.begin();
 //		batch.draw(tex, Gdx.graphics.getWidth() / 4 - tex.getWidth(), Gdx.graphics.getHeight() / 4 - tex.getWidth(),
 //				0, 0);
-//		batch.end();
+		sprite.draw(batch);
+		batch.end();
 	}
 
 	@Override
