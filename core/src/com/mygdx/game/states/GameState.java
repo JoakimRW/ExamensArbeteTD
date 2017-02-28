@@ -15,7 +15,7 @@ public abstract class GameState {
 	
 	protected GameState(GameStateManager gsm) {
 		this.gsm = gsm;
-		this.game = game;
+		this.game = gsm.game();
 		batch = game.getBatch();
 		camera = game.getCamera();
 	}
