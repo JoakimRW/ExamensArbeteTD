@@ -2,10 +2,9 @@ package com.mygdx.game.managers;
 
 import java.util.Stack;
 
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.Game;
 import com.mygdx.game.states.GameState;
+import com.mygdx.game.states.SplashState;
 
 public class GameStateManager {
 	
@@ -45,11 +44,19 @@ public class GameStateManager {
 		states.peek().resize(w,h);
 	}
 	public void setState(State state){
-		states.pop().dispose();
+		if(states.size() >= 1) {
+			states.pop().dispose();
+		}
 		states.push(getState(state));
 	}
 	private GameState getState(State state){
+		switch(state){
+		case MAINMENU: 	return null;
+		case SPLASH: 	return new SplashState(this);
+		default:
+			break;
 		
+		}
 		return null;
 	}
 	
