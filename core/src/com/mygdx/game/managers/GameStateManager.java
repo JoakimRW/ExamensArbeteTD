@@ -4,6 +4,7 @@ import java.util.Stack;
 
 import com.mygdx.game.Game;
 import com.mygdx.game.states.GameState;
+import com.mygdx.game.states.PlayState;
 import com.mygdx.game.states.SplashState;
 
 public class GameStateManager {

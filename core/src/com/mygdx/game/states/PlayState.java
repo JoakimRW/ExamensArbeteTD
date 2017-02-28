@@ -1,8 +1,8 @@
-package com.mygdx.game.managers;
+package com.mygdx.game.states;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.mygdx.game.states.GameState;
+import com.mygdx.game.managers.GameStateManager;
 
 public class PlayState extends GameState {
 
