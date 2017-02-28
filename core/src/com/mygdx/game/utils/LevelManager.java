@@ -19,7 +19,7 @@ public class LevelManager {
     public static Integer tileWidth;
     public static Integer tileHeight;
     public static TiledMapTileLayer tileLayer;
-    public static com.mygdx.game.Tile[][] tiles;
+    public static com.mygdx.game.utils.Tile[][] tiles;
 
     public static void loadLevel(String filePath) {
         tiledMap = new TmxMapLoader().load(filePath);
@@ -29,7 +29,7 @@ public class LevelManager {
         mapHeightInTiles = properties.get("height", Integer.class);
         tileWidth = properties.get("tilewidth", Integer.class);
         tileHeight = properties.get("tileheight", Integer.class);
-        tiles = new com.mygdx.game.Tile[Gdx.graphics.getWidth() / tileWidth][Gdx.graphics.getHeight() / tileHeight];
+        tiles = new com.mygdx.game.utils.Tile[Gdx.graphics.getWidth() / tileWidth][Gdx.graphics.getHeight() / tileHeight];
         mapPixelWidth = mapWidthInTiles * tileWidth;
         mapPixelHeight = mapHeightInTiles * tileHeight;
         System.out.println("Map width: " + mapPixelWidth + " :: " + mapPixelHeight);
@@ -48,7 +48,7 @@ public class LevelManager {
         }
     }
 
-    public static com.mygdx.game.Tile getTile(int x , int y){
+    public static com.mygdx.game.utils.Tile getTile(int x , int y){
         if(x > tiles.length -1 || y > tiles[0].length -1 || y < 0 || x < 0) return null;
         return tiles[x][y];
     }
@@ -60,10 +60,10 @@ public class LevelManager {
             for (int y = 0; y < tiles[0].length; y++) {
                 if (checkIfWall(  x  ,  y )) {
                     walls ++;
-                    tiles[x][y] = new com.mygdx.game.Tile(new Vector2(x * tileWidth , y * tileHeight), tileWidth , tileHeight , TileType.WALL);
+                    tiles[x][y] = new com.mygdx.game.utils.Tile(new Vector2(x * tileWidth , y * tileHeight), tileWidth , tileHeight , TileType.WALL);
                 } else {
                     floor++;
-                    tiles[x][y] = new com.mygdx.game.Tile(new Vector2(x * tileWidth , y * tileHeight), tileWidth , tileHeight , TileType.FLOOR);
+                    tiles[x][y] = new com.mygdx.game.utils.Tile(new Vector2(x * tileWidth , y * tileHeight), tileWidth , tileHeight , TileType.FLOOR);
                 }
             }
         }

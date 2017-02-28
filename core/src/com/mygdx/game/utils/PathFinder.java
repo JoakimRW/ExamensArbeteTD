@@ -2,8 +2,8 @@ package com.mygdx.game.utils;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.Node;
-import com.mygdx.game.Tile;
+import com.mygdx.game.utils.Node;
+import com.mygdx.game.utils.Tile;
 
 import java.util.*;
 
