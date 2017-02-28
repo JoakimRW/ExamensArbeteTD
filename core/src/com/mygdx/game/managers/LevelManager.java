@@ -1,4 +1,4 @@
-package com.mygdx.game.utils;
+package com.mygdx.game.managers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.MapProperties;
@@ -6,6 +6,8 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.utils.Tile;
+import com.mygdx.game.utils.TileType;
 
 /**
  * Created by MichaelSjogren on 2017-02-23.

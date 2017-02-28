@@ -2,6 +2,7 @@ package com.mygdx.game.utils;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.managers.LevelManager;
 import com.mygdx.game.utils.Node;
 import com.mygdx.game.utils.Tile;
 
