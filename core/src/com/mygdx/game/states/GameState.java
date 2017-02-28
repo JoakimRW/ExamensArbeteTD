@@ -21,7 +21,7 @@ public abstract class GameState {
 	}
 	
 	public void resize(int w, int h){
-		camera.setToOrtho(false, w,h);
+		camera.setToOrtho(false, w, h);
 	}
 	public abstract void update(float delta);
 	public abstract void render();
