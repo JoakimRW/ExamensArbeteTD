@@ -2,13 +2,15 @@ package com.mygdx.game.managers;
 
 import java.util.Stack;
 
-import com.badlogic.gdx.Application;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.game.Game;
 import com.mygdx.game.states.GameState;
 
 public class GameStateManager {
 	
 	// Application Reference
-	private final Application app;
+	private final Game game;
 	
 	private Stack<GameState> states;
 	
@@ -17,14 +19,14 @@ public class GameStateManager {
 		MAINMENU
 	}
 	
-	public GameStateManager(final Application app){
-		this.app = app;
+	public GameStateManager(Game game){
+		this.game = game;
 		this.states = new Stack<GameState>();
 		this.setState(State.SPLASH);
 	}
 	
-	public Application application(){
-		return app;
+	public Game game(){
+		return game;
 	}
 	
 	public void update(float delta){
@@ -39,7 +41,7 @@ public class GameStateManager {
 		}
 	}
 	
-	public void resize(){
+	public void resize(int w , int h){
 		states.peek().resize(w,h);
 	}
 	public void setState(State state){
@@ -49,5 +51,7 @@ public class GameStateManager {
 	private GameState getState(State state){
 		return null;
 	}
+	
+
 
 }
