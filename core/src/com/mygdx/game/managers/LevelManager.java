@@ -32,11 +32,10 @@ public class LevelManager {
         mapHeightInTiles = properties.get("height", Integer.class);
         tileWidth = properties.get("tilewidth", Integer.class);
         tileHeight = properties.get("tileheight", Integer.class);
-        int mapY = Gdx.graphics.getHeight() / tileHeight;
-        int mapX = Gdx.graphics.getWidth() / tileWidth;
-        tiles = new Tile[mapX][mapY];
+        System.out.println(Gdx.graphics.getWidth() + " :: " + Gdx.graphics.getHeight());
         mapPixelWidth = mapWidthInTiles * tileWidth;
         mapPixelHeight = mapHeightInTiles * tileHeight;
+        tiles = new Tile[mapWidthInTiles][mapHeightInTiles];
         System.out.println("Map width: " + mapPixelWidth + " :: " + mapPixelHeight);
         System.out.println("map width in tiles:" + mapWidthInTiles + " : map height in tiles: " + mapHeightInTiles);
         createNodeList();
@@ -50,7 +49,7 @@ public class LevelManager {
         }catch (NullPointerException e){
         }
         if(tile != null){
-            boolean iswall = Boolean.valueOf(tile.getProperties().get("Wall",String.class));
+            boolean iswall = tile.getProperties().get("Wall",Boolean.class);
             if (iswall) {
                 return true;
             } else {
