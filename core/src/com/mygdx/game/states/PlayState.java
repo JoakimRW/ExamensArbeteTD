@@ -72,7 +72,6 @@ public class PlayState extends GameState implements InputProcessor{
 
     @Override
 	public void dispose() {
-		// TODO Auto-generated method stub
         renderer.dispose();
         LevelManager.tiledMap.dispose();
 	}
@@ -82,7 +81,8 @@ public class PlayState extends GameState implements InputProcessor{
         gsm.game().getCamera().viewportHeight = Gdx.graphics.getHeight() / 4;
         float cameraPosX = gsm.game().getCamera().position.x;
         float cameraPosY =  gsm.game().getCamera().position.y;
-        gsm.game().getCamera().position.set(cameraPosX + (xDir * cameraSpeed) * delta , cameraPosY + (yDir * cameraSpeed) * delta, 0);
+
+        gsm.game().getCamera().position.set((int)(cameraPosX + (xDir * cameraSpeed) * delta) ,(int) (cameraPosY + (yDir * cameraSpeed) * delta), 0);
 
         gsm.game().getCamera().update();
     }
