@@ -1,11 +1,16 @@
 package com.mygdx.game.stages;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
 import com.mygdx.game.managers.GameStateManager;
 
 public class MainMenuStage extends Stage {
@@ -14,7 +19,7 @@ public class MainMenuStage extends Stage {
 
 	public MainMenuStage(final GameStateManager gsm) {
 		skin = new Skin(Gdx.files.internal("MainMenuSkin.json"));
-
+		Table table = new Table();
 		final TextButton button = new TextButton("New Game", skin, "default");
 		final TextButton exitButton = new TextButton("Quit Game", skin, "default");
 		button.setSize(200f, 50f);
@@ -37,11 +42,30 @@ public class MainMenuStage extends Stage {
 			}
 			
 		});
-		addActor(exitButton);
-		addActor(button);
 		
-		button.setPosition(getWidth() / 2 - button.getWidth() / 2, getHeight() / 2 + 100);
-		exitButton.setPosition(getWidth() / 2 - exitButton.getWidth() / 2, getHeight() / 2 - 100);
+		table.setWidth(this.getWidth());
+		table.align(Align.center|Align.top);
+		table.setPosition(0, Gdx.graphics.getHeight());
+		table.padTop(30);
+		table.add(button).padBottom(30f);
+		table.row();
+		table.add(exitButton);
+		
+		this.addActor(table);
 	}
+
+	@Override
+	public void draw() {
+		SpriteBatch batch = new SpriteBatch();
+		Sprite sprite = new Sprite(new Texture(Gdx.files.internal("badlogic.jpg")));
+		sprite.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		batch.begin();
+		sprite.draw(batch);
+		batch.end();
+		
+		super.draw();
+	}
+	
+	
 
 }
