@@ -59,6 +59,7 @@ public class GameStage extends Stage implements InputProcessor{
 	
 	@Override
 	public void act() {
+		moveCamera(Gdx.graphics.getDeltaTime());
 		super.act();
 	}
 	
@@ -81,7 +82,6 @@ public class GameStage extends Stage implements InputProcessor{
 	
 	  @Override
 	    public boolean keyDown(int keycode) {
-		  System.out.println("test");
 	        switch (keycode){
 	            case Input.Keys.W:
 	                yDir = 1;

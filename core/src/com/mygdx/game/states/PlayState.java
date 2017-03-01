@@ -7,13 +7,11 @@ import com.mygdx.game.stages.UiStage;
 
 public class PlayState extends GameState {
 
-	private GameStateManager gsm;
 	private GameStage gameStage;
 	private UiStage uiStage;
 
 	public PlayState(GameStateManager gsm) {
 		super(gsm);
-		this.gsm = gsm;
 		gameStage = new GameStage(gsm);
 		uiStage = new UiStage(gsm);
 		Gdx.input.setInputProcessor(gameStage);
