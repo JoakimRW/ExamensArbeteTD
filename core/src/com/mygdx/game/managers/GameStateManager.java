@@ -4,6 +4,7 @@ import java.util.Stack;
 
 import com.mygdx.game.Game;
 import com.mygdx.game.states.GameState;
+import com.mygdx.game.states.MainMenuState;
 import com.mygdx.game.states.PlayState;
 import com.mygdx.game.states.SplashState;
 
@@ -15,7 +16,7 @@ public class GameStateManager {
 	private Stack<GameState> states;
 
 	public enum State {
-		SPLASH, PLAY
+		SPLASH, PLAY, MAINMENU
 
 	}
 
@@ -60,6 +61,8 @@ public class GameStateManager {
 			return new PlayState(this);
 		case SPLASH:
 			return new SplashState(this);
+		case MAINMENU:
+			return new MainMenuState(this);
 		default:
 			break;
 
