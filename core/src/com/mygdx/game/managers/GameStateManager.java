@@ -23,7 +23,7 @@ public class GameStateManager {
 	public GameStateManager(Game game) {
 		this.game = game;
 		this.states = new Stack<GameState>();
-		this.setState(State.PLAY);
+		this.setState(State.MAINMENU);
 	}
 
 	public Game game() {
