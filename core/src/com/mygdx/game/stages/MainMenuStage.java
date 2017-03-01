@@ -18,6 +18,9 @@ public class MainMenuStage extends Stage {
 	private Skin skin;
 
 	public MainMenuStage(final GameStateManager gsm) {
+		initMainMenu(gsm);
+	}
+	private void initMainMenu(final GameStateManager gsm){
 		skin = new Skin(Gdx.files.internal("MainMenuSkin.json"));
 		Table table = new Table();
 		final TextButton button = new TextButton("New Game", skin, "default");
