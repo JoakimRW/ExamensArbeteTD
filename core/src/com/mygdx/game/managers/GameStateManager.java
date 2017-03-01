@@ -22,7 +22,7 @@ public class GameStateManager {
 	public GameStateManager(Game game) {
 		this.game = game;
 		this.states = new Stack<GameState>();
-		this.setState(State.SPLASH);
+		this.setState(State.PLAY);
 	}
 
 	public Game game() {
