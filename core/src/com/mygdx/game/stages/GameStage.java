@@ -13,12 +13,11 @@ import com.mygdx.game.utils.Tile;
 import com.mygdx.game.utils.TileType;
 
 public class GameStage extends Stage implements InputProcessor{
-	GameStateManager gsm;
+	private GameStateManager gsm;
 	private OrthogonalTiledMapRenderer renderer;
 	private ShapeRenderer shapeRenderer;
 	private int xDir = 0;
 	private int yDir = 0;
-	public static float cameraSpeed = 200f;
 	public GameStage(GameStateManager gsm) {
 		this.gsm = gsm;
 		LevelManager.loadLevel("maps/simple-map.tmx");
@@ -40,11 +39,13 @@ public class GameStage extends Stage implements InputProcessor{
 	private void drawTiles(){
         for (int row = 0; row < LevelManager.tiles.length; row++) {
             for (int col = 0; col < LevelManager.tiles[0].length; col++) {
-                Tile tile = LevelManager.getTile(row , col);
 
+                Tile tile = LevelManager.getTile(row , col);
+                @SuppressWarnings("ConstantConditions")
+                TileType type = tile.getType();
                 shapeRenderer.begin();
                 // ritar tile grid , och fyller med vit färg där fiender inte kan gå
-                if(tile.getType() == TileType.FLOOR){
+                if(type == TileType.FLOOR){
                     shapeRenderer.setColor(1,1,1,.2f);
                     shapeRenderer.rect(tile.getCords().x , tile.getCords().y , tile.getTileWidth() , tile.getTileHeight());
                 }else {
@@ -69,7 +70,8 @@ public class GameStage extends Stage implements InputProcessor{
         LevelManager.tiledMap.dispose();
 	}
 	
-	public void moveCamera(float delta){
+	private void moveCamera(float delta){
+        final float cameraSpeed = 200f;
         gsm.game().getCamera().viewportWidth = Gdx.graphics.getWidth() / 4;
         gsm.game().getCamera().viewportHeight = Gdx.graphics.getHeight() / 4;
         float cameraPosX = gsm.game().getCamera().position.x;
