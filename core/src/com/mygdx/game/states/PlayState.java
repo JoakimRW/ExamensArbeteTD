@@ -1,6 +1,8 @@
 package com.mygdx.game.states;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -9,11 +11,14 @@ import com.mygdx.game.managers.LevelManager;
 import com.mygdx.game.utils.Tile;
 import com.mygdx.game.utils.TileType;
 
-public class PlayState extends GameState {
+public class PlayState extends GameState implements InputProcessor{
 
 	private GameStateManager gsm;
 	private OrthogonalTiledMapRenderer renderer;
 	private ShapeRenderer shapeRenderer;
+	private int xDir = 0;
+	private int yDir = 0;
+	private float cameraSpeed = 100f;
 
 	public PlayState(GameStateManager gsm) {
 		super(gsm);
@@ -22,13 +27,13 @@ public class PlayState extends GameState {
 		renderer = new OrthogonalTiledMapRenderer(LevelManager.tiledMap);
 		shapeRenderer = new ShapeRenderer();
 		shapeRenderer.setAutoShapeType(true);
+		Gdx.input.setInputProcessor(this);
 	}
 
 	@Override
 	public void update(float delta) {
-		// TODO Auto-generated method stub
-        gsm.game().getCamera().update();
         shapeRenderer.setProjectionMatrix(gsm.game().getCamera().combined);
+        moveCamera(delta);
 	}
 
 	@Override
@@ -37,7 +42,6 @@ public class PlayState extends GameState {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         renderer.setView(gsm.game().getCamera());
         renderer.render();
-        // drawTiles();
 	}
 
 	/** for debugging **/
@@ -49,9 +53,11 @@ public class PlayState extends GameState {
                 shapeRenderer.begin();
                 // ritar tile grid , och fyller med vit färg där fiender inte kan gå
                 if(tile.getType() == TileType.FLOOR){
+                    shapeRenderer.setColor(1,1,1,.2f);
                     shapeRenderer.rect(tile.getCords().x , tile.getCords().y , tile.getTileWidth() , tile.getTileHeight());
                 }else {
                     shapeRenderer.set(ShapeRenderer.ShapeType.Filled);
+                    shapeRenderer.setColor(.8f,0,0,.2f);
                     shapeRenderer.rect(tile.getCords().x , tile.getCords().y , tile.getTileWidth() , tile.getTileHeight());
                 }
                 shapeRenderer.end();
@@ -59,11 +65,97 @@ public class PlayState extends GameState {
         }
     }
 
-	@Override
+    @Override
+    public void resize(int w, int h) {
+        super.resize(w, h);
+    }
+
+    @Override
 	public void dispose() {
 		// TODO Auto-generated method stub
         renderer.dispose();
         LevelManager.tiledMap.dispose();
 	}
+
+	public void moveCamera(float delta){
+        gsm.game().getCamera().viewportWidth = Gdx.graphics.getWidth() / 4;
+        gsm.game().getCamera().viewportHeight = Gdx.graphics.getHeight() / 4;
+        float cameraPosX = gsm.game().getCamera().position.x;
+        float cameraPosY =  gsm.game().getCamera().position.y;
+        gsm.game().getCamera().position.set(cameraPosX + (xDir * cameraSpeed) * delta , cameraPosY + (yDir * cameraSpeed) * delta, 0);
+
+        gsm.game().getCamera().update();
+    }
+
+    @Override
+    public boolean keyDown(int keycode) {
+        switch (keycode){
+            case Input.Keys.W:
+                yDir = 1;
+                break;
+            case Input.Keys.S:
+                yDir = -1;
+                break;
+            case Input.Keys.A:
+                xDir = -1;
+                break;
+            case Input.Keys.D:
+                xDir = 1;
+                break;
+            default: break;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean keyUp(int keycode) {
+        switch (keycode){
+            case Input.Keys.W:
+                yDir = 0;
+                break;
+            case Input.Keys.S:
+                yDir = 0;
+                break;
+            case Input.Keys.A:
+                xDir = 0;
+                break;
+            case Input.Keys.D:
+                xDir = 0;
+                break;
+            default: break;
+        }
+        return false;
+    }
+
+
+    @Override
+    public boolean keyTyped(char character) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+        return false;
+    }
+
+    @Override
+    public boolean mouseMoved(int screenX, int screenY) {
+        return false;
+    }
+
+    @Override
+    public boolean scrolled(int amount) {
+        return false;
+    }
 
 }
