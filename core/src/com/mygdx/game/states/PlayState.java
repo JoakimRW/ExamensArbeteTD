@@ -18,7 +18,7 @@ public class PlayState extends GameState implements InputProcessor{
 	private ShapeRenderer shapeRenderer;
 	private int xDir = 0;
 	private int yDir = 0;
-	private float cameraSpeed = 100f;
+	public static float cameraSpeed = 200f;
 
 	public PlayState(GameStateManager gsm) {
 		super(gsm);
@@ -150,6 +150,23 @@ public class PlayState extends GameState implements InputProcessor{
 
     @Override
     public boolean mouseMoved(int screenX, int screenY) {
+	    /*
+        System.out.println(screenX );
+        if(screenX > Gdx.graphics.getWidth() - 15f){
+	        xDir = 1;
+        }else if(screenX < 15f){
+            xDir = -1;
+        }else {
+            xDir = 0;
+        }
+        if (screenY > Gdx.graphics.getHeight() - 15f){
+            yDir = -1;
+        }else if(screenY < 15f){
+            yDir = 1;
+        }else {
+            yDir = 0;
+        }
+        */
         return false;
     }
 
