@@ -3,6 +3,7 @@ package com.mygdx.game.managers;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Vector2;
@@ -31,8 +32,9 @@ public class LevelManager {
         mapHeightInTiles = properties.get("height", Integer.class);
         tileWidth = properties.get("tilewidth", Integer.class);
         tileHeight = properties.get("tileheight", Integer.class);
-
-        tiles = new Tile[tileWidth][tileHeight];
+        int mapY = Gdx.graphics.getHeight() / tileHeight;
+        int mapX = Gdx.graphics.getWidth() / tileWidth;
+        tiles = new Tile[mapX][mapY];
         mapPixelWidth = mapWidthInTiles * tileWidth;
         mapPixelHeight = mapHeightInTiles * tileHeight;
         System.out.println("Map width: " + mapPixelWidth + " :: " + mapPixelHeight);
@@ -42,13 +44,20 @@ public class LevelManager {
 
 
     public static boolean checkIfWall(int x, int y) {
-        if(tileLayer.getCell(x, y).getTile().getProperties().get("Wall" ) == null) return true;
-        boolean iswall = Boolean.valueOf(tileLayer.getCell(x, y).getTile().getProperties().get("Wall" , String.class));
-        if (iswall) {
-            return true;
-        } else {
-            return false;
+        TiledMapTile tile = null;
+        try {
+            tile = tileLayer.getCell(x, y).getTile();
+        }catch (NullPointerException e){
         }
+        if(tile != null){
+            boolean iswall = Boolean.valueOf(tile.getProperties().get("Wall",String.class));
+            if (iswall) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return false;
     }
 
     public static Tile getTile(int x , int y){
