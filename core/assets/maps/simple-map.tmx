@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="32" tileheight="32" nextobjectid="1">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="32" tileheight="32" nextobjectid="10">
  <tileset firstgid="1" name="rocky-td-tileset" tilewidth="32" tileheight="32" tilecount="15" columns="5">
   <image source="rocky-td-tileset.png" width="160" height="96"/>
   <tile id="0">
@@ -58,7 +58,7 @@
    </properties>
   </tile>
  </tileset>
- <layer name="Tile Layer 1" width="30" height="20">
+ <layer name="floor" width="30" height="20">
   <data encoding="csv">
 5,5,15,15,15,10,15,15,15,15,5,5,10,5,15,5,5,5,15,15,10,10,5,5,5,10,10,5,10,5,
 15,15,15,10,15,5,10,10,5,5,15,10,15,10,10,15,5,15,5,15,10,5,10,5,15,15,15,10,5,5,
@@ -109,4 +109,15 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
+ <objectgroup name="spawnLocations">
+  <object id="6" x="8.25" y="73.25" width="14.75" height="11.25"/>
+  <object id="7" x="8.5" y="140.75" width="15.5" height="11.25"/>
+  <object id="8" x="8.75" y="294.75" width="14.5" height="16.75"/>
+ </objectgroup>
+ <objectgroup name="endLocations" visible="0">
+  <object id="2" x="937.667" y="521.667" width="13.3333" height="11.3333"/>
+  <object id="3" x="939" y="427.333" width="13.3333" height="10.6667"/>
+  <object id="4" x="939.667" y="234.667" width="13" height="12.6667"/>
+  <object id="5" x="939" y="106.333" width="12.6667" height="11.6667"/>
+ </objectgroup>
 </map>

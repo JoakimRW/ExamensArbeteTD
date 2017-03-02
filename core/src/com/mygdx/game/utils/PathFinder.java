@@ -3,8 +3,6 @@ package com.mygdx.game.utils;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.managers.LevelManager;
-import com.mygdx.game.utils.Node;
-import com.mygdx.game.utils.Tile;
 
 import java.util.*;
 
@@ -18,8 +16,9 @@ public abstract class PathFinder {
      *                  else will only calculate up , down left , right
      * **/
     public static ArrayList<Node> findPath(Vector2 startNode , Vector2 endNode , boolean canGoDiag){
-        ArrayList<Node> openList = new ArrayList<Node>();
-        ArrayList<Node> closedList = new ArrayList<Node>();
+        ArrayList<Node> openList = new ArrayList<>();
+        ArrayList<Node> closedList = new ArrayList<>();
+        System.out.println("find path called");
         Node current = new Node(startNode , null , 0 , startNode.dst(endNode));
         openList.add(current);
         while(openList.size() > 0){
@@ -27,13 +26,14 @@ public abstract class PathFinder {
             openList.sort(nodeSorter);
             current = openList.get(0);
             if(current.getCordinates().equals(endNode)){
-                ArrayList<Node> path = new ArrayList<Node>();
+                ArrayList<Node> path = new ArrayList<>();
                 while(current.getParent() != null){
                     path.add(current);
                     current = current.getParent();
                 }
                 openList.clear();
                 closedList.clear();
+                System.out.println("found path, returning");
                 return path;
             }
             openList.remove(current);
@@ -64,6 +64,7 @@ public abstract class PathFinder {
             }
         }
         closedList.clear();
+        System.out.println("found no path, returning");
         return null;
     }
 
