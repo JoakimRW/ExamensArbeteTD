@@ -1,6 +1,7 @@
 package com.mygdx.game.managers;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
@@ -80,5 +81,29 @@ public class LevelManager {
         }
         System.out.println("Floor tiles: " + floor);
         System.out.println("Wall tiles: " + walls);
+    }
+
+    /** for debugging **/
+    @SuppressWarnings("unused")
+    public static void drawTiles(ShapeRenderer shapeRenderer){
+        for (int row = 0; row < LevelManager.tiles.length; row++) {
+            for (int col = 0; col < LevelManager.tiles[0].length; col++) {
+
+                Tile tile = LevelManager.getTile(row , col);
+                @SuppressWarnings("ConstantConditions")
+                TileType type = tile.getType();
+                shapeRenderer.begin();
+                // ritar tile grid , och fyller med vit färg där fiender inte kan gå
+                if(type == TileType.FLOOR){
+                    shapeRenderer.setColor(1,1,1,.2f);
+                    shapeRenderer.rect(tile.getCords().x , tile.getCords().y , tile.getTileWidth() , tile.getTileHeight());
+                }else {
+                    shapeRenderer.set(ShapeRenderer.ShapeType.Filled);
+                    shapeRenderer.setColor(.8f,0,0,.2f);
+                    shapeRenderer.rect(tile.getCords().x , tile.getCords().y , tile.getTileWidth() , tile.getTileHeight());
+                }
+                shapeRenderer.end();
+            }
+        }
     }
 }
