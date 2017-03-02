@@ -11,8 +11,6 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.managers.GameStateManager;
 import com.mygdx.game.managers.LevelManager;
-import com.mygdx.game.utils.Tile;
-import com.mygdx.game.utils.TileType;
 
 public class GameStage extends Stage implements InputProcessor{
 	private GameStateManager gsm;
