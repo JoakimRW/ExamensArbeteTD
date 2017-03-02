@@ -76,17 +76,17 @@ public class GameStage extends Stage implements InputProcessor{
 	
 	private void moveCamera(float delta){
         final float cameraSpeed = 10f;
-        gsm.game().getCamera().viewportWidth = Gdx.graphics.getWidth() / 2;
-        gsm.game().getCamera().viewportHeight = Gdx.graphics.getHeight() / 2;
-        float cameraPosX = gsm.game().getCamera().position.x;
-        float cameraPosY =  gsm.game().getCamera().position.y;
-        gsm.game().getCamera().position.set((int)cameraPosX+ xDir * cameraSpeed , (int) cameraPosY + yDir * cameraSpeed , 0);
-        gsm.game().getCamera().update();
-        float startX = gsm.game().getCamera().viewportWidth / 2;
-        float startY = gsm.game().getCamera().viewportWidth / 2;
-        setCameraBoundary(gsm.game().getCamera() , startX , startY , LevelManager.mapPixelWidth - (startX * 2), LevelManager.mapPixelHeight  - (startY * 2));
-
-
+        gsm.game().getCamera().viewportWidth = Gdx.graphics.getWidth() / 3;
+        gsm.game().getCamera().viewportHeight = Gdx.graphics.getHeight() / 3;
+		float cameraPosX = gsm.game().getCamera().position.x;
+		float cameraPosY =  gsm.game().getCamera().position.y;
+		gsm.game().getCamera().position.set((int)cameraPosX+ xDir * cameraSpeed , (int) cameraPosY + yDir * cameraSpeed , 0);
+		gsm.game().getCamera().update();
+		float startX = gsm.game().getCamera().viewportWidth / 2;
+		float startY = gsm.game().getCamera().viewportHeight / 2;
+		float width = startX *2;
+		float height = startY *2;
+		setCameraBoundary(gsm.game().getCamera() , startX , startY , LevelManager.mapPixelWidth - width , LevelManager.mapPixelHeight - height);
 	}
 	
 	  @Override
@@ -190,7 +190,7 @@ public class GameStage extends Stage implements InputProcessor{
             }
             if(position.y > startY + height){
                 position.y = startY + height;
-            }
+			}
             camera.position.set(position);
             camera.update();
         }
