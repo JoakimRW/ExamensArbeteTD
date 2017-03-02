@@ -3,9 +3,11 @@ package com.mygdx.game.stages;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.managers.GameStateManager;
 import com.mygdx.game.managers.LevelManager;
@@ -31,7 +33,9 @@ public class GameStage extends Stage implements InputProcessor{
 		Gdx.gl.glClearColor(.25f, .25f, .25f, 1f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         renderer.setView(gsm.game().getCamera());
+        shapeRenderer.setProjectionMatrix(gsm.game().getCamera().combined);
         renderer.render();
+        drawTiles();
 	}
 	
 	/** for debugging **/
@@ -71,16 +75,19 @@ public class GameStage extends Stage implements InputProcessor{
 	}
 	
 	private void moveCamera(float delta){
-        final float cameraSpeed = 200f;
-        gsm.game().getCamera().viewportWidth = Gdx.graphics.getWidth() / 4;
-        gsm.game().getCamera().viewportHeight = Gdx.graphics.getHeight() / 4;
+        final float cameraSpeed = 10f;
+        gsm.game().getCamera().viewportWidth = Gdx.graphics.getWidth() / 2;
+        gsm.game().getCamera().viewportHeight = Gdx.graphics.getHeight() / 2;
         float cameraPosX = gsm.game().getCamera().position.x;
         float cameraPosY =  gsm.game().getCamera().position.y;
-
-        gsm.game().getCamera().position.set((int)(cameraPosX + (xDir * cameraSpeed) * delta) ,(int) (cameraPosY + (yDir * cameraSpeed) * delta), 0);
-
+        gsm.game().getCamera().position.set((int)cameraPosX+ xDir * cameraSpeed , (int) cameraPosY + yDir * cameraSpeed , 0);
         gsm.game().getCamera().update();
-    }
+        float startX = gsm.game().getCamera().viewportWidth / 2;
+        float startY = gsm.game().getCamera().viewportWidth / 2;
+        setCameraBoundary(gsm.game().getCamera() , startX , startY , LevelManager.mapPixelWidth - (startX * 2), LevelManager.mapPixelHeight  - (startY * 2));
+
+
+	}
 	
 	  @Override
 	    public boolean keyDown(int keycode) {
@@ -169,5 +176,23 @@ public class GameStage extends Stage implements InputProcessor{
 	    public boolean scrolled(int amount) {
 	        return false;
 	    }
+
+	    private void setCameraBoundary(Camera camera , float startX , float startY , float width , float height){
+            Vector3 position = camera.position;
+            if(position.x < startX ){
+                position.x = startX;
+            }
+            if(position.y < startY){
+                position.y = startY;
+            }
+            if(position.x > startX + width){
+                position.x = startX + width;
+            }
+            if(position.y > startY + height){
+                position.y = startY + height;
+            }
+            camera.position.set(position);
+            camera.update();
+        }
 	
 }
