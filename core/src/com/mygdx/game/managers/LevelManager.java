@@ -5,17 +5,12 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.MapProperties;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.utils.Node;
-import com.mygdx.game.utils.PathFinder;
 import com.mygdx.game.utils.Tile;
 import com.mygdx.game.utils.TileType;
 
@@ -35,13 +30,12 @@ public class LevelManager {
     public static TiledMapTileLayer tileLayer;
     public static Tile[][] tiles;
     private static MapLayer spawnLocLayer;
-    public static ArrayList<Vector2> spawnLocations = new ArrayList();
-    public static ArrayList<Vector2> endLocactions = new ArrayList();
+    public static ArrayList<Vector2> spawnLocations = new ArrayList<>();
+    public static ArrayList<Vector2> endLocactions = new ArrayList<>();
     private static  ShapeRenderer shapeRenderer = new ShapeRenderer();
     private static MapLayer endLocLayer;
     public static Tile tileSpawn;
     public static Tile tileEnd;
-    private static ArrayList<Node> path;
 
     public static void loadLevel(String filePath) {
         tiledMap = new TmxMapLoader().load(filePath);
@@ -65,7 +59,9 @@ public class LevelManager {
 
             spawnLocations.add(new Vector2(x, y));
         }
-        System.out.println(spawnLocations);
+        System.out.println( ((int)endLocactions.get(0).x / 32));
+        System.out.println( ((int)spawnLocations.get(0).x / 32));
+
 
         mapWidthInTiles = properties.get("width", Integer.class);
         mapHeightInTiles = properties.get("height", Integer.class);
@@ -78,6 +74,8 @@ public class LevelManager {
         System.out.println("Map width: " + mapPixelWidth + " :: " + mapPixelHeight);
         System.out.println("map width in tiles:" + mapWidthInTiles + " : map height in tiles: " + mapHeightInTiles);
         createNodeList();
+        tileEnd = getTile((int)endLocactions.get(0).x /32 ,(int) endLocactions.get(0).y / 32);
+        tileSpawn = getTile((int)spawnLocations.get(0).x /32 ,(int) spawnLocations.get(0).y / 32);
     }
 
 
@@ -86,6 +84,7 @@ public class LevelManager {
         try {
             tile = tileLayer.getCell(x, y).getTile();
         }catch (NullPointerException e){
+
         }
         if(tile != null){
             boolean iswall = tile.getProperties().get("Wall",Boolean.class);
@@ -99,7 +98,7 @@ public class LevelManager {
     }
 
     public static Tile getTile(int x , int y){
-        if(x > tiles.length -1 || y > tiles[0].length -1 || y < 0 || x < 0) return null;
+        if(x > tiles.length -1 || y > tiles[0].length -1  || y < 0 || x < 0) return null;
         return tiles[x][y];
     }
 
@@ -117,8 +116,6 @@ public class LevelManager {
                 }
             }
         }
-        System.out.println("Floor tiles: " + floor);
-        System.out.println("Wall tiles: " + walls);
     }
 
     /** for debugging **/
@@ -142,19 +139,21 @@ public class LevelManager {
         shapeRenderer.set(ShapeRenderer.ShapeType.Line);
         shapeRenderer.end();
         for (int row = 0; row < LevelManager.tiles.length; row++) {
+            Tile rowTile = LevelManager.getTile(row , 0);
             for (int col = 0; col < LevelManager.tiles[0].length; col++) {
-
                 Tile tile = LevelManager.getTile(row , col);
+                Tile colTile = LevelManager.getTile(0 , col);
                 @SuppressWarnings("ConstantConditions")
                 TileType type = tile.getType();
                 shapeRenderer.begin();
                 // ritar tile grid , och fyller med vit färg där fiender inte kan gå
+
                 if(type == TileType.FLOOR){
                     shapeRenderer.setColor(1,1,1,.2f);
                     shapeRenderer.rect(tile.getCords().x , tile.getCords().y , tile.getTileWidth() , tile.getTileHeight());
                 }else {
-                    shapeRenderer.set(ShapeRenderer.ShapeType.Filled);
-                    shapeRenderer.setColor(.8f,0,0,.2f);
+                  //  shapeRenderer.set(ShapeRenderer.ShapeType.Filled);
+                  //  shapeRenderer.setColor(.8f,0,0,.2f);
                     shapeRenderer.rect(tile.getCords().x , tile.getCords().y , tile.getTileWidth() , tile.getTileHeight());
                 }
                 shapeRenderer.end();

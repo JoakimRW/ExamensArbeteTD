@@ -7,12 +7,18 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.managers.GameStateManager;
 import com.mygdx.game.managers.LevelManager;
+import com.mygdx.game.utils.Node;
+import com.mygdx.game.utils.PathFinder;
+
+import java.util.ArrayList;
 
 public class GameStage extends Stage implements InputProcessor{
+	private ArrayList<Node> path = new ArrayList<>();
 	private GameStateManager gsm;
 	private OrthogonalTiledMapRenderer renderer;
 	private ShapeRenderer shapeRenderer;
@@ -24,6 +30,7 @@ public class GameStage extends Stage implements InputProcessor{
 		renderer = new OrthogonalTiledMapRenderer(LevelManager.tiledMap);
 		shapeRenderer = new ShapeRenderer();
 		shapeRenderer.setAutoShapeType(true);
+        path =  PathFinder.findPath(new Vector2(LevelManager.tileSpawn.getTileCenter().x / 32 , LevelManager.tileSpawn.getTileCenter().y / 32), new Vector2(LevelManager.tileEnd.getCords().x / 32 , LevelManager.tileEnd.getCords().y / 32) , true);
 	}
 	
 	@Override
@@ -31,8 +38,19 @@ public class GameStage extends Stage implements InputProcessor{
 		Gdx.gl.glClearColor(.25f, .25f, .25f, 1f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         renderer.setView(gsm.game().getCamera());
-        shapeRenderer.setProjectionMatrix(gsm.game().getCamera().combined);
         renderer.render();
+        shapeRenderer.setProjectionMatrix(gsm.game().getCamera().combined);
+
+        if(path !=null){
+            for (Node node: path
+                    ) {
+                shapeRenderer.begin();
+                shapeRenderer.set(ShapeRenderer.ShapeType.Filled);
+                shapeRenderer.setColor(1f , 0 , 1f , 1f);
+                shapeRenderer.rectLine(node.getCordinates().x * 32 + 16 ,node.getCordinates().y * 32 + 16  , node.getParent().getCordinates().x * 32 + 16 , node.getParent().getCordinates().y* 32 + 16,2f);
+                shapeRenderer.end();
+            }
+        }
 	}
 
 	
@@ -126,8 +144,8 @@ public class GameStage extends Stage implements InputProcessor{
 
 	    @Override
 	    public boolean mouseMoved(int screenX, int screenY) {
-		    /*
-	        System.out.println(screenX );
+
+	         /*
 	        if(screenX > Gdx.graphics.getWidth() - 15f){
 		        xDir = 1;
 	        }else if(screenX < 15f){
