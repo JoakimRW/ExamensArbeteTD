@@ -1,15 +1,18 @@
 package com.mygdx.game.stages;
 
+import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.mygdx.game.managers.EntityManager;
 import com.mygdx.game.managers.GameStateManager;
 import com.mygdx.game.managers.LevelManager;
 import com.mygdx.game.utils.Node;
@@ -18,7 +21,12 @@ import com.mygdx.game.utils.PathFinder;
 import java.util.ArrayList;
 
 public class GameStage extends Stage implements InputProcessor{
-	private ArrayList<Node> path = new ArrayList<>();
+
+
+	private final SpriteBatch batch;
+	private final EntityManager entityManager;
+	private Engine ashleyEngine;
+	private ArrayList<Node> path;
 	private GameStateManager gsm;
 	private OrthogonalTiledMapRenderer renderer;
 	private ShapeRenderer shapeRenderer;
@@ -30,8 +38,11 @@ public class GameStage extends Stage implements InputProcessor{
 		renderer = new OrthogonalTiledMapRenderer(LevelManager.tiledMap);
 		shapeRenderer = new ShapeRenderer();
 		shapeRenderer.setAutoShapeType(true);
+		ashleyEngine = new Engine();
+		batch = new SpriteBatch();
         path =  PathFinder.findPath(new Vector2(LevelManager.tileSpawn.getTileCenter().x / 32 , LevelManager.tileSpawn.getTileCenter().y / 32), new Vector2(LevelManager.tileEnd.getCords().x / 32 , LevelManager.tileEnd.getCords().y / 32) , true);
-	}
+        entityManager = new EntityManager(ashleyEngine , batch , path);
+    }
 	
 	@Override
 	public void draw() {
@@ -40,7 +51,10 @@ public class GameStage extends Stage implements InputProcessor{
         renderer.setView(gsm.game().getCamera());
         renderer.render();
         shapeRenderer.setProjectionMatrix(gsm.game().getCamera().combined);
-
+		batch.begin();
+		entityManager.update(Gdx.graphics.getDeltaTime());
+		batch.setProjectionMatrix(gsm.game().getCamera().combined);
+		batch.end();
         if(path !=null){
             for (Node node: path
                     ) {
@@ -64,6 +78,7 @@ public class GameStage extends Stage implements InputProcessor{
 	public void dispose() {
         renderer.dispose();
         LevelManager.tiledMap.dispose();
+        batch.dispose();
 	}
 	
 	private void moveCamera(float delta){
@@ -72,7 +87,7 @@ public class GameStage extends Stage implements InputProcessor{
         gsm.game().getCamera().viewportHeight = Gdx.graphics.getHeight() / 3;
 		float cameraPosX = gsm.game().getCamera().position.x;
 		float cameraPosY =  gsm.game().getCamera().position.y;
-		gsm.game().getCamera().position.set((int)cameraPosX+ xDir * cameraSpeed , (int) cameraPosY + yDir * cameraSpeed , 0);
+		gsm.game().getCamera().position.set((int)cameraPosX+ xDir * cameraSpeed , (int) cameraPosY + yDir * cameraSpeed, 0);
 		gsm.game().getCamera().update();
 		float startX = gsm.game().getCamera().viewportWidth / 2;
 		float startY = gsm.game().getCamera().viewportHeight / 2;
