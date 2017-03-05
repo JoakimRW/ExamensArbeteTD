@@ -9,8 +9,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
  * Created by MichaelSjogren on 2017-03-04.
  */
 public class Assets {
-    public static Texture bloodWormSpriteSheet;
-    public static TextureRegion[]bloodWormFrames;
+    private static Texture bloodWormSpriteSheet;
+    private static TextureRegion[]bloodWormFrames;
     public static Animation bloodWormAnimation;
 
     public static Texture loadTexture(String file){

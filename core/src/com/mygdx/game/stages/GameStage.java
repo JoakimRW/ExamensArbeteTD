@@ -40,8 +40,8 @@ public class GameStage extends Stage implements InputProcessor{
 		shapeRenderer.setAutoShapeType(true);
 		ashleyEngine = new Engine();
 		batch = new SpriteBatch();
-        path =  PathFinder.findPath(new Vector2(LevelManager.tileSpawn.getTileCenter().x / 32 , LevelManager.tileSpawn.getTileCenter().y / 32), new Vector2(LevelManager.tileEnd.getCords().x / 32 , LevelManager.tileEnd.getCords().y / 32) , true);
-        entityManager = new EntityManager(ashleyEngine , batch , path);
+        path =  PathFinder.findPath(new Vector2(LevelManager.tileSpawn.getTileCenter().x / 32 , LevelManager.tileSpawn.getTileCenter().y / 32), new Vector2(LevelManager.tileEnd.getCords().x / 32 , LevelManager.tileEnd.getCords().y / 32) , false);
+        entityManager = new EntityManager(ashleyEngine , batch, shapeRenderer , path);
     }
 	
 	@Override
@@ -50,21 +50,13 @@ public class GameStage extends Stage implements InputProcessor{
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         renderer.setView(gsm.game().getCamera());
         renderer.render();
-        shapeRenderer.setProjectionMatrix(gsm.game().getCamera().combined);
+        shapeRenderer.begin();
+		shapeRenderer.setProjectionMatrix(gsm.game().getCamera().combined);
 		batch.begin();
 		entityManager.update(Gdx.graphics.getDeltaTime());
 		batch.setProjectionMatrix(gsm.game().getCamera().combined);
 		batch.end();
-        if(path !=null){
-            for (Node node: path
-                    ) {
-                shapeRenderer.begin();
-                shapeRenderer.set(ShapeRenderer.ShapeType.Filled);
-                shapeRenderer.setColor(1f , 0 , 1f , 1f);
-                shapeRenderer.rectLine(node.getCordinates().x * 32 + 16 ,node.getCordinates().y * 32 + 16  , node.getParent().getCordinates().x * 32 + 16 , node.getParent().getCordinates().y* 32 + 16,2f);
-                shapeRenderer.end();
-            }
-        }
+		shapeRenderer.end();
 	}
 
 	
