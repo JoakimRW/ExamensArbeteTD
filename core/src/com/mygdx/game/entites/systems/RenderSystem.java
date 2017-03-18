@@ -23,11 +23,9 @@ import com.mygdx.game.utils.Assets;
 public class RenderSystem extends EntitySystem{
     private ImmutableArray<Entity> entities;
     private SpriteBatch batch;
-    private ShapeRenderer renderer;
 
-    public RenderSystem(SpriteBatch batch , ShapeRenderer renderer){
+    public RenderSystem(SpriteBatch batch){
         this.batch = batch;
-        this.renderer = renderer;
     }
 
     public void addedToEngine(Engine engine){
@@ -41,13 +39,9 @@ public class RenderSystem extends EntitySystem{
             AnimationComponent animComp = entity.getComponent(AnimationComponent.class);
             StateComponent stateComp = entity.getComponent(StateComponent.class);
             DirectionComponent dirComp = entity.getComponent(DirectionComponent.class);
-            DimensionComponent dimComp = entity.getComponent(DimensionComponent.class);
-
             TextureRegion region = ((TextureRegion) animComp.animations.get(stateComp.get()).getKeyFrame(stateComp.time , true));
-           // renderer.set(ShapeRenderer.ShapeType.Line);
-          //  renderer.rect(posComp.position.x , posComp.position.y ,dimComp.width , dimComp.height);
             batch.draw( region
-                    ,posComp.position.x,posComp.position.y,region.getRegionWidth() / 2 , region.getRegionHeight() / 2
+                    ,posComp.x,posComp.y,region.getRegionWidth() / 2 , region.getRegionHeight() / 2
             ,region.getRegionWidth() ,region.getRegionHeight(),1,1,dirComp.angle);
         }
     }

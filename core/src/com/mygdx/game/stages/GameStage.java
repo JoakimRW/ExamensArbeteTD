@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.managers.EntityManager;
 import com.mygdx.game.managers.GameStateManager;
 import com.mygdx.game.managers.LevelManager;
+import com.mygdx.game.utils.Assets;
 import com.mygdx.game.utils.Node;
 import com.mygdx.game.utils.PathFinder;
 
@@ -25,23 +26,18 @@ public class GameStage extends Stage implements InputProcessor{
 
 	private final SpriteBatch batch;
 	private final EntityManager entityManager;
-	private Engine ashleyEngine;
-	private ArrayList<Node> path;
 	private GameStateManager gsm;
 	private OrthogonalTiledMapRenderer renderer;
-	private ShapeRenderer shapeRenderer;
 	private int xDir = 0;
 	private int yDir = 0;
 	public GameStage(GameStateManager gsm) {
 		this.gsm = gsm;
 		LevelManager.loadLevel("maps/simple-map.tmx");
 		renderer = new OrthogonalTiledMapRenderer(LevelManager.tiledMap);
-		shapeRenderer = new ShapeRenderer();
-		shapeRenderer.setAutoShapeType(true);
-		ashleyEngine = new Engine();
+		Engine ashleyEngine = new Engine();
 		batch = new SpriteBatch();
-        path =  PathFinder.findPath(new Vector2(LevelManager.tileSpawn.getTileCenter().x / 32 , LevelManager.tileSpawn.getTileCenter().y / 32), new Vector2(LevelManager.tileEnd.getCords().x / 32 , LevelManager.tileEnd.getCords().y / 32) , false);
-        entityManager = new EntityManager(ashleyEngine , batch, shapeRenderer , path);
+        entityManager = new EntityManager(ashleyEngine, batch);
+		Assets.load();
     }
 	
 	@Override
@@ -50,13 +46,10 @@ public class GameStage extends Stage implements InputProcessor{
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         renderer.setView(gsm.game().getCamera());
         renderer.render();
-        shapeRenderer.begin();
-		shapeRenderer.setProjectionMatrix(gsm.game().getCamera().combined);
 		batch.begin();
 		entityManager.update(Gdx.graphics.getDeltaTime());
 		batch.setProjectionMatrix(gsm.game().getCamera().combined);
 		batch.end();
-		shapeRenderer.end();
 	}
 
 	

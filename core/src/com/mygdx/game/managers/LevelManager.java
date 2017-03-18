@@ -10,6 +10,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.utils.Tile;
 import com.mygdx.game.utils.TileType;
@@ -73,7 +74,7 @@ public class LevelManager {
         tiles = new Tile[mapWidthInTiles][mapHeightInTiles];
         System.out.println("Map width: " + mapPixelWidth + " :: " + mapPixelHeight);
         System.out.println("map width in tiles:" + mapWidthInTiles + " : map height in tiles: " + mapHeightInTiles);
-        createNodeList();
+        createTileList();
         tileEnd = getTile((int)endLocactions.get(0).x /32 ,(int) endLocactions.get(0).y / 32);
         tileSpawn = getTile((int)spawnLocations.get(0).x /32 ,(int) spawnLocations.get(0).y / 32);
     }
@@ -102,7 +103,7 @@ public class LevelManager {
         return tiles[x][y];
     }
 
-    private static void createNodeList() {
+    private static void createTileList() {
         int walls = 0;
         int floor = 0;
         for (int x = 0; x < tiles.length; x++) {
@@ -117,6 +118,7 @@ public class LevelManager {
             }
         }
     }
+
 
     /** for debugging **/
     @SuppressWarnings("unused")
