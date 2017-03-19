@@ -2,6 +2,7 @@ package com.mygdx.game.managers;
 
 import java.util.Stack;
 
+import com.badlogic.ashley.core.Engine;
 import com.mygdx.game.Game;
 import com.mygdx.game.states.GameState;
 import com.mygdx.game.states.MainMenuState;
@@ -12,6 +13,7 @@ public class GameStateManager {
 
 	// Application Reference
 	private final Game game;
+	Engine ashleyEngine;
 
 	private Stack<GameState> states;
 
@@ -24,6 +26,7 @@ public class GameStateManager {
 		this.game = game;
 		this.states = new Stack<GameState>();
 		this.setState(State.MAINMENU);
+		ashleyEngine = new Engine();
 	}
 
 	public Game game() {
@@ -58,7 +61,7 @@ public class GameStateManager {
 	private GameState getState(State state) {
 		switch (state) {
 		case PLAY:
-			return new PlayState(this);
+			return new PlayState(this,ashleyEngine);
 		case SPLASH:
 			return new SplashState(this);
 		case MAINMENU:

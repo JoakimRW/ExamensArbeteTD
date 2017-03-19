@@ -1,12 +1,13 @@
 package com.mygdx.game.utils;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.game.utils.TileType;
 
 /**
  * Created by MichaelSjogren on 2017-02-19.
  */
-public class Tile {
+public class Tile extends Actor{
     private Vector2 cords;
     private int tileWidth;
     private int tileHeight;

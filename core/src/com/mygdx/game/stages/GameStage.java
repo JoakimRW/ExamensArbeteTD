@@ -24,19 +24,20 @@ import java.util.ArrayList;
 public class GameStage extends Stage implements InputProcessor{
 
 
-	private final SpriteBatch batch;
-	private final EntityManager entityManager;
-	private GameStateManager gsm;
-	private OrthogonalTiledMapRenderer renderer;
-	private int xDir = 0;
-	private int yDir = 0;
-	public GameStage(GameStateManager gsm) {
-		this.gsm = gsm;
+	private final SpriteBatch _batch;
+	private final EntityManager _entityManager;
+	private GameStateManager _gsm;
+	private OrthogonalTiledMapRenderer _renderer;
+	private int _xDir = 0;
+	private int _yDir = 0;
+	private Engine _ashleyEngine;
+	public GameStage(GameStateManager gsm , Engine ashleyEngine) {
+		this._gsm = gsm;
 		LevelManager.loadLevel("maps/simple-map.tmx");
-		renderer = new OrthogonalTiledMapRenderer(LevelManager.tiledMap);
-		Engine ashleyEngine = new Engine();
-		batch = new SpriteBatch();
-        entityManager = new EntityManager(ashleyEngine, batch);
+		_renderer = new OrthogonalTiledMapRenderer(LevelManager.tiledMap);
+		_ashleyEngine = ashleyEngine;
+		_batch = new SpriteBatch();
+        _entityManager = new EntityManager(ashleyEngine, _batch);
 		Assets.load();
     }
 	
@@ -44,12 +45,12 @@ public class GameStage extends Stage implements InputProcessor{
 	public void draw() {
 		Gdx.gl.glClearColor(.25f, .25f, .25f, 1f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        renderer.setView(gsm.game().getCamera());
-        renderer.render();
-		batch.begin();
-		entityManager.update(Gdx.graphics.getDeltaTime());
-		batch.setProjectionMatrix(gsm.game().getCamera().combined);
-		batch.end();
+        _renderer.setView(_gsm.game().getCamera());
+        _renderer.render();
+		_batch.begin();
+		_entityManager.update(Gdx.graphics.getDeltaTime());
+		_batch.setProjectionMatrix(_gsm.game().getCamera().combined);
+		_batch.end();
 	}
 
 	
@@ -61,40 +62,40 @@ public class GameStage extends Stage implements InputProcessor{
 	
 	@Override
 	public void dispose() {
-        renderer.dispose();
+        _renderer.dispose();
         LevelManager.tiledMap.dispose();
-        batch.dispose();
+        _batch.dispose();
 	}
 	
 	private void moveCamera(float delta){
         final float cameraSpeed = 10f;
-        gsm.game().getCamera().viewportWidth = Gdx.graphics.getWidth() / 3;
-        gsm.game().getCamera().viewportHeight = Gdx.graphics.getHeight() / 3;
-		float cameraPosX = gsm.game().getCamera().position.x;
-		float cameraPosY =  gsm.game().getCamera().position.y;
-		gsm.game().getCamera().position.set((int)cameraPosX+ xDir * cameraSpeed , (int) cameraPosY + yDir * cameraSpeed, 0);
-		gsm.game().getCamera().update();
-		float startX = gsm.game().getCamera().viewportWidth / 2;
-		float startY = gsm.game().getCamera().viewportHeight / 2;
+        _gsm.game().getCamera().viewportWidth = Gdx.graphics.getWidth() / 3;
+        _gsm.game().getCamera().viewportHeight = Gdx.graphics.getHeight() / 3;
+		float cameraPosX = _gsm.game().getCamera().position.x;
+		float cameraPosY =  _gsm.game().getCamera().position.y;
+		_gsm.game().getCamera().position.set((int)cameraPosX+ _xDir * cameraSpeed , (int) cameraPosY + _yDir * cameraSpeed, 0);
+		_gsm.game().getCamera().update();
+		float startX = _gsm.game().getCamera().viewportWidth / 2;
+		float startY = _gsm.game().getCamera().viewportHeight / 2;
 		float width = startX *2;
 		float height = startY *2;
-		setCameraBoundary(gsm.game().getCamera() , startX , startY , LevelManager.mapPixelWidth - width , LevelManager.mapPixelHeight - height);
+		setCameraBoundary(_gsm.game().getCamera() , startX , startY , LevelManager.mapPixelWidth - width , LevelManager.mapPixelHeight - height);
 	}
 	
 	  @Override
 	    public boolean keyDown(int keycode) {
 	        switch (keycode){
 	            case Input.Keys.W:
-	                yDir = 1;
+	                _yDir = 1;
 	                break;
 	            case Input.Keys.S:
-	                yDir = -1;
+	                _yDir = -1;
 	                break;
 	            case Input.Keys.A:
-	                xDir = -1;
+	                _xDir = -1;
 	                break;
 	            case Input.Keys.D:
-	                xDir = 1;
+	                _xDir = 1;
 	                break;
 	            default: break;
 	        }
@@ -105,16 +106,16 @@ public class GameStage extends Stage implements InputProcessor{
 	    public boolean keyUp(int keycode) {
 	        switch (keycode){
 	            case Input.Keys.W:
-	                yDir = 0;
+	                _yDir = 0;
 	                break;
 	            case Input.Keys.S:
-	                yDir = 0;
+	                _yDir = 0;
 	                break;
 	            case Input.Keys.A:
-	                xDir = 0;
+	                _xDir = 0;
 	                break;
 	            case Input.Keys.D:
-	                xDir = 0;
+	                _xDir = 0;
 	                break;
 	            default: break;
 	        }
