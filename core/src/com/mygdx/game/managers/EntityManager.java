@@ -1,41 +1,39 @@
 package com.mygdx.game.managers;
 
 import com.badlogic.ashley.core.Engine;
-import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.mygdx.game.Factory.EnemyFactory;
-import com.mygdx.game.entites.entitiycomponents.*;
+import com.mygdx.game.entites.systems.HealthSystem;
 import com.mygdx.game.entites.systems.MoveToSystem;
 import com.mygdx.game.entites.systems.RenderSystem;
 import com.mygdx.game.entites.systems.StateSystem;
-import com.mygdx.game.utils.Assets;
-import com.mygdx.game.utils.Node;
-
-import java.util.ArrayList;
 
 /**
  * Created by MichaelSjogren on 2017-03-04.
  */
 public class EntityManager {
+    private final EnemyFactory enemySpawner;
     private Engine ashleyEngine;
-    private SpriteBatch batch;
+	private WaveTimeManager waveManager;
 
-    public EntityManager(Engine ashleyEngine , SpriteBatch batch){
+    public EntityManager(Engine ashleyEngine , SpriteBatch batch , ShapeRenderer sr){
         this.ashleyEngine = ashleyEngine;
-        this.batch = batch;
-        EnemyFactory enemySpawner = new EnemyFactory(ashleyEngine);
-        MoveToSystem mts = new MoveToSystem();
+        enemySpawner = new EnemyFactory(ashleyEngine);
+        MoveToSystem moveToSystem = new MoveToSystem();
         StateSystem stateSystem = new StateSystem();
-        RenderSystem rs = new RenderSystem(batch);
+        RenderSystem renderSystem = new RenderSystem(batch , sr);
+        HealthSystem healthSystem = new HealthSystem();
         ashleyEngine.addSystem(stateSystem);
-        ashleyEngine.addSystem(mts);
-        ashleyEngine.addSystem(rs);
-        enemySpawner.spawnEnemies(10,100,60,1000);
+        ashleyEngine.addSystem(moveToSystem);
+        ashleyEngine.addSystem(renderSystem);
+        ashleyEngine.addSystem(healthSystem);
+        waveManager = new WaveTimeManager(enemySpawner);  
     }
 
 
     public void update(float deltaTime){
         ashleyEngine.update(deltaTime);
+        waveManager.tick(deltaTime);
     }
 }

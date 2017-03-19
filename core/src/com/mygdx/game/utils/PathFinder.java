@@ -33,7 +33,6 @@ public abstract class PathFinder {
                 }
                 openList.clear();
                 closedList.clear();
-                System.out.println("found path, returning path");
                 return path;
             }
             openList.remove(current);

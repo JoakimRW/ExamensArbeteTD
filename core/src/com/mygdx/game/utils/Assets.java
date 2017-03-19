@@ -3,6 +3,7 @@ package com.mygdx.game.utils;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 /**
@@ -10,19 +11,23 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
  */
 public class Assets {
     private static Texture bloodWormSpriteSheet;
-    private static TextureRegion[]bloodWormFrames;
-    public static Animation bloodWormAnimation;
+    public static TextureRegion[]bloodWormFrames;
+    public static Animation<TextureRegion> bloodWormAnimation;
+    public static Sprite enemyGreenHealthbarBG;
+    public static Sprite enemyRedHealthbarBG;
 
     public static Texture loadTexture(String file){
         return new Texture(Gdx.files.internal(file));
     }
 
     public static void load(){
+ 
         bloodWormSpriteSheet = loadTexture("enemies/mutant-bloodworm-sheet.png");
-        bloodWormFrames = getRegions(bloodWormSpriteSheet , bloodWormSpriteSheet.getWidth()
-                ,bloodWormSpriteSheet.getHeight()
-                ,32 , 32);
+        bloodWormFrames = getRegions(bloodWormSpriteSheet , bloodWormSpriteSheet.getWidth(),bloodWormSpriteSheet.getHeight(),32 , 32);
         bloodWormAnimation = new Animation<>(0.1f , bloodWormFrames);
+        
+        enemyGreenHealthbarBG = new Sprite(new Texture("enemies/healthbar-green.png"));
+        enemyRedHealthbarBG = new Sprite(new Texture("enemies/healthbar-red.png"));
     }
 
     /** delar upp ett spritesheet i delar och returnerar en textureregion array för animation **/
