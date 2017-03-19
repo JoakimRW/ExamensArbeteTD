@@ -10,7 +10,6 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.utils.Tile;
 import com.mygdx.game.utils.TileType;
@@ -18,7 +17,7 @@ import com.mygdx.game.utils.TileType;
 import java.util.ArrayList;
 
 /**
- * This is a helper class that loads the map and the creates a list of tiles of that map.
+ * This is a helper class that loads the map and then creates a list of tiles of that map.
  * Created by MichaelSjogren on 2017-02-23.
  */
 public abstract class LevelManager {
@@ -154,7 +153,6 @@ public abstract class LevelManager {
             for (int col = 0; col < LevelManager.tiles[0].length; col++) {
                 Tile tile = LevelManager.getTile(row , col);
                 Tile colTile = LevelManager.getTile(0 , col);
-                @SuppressWarnings("ConstantConditions")
                 TileType type = tile.getType();
                 shapeRenderer.begin();
                 if(type == TileType.FLOOR){

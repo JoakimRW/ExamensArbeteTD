@@ -7,6 +7,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -29,6 +30,7 @@ public class GameStage extends Stage implements InputProcessor{
 	// TODO make camera code ashley components and system
 	private int xDir = 0;
 	private int yDir = 0;
+	private ShapeRenderer sr;
 
 	public GameStage(GameStateManager gsm) {
         Assets.load();
@@ -36,8 +38,10 @@ public class GameStage extends Stage implements InputProcessor{
         LevelManager.loadLevel("maps/simple-map.tmx");
         renderer = new OrthogonalTiledMapRenderer(LevelManager.tiledMap);
         Engine ashleyEngine = new Engine();
+        sr = new ShapeRenderer();
+        sr.setAutoShapeType(true);
         batch = new SpriteBatch();
-        entityManager = new EntityManager(ashleyEngine, batch);
+        entityManager = new EntityManager(ashleyEngine, batch , sr);
         System.out.println("*************** To Start the game , Press Enter! ***************");
     }
 	
@@ -48,8 +52,11 @@ public class GameStage extends Stage implements InputProcessor{
         renderer.setView(gsm.game().getCamera());
         renderer.render();
 		batch.begin();
+		sr.begin();
 		entityManager.update(Gdx.graphics.getDeltaTime());
 		batch.setProjectionMatrix(gsm.game().getCamera().combined);
+		sr.setProjectionMatrix(gsm.game().getCamera().combined);
+		sr.end();
 		batch.end();
 	}
 
@@ -65,6 +72,7 @@ public class GameStage extends Stage implements InputProcessor{
 	
 	@Override
 	public void dispose() {
+		sr.dispose();
         renderer.dispose();
         LevelManager.tiledMap.dispose();
         batch.dispose();
