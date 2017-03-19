@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.*;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.math.MathUtils;
 import com.mygdx.game.entites.entitiycomponents.*;
+import com.mygdx.game.stages.GameStage;
 
 
 
@@ -28,14 +29,17 @@ public class MoveToSystem extends EntitySystem {
             Entity entity = entities.get(i);
             PositionComponent posComp = entity.getComponent(PositionComponent.class);
             DirectionComponent dirComp = entity.getComponent(DirectionComponent.class);
-            VelocityComponent velocityComp = entity.getComponent(VelocityComponent.class);
             PathComponent pathComp = entity.getComponent(PathComponent.class);
+            VelocityComponent velocityComp = entity.getComponent(VelocityComponent.class);
+           
 
                 if(pathComp.path.size() >= pathComp.index){
                   moveTo(posComp , dirComp , deltaTime , pathComp , velocityComp);
                 }else{
                 	entity.removeAll();
                 	engine.removeEntity(entity);
+                	GameStage.PlAYER_HEALTH = GameStage.PlAYER_HEALTH != 0 ? GameStage.PlAYER_HEALTH - 1 : -1;
+                	System.out.println("Health left:" + GameStage.PlAYER_HEALTH);  	
                 }
         }
     }

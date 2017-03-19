@@ -7,23 +7,21 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.managers.EntityManager;
 import com.mygdx.game.managers.GameStateManager;
 import com.mygdx.game.managers.LevelManager;
 import com.mygdx.game.utils.Assets;
-import com.mygdx.game.utils.Node;
-import com.mygdx.game.utils.PathFinder;
-
-import java.util.ArrayList;
 
 public class GameStage extends Stage implements InputProcessor{
 
 
+	public static int PlAYER_HEALTH = 30;
+	public static boolean GAME_OVER = false;
+	public static boolean START_GAME = false;
+	
 	private final SpriteBatch batch;
 	private final EntityManager entityManager;
 	private GameStateManager gsm;
@@ -31,6 +29,7 @@ public class GameStage extends Stage implements InputProcessor{
 	// TODO make camera code ashley components and system
 	private int xDir = 0;
 	private int yDir = 0;
+
 	public GameStage(GameStateManager gsm) {
         Assets.load();
         this.gsm = gsm;
@@ -39,6 +38,7 @@ public class GameStage extends Stage implements InputProcessor{
         Engine ashleyEngine = new Engine();
         batch = new SpriteBatch();
         entityManager = new EntityManager(ashleyEngine, batch);
+        System.out.println("*************** To Start the game , Press Enter! ***************");
     }
 	
 	@Override
@@ -57,6 +57,9 @@ public class GameStage extends Stage implements InputProcessor{
 	@Override
 	public void act() {
 		moveCamera(Gdx.graphics.getDeltaTime());
+		if(PlAYER_HEALTH == 0){
+			GAME_OVER = true;
+		}
 		super.act();
 	}
 	
@@ -116,6 +119,10 @@ public class GameStage extends Stage implements InputProcessor{
 	                break;
 	            case Input.Keys.D:
 	                xDir = 0;
+	                break;
+	            case Input.Keys.ENTER:
+	            	if(!START_GAME)System.out.println("Game Started , Spawning first Wave");
+	                START_GAME = true;
 	                break;
 	            default: break;
 	        }

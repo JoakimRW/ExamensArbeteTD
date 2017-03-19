@@ -51,16 +51,18 @@ public class EnemyFactory{
         }
 
         private void createEnenmy(){
-            ArrayList<Node> path =  PathFinder.findPath(new Vector2(LevelManager.tileSpawn.getTileCenter().x / 32 , LevelManager.tileSpawn.getTileCenter().y / 32), new Vector2(LevelManager.tileEnd.getCords().x / 32 , LevelManager.tileEnd.getCords().y / 32) , true);
+            ArrayList<Node> path =  PathFinder.findPath(new Vector2(LevelManager.tileSpawn.getTileCenter().x / 32 , LevelManager.tileSpawn.getTileCenter().y / 32), new Vector2(LevelManager.tileEnd.getCords().x / 32 , LevelManager.tileEnd.getCords().y / 32) , false);
             if (path == null) return;
             Entity entity = new Entity();
+            // components
             PathComponent pathComp = new PathComponent();
-            pathComp.path = path;
             AnimationComponent animation = new AnimationComponent();
-            StateComponent state = new StateComponent();
-            state.set(0);
-            animation.animations.put(state.get(), Assets.bloodWormAnimation);
             PositionComponent pos = new PositionComponent(path.get(path.size()-1).getCordinates().x * 32 , path.get(path.size()-1).getCordinates().y * 32 );
+            StateComponent state = new StateComponent();
+            pathComp.path = path;
+            state.set(state.RUNNING);
+            animation.animations.put(state.get(), Assets.bloodWormAnimation);
+            // add components
             entity.add(pos)
             	.add(new VelocityComponent(speed))
             	.add(new HealthComponent(health))
