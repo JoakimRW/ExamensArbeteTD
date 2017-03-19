@@ -18,9 +18,10 @@ import com.mygdx.game.utils.TileType;
 import java.util.ArrayList;
 
 /**
+ * This is a helper class that loads the map and the creates a list of tiles of that map.
  * Created by MichaelSjogren on 2017-02-23.
  */
-public class LevelManager {
+public abstract class LevelManager {
     public static int mapWidthInTiles;
     public static int mapHeightInTiles;
     public static int mapPixelWidth;
@@ -37,7 +38,11 @@ public class LevelManager {
     private static MapLayer endLocLayer;
     public static Tile tileSpawn;
     public static Tile tileEnd;
-
+    
+    /** 
+     * Loads the level and inits all the public variables for this class
+     * @param filePath The path of where the file is , root is in your assets folder
+     * **/
     public static void loadLevel(String filePath) {
         tiledMap = new TmxMapLoader().load(filePath);
         MapProperties properties = tiledMap.getProperties();
@@ -97,22 +102,25 @@ public class LevelManager {
         }
         return false;
     }
-
+    
+    /** 
+     * You need to divide by the x / tile width and y / tile height if you have pixel cords
+     * This will only work with Tile coordinates 
+     * @param x The x position of the Tile
+     * @param y The y position of the Tile
+     * @return if the coordinates are not out of bounds : returns Tile object , otherwise returns null
+     * **/
     public static Tile getTile(int x , int y){
         if(x > tiles.length -1 || y > tiles[0].length -1  || y < 0 || x < 0) return null;
         return tiles[x][y];
     }
 
     private static void createTileList() {
-        int walls = 0;
-        int floor = 0;
         for (int x = 0; x < tiles.length; x++) {
             for (int y = 0; y < tiles[0].length; y++) {
                 if (checkIfWall(  x  ,  y )) {
-                    walls ++;
                     tiles[x][y] = new Tile(new Vector2(x * tileWidth , y * tileHeight), tileWidth , tileHeight , TileType.WALL);
                 } else {
-                    floor++;
                     tiles[x][y] = new Tile(new Vector2(x * tileWidth , y * tileHeight), tileWidth , tileHeight , TileType.FLOOR);
                 }
             }
@@ -120,7 +128,8 @@ public class LevelManager {
     }
 
 
-    /** for debugging **/
+    /** draws tile grid and fills with white where enemies cannot go
+     * @param camera need the camera to set the projection matrix **/
     @SuppressWarnings("unused")
     public static void drawTiles(Camera camera){
 
@@ -148,8 +157,6 @@ public class LevelManager {
                 @SuppressWarnings("ConstantConditions")
                 TileType type = tile.getType();
                 shapeRenderer.begin();
-                // ritar tile grid , och fyller med vit färg där fiender inte kan gå
-
                 if(type == TileType.FLOOR){
                     shapeRenderer.setColor(1,1,1,.2f);
                     shapeRenderer.rect(tile.getCords().x , tile.getCords().y , tile.getTileWidth() , tile.getTileHeight());
