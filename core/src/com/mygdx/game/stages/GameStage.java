@@ -28,16 +28,17 @@ public class GameStage extends Stage implements InputProcessor{
 	private final EntityManager entityManager;
 	private GameStateManager gsm;
 	private OrthogonalTiledMapRenderer renderer;
+	// TODO make camera code ashley components and system
 	private int xDir = 0;
 	private int yDir = 0;
 	public GameStage(GameStateManager gsm) {
-		this.gsm = gsm;
-		LevelManager.loadLevel("maps/simple-map.tmx");
-		renderer = new OrthogonalTiledMapRenderer(LevelManager.tiledMap);
-		Engine ashleyEngine = new Engine();
-		batch = new SpriteBatch();
+        Assets.load();
+        this.gsm = gsm;
+        LevelManager.loadLevel("maps/simple-map.tmx");
+        renderer = new OrthogonalTiledMapRenderer(LevelManager.tiledMap);
+        Engine ashleyEngine = new Engine();
+        batch = new SpriteBatch();
         entityManager = new EntityManager(ashleyEngine, batch);
-		Assets.load();
     }
 	
 	@Override

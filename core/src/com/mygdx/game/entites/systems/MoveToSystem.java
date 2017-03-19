@@ -13,12 +13,14 @@ import com.mygdx.game.entites.entitiycomponents.*;
  */
 public class MoveToSystem extends EntitySystem {
     private ImmutableArray<Entity> entities;
+    private Engine engine;
 
     public MoveToSystem(){
     }
 
     public void addedToEngine(Engine engine){
-        entities = engine.getEntitiesFor(Family.all(PositionComponent.class , DirectionComponent.class , PathComponent.class).get());
+    	this.engine = engine;
+        entities = engine.getEntitiesFor(Family.all(PositionComponent.class , VelocityComponent.class , DirectionComponent.class , PathComponent.class).get());
     }
 
     public void update(float deltaTime){
@@ -26,17 +28,21 @@ public class MoveToSystem extends EntitySystem {
             Entity entity = entities.get(i);
             PositionComponent posComp = entity.getComponent(PositionComponent.class);
             DirectionComponent dirComp = entity.getComponent(DirectionComponent.class);
+            VelocityComponent velocityComp = entity.getComponent(VelocityComponent.class);
             PathComponent pathComp = entity.getComponent(PathComponent.class);
 
                 if(pathComp.path.size() >= pathComp.index){
-                  moveTo(posComp , dirComp , deltaTime , pathComp);
+                  moveTo(posComp , dirComp , deltaTime , pathComp , velocityComp);
+                }else{
+                	entity.removeAll();
+                	engine.removeEntity(entity);
                 }
         }
     }
 
-    public void moveTo(PositionComponent pos , DirectionComponent dir, float deltaTime , PathComponent pathComp){
+    public void moveTo(PositionComponent pos , DirectionComponent dir, float deltaTime , PathComponent pathComp , VelocityComponent velocityComponent){
         final float tolerance = 80f;
-        final float speed = 60f;
+        final float speed = velocityComponent.speed;
         int pointX = MathUtils.round(pathComp.path.get(pathComp.path.size() - pathComp.index ).getCordinates().x) << 5;
         int pointY = MathUtils.round(pathComp.path.get(pathComp.path.size() - pathComp.index ).getCordinates().y) << 5;
         double difX = pointX - pos.x;
