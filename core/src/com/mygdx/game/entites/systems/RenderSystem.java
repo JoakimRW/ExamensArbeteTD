@@ -39,7 +39,6 @@ public class RenderSystem extends EntitySystem{
             StateComponent stateComp = entity.getComponent(StateComponent.class);
             DirectionComponent dirComp = entity.getComponent(DirectionComponent.class);
             HealthComponent healthComp = entity.getComponent(HealthComponent.class);
-            healthComp.health -= .1f;
             drawHealthbar(healthComp, posComp);
             TextureRegion region =  (TextureRegion) animComp.animations.get(stateComp.get()).getKeyFrame(stateComp.time , true);
             batch.draw( region
@@ -66,7 +65,9 @@ public class RenderSystem extends EntitySystem{
     	if(healthComp.health <= 0.50 * healthComp.maxHealth) sprite.setColor(Color.ORANGE);
     	// 25%
     	if(healthComp.health <= 0.25 * healthComp.maxHealth) sprite.setColor(Color.RED);
-    	spriteBg.draw(batch);
-    	sprite.draw(batch);
+    	if(healthComp.health != healthComp.maxHealth){
+        	spriteBg.draw(batch);
+        	sprite.draw(batch);
+    	}
     }
 }
