@@ -23,7 +23,7 @@ public class EntityManager {
         MoveToSystem moveToSystem = new MoveToSystem();
         StateSystem stateSystem = new StateSystem();
         RenderSystem renderSystem = new RenderSystem(batch , sr);
-        HealthSystem healthSystem = new HealthSystem();
+        HealthSystem healthSystem = new HealthSystem(batch);
         ashleyEngine.addSystem(stateSystem);
         ashleyEngine.addSystem(moveToSystem);
         ashleyEngine.addSystem(renderSystem);

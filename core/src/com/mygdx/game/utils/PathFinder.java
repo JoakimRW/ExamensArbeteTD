@@ -16,7 +16,7 @@ public abstract class PathFinder {
      * @param canGoDiag - if true: path will include calculation of nodes that are diagonal ,
      *                  else will only calculate up , down left , right
      * **/
-    public static ArrayList<Node> findPath(Vector2 startNode , Vector2 endNode , boolean canGoDiag){
+    public static ArrayList<Node> findPath(Vector2 startNode , Vector2 endNode , boolean canGoDiag , boolean isFlying){
         ArrayList<Node> openList = new ArrayList<>();
         ArrayList<Node> closedList = new ArrayList<>();
         Node current = new Node(startNode , null , 0 , startNode.dst(endNode));
@@ -52,7 +52,9 @@ public abstract class PathFinder {
                 int yDir = (i / 3) - 1;
                 Tile at = LevelManager.getTile(x + xDir , y + yDir);
                 if (at == null) continue;
-                if(at.getType() == TileType.WALL) continue;
+                if(!isFlying){
+                	if(at.getType() == TileType.WALL) continue;
+                }
                 // at is a valid path
                 // to prevent creating a path diagonally we have to check
                 // that there arent any walls between the diagonal path
