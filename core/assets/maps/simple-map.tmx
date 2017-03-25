@@ -213,7 +213,7 @@
    </properties>
   </tile>
  </tileset>
- <layer name="floor" width="36" height="26" visible="0">
+ <layer name="floor" width="36" height="26">
   <data encoding="csv">
 21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,
 21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,21,
@@ -273,10 +273,10 @@
 43,43,43,43,43,43,43,43,43,43,43,43,43,43,43,43,43,43,43,43,43,43,43,43,43,43,43,43,43,43,43,43,43,43,43,43
 </data>
  </layer>
- <objectgroup name="spawnLocations" visible="0">
+ <objectgroup name="spawnLocations">
   <object id="6" x="6" y="170" width="14.75" height="11.25"/>
  </objectgroup>
- <objectgroup name="endLocations" visible="0">
+ <objectgroup name="endLocations">
   <object id="5" x="1128" y="458.333" width="12.6667" height="11.6667"/>
  </objectgroup>
 </map>
