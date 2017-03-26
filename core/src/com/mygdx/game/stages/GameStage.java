@@ -16,7 +16,7 @@ import com.mygdx.game.managers.GameStateManager;
 import com.mygdx.game.managers.LevelManager;
 import com.mygdx.game.utils.Assets;
 
-public class GameStage extends Stage implements InputProcessor {
+public class GameStage extends Stage{
 
 	public static int PlAYER_HEALTH = 30;
 	public static boolean GAME_OVER = false;
@@ -63,6 +63,11 @@ public class GameStage extends Stage implements InputProcessor {
 	@Override
 	public void act() {
 		moveCamera(Gdx.graphics.getDeltaTime());
+		if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+			if (!START_GAME)
+				System.out.println("Game Started , Spawning first Wave");
+			START_GAME = true;
+		}
 		if (PlAYER_HEALTH == 0) {
 			GAME_OVER = true;
 		}
@@ -78,6 +83,20 @@ public class GameStage extends Stage implements InputProcessor {
 	}
 
 	private void moveCamera(float delta) {
+		if(Gdx.input.isKeyPressed(Input.Keys.W)){
+			yDir = 1;
+		}else if(Gdx.input.isKeyPressed(Input.Keys.S)){
+			yDir = -1;
+		}else {
+			yDir = 0;
+		}
+		if(Gdx.input.isKeyPressed(Input.Keys.A)){
+			xDir = -1;
+		}else if(Gdx.input.isKeyPressed(Input.Keys.D)){
+			xDir = 1;
+		}else {
+			xDir = 0;
+		}
 		final float cameraSpeed = 10f;
 		gsm.game().getCamera().viewportWidth = Gdx.graphics.getWidth() / 3;
 		gsm.game().getCamera().viewportHeight = Gdx.graphics.getHeight() / 3;
@@ -92,90 +111,6 @@ public class GameStage extends Stage implements InputProcessor {
 		float height = startY * 2;
 		setCameraBoundary(gsm.game().getCamera(), startX, startY, LevelManager.mapPixelWidth - width,
 				LevelManager.mapPixelHeight - height);
-	}
-
-	@Override
-	public boolean keyDown(int keycode) {
-		switch (keycode) {
-		case Input.Keys.W:
-			yDir = 1;
-			break;
-		case Input.Keys.S:
-			yDir = -1;
-			break;
-		case Input.Keys.A:
-			xDir = -1;
-			break;
-		case Input.Keys.D:
-			xDir = 1;
-			break;
-		default:
-			break;
-		}
-		return false;
-	}
-
-	@Override
-	public boolean keyUp(int keycode) {
-		switch (keycode) {
-		case Input.Keys.W:
-			yDir = 0;
-			break;
-		case Input.Keys.S:
-			yDir = 0;
-			break;
-		case Input.Keys.A:
-			xDir = 0;
-			break;
-		case Input.Keys.D:
-			xDir = 0;
-			break;
-		case Input.Keys.ENTER:
-			if (!START_GAME)
-				System.out.println("Game Started , Spawning first Wave");
-			START_GAME = true;
-			break;
-		default:
-			break;
-		}
-		return false;
-	}
-
-	@Override
-	public boolean keyTyped(char character) {
-		return false;
-	}
-
-	@Override
-	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		return false;
-	}
-
-	@Override
-	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		return false;
-	}
-
-	@Override
-	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		return false;
-	}
-
-	@Override
-	public boolean mouseMoved(int screenX, int screenY) {
-
-		/*
-		 * if(screenX > Gdx.graphics.getWidth() - 15f){ xDir = 1; }else
-		 * if(screenX < 15f){ xDir = -1; }else { xDir = 0; } if (screenY >
-		 * Gdx.graphics.getHeight() - 15f){ yDir = -1; }else if(screenY < 15f){
-		 * yDir = 1; }else { yDir = 0; }
-		 */
-		return false;
-	}
-
-	@Override
-	public boolean scrolled(int amount) {
-		return false;
 	}
 
 	private void setCameraBoundary(Camera camera, float startX, float startY, float width, float height) {

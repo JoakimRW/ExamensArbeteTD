@@ -30,11 +30,9 @@ public abstract class LevelManager {
     public static Integer tileHeight;
     public static TiledMapTileLayer tileLayer;
     public static Tile[][] tiles;
-    private static MapLayer spawnLocLayer;
-    public static ArrayList<Vector2> spawnLocations = new ArrayList<>();
-    public static ArrayList<Vector2> endLocactions = new ArrayList<>();
+    private static ArrayList<Vector2> spawnLocations = new ArrayList<>();
+    private static ArrayList<Vector2> endLocactions = new ArrayList<>();
     private static  ShapeRenderer shapeRenderer = new ShapeRenderer();
-    private static MapLayer endLocLayer;
     public static Tile tileSpawn;
     public static Tile tileEnd;
     
@@ -46,10 +44,10 @@ public abstract class LevelManager {
         tiledMap = new TmxMapLoader().load(filePath);
         MapProperties properties = tiledMap.getProperties();
         tileLayer = (TiledMapTileLayer) tiledMap.getLayers().get("collision");
-        spawnLocLayer =  tiledMap.getLayers().get("spawnLocations");
-        endLocLayer = tiledMap.getLayers().get("endLocations");
+        MapLayer spawnLocLayer = tiledMap.getLayers().get("spawnLocations");
+        MapLayer endLocLayer = tiledMap.getLayers().get("endLocations");
 
-        for (MapObject object :endLocLayer.getObjects()
+        for (MapObject object : endLocLayer.getObjects()
                 ) {
             float x = object.getProperties().get("x", Float.class);
             float y = object.getProperties().get("y", Float.class);
@@ -57,7 +55,7 @@ public abstract class LevelManager {
             endLocactions.add(new Vector2(x, y));
         }
 
-        for (MapObject object :spawnLocLayer.getObjects()
+        for (MapObject object : spawnLocLayer.getObjects()
              ) {
             float x = object.getProperties().get("x", Float.class);
             float y = object.getProperties().get("y", Float.class);
@@ -84,20 +82,16 @@ public abstract class LevelManager {
     }
 
 
-    public static boolean checkIfWall(int x, int y) {
+    private static boolean checkIfWall(int x, int y) {
         TiledMapTile tile = null;
         try {
             tile = tileLayer.getCell(x, y).getTile();
         }catch (NullPointerException e){
-
+            System.out.println(e + " Tile");
         }
         if(tile != null){
             boolean iswall = tile.getProperties().get("Wall",Boolean.class);
-            if (iswall) {
-                return true;
-            } else {
-                return false;
-            }
+            if (iswall) return true;
         }
         return false;
     }
@@ -153,6 +147,7 @@ public abstract class LevelManager {
             for (int col = 0; col < LevelManager.tiles[0].length; col++) {
                 Tile tile = LevelManager.getTile(row , col);
                 Tile colTile = LevelManager.getTile(0 , col);
+                if (tile == null) continue;
                 TileType type = tile.getType();
                 shapeRenderer.begin();
                 if(type == TileType.FLOOR){
