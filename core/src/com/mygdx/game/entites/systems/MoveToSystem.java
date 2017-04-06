@@ -1,81 +1,75 @@
 package com.mygdx.game.entites.systems;
 
 import com.badlogic.ashley.core.*;
-import com.badlogic.ashley.utils.ImmutableArray;
+import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.math.MathUtils;
 import com.mygdx.game.entites.entitiycomponents.*;
 import com.mygdx.game.stages.GameStage;
 
 
-
-
-/**
- * Created by MichaelSjogren on 2017-03-04.
- */
-public class MoveToSystem extends EntitySystem {
-    private ImmutableArray<Entity> entities;
-    private Engine engine;
-
+public class MoveToSystem extends IteratingSystem {
+    float time = 0;
     public MoveToSystem(){
+        super(Family.all(PositionComponent.class , VelocityComponent.class , DirectionComponent.class , PathComponent.class).get());
     }
 
-    public void addedToEngine(Engine engine){
-    	this.engine = engine;
-        entities = engine.getEntitiesFor(Family.all(PositionComponent.class , VelocityComponent.class , DirectionComponent.class , PathComponent.class).get());
-    }
 
-    public void update(float deltaTime){
-        for (int i = 0; i < entities.size(); i++) {
-            Entity entity = entities.get(i);
-            PositionComponent posComp = entity.getComponent(PositionComponent.class);
-            DirectionComponent dirComp = entity.getComponent(DirectionComponent.class);
-            PathComponent pathComp = entity.getComponent(PathComponent.class);
-            VelocityComponent velocityComp = entity.getComponent(VelocityComponent.class);
-           
-
-                if(pathComp.path.size() >= pathComp.index){
-                  moveTo(posComp , dirComp , deltaTime , pathComp , velocityComp);
-                }else{
-                	entity.removeAll();
-                	engine.removeEntity(entity);
-                	GameStage.PlAYER_HEALTH = GameStage.PlAYER_HEALTH != 0 ? GameStage.PlAYER_HEALTH - 1 : -1;
-                	System.out.println("Health left:" + GameStage.PlAYER_HEALTH);  	
-                }
+    @Override
+    protected void processEntity(Entity entity, float deltaTime) {
+        time += deltaTime;
+        PositionComponent posComp = entity.getComponent(PositionComponent.class);
+        DirectionComponent dirComp = entity.getComponent(DirectionComponent.class);
+        PathComponent pathComp = entity.getComponent(PathComponent.class);
+        VelocityComponent velocityComp = entity.getComponent(VelocityComponent.class);
+        if (pathComp.path != null){
+            if(pathComp.path.size() >= pathComp.index){
+                moveTo(posComp , dirComp , deltaTime , pathComp , velocityComp);
+            }else {
+                entity.removeAll();
+                getEngine().removeEntity(entity);
+                GameStage.PlAYER_HEALTH = GameStage.PlAYER_HEALTH != 0 ? GameStage.PlAYER_HEALTH - 1 : -1;
+            }
         }
+
     }
 
-    public void moveTo(PositionComponent pos , DirectionComponent dir, float deltaTime , PathComponent pathComp , VelocityComponent velocityComponent){
-        final float tolerance = 80f;
+    private void moveTo(PositionComponent pos , DirectionComponent dir, float deltaTime , PathComponent pathComp , VelocityComponent velocityComponent){
+        final float tolerance = 1.5f;
         final float speed = velocityComponent.speed;
-        int pointX = MathUtils.round(pathComp.path.get(pathComp.path.size() - pathComp.index ).getCordinates().x) << 5;
-        int pointY = MathUtils.round(pathComp.path.get(pathComp.path.size() - pathComp.index ).getCordinates().y) << 5;
+        // a xy point in the path array that the entity will go to
+        final int pointX = MathUtils.round(pathComp.path.get(pathComp.path.size() - pathComp.index ).getCordinates().x) << 5;
+        final int pointY = MathUtils.round(pathComp.path.get(pathComp.path.size() - pathComp.index ).getCordinates().y) << 5;
+        // position of entity
+        final int positionX = MathUtils.round(pos.x);
+        final int positionY = MathUtils.round(pos.y);
+        // calculate direction
         double difX = pointX - pos.x;
         double difY = pointY - pos.y;
+        // set direction
         float rotAng = (float)Math.toDegrees(Math.atan2(difX,-difY));
         dir.angle = MathUtils.lerpAngleDeg(dir.angle,rotAng,.1f);
-        if ( MathUtils.isEqual(pos.x , pointX,speed / tolerance) && MathUtils.isEqual(pointY , pos.y, speed / tolerance)){
+        // check if entity has the same cords that the point x and y has , if it has go to next point
+        if (MathUtils.isEqual(positionX , pointX , tolerance) && MathUtils.isEqual(positionY , pointY , tolerance)){
             pathComp.index++;
         }
-        pos.x += (speed*dir.xAxis)*deltaTime;
-        pos.y += (speed*dir.yAxis)*deltaTime;
-
-        if(MathUtils.round(pos.y) < pointY){
-                dir.yAxis = 1;
+        if(positionY < pointY){
+            dir.yAxis = 1;
         }
-        else if(MathUtils.round(pos.y) > pointY){
-                dir.yAxis = -1;
+        else if(positionY > pointY){
+            dir.yAxis = -1;
         }else {
             dir.yAxis = 0;
         }
+        pos.y += (speed * dir.yAxis) * deltaTime;
 
-        if(MathUtils.round(pos.x) < pointX){
+        if(positionX  < pointX){
             dir.xAxis = 1;
         }
-        else if(MathUtils.round(pos.x) > pointX){
+        else if(positionX  > pointX){
             dir.xAxis = -1;
         }else {
             dir.xAxis = 0;
         }
-
+        pos.x +=  (dir.xAxis * speed) * deltaTime ;
     }
 }

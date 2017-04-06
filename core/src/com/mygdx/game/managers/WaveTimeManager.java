@@ -3,7 +3,7 @@ package com.mygdx.game.managers;
 import java.util.Random;
 
 import com.mygdx.game.Factory.EnemyFactory;
-import com.mygdx.game.Factory.EnemyType;
+import com.mygdx.game.Factory.EntityType;
 import com.mygdx.game.stages.GameStage;
 
 public class WaveTimeManager {
@@ -28,10 +28,8 @@ public class WaveTimeManager {
 				System.out.println(currentWaveTime);
 			}
 			if(currentWaveTime <= 0){
-				System.out.println(EnemyType.values().length + " LENGTH");
-				final int rand = new Random().nextInt(EnemyType.values().length);
-				
-				EnemyType enemyType = EnemyType.values()[rand];
+				final int rand = new Random().nextInt(EntityType.values().length);
+				EntityType enemyType = EntityType.values()[rand];
 				enemySpawner.spawnEnemies(10 + wave , 100, 75, 500 , enemyType);
 				wave++;
 				System.out.println("Wave ---------- " + wave);

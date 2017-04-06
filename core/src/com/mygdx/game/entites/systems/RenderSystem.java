@@ -1,47 +1,39 @@
 package com.mygdx.game.entites.systems;
 
-import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.Family;
-import com.badlogic.ashley.utils.ImmutableArray;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.esotericsoftware.spine.SkeletonRenderer;
 import com.mygdx.game.entites.entitiycomponents.*;
-import com.mygdx.game.utils.Assets;
 
-/**
- * Created by MichaelSjogren on 2017-03-04.
- */
-public class RenderSystem extends EntitySystem{
-    private ImmutableArray<Entity> entities;
+public class RenderSystem extends IteratingSystem{
     private SpriteBatch batch;
-    ShapeRenderer sr;
+    private SkeletonRenderer<SpriteBatch> renderer;
 
-    public RenderSystem(SpriteBatch batch , ShapeRenderer sr){
+    public RenderSystem(SpriteBatch batch){
+        super(Family.all(SkeletonComponent.class,RenderableComponent.class , HealthComponent.class , StateComponent.class , DirectionComponent.class).get());
+        //Family enemy = Family.all(SkeletonComponent.class,RenderableComponent.class , HealthComponent.class , StateComponent.class , DirectionComponent.class , DimensionComponent.class).get();
         this.batch = batch;
-        this.sr = sr;
+        renderer = new SkeletonRenderer<>();
+        renderer.setPremultipliedAlpha(true);
     }
 
-    public void addedToEngine(Engine engine){
-        entities = engine.getEntitiesFor(Family.all(RenderableComponent.class , HealthComponent.class , AnimationComponent.class , StateComponent.class , DirectionComponent.class , DimensionComponent.class).get());
-    }
 
-    public void update(float deltaTile){
-        for (int i = 0; i < entities.size(); ++i) {
-            Entity entity = entities.get(i);
-            PositionComponent posComp = entity.getComponent(PositionComponent.class);
-            AnimationComponent animComp = entity.getComponent(AnimationComponent.class);
-            StateComponent stateComp = entity.getComponent(StateComponent.class);
-            DirectionComponent dirComp = entity.getComponent(DirectionComponent.class);
-            TextureRegion region =  (TextureRegion) animComp.animations.get(stateComp.get()).getKeyFrame(stateComp.time , true);
-            batch.draw( region
-                    ,posComp.x,posComp.y,region.getRegionWidth() / 2 , region.getRegionHeight() / 2
-            ,region.getRegionWidth() ,region.getRegionHeight(),1,1,dirComp.angle);
-        }
+
+    @Override
+    protected void processEntity(Entity entity, float deltaTime) {
+        final int offsetX = 16;
+        final int offsetY = 16;
+        PositionComponent posComp = entity.getComponent(PositionComponent.class);
+        StateComponent stateComp = entity.getComponent(StateComponent.class);
+        DirectionComponent dirComp = entity.getComponent(DirectionComponent.class);
+        SkeletonComponent skeletonComponent = entity.getComponent(SkeletonComponent.class);
+        stateComp.animationState.update(deltaTime);
+        stateComp.animationState.apply(skeletonComponent.skeleton);
+        skeletonComponent.skeleton.updateWorldTransform();
+        skeletonComponent.skeleton.setPosition(posComp.x + offsetX , posComp.y + offsetY);
+        skeletonComponent.skeleton.getRootBone().setRotation(dirComp.angle);
+        renderer.draw(batch,skeletonComponent.skeleton);
     }
 }

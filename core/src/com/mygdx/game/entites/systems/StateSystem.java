@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
+import com.esotericsoftware.spine.AnimationState;
 import com.mygdx.game.entites.entitiycomponents.StateComponent;
 
 /**
@@ -20,6 +21,7 @@ public class StateSystem extends IteratingSystem {
 
     @Override
     public void processEntity(Entity entity, float deltaTime) {
-        sm.get(entity).time += deltaTime;
+        StateComponent state = sm.get(entity);
+            state.time += deltaTime;
     }
 }

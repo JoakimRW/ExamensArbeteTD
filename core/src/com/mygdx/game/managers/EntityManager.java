@@ -2,7 +2,6 @@ package com.mygdx.game.managers;
 
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.mygdx.game.Factory.EnemyFactory;
 import com.mygdx.game.entites.systems.HealthSystem;
 import com.mygdx.game.entites.systems.MoveToSystem;
@@ -17,12 +16,12 @@ public class EntityManager {
     private Engine ashleyEngine;
 	private WaveTimeManager waveManager;
 
-    public EntityManager(Engine ashleyEngine , SpriteBatch batch , ShapeRenderer sr){
+    public EntityManager(Engine ashleyEngine , SpriteBatch batch){
         this.ashleyEngine = ashleyEngine;
         enemySpawner = new EnemyFactory(ashleyEngine);
         MoveToSystem moveToSystem = new MoveToSystem();
         StateSystem stateSystem = new StateSystem();
-        RenderSystem renderSystem = new RenderSystem(batch , sr);
+        RenderSystem renderSystem = new RenderSystem(batch);
         HealthSystem healthSystem = new HealthSystem(batch);
         ashleyEngine.addSystem(stateSystem);
         ashleyEngine.addSystem(moveToSystem);

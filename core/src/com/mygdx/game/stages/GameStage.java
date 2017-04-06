@@ -3,11 +3,9 @@ package com.mygdx.game.stages;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -26,22 +24,16 @@ public class GameStage extends Stage{
 	private final EntityManager entityManager;
 	private GameStateManager gsm;
 	private OrthogonalTiledMapRenderer renderer;
-	Engine _ashleyEngine;
-	// TODO make camera code ashley components and system
 	private int xDir = 0;
 	private int yDir = 0;
-	private ShapeRenderer sr;
 
 	public GameStage(GameStateManager gsm, Engine ashleyEngine) {
-		Assets.load();
+		Assets.loadGameStageAssets();
 		this.gsm = gsm;
 		LevelManager.loadLevel("maps/simple-map.tmx");
 		renderer = new OrthogonalTiledMapRenderer(LevelManager.tiledMap);
-		_ashleyEngine = ashleyEngine;
-		sr = new ShapeRenderer();
-		sr.setAutoShapeType(true);
 		batch = new SpriteBatch();
-		entityManager = new EntityManager(_ashleyEngine, batch, sr);
+		entityManager = new EntityManager(ashleyEngine, batch);
 		System.out.println("*************** To Start the game , Press Enter! ***************");
 	}
 
@@ -52,17 +44,14 @@ public class GameStage extends Stage{
 		renderer.setView(gsm.game().getCamera());
 		renderer.render();
 		batch.begin();
-		sr.begin();
 		entityManager.update(Gdx.graphics.getDeltaTime());
 		batch.setProjectionMatrix(gsm.game().getCamera().combined);
-		sr.setProjectionMatrix(gsm.game().getCamera().combined);
-		sr.end();
 		batch.end();
 	}
 
 	@Override
 	public void act() {
-		moveCamera(Gdx.graphics.getDeltaTime());
+		moveCamera();
 		if(Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
 			if (!START_GAME)
 				System.out.println("Game Started , Spawning first Wave");
@@ -76,13 +65,12 @@ public class GameStage extends Stage{
 
 	@Override
 	public void dispose() {
-		sr.dispose();
 		renderer.dispose();
 		LevelManager.tiledMap.dispose();
 		batch.dispose();
 	}
 
-	private void moveCamera(float delta) {
+	private void moveCamera() {
 		if(Gdx.input.isKeyPressed(Input.Keys.W)){
 			yDir = 1;
 		}else if(Gdx.input.isKeyPressed(Input.Keys.S)){

@@ -1,0 +1,27 @@
+
+skeleton.png
+size: 64,16
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+BloodwormImages/body
+  rotate: false
+  xy: 16, 3
+  size: 12, 10
+  orig: 32, 32
+  offset: 10, 12
+  index: -1
+BloodwormImages/head
+  rotate: false
+  xy: 2, 2
+  size: 12, 11
+  orig: 32, 32
+  offset: 10, 10
+  index: -1
+BloodwormImages/tail
+  rotate: false
+  xy: 30, 4
+  size: 8, 9
+  orig: 32, 32
+  offset: 12, 12
+  index: -1

@@ -1,0 +1,59 @@
+{
+"skeleton": { "hash": "qZhgkUR6DH2pxW/KHw6fAsEMWtc", "spine": "3.5.51", "width": 29.21, "height": 21, "images": "" },
+"bones": [
+	{ "name": "root" },
+	{ "name": "bone", "parent": "root", "length": 13.32, "rotation": 89.83, "x": 0.24, "y": -7.48 },
+	{ "name": "bone2", "parent": "bone", "length": 5.43, "rotation": -101.3, "x": 7.59, "y": -1.86 },
+	{ "name": "bone3", "parent": "bone2", "length": 5.09, "rotation": 7.32, "x": 5.57, "y": 0.19 },
+	{ "name": "bone4", "parent": "bone", "length": 5.24, "rotation": 98.93, "x": 7.51, "y": 2.96 },
+	{ "name": "bone5", "parent": "bone4", "length": 5.25, "rotation": -1.98, "x": 5.96, "y": -0.06 }
+],
+"slots": [
+	{ "name": "BirdEnemy/top-left-wing", "bone": "bone3", "attachment": "top-left-wing" },
+	{ "name": "BirdEnemy/top-right-wing", "bone": "bone5", "attachment": "top-right-wing" },
+	{ "name": "BirdEnemy/bird-body", "bone": "bone", "attachment": "bird-body" },
+	{ "name": "BirdEnemy/lower-left-wing", "bone": "bone2", "attachment": "lower-left-wing" },
+	{ "name": "BirdEnemy/lower-right-wing", "bone": "bone4", "attachment": "lower-right-wing" }
+],
+"skins": {
+	"default": {
+		"BirdEnemy/bird-body": {
+			"bird-body": { "x": 6.6, "y": 0.26, "rotation": -89.83, "width": 11, "height": 21 }
+		},
+		"BirdEnemy/lower-left-wing": {
+			"lower-left-wing": { "x": 3.17, "y": -0.18, "rotation": 11.48, "width": 6, "height": 7 }
+		},
+		"BirdEnemy/lower-right-wing": {
+			"lower-right-wing": { "x": 2.88, "y": 0.44, "rotation": 171.31, "width": 6, "height": 7 }
+		},
+		"BirdEnemy/top-left-wing": {
+			"top-left-wing": { "x": 3.1, "y": 0.08, "rotation": 3.27, "width": 7, "height": 6 }
+		},
+		"BirdEnemy/top-right-wing": {
+			"top-right-wing": { "x": 2.86, "y": 0.01, "rotation": 173.29, "width": 7, "height": 6 }
+		}
+	}
+},
+"animations": {
+	"MOVING": {
+		"bones": {
+			"bone4": {
+				"shear": [
+					{ "time": 0, "x": 0, "y": 0 },
+					{ "time": 0.1667, "x": -47.34, "y": 0 },
+					{ "time": 0.3333, "x": 44.67, "y": 0 },
+					{ "time": 0.5, "x": 0, "y": 0 }
+				]
+			},
+			"bone2": {
+				"shear": [
+					{ "time": 0, "x": 0, "y": 0 },
+					{ "time": 0.1667, "x": 48.75, "y": 0 },
+					{ "time": 0.3333, "x": -45.54, "y": 0 },
+					{ "time": 0.5, "x": 0, "y": 0 }
+				]
+			}
+		}
+	}
+}
+}

@@ -1,0 +1,41 @@
+
+skeleton.png
+size: 64,16
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+bird-body
+  rotate: true
+  xy: 2, 2
+  size: 11, 21
+  orig: 11, 21
+  offset: 0, 0
+  index: -1
+lower-left-wing
+  rotate: true
+  xy: 51, 7
+  size: 6, 7
+  orig: 6, 7
+  offset: 0, 0
+  index: -1
+lower-right-wing
+  rotate: false
+  xy: 25, 6
+  size: 6, 7
+  orig: 6, 7
+  offset: 0, 0
+  index: -1
+top-left-wing
+  rotate: false
+  xy: 33, 7
+  size: 7, 6
+  orig: 7, 6
+  offset: 0, 0
+  index: -1
+top-right-wing
+  rotate: false
+  xy: 42, 7
+  size: 7, 6
+  orig: 7, 6
+  offset: 0, 0
+  index: -1
