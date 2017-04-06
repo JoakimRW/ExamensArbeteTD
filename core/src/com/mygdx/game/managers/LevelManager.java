@@ -62,9 +62,6 @@ public abstract class LevelManager {
 
             spawnLocations.add(new Vector2(x, y));
         }
-        System.out.println( ((int)endLocactions.get(0).x / 32));
-        System.out.println( ((int)spawnLocations.get(0).x / 32));
-
 
         mapWidthInTiles = properties.get("width", Integer.class);
         mapHeightInTiles = properties.get("height", Integer.class);
@@ -74,8 +71,7 @@ public abstract class LevelManager {
         mapPixelWidth = mapWidthInTiles * tileWidth;
         mapPixelHeight = mapHeightInTiles * tileHeight;
         tiles = new Tile[mapWidthInTiles][mapHeightInTiles];
-        System.out.println("Map width: " + mapPixelWidth + " :: " + mapPixelHeight);
-        System.out.println("map width in tiles:" + mapWidthInTiles + " : map height in tiles: " + mapHeightInTiles);
+
         createTileList();
         tileEnd = getTile((int)endLocactions.get(0).x /32 ,(int) endLocactions.get(0).y / 32);
         tileSpawn = getTile((int)spawnLocations.get(0).x /32 ,(int) spawnLocations.get(0).y / 32);
@@ -87,7 +83,7 @@ public abstract class LevelManager {
         try {
             tile = tileLayer.getCell(x, y).getTile();
         }catch (NullPointerException e){
-            System.out.println(e + " Tile");
+            System.out.println(e + " Tile null at : x:_" + x + "   y:_" + y);
         }
         if(tile != null){
             boolean iswall = tile.getProperties().get("Wall",Boolean.class);
@@ -121,7 +117,7 @@ public abstract class LevelManager {
     }
 
 
-    /** draws tile grid and fills with white where enemies cannot go
+    /** For debugging pathfinding draws tile grid and fills with white where enemies cannot go
      * @param camera need the camera to set the projection matrix **/
     @SuppressWarnings("unused")
     public static void drawTiles(Camera camera){

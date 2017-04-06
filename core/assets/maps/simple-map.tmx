@@ -364,34 +364,42 @@
   </tile>
   <tile id="72">
    <properties>
+    <property name="Wall" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="73">
    <properties>
+    <property name="Wall" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="74">
    <properties>
+    <property name="Wall" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="75">
    <properties>
+    <property name="Wall" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="76">
    <properties>
+    <property name="Wall" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="77">
    <properties>
+    <property name="Wall" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="78">
    <properties>
+    <property name="Wall" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="79">
    <properties>
+    <property name="Wall" type="bool" value="false"/>
    </properties>
   </tile>
  </tileset>
