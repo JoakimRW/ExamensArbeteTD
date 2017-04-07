@@ -31,9 +31,9 @@ public class RenderSystem extends IteratingSystem{
         SkeletonComponent skeletonComponent = entity.getComponent(SkeletonComponent.class);
         stateComp.animationState.update(deltaTime);
         stateComp.animationState.apply(skeletonComponent.skeleton);
-        skeletonComponent.skeleton.updateWorldTransform();
         skeletonComponent.skeleton.setPosition(posComp.x + offsetX , posComp.y + offsetY);
-        skeletonComponent.skeleton.getRootBone().setRotation(dirComp.angle);
+        skeletonComponent.skeleton.getRootBone().setRotation(dirComp.angle + 1 * deltaTime);
+        skeletonComponent.skeleton.updateWorldTransform();
         renderer.draw(batch,skeletonComponent.skeleton);
     }
 }
