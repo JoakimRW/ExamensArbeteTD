@@ -25,9 +25,10 @@ public class Game extends ApplicationAdapter {
 
 	@Override
 	public void render () {
-		
-		gsm.update(Gdx.graphics.getDeltaTime());
-		gsm.render();
+		if(!(Gdx.graphics.getDeltaTime() > .1f)){
+            gsm.update(Gdx.graphics.getDeltaTime());
+            gsm.render();
+        }
 	}
 	
 	

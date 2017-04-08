@@ -1,5 +1,11 @@
 package com.mygdx.game.utils;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.MapProperties;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTile;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.game.utils.TileType;
@@ -13,15 +19,21 @@ public class Tile extends Actor{
     private int tileHeight;
     private Vector2 tileCenter;
     private TileType type;
+    private TiledMapTileLayer.Cell cell;
 
-    public Tile(Vector2 cords , int tileWidth , int tileHeight , TileType type){
+    public Tile(Vector2 cords , int tileWidth , int tileHeight , TileType type , TiledMapTileLayer.Cell cell){
         this.cords = cords;
         this.tileWidth = tileWidth;
         this.tileHeight = tileHeight;
         this.type = type;
+        this.cell = cell;
         int tileCenterX = Math.round(cords.x) + tileWidth / 2 ;
         int tileCenterY = Math.round(cords.y) + tileHeight / 2 ;
         tileCenter = new Vector2(tileCenterX , tileCenterY);
+    }
+
+    public Tile(){
+
     }
 
 
@@ -63,5 +75,13 @@ public class Tile extends Actor{
 
     public Vector2 getTileCenter() {
         return tileCenter;
+    }
+
+    public TiledMapTileLayer.Cell getCell() {
+        return cell;
+    }
+
+    public void setCell(TiledMapTileLayer.Cell cell) {
+        this.cell = cell;
     }
 }

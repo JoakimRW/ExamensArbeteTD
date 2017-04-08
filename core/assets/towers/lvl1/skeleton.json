@@ -1,0 +1,24 @@
+{
+"skeleton": { "hash": "mubjI87zdxrsi4yi1QNImW9rZxU", "spine": "3.5.51", "width": 0, "height": 0, "images": "" },
+"bones": [
+	{ "name": "base" },
+	{ "name": "turret", "parent": "base", "length": 7.38, "rotation": 89.67, "x": 0.04, "y": -0.06 }
+],
+"slots": [
+	{ "name": "lvl1/base", "bone": "base", "attachment": "lvl1/base" },
+	{ "name": "lvl1/turret", "bone": "turret", "attachment": "lvl1/turret" }
+],
+"skins": {
+	"default": {
+		"lvl1/base": {
+			"lvl1/base": { "width": 16, "height": 16 }
+		},
+		"lvl1/turret": {
+			"lvl1/turret": { "x": 0.42, "y": -0.12, "rotation": -89.74, "width": 16, "height": 16 }
+		}
+	}
+},
+"animations": {
+	"animation": {}
+}
+}

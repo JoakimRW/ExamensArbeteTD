@@ -6,11 +6,7 @@ import com.mygdx.game.Factory.EnemyFactory;
 import com.mygdx.game.entites.systems.HealthSystem;
 import com.mygdx.game.entites.systems.MoveToSystem;
 import com.mygdx.game.entites.systems.RenderSystem;
-import com.mygdx.game.entites.systems.StateSystem;
 
-/**
- * Created by MichaelSjogren on 2017-03-04.
- */
 public class EntityManager {
     private final EnemyFactory enemySpawner;
     private Engine ashleyEngine;
@@ -20,16 +16,13 @@ public class EntityManager {
         this.ashleyEngine = ashleyEngine;
         enemySpawner = new EnemyFactory(ashleyEngine);
         MoveToSystem moveToSystem = new MoveToSystem();
-        StateSystem stateSystem = new StateSystem();
         RenderSystem renderSystem = new RenderSystem(batch);
         HealthSystem healthSystem = new HealthSystem(batch);
-        ashleyEngine.addSystem(stateSystem);
         ashleyEngine.addSystem(moveToSystem);
         ashleyEngine.addSystem(renderSystem);
         ashleyEngine.addSystem(healthSystem);
         waveManager = new WaveTimeManager(enemySpawner);  
     }
-
 
     public void update(float deltaTime){
         ashleyEngine.update(deltaTime);

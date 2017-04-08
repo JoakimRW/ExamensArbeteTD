@@ -20,6 +20,8 @@ public class Assets {
 
     public static Skeleton birdSkeleton;
     public static AnimationState birdAnimationState;
+    private static Skeleton lasetTowerSleleton;
+    private static AnimationState lasetTowerAnimationState;
 
     private static Texture loadTexture(String file){
         return new Texture(Gdx.files.internal(file));
@@ -32,9 +34,12 @@ public class Assets {
        // bird
         birdSkeleton = loadSkeleton("enemies/bird/skeleton.atlas","enemies/bird/skeleton.json");
         birdAnimationState = new AnimationState(new AnimationStateData(birdSkeleton.getData()));
-
+        // healtbar
         enemyGreenHealthbarBG = new Sprite(loadTexture("enemies/healthbar-green.png"));
         enemyRedHealthbarBG = new Sprite(loadTexture("enemies/healthbar-red.png"));
+        // Tower
+        lasetTowerSleleton = loadSkeleton("towers/lvl1/skeleton.atlas","towers/lvl1/skeleton.json");
+        lasetTowerAnimationState = new AnimationState(new AnimationStateData(lasetTowerSleleton.getData()));
 
         Cursor slickArrow = Gdx.graphics.newCursor(new Pixmap(Gdx.files.getFileHandle("slick_arrow-arrow.png", Files.FileType.Internal)), 0, 0);
         Gdx.graphics.setCursor(slickArrow);

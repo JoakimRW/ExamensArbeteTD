@@ -50,7 +50,7 @@ public class HealthSystem extends EntitySystem {
     	spriteBg.setPosition(pos.x, pos.y);
     	sprite.setSize(ratio * healthComp.health , healthbarHeight);
     	// 100 %
-    	if(healthComp.health <= 1 * healthComp.maxHealth) sprite.setColor(Color.GREEN);
+    	if(healthComp.health <= healthComp.maxHealth) sprite.setColor(Color.GREEN);
     	// 75 %
     	if(healthComp.health <= 0.75 * healthComp.maxHealth) sprite.setColor(Color.YELLOW);
     	// 50%
@@ -58,10 +58,10 @@ public class HealthSystem extends EntitySystem {
     	// 25%
     	if(healthComp.health <= 0.25 * healthComp.maxHealth) sprite.setColor(Color.RED);
     	
-    	if(healthComp.health != healthComp.maxHealth){
+    	//if(healthComp.health != healthComp.maxHealth){
         	spriteBg.draw(batch);
         	sprite.draw(batch);
-    	}
+    	//}
     }
     
     private void checkEntityHealth(Entity entity , HealthComponent hpComp){

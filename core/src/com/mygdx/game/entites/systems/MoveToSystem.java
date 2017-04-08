@@ -34,7 +34,7 @@ public class MoveToSystem extends IteratingSystem {
     }
 
     private void moveTo(PositionComponent pos , DirectionComponent dir, float deltaTime , PathComponent pathComp , VelocityComponent velocityComponent){
-        final float tolerance = 1.5f;
+        final float tolerance = 4f;
         final float speed = velocityComponent.speed;
         // a xy point in the path array that the entity will go to
         final int pointX = MathUtils.round(pathComp.path.get(pathComp.path.size() - pathComp.index ).getCordinates().x) << 5;
@@ -60,7 +60,7 @@ public class MoveToSystem extends IteratingSystem {
         }else {
             dir.yAxis = 0;
         }
-        pos.y += (speed * dir.yAxis) * deltaTime;
+
 
         if(positionX  < pointX){
             dir.xAxis = 1;
@@ -70,6 +70,8 @@ public class MoveToSystem extends IteratingSystem {
         }else {
             dir.xAxis = 0;
         }
-        pos.x +=  (dir.xAxis * speed) * deltaTime ;
+
+        pos.y += (dir.yAxis * speed) * deltaTime;
+        pos.x +=  (dir.xAxis * speed) * deltaTime;
     }
 }

@@ -28,22 +28,24 @@ public abstract class LevelManager {
     public static TiledMap tiledMap;
     public static Integer tileWidth;
     public static Integer tileHeight;
-    public static TiledMapTileLayer tileLayer;
+    public static TiledMapTileLayer collisionLayer;
+    public static TiledMapTileLayer floorLayer;
     public static Tile[][] tiles;
     private static ArrayList<Vector2> spawnLocations = new ArrayList<>();
     private static ArrayList<Vector2> endLocactions = new ArrayList<>();
     private static  ShapeRenderer shapeRenderer = new ShapeRenderer();
     public static Tile tileSpawn;
     public static Tile tileEnd;
-    
-    /** 
+
+    /**
      * Loads the level and inits all the public variables for this class
      * @param filePath The path of where the file is , root is in your assets folder
      * **/
     public static void loadLevel(String filePath) {
         tiledMap = new TmxMapLoader().load(filePath);
         MapProperties properties = tiledMap.getProperties();
-        tileLayer = (TiledMapTileLayer) tiledMap.getLayers().get("collision");
+        collisionLayer = (TiledMapTileLayer) tiledMap.getLayers().get("collision");
+        floorLayer = (TiledMapTileLayer) tiledMap.getLayers().get("floor");
         MapLayer spawnLocLayer = tiledMap.getLayers().get("spawnLocations");
         MapLayer endLocLayer = tiledMap.getLayers().get("endLocations");
 
@@ -67,7 +69,7 @@ public abstract class LevelManager {
         mapHeightInTiles = properties.get("height", Integer.class);
         tileWidth = properties.get("tilewidth", Integer.class);
         tileHeight = properties.get("tileheight", Integer.class);
-        System.out.println(Gdx.graphics.getWidth() + " :: " + Gdx.graphics.getHeight());
+
         mapPixelWidth = mapWidthInTiles * tileWidth;
         mapPixelHeight = mapHeightInTiles * tileHeight;
         tiles = new Tile[mapWidthInTiles][mapHeightInTiles];
@@ -81,20 +83,22 @@ public abstract class LevelManager {
     private static boolean checkIfWall(int x, int y) {
         TiledMapTile tile = null;
         try {
-            tile = tileLayer.getCell(x, y).getTile();
+            tile = collisionLayer.getCell(x, y).getTile();
         }catch (NullPointerException e){
-            System.out.println(e + " Tile null at : x:_" + x + "   y:_" + y);
+            System.out.println(e);
         }
+
+
         if(tile != null){
             boolean iswall = tile.getProperties().get("Wall",Boolean.class);
             if (iswall) return true;
         }
         return false;
     }
-    
-    /** 
+
+    /**
      * You need to divide by the x / tile width and y / tile height if you have pixel cords
-     * This will only work with Tile coordinates 
+     * This will only work with Tile coordinates
      * @param x The x position of the Tile
      * @param y The y position of the Tile
      * @return if the coordinates are not out of bounds : returns Tile object , otherwise returns null
@@ -107,10 +111,28 @@ public abstract class LevelManager {
     private static void createTileList() {
         for (int x = 0; x < tiles.length; x++) {
             for (int y = 0; y < tiles[0].length; y++) {
+
+
                 if (checkIfWall(  x  ,  y )) {
-                    tiles[x][y] = new Tile(new Vector2(x * tileWidth , y * tileHeight), tileWidth , tileHeight , TileType.WALL);
+                    TiledMapTileLayer.Cell cell = collisionLayer.getCell(x, y);
+                    Tile tile = new Tile();
+                    if( cell != null){tile.setCell(cell);}
+                    tile.setCords(new Vector2(x * tileWidth , y * tileHeight));
+                    tile.setTileCenter(new Vector2((x * tileWidth) + tileWidth / 2 ,( y * tileHeight) + tileHeight / 2));
+                    tile.setTileWidth(tileWidth);
+                    tile.setTileHeight(tileHeight);
+                    tile.setType(TileType.WALL);
+                    tiles[x][y] = tile;
                 } else {
-                    tiles[x][y] = new Tile(new Vector2(x * tileWidth , y * tileHeight), tileWidth , tileHeight , TileType.FLOOR);
+                    TiledMapTileLayer.Cell cell = floorLayer.getCell(x, y);
+                    Tile tile = new Tile();
+                    if( cell != null){tile.setCell(cell);}
+                    tile.setCords(new Vector2(x * tileWidth , y * tileHeight));
+                    tile.setTileCenter(new Vector2((x * tileWidth) + tileWidth / 2 ,( y * tileHeight) + tileHeight / 2));
+                    tile.setTileWidth(tileWidth);
+                    tile.setTileHeight(tileHeight);
+                    tile.setType(TileType.FLOOR);
+                    tiles[x][y] = tile;
                 }
             }
         }

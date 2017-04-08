@@ -57,35 +57,32 @@ public class EnemyFactory{
             Entity entity = new Entity();
             // components
             PathComponent pathComp = new PathComponent();
-            StateComponent state = null;
             SkeletonComponent skeletonComp = null;
             ArrayList<Node> path = null;
             switch(enemyType){
             	case BLOODWORM:
-                    state = new StateComponent();
             		path =  PathFinder.findPath(
             		        new Vector2(LevelManager.tileSpawn.getTileCenter().x / 32, LevelManager.tileSpawn.getTileCenter().y / 32)
                             , new Vector2(LevelManager.tileEnd.getCords().x / 32, LevelManager.tileEnd.getCords().y / 32)
                             , false
                             , false);
             		skeletonComp = new SkeletonComponent(Assets.bloodWormSkeleton);
-            		state.animationState.setData(Assets.bloodWormAnimationState.getData());
+            		skeletonComp.animationState.setData(Assets.bloodWormAnimationState.getData());
             		skeletonComp.skeleton.setPosition(LevelManager.tileSpawn.getTileCenter().x,LevelManager.tileSpawn.getTileCenter().y);
-                    state.animationState.setAnimation(0 ,"MOVING",true);
+                    skeletonComp.animationState.setAnimation(0 ,"MOVING",true);
                     pathComp.path = path;
             		if (path == null) return;
             		break;
             	case BIRD:
-                    state = new StateComponent();
                     path =  PathFinder.findPath(
                             new Vector2(LevelManager.tileSpawn.getTileCenter().x / 32, LevelManager.tileSpawn.getTileCenter().y / 32)
                             , new Vector2(LevelManager.tileEnd.getCords().x / 32, LevelManager.tileEnd.getCords().y / 32)
                             , true
                             , true);
                     skeletonComp = new SkeletonComponent(Assets.birdSkeleton);
-                    state.animationState.setData(Assets.birdAnimationState.getData());
+                    skeletonComp.animationState.setData(Assets.birdAnimationState.getData());
                     skeletonComp.skeleton.setPosition(LevelManager.tileSpawn.getTileCenter().x,LevelManager.tileSpawn.getTileCenter().y);
-                    state.animationState.setAnimation(0 ,"MOVING",true);
+                    skeletonComp.animationState.setAnimation(0 ,"MOVING",true);
                     pathComp.path = path;
                     if (path == null) return;
             		break;
@@ -99,7 +96,6 @@ public class EnemyFactory{
             	.add(skeletonComp)
             	.add(new HealthComponent(health))
 	            .add(new DirectionComponent())
-	            .add(state)
 	            .add(new RenderableComponent())
 	            .add(pathComp);
             engine.addEntity(entity);
