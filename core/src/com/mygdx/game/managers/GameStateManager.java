@@ -1,8 +1,10 @@
 package com.mygdx.game.managers;
 
+import java.util.List;
 import java.util.Stack;
 
 import com.badlogic.ashley.core.Engine;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.mygdx.game.Game;
 import com.mygdx.game.states.GameState;
 import com.mygdx.game.states.MainMenuState;
@@ -14,6 +16,7 @@ public class GameStateManager {
 	// Application Reference
 	private final Game game;
 	Engine ashleyEngine;
+	private List<OrthographicCamera> _cameraList;
 
 	private Stack<GameState> states;
 
@@ -61,7 +64,7 @@ public class GameStateManager {
 	private GameState getState(State state) {
 		switch (state) {
 		case PLAY:
-			return new PlayState(this,ashleyEngine);
+			return new PlayState(this, ashleyEngine);
 		case SPLASH:
 			return new SplashState(this);
 		case MAINMENU:
@@ -71,6 +74,14 @@ public class GameStateManager {
 
 		}
 		return null;
+	}
+
+	public List<OrthographicCamera> get_cameraList() {
+		return _cameraList;
+	}
+
+	public void removeCamera(OrthographicCamera camera) {
+		_cameraList.remove(camera);
 	}
 
 }

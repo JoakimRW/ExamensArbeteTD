@@ -22,9 +22,10 @@ public class PlayState extends GameState {
 		super(gsm);
 		LevelManager.loadLevel("maps/simple-map.tmx");
 		ashleyEngine.update(Gdx.graphics.getDeltaTime());
+
 		_gameStage = new GameStage(gsm, ashleyEngine);
-		_uIStage = new UiStage(gsm, ashleyEngine);
-		_playStateHelper = new PlayStateHelper(_uIStage,_gameStage,_dragAndDrop,ashleyEngine);
+		_uIStage = new UiStage(gsm);
+		_playStateHelper = new PlayStateHelper(batch, _gameStage, _uIStage, _dragAndDrop, ashleyEngine);
 
 		Table table = _uIStage.getTable();
 		_playStateHelper.UiStageControl(table);
@@ -37,14 +38,14 @@ public class PlayState extends GameState {
 
 	@Override
 	public void update(float delta) {
-		batch.setProjectionMatrix(game.getCamera().combined);
+		// batch.setProjectionMatrix(game.getCamera().combined);
 		_gameStage.act();
 		_uIStage.act();
 	}
 
 	@Override
 	public void render() {
-		batch.setProjectionMatrix(game.getCamera().combined);
+		// batch.setProjectionMatrix(game.getCamera().combined);
 		_gameStage.draw();
 		_uIStage.draw();
 	}

@@ -2,13 +2,12 @@ package com.mygdx.game.states;
 
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -16,25 +15,77 @@ import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Payload;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Source;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Target;
-import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.utils.SnapshotArray;
+import com.mygdx.game.actors.DropListener;
 import com.mygdx.game.entites.towers.LaserTurret;
-import com.mygdx.game.managers.LevelManager;
 import com.mygdx.game.stages.GameStage;
 import com.mygdx.game.stages.UiStage;
+import com.mygdx.game.utils.Tile;
 
 public final class PlayStateHelper {
 
-	DragAndDrop _dragAndDrop;
-	Engine _ashleyEngine;
-	UiStage _uIStage;
-	GameStage _gameStage;
+	private GameStage _gameStage;
+	private UiStage _uIStage;
+	private DragAndDrop _dragAndDrop;
+	private SpriteBatch _batch;
 
-	public PlayStateHelper(UiStage uIStage, GameStage gameStage, DragAndDrop dragAndDrop, Engine ashleyEngine) {
-		_uIStage = uIStage;
+	public PlayStateHelper(SpriteBatch batch, GameStage gameStage, UiStage uIStage, DragAndDrop dragAndDrop,
+			Engine ashleyEngine) {
 		_gameStage = gameStage;
+		_uIStage = uIStage;
 		_dragAndDrop = dragAndDrop;
-		_ashleyEngine = ashleyEngine;
+		_batch = batch;
+		createBasicTower();
+	}
+
+	private void addManyTargets(Tile[][]... tiles) {
+
+		for (Tile[][] twodtilearray : tiles) {
+			for (Tile[] tileArray : twodtilearray) {
+				for (Tile actor : tileArray) {
+					_uIStage.addActor(actor);
+					System.out.println(actor.getCords());
+				}
+			}
+		}
+
+	}
+
+	private void initDrag() {
+		Image turretActor = _uIStage.getTurretActor();
+
+		Skin turretSkin = _uIStage.getTurretSkin();
+		_dragAndDrop.addSource(new Source(turretActor) {
+
+			public Payload dragStart(InputEvent event, float x, float y, int pointer) {
+				System.out.println("Drag Started");
+				// _gameStage.addActor(turretActor);
+				event.setStage(_gameStage);
+				Payload payload = new Payload();
+				turretActor.toFront();
+				payload.setObject(turretActor);
+				payload.setInvalidDragActor(turretActor);
+				payload.setValidDragActor(turretActor);
+				payload.setDragActor(new Image(turretSkin.getDrawable("turret1")));
+
+				// Label validLabel = new Label("turret1", skin);
+				// payload.setValidDragActor(validLabel);
+				//
+				// Label invalidLabel = new Label("turret1", skin);
+				// payload.setInvalidDragActor(invalidLabel);
+
+				return payload;
+			}
+
+			@Override
+			public void dragStop(InputEvent event, float x, float y, int pointer, Payload payload, Target target) {
+				event.setStage(_gameStage);
+				System.out.println("STOP target = " + target);
+				super.dragStop(event, x, y, pointer, payload, target);
+
+			}
+
+		});
 	}
 
 	public void UiStageControl(Table table) {
@@ -46,101 +97,48 @@ public final class PlayStateHelper {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
 
-					createBasicTower();
+					// createBasicTower();
 				};
 			});
 		}
 		;
+
 	}
 
 	private void createBasicTower() {
-
-		final Skin skin = new Skin();
-
-		skin.add("default", new LabelStyle(new BitmapFont(), Color.WHITE));
-
-		skin.add("turret", ((LaserTurret) _ashleyEngine.getEntities().first()).getTurretTexture());
-		Image dragImage = new Image(skin, "turret");
-		_uIStage.addActor(dragImage);
-		
-		dragImage.setPosition(Gdx.input.getX(), Gdx.input.getY());
-		_dragAndDrop.addSource(new Source(dragImage) {
-			public Payload dragStart(InputEvent event, float x, float y, int pointer) {
-
-				Payload payload = new Payload();
-				payload.setObject("turret");
-
-				payload.setDragActor(new Image(skin.getDrawable("turret")));
-
-				Label validLabel = new Label("turret", skin);
-				payload.setValidDragActor(validLabel);
-
-				Label invalidLabel = new Label("turret", skin);
-				payload.setInvalidDragActor(invalidLabel);
-
-				return payload;
-			}
-		});
-		
-		_dragAndDrop.addTarget(new Target(LevelManager.getTile(Gdx.input.getX()/32, Gdx.input.getY()/32)){
+		TextureRegion turretImage = new TextureRegion(new Texture(Gdx.files.internal("towers/lvl1/turret.png")));
+		LaserTurret turret = new LaserTurret(turretImage);
+		turret.addDropListener(new DropListener() {
 			@Override
-			public boolean drag(Source source, Payload payload, float x, float y, int pointer) {
-				getActor().setColor(Color.GREEN);
-				return true;
-			}
-			@Override
-			public void drop(Source source, Payload payload, float x, float y, int pointer) {
-				getActor().getStage().addActor(source.getActor());
-				source.getActor().setPosition(x, y);
-				System.out.println("Dropped!");
-			}
-			@Override
-			public void reset(Source source, Payload payload) {
-				// TODO Auto-generated method stub
-				super.reset(source, payload);
-			}
-		});
-
-		_dragAndDrop.addTarget(new Target(dragImage) {
-			public boolean drag(Source source, Payload payload, float x, float y, int pointer) {
-				
-				
-				getActor().setColor(Color.GREEN);
-				return true;
-			}
-
-			public void reset(Source source, Payload payload) {
-				getActor().setColor(Color.WHITE);
-			}
-
-			public void drop(Source source, Payload payload, float x, float y, int pointer) {
-
-				Texture turretTexture = ((LaserTurret) (_ashleyEngine.getEntities().first())).getTurretTexture();
-				Image turretImage = new Image(turretTexture);
-				_gameStage.addActor(turretImage);
-				turretImage.setPosition(x, y);
-				System.out.println("Accepted: " + payload.getObject() + " " + x + ", " + y);
+			public void drop(Actor actor) {
+				System.out.println("TEST!");
+				createNewTurretOnGameStage();
+				// actor.toFront();
+				// actor.setPosition(Gdx.input.getX(), Gdx.input.getY());
+				// actor.setOrigin(Gdx.input.getX(), Gdx.input.getY());
+				// actor.stageToLocalCoordinates(new Vector2(Gdx.input.getX(),
+				// Gdx.input.getY()));
+				// actor.screenToLocalCoordinates(new Vector2(Gdx.input.getX(),
+				// Gdx.input.getY()));
+				// actor.setVisible(true);
+				// actor.setX(Gdx.input.getX());
+				// actor.setY(Gdx.input.getY());
+				// Vector2 localToParentCoordinates =
+				// actor.localToParentCoordinates(actor.screenToLocalCoordinates(new
+				// Vector2(Gdx.input.getX(), Gdx.input.getY())));
+				// actor.setPosition(localToParentCoordinates.x,
+				// localToParentCoordinates.y);
 			}
 		});
 
-		_dragAndDrop.addTarget(new Target(dragImage) {
-			public boolean drag(Source source, Payload payload, float x, float y, int pointer) {
-				getActor().setColor(Color.RED);
-				return false;
-			}
+		_uIStage.addActor(turret);
+		// _ashleyEngine.addEntity(turret);
+	}
 
-			public void reset(Source source, Payload payload) {
-				getActor().setColor(Color.WHITE);
-			}
-
-			public void drop(Source source, Payload payload, float x, float y, int pointer) {
-				Texture turretTexture = ((LaserTurret) (_ashleyEngine.getEntities().first())).getTurretTexture();
-				Image turretImage = new Image(turretTexture);
-				_gameStage.addActor(turretImage);
-				turretImage.setPosition(x, y);
-			}
-		});
-		
+	public void createNewTurretOnGameStage() {
+		TextureRegion region = new TextureRegion(new Texture(Gdx.files.internal("towers/lvl1/turret.png")));
+		LaserTurret turret = new LaserTurret(region);
+		_gameStage.addActor(turret);
 		
 	}
 

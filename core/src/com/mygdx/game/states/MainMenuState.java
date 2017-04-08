@@ -6,15 +6,16 @@ import com.mygdx.game.managers.GameStateManager;
 import com.mygdx.game.stages.MainMenuStage;
 
 public class MainMenuState extends GameState {
-	
-	MainMenuStage stage;
+
+	MainMenuStage _stage;
 
 	public MainMenuState(GameStateManager gsm) {
 		super(gsm);
-		stage = new MainMenuStage(gsm);
-		Gdx.input.setInputProcessor(stage);
+
+		_stage = new MainMenuStage(gsm);
+		Gdx.input.setInputProcessor(_stage);
 	}
-	
+
 	@Override
 	public void update(float delta) {
 		// TODO Auto-generated method stub
@@ -23,9 +24,9 @@ public class MainMenuState extends GameState {
 
 	@Override
 	public void render() {
-		
+
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		stage.draw();
+		_stage.draw();
 	}
 
 	@Override
