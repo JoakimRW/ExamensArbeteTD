@@ -20,8 +20,9 @@ public class Assets {
 
     public static Skeleton birdSkeleton;
     public static AnimationState birdAnimationState;
-    private static Skeleton lasetTowerSleleton;
-    private static AnimationState lasetTowerAnimationState;
+
+    public static Skeleton lasetTowerSleleton;
+    public static AnimationState lasetTowerAnimationState;
 
     private static Texture loadTexture(String file){
         return new Texture(Gdx.files.internal(file));
