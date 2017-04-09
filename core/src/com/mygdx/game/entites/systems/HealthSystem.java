@@ -46,11 +46,12 @@ public class HealthSystem extends EntitySystem {
     	float ratio = healthbarWidth / healthComp.maxHealth;
     	Sprite spriteBg = Assets.enemyRedHealthbarBG;
     	Sprite sprite  = Assets.enemyGreenHealthbarBG;
-    	sprite.setPosition(pos.x, pos.y);
-    	spriteBg.setPosition(pos.x, pos.y);
+    	// todo center hp bar
+    	sprite.setPosition(pos.position.x , pos.position.y);
+    	spriteBg.setPosition(pos.position.x , pos.position.y);
     	sprite.setSize(ratio * healthComp.health , healthbarHeight);
     	// 100 %
-    	if(healthComp.health <= healthComp.maxHealth) sprite.setColor(Color.GREEN);
+    	if(healthComp.health <= healthComp.maxHealth) sprite.setColor(0,0.75f,0,1f);
     	// 75 %
     	if(healthComp.health <= 0.75 * healthComp.maxHealth) sprite.setColor(Color.YELLOW);
     	// 50%

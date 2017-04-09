@@ -89,7 +89,7 @@ public class EnemyFactory{
             	default:
             	    break;
             }
-            PositionComponent pos = new PositionComponent(path.get(path.size()-1).getCordinates().x * 32 , path.get(path.size()-1).getCordinates().y * 32 );
+            PositionComponent pos = new PositionComponent(new Vector2(LevelManager.tileSpawn.getTileCenter().x  , LevelManager.tileSpawn.getTileCenter().y ));
             // add components
             entity.add(pos)
             	.add(new VelocityComponent(speed))

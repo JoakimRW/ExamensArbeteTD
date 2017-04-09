@@ -3,24 +3,35 @@ package com.mygdx.game.entites.systems;
 import com.badlogic.ashley.core.*;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entites.entitiycomponents.*;
+import com.mygdx.game.managers.LevelManager;
 import com.mygdx.game.stages.GameStage;
 
 
+
 public class MoveToSystem extends IteratingSystem {
-    float time = 0;
+
+    private ComponentMapper<PositionComponent> pm;
+    private ComponentMapper<VelocityComponent> vm;
+    private ComponentMapper<DirectionComponent> dm;
+    private ComponentMapper<PathComponent> pam;
+
     public MoveToSystem(){
         super(Family.all(PositionComponent.class , VelocityComponent.class , DirectionComponent.class , PathComponent.class).get());
+        pm = ComponentMapper.getFor(PositionComponent.class);
+        vm = ComponentMapper.getFor(VelocityComponent.class);
+        dm = ComponentMapper.getFor(DirectionComponent.class);
+        pam = ComponentMapper.getFor(PathComponent.class);
     }
 
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        time += deltaTime;
-        PositionComponent posComp = entity.getComponent(PositionComponent.class);
-        DirectionComponent dirComp = entity.getComponent(DirectionComponent.class);
-        PathComponent pathComp = entity.getComponent(PathComponent.class);
-        VelocityComponent velocityComp = entity.getComponent(VelocityComponent.class);
+        PositionComponent posComp = pm.get(entity);
+        DirectionComponent dirComp = dm.get(entity);
+        PathComponent pathComp = pam.get(entity);
+        VelocityComponent velocityComp = vm.get(entity);
         if (pathComp.path != null){
             if(pathComp.path.size() >= pathComp.index){
                 moveTo(posComp , dirComp , deltaTime , pathComp , velocityComp);
@@ -33,45 +44,46 @@ public class MoveToSystem extends IteratingSystem {
 
     }
 
-    private void moveTo(PositionComponent pos , DirectionComponent dir, float deltaTime , PathComponent pathComp , VelocityComponent velocityComponent){
-        final float tolerance = 4f;
-        final float speed = velocityComponent.speed;
+    private void moveTo(PositionComponent pos , DirectionComponent dir, float deltaTime , PathComponent pathComp , VelocityComponent vel){
         // a xy point in the path array that the entity will go to
-        final int pointX = MathUtils.round(pathComp.path.get(pathComp.path.size() - pathComp.index ).getCordinates().x) << 5;
-        final int pointY = MathUtils.round(pathComp.path.get(pathComp.path.size() - pathComp.index ).getCordinates().y) << 5;
-        // position of entity
-        final int positionX = MathUtils.round(pos.x);
-        final int positionY = MathUtils.round(pos.y);
-        // calculate direction
-        double difX = pointX - pos.x;
-        double difY = pointY - pos.y;
+        float pointX = pathComp.path.get(pathComp.path.size() - pathComp.index ).getCordinates().x * 32;
+        float pointY = pathComp.path.get(pathComp.path.size() - pathComp.index ).getCordinates().y * 32;
+        double difX = pointX - pos.position.x;
+        double difY = pointY - pos.position.y;
+        float distance = Vector2.dst(pos.position.x , pos.position.y , pointX , pointY);
         // set direction
-        float rotAng = (float)Math.toDegrees(Math.atan2(difX,-difY));
-        dir.angle = MathUtils.lerpAngleDeg(dir.angle,rotAng,.1f);
+        float sprAng = (float)Math.toDegrees(Math.atan2(difX,-difY));
+        float rotAng = (float)Math.toDegrees(Math.atan2(difY,difX));
+        dir.spriteAngle = sprAng;
+        dir.dirAngle = rotAng;
+        vel.velocity.x = approach(vel.maxSpeed,vel.velocity.x,deltaTime );
+        vel.velocity.y = approach(vel.maxSpeed,vel.velocity.y,deltaTime);
         // check if entity has the same cords that the point x and y has , if it has go to next point
-        if (MathUtils.isEqual(positionX , pointX , tolerance) && MathUtils.isEqual(positionY , pointY , tolerance)){
+        if (distance < 2)
             pathComp.index++;
-        }
-        if(positionY < pointY){
-            dir.yAxis = 1;
-        }
-        else if(positionY > pointY){
-            dir.yAxis = -1;
-        }else {
-            dir.yAxis = 0;
-        }
+        float angleGoalX = (float)Math.cos(Math.toRadians(dir.dirAngle));
+        float angleGoalY = (float)Math.sin(Math.toRadians(dir.dirAngle));
 
+        dir.direction.x = angleGoalX;
+        dir.direction.y = angleGoalY;
 
-        if(positionX  < pointX){
-            dir.xAxis = 1;
-        }
-        else if(positionX  > pointX){
-            dir.xAxis = -1;
-        }else {
-            dir.xAxis = 0;
-        }
+        if (dir.direction.len() > 0)
+            dir.direction = dir.direction.nor();
+        vel.velocity.x = dir.direction.x * vel.maxSpeed;
+        vel.velocity.y = dir.direction.y * vel.maxSpeed;
 
-        pos.y += (dir.yAxis * speed) * deltaTime;
-        pos.x +=  (dir.xAxis * speed) * deltaTime;
+        pos.position.x += vel.velocity.x * deltaTime;
+        pos.position.y += vel.velocity.y * deltaTime;
+
     }
+
+    private float approach(float goal , float current , float deltaTime){
+        float diffrence = goal - current;
+        if(diffrence > deltaTime)
+            return current + deltaTime;
+        if(diffrence < deltaTime)
+            return current - deltaTime;
+        return goal;
+    }
+
 }

@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.esotericsoftware.spine.SkeletonRenderer;
 import com.mygdx.game.entites.entitiycomponents.*;
 
@@ -25,13 +26,13 @@ public class RenderSystem extends IteratingSystem{
     protected void processEntity(Entity entity, float deltaTime) {
         final int offsetX = 16;
         final int offsetY = 16;
-        PositionComponent posComp = entity.getComponent(PositionComponent.class);
+        PositionComponent pos = entity.getComponent(PositionComponent.class);
         DirectionComponent dirComp = entity.getComponent(DirectionComponent.class);
         SkeletonComponent skeletonComponent = entity.getComponent(SkeletonComponent.class);
         skeletonComponent.animationState.update(deltaTime);
         skeletonComponent.animationState.apply(skeletonComponent.skeleton);
-        skeletonComponent.skeleton.setPosition(posComp.x + offsetX , posComp.y + offsetY);
-        skeletonComponent.skeleton.getRootBone().setRotation(dirComp.angle + 1 * deltaTime);
+        skeletonComponent.skeleton.setPosition(pos.position.x + offsetX, pos.position.y + offsetY);
+        skeletonComponent.skeleton.getRootBone().setRotation(dirComp.spriteAngle);
         skeletonComponent.skeleton.updateWorldTransform();
         renderer.draw(batch,skeletonComponent.skeleton);
     }
