@@ -1,6 +1,6 @@
 package com.mygdx.game.Factory;
 
-public enum EntityType {
+public enum EnemyType {
 	BLOODWORM,
 	BIRD
 }

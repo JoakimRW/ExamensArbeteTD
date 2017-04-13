@@ -4,8 +4,8 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import com.mygdx.game.Factory.EnemyType;
 import com.mygdx.game.Factory.EntityFactory;
-import com.mygdx.game.Factory.EntityType;
 import com.mygdx.game.stages.GameStage;
 
 public class WaveTimeManager {
@@ -32,8 +32,8 @@ public class WaveTimeManager {
 				System.out.println(currentWaveTime);
 			}
 			if(currentWaveTime <= 0){
-				final int rand = new Random().nextInt(EntityType.values().length);
-				EntityType enemyType = EntityType.values()[rand];
+				final int rand = new Random().nextInt(EnemyType.values().length);
+                EnemyType enemyType = EnemyType.values()[rand];
                 System.out.println(enemyType);
                 spawnEnemies( enemyType , 500 , 10);
 				wave++;
@@ -47,16 +47,16 @@ public class WaveTimeManager {
 	 * This method initiates a timer that schedules tasks at a fixed rate and spawns a enemy
 	 * @ The time gap in milliseconds between enemy spawns during a wave
 	 * **/
-	public void spawnEnemies(EntityType enemyType , long delayInSec , int amount){
+	public void spawnEnemies(EnemyType enemyType , long delayInSec , int amount){
 		Timer timer = new Timer();
 		timer.scheduleAtFixedRate(new Enemy(enemyType , amount ) , delayInSec  , 500 );
 	}
 
 	private class Enemy extends TimerTask {
 		int amount;
-		private EntityType enemyType;
+		private EnemyType enemyType;
 
-		private Enemy(EntityType enemyType , int amount ){
+		private Enemy(EnemyType enemyType , int amount ){
 			this.amount = amount;
 			this.enemyType = enemyType;
 		}
