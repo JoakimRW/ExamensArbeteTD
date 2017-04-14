@@ -5,12 +5,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.managers.EntityManager;
-import com.mygdx.game.managers.GameStateManager;
 import com.mygdx.game.managers.LevelManager;
 import com.mygdx.game.utils.Assets;
 
@@ -20,20 +20,21 @@ public class GameStage extends Stage{
 	public static boolean GAME_OVER = false;
 	public static boolean START_GAME = false;
 
-	private final SpriteBatch batch;
-	private final EntityManager entityManager;
-	private GameStateManager gsm;
+	private final SpriteBatch _batch;
+	private final EntityManager _entityManager;
 	private OrthogonalTiledMapRenderer renderer;
 	private int xDir = 0;
 	private int yDir = 0;
+	
+	private OrthographicCamera _camera;
 
-	public GameStage(GameStateManager gsm, Engine ashleyEngine) {
+	public GameStage(Engine ashleyEngine,EntityManager entityManager, SpriteBatch batch) {
 		Assets.loadGameStageAssets();
-		this.gsm = gsm;
-		LevelManager.loadLevel("maps/simple-map.tmx");
+		
 		renderer = new OrthogonalTiledMapRenderer(LevelManager.tiledMap);
-		batch = new SpriteBatch();
-		entityManager = new EntityManager(ashleyEngine, batch);
+		_batch = batch;
+		_entityManager = entityManager;
+		_camera = new OrthographicCamera();
 		System.out.println("*************** To Start the game , Press Enter! ***************");
 	}
 
@@ -41,12 +42,12 @@ public class GameStage extends Stage{
 	public void draw() {
 		Gdx.gl.glClearColor(.25f, .25f, .25f, 1f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		renderer.setView(gsm.game().getCamera());
+		renderer.setView(_camera);
 		renderer.render();
-		batch.begin();
-		entityManager.update(Gdx.graphics.getDeltaTime());
-		batch.setProjectionMatrix(gsm.game().getCamera().combined);
-		batch.end();
+		_batch.begin();
+		_entityManager.update(Gdx.graphics.getDeltaTime());
+		_batch.setProjectionMatrix(_camera.combined);
+		_batch.end();
 	}
 
 	@Override
@@ -67,7 +68,7 @@ public class GameStage extends Stage{
 	public void dispose() {
 		renderer.dispose();
 		LevelManager.tiledMap.dispose();
-		batch.dispose();
+		_batch.dispose();
 	}
 
 	private void moveCamera() {
@@ -86,22 +87,22 @@ public class GameStage extends Stage{
 			xDir = 0;
 		}
 		final float cameraSpeed = 10f;
-		gsm.game().getCamera().viewportWidth = Gdx.graphics.getWidth() / 3;
-		gsm.game().getCamera().viewportHeight = Gdx.graphics.getHeight() / 3;
-		float cameraPosX = gsm.game().getCamera().position.x;
-		float cameraPosY = gsm.game().getCamera().position.y;
-		gsm.game().getCamera().position.set((int) cameraPosX + xDir * cameraSpeed,
+		_camera.viewportWidth = Gdx.graphics.getWidth() / 3;
+		_camera.viewportHeight = Gdx.graphics.getHeight() / 3;
+		float cameraPosX = _camera.position.x;
+		float cameraPosY = _camera.position.y;
+		_camera.position.set((int) cameraPosX + xDir * cameraSpeed,
 				(int) cameraPosY + yDir * cameraSpeed, 0);
-		gsm.game().getCamera().update();
-		float startX = gsm.game().getCamera().viewportWidth / 2;
-		float startY = gsm.game().getCamera().viewportHeight / 2;
+		_camera.update();
+		float startX = _camera.viewportWidth / 2;
+		float startY = _camera.viewportHeight / 2;
 		float width = startX * 2;
 		float height = startY * 2;
-		setCameraBoundary(gsm.game().getCamera(), startX, startY, LevelManager.mapPixelWidth - width,
+		setCameraBoundary(_camera, startX, startY, LevelManager.mapPixelWidth - width,
 				LevelManager.mapPixelHeight - height);
 	}
 
-	private void setCameraBoundary(Camera camera, float startX, float startY, float width, float height) {
+	private static void setCameraBoundary(Camera camera, float startX, float startY, float width, float height) {
 		Vector3 position = camera.position;
 		if (position.x < startX) {
 			position.x = startX;

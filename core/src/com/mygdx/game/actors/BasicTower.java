@@ -10,13 +10,11 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 
 public abstract class BasicTower extends Actor {
-	
+
 	private BasicTower _actor = this;
 	private TextureRegion _region;
-	// private Boolean _dragging = false;
-	private float _lastX;
-	private float _lastY;
-	List<DropListener> _listeners = new ArrayList<>();
+	List<DropListener> _dropListeners = new ArrayList<>();
+	private List<SelectListener> _selectListeners;
 
 	public BasicTower(TextureRegion region) {
 		_region = region;
@@ -24,63 +22,65 @@ public abstract class BasicTower extends Actor {
 		setHeight(_region.getRegionHeight());
 
 		addListener(new InputListener() {
-			
-			
+			private boolean _inPlacementMode = false;
 
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				if (pointer != 0)
 					return false;
 
-				_lastX = x;
-				_lastY = y;
-				return true;
-			}
+				if (_inPlacementMode) {
+					for (DropListener listener : _dropListeners) {
+						listener.drop(getActor(), x, y, event);
+					}
+					_inPlacementMode = false;
+					return true;
+				}
+				if (!_inPlacementMode) {
 
-			@Override
-			public void touchDragged(InputEvent event, float x, float y, int pointer) {
-				if (pointer != 0)
-					return;
-				moveBy(x - _lastX, y - _lastY);
+					for (SelectListener selectListener : _selectListeners) {
+						selectListener.select(getActor(),event);
+					}
 
-				_lastX = x - (x - _lastX);
-				_lastY = y - (y - _lastY);
+					_inPlacementMode = true;
+					return true;
+				}
+				return false;
 			}
 
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				
 				if (pointer != 0) {
 					return;
 				}
-				
-				System.out.println(_listeners);
-				for(DropListener listener : _listeners){
-					
-					listener.drop(getActor());
+				if (_inPlacementMode) {
+
 				}
-				
 			}
 
 		});
 
 	}
-	
-	public BasicTower (BasicTower actor){
+
+	public BasicTower(BasicTower actor) {
 		this(actor.getTextureRegion());
 		_actor = (BasicTower) actor;
 	}
+
 	public TextureRegion getTextureRegion() {
 		return _region;
 	}
 
-	private Actor getActor(){
+	private Actor getActor() {
 		return _actor;
 	}
-	
 
 	public void addDropListener(DropListener listener) {
-		_listeners.add(listener);
+		_dropListeners.add(listener);
+	}
+
+	public void addSelectListener(SelectListener listener) {
+		_selectListeners.add(listener);
 	}
 
 	@Override
@@ -88,7 +88,11 @@ public abstract class BasicTower extends Actor {
 		batch.draw(_region, getX(), getY(), getOriginX(), getOriginY(), getWidth(), getHeight(), 1f, 1f, getRotation(),
 				true);
 	}
-	
-	
+
+	@Override
+	public void act(float delta) {
+
+		super.act(delta);
+	}
 
 }

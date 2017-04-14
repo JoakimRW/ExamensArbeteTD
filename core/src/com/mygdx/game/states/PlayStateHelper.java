@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Source;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Target;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.mygdx.game.actors.DropListener;
+import com.mygdx.game.actors.SelectListener;
 import com.mygdx.game.entites.towers.LaserTurret;
 import com.mygdx.game.stages.GameStage;
 import com.mygdx.game.stages.UiStage;
@@ -35,7 +36,7 @@ public final class PlayStateHelper {
 		_uIStage = uIStage;
 		_dragAndDrop = dragAndDrop;
 		_batch = batch;
-		createBasicTower();
+//		createBasicTower();
 	}
 
 	private void addManyTargets(Tile[][]... tiles) {
@@ -110,36 +111,33 @@ public final class PlayStateHelper {
 		LaserTurret turret = new LaserTurret(turretImage);
 		turret.addDropListener(new DropListener() {
 			@Override
-			public void drop(Actor actor) {
+			public void drop(Actor actor, float x, float y, InputEvent event) {
 				System.out.println("TEST!");
-				createNewTurretOnGameStage();
-				// actor.toFront();
-				// actor.setPosition(Gdx.input.getX(), Gdx.input.getY());
-				// actor.setOrigin(Gdx.input.getX(), Gdx.input.getY());
-				// actor.stageToLocalCoordinates(new Vector2(Gdx.input.getX(),
-				// Gdx.input.getY()));
-				// actor.screenToLocalCoordinates(new Vector2(Gdx.input.getX(),
-				// Gdx.input.getY()));
-				// actor.setVisible(true);
-				// actor.setX(Gdx.input.getX());
-				// actor.setY(Gdx.input.getY());
-				// Vector2 localToParentCoordinates =
-				// actor.localToParentCoordinates(actor.screenToLocalCoordinates(new
-				// Vector2(Gdx.input.getX(), Gdx.input.getY())));
-				// actor.setPosition(localToParentCoordinates.x,
-				// localToParentCoordinates.y);
+				createNewTurretOnGameStage(event.getStageX(), event.getStageY());
 			}
+		});
+
+		turret.addSelectListener(new SelectListener() {
+
+			@Override
+			public void select(Actor actor, InputEvent event) {
+				fireEvent(event);
+			}
+
 		});
 
 		_uIStage.addActor(turret);
 		// _ashleyEngine.addEntity(turret);
 	}
+	private void fireEvent(InputEvent event) {
+	}
 
-	public void createNewTurretOnGameStage() {
+	public void createNewTurretOnGameStage(float x, float y) {
 		TextureRegion region = new TextureRegion(new Texture(Gdx.files.internal("towers/lvl1/turret.png")));
 		LaserTurret turret = new LaserTurret(region);
 		_gameStage.addActor(turret);
-		
+		turret.setPosition(x, y);
+
 	}
 
 }

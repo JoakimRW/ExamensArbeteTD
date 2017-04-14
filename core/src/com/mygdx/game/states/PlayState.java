@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
+import com.mygdx.game.managers.EntityManager;
 import com.mygdx.game.managers.GameStateManager;
 import com.mygdx.game.managers.LevelManager;
 import com.mygdx.game.stages.GameStage;
@@ -16,16 +17,17 @@ public class PlayState extends GameState {
 	private UiStage _uIStage;
 	PlayStateHelper _playStateHelper;
 	DragAndDrop _dragAndDrop = new DragAndDrop();
-	LevelManager _levelManager;
+	EntityManager _entityManager;
 
 	public PlayState(GameStateManager gsm, Engine ashleyEngine) {
 		super(gsm);
-		LevelManager.loadLevel("maps/simple-map.tmx");
 		ashleyEngine.update(Gdx.graphics.getDeltaTime());
-
-		_gameStage = new GameStage(gsm, ashleyEngine);
-		_uIStage = new UiStage(gsm);
-		_playStateHelper = new PlayStateHelper(batch, _gameStage, _uIStage, _dragAndDrop, ashleyEngine);
+		LevelManager.loadLevel("maps/simple-map.tmx");
+		_entityManager = new EntityManager(ashleyEngine, _batch);
+		_gameStage = new GameStage(ashleyEngine,_entityManager,_batch);
+		_uIStage = new UiStage(_entityManager,_batch);
+		
+		_playStateHelper = new PlayStateHelper(_batch, _gameStage, _uIStage, _dragAndDrop, ashleyEngine);
 
 		Table table = _uIStage.getTable();
 		_playStateHelper.UiStageControl(table);

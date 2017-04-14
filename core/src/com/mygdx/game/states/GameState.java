@@ -10,13 +10,13 @@ public abstract class GameState {
 	// References
 	protected GameStateManager gsm;
 	protected Game game;
-	protected SpriteBatch batch;
+	protected SpriteBatch _batch;
 	protected OrthographicCamera camera;
 	
 	protected GameState(GameStateManager gsm) {
 		this.gsm = gsm;
 		this.game = gsm.game();
-		batch = game.getBatch();
+		_batch = game.getBatch();
 		camera = game.getCamera();
 	}
 	

@@ -3,6 +3,9 @@ package com.mygdx.game.stages;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -10,9 +13,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.Scaling;
-import com.badlogic.gdx.utils.viewport.ScalingViewport;
-import com.mygdx.game.managers.GameStateManager;
+import com.mygdx.game.Factory.TowerType;
+import com.mygdx.game.managers.EntityManager;
+import com.mygdx.game.managers.LevelManager;
 
 public class UiStage extends Stage {
 	private Skin _skin;
@@ -20,13 +23,13 @@ public class UiStage extends Stage {
 	Table _table;
 	private Image _turret1;
 	private OrthographicCamera _camera;
+	EntityManager _entityManager;
 
-	public UiStage(GameStateManager gsm) {
+	public UiStage(EntityManager entityManager, SpriteBatch _batch) {
 		super();
+		_entityManager = entityManager;
 		_camera = new OrthographicCamera();
-		this.setViewport(
-				new ScalingViewport(Scaling.fillX, Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), _camera));
-		initUi(gsm);
+		initUi();
 
 	}
 
@@ -34,11 +37,20 @@ public class UiStage extends Stage {
 		return _camera;
 	}
 
-	private void initUi(GameStateManager gsm) {
+	private void initUi() {
 		_skin = new Skin(Gdx.files.internal("MainMenuSkin.json"));
 		_turretsSkin = new Skin();
 		_turretsSkin.add("turret1", new Texture(Gdx.files.internal("towers/lvl1/turret.png")));
 		TextButton testUIButton = new TextButton("UITEST", _skin, "default");
+		testUIButton.addListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				System.out.println("TOWER CREATED");
+				_entityManager.getEntityFactory().createTowerEntity(TowerType.BASIC_LASER_TURRET, LevelManager.tileSpawn.getCords().x / 32, LevelManager.tileSpawn.getCords().y / 32);
+				return true;
+			}
+		});
+		
 		final Label moneyLabel = new Label("Money : 1000", _skin, "default");
 		final Label honeyLabel = new Label("honey", _skin, "default");
 		final Label koneyLabel = new Label("koney", _skin, "default");
