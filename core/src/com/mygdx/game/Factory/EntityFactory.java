@@ -5,13 +5,7 @@ import java.util.ArrayList;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.entites.entitiycomponents.DirectionComponent;
-import com.mygdx.game.entites.entitiycomponents.HealthComponent;
-import com.mygdx.game.entites.entitiycomponents.PathComponent;
-import com.mygdx.game.entites.entitiycomponents.PositionComponent;
-import com.mygdx.game.entites.entitiycomponents.RenderableComponent;
-import com.mygdx.game.entites.entitiycomponents.SkeletonComponent;
-import com.mygdx.game.entites.entitiycomponents.VelocityComponent;
+import com.mygdx.game.entites.entitiycomponents.*;
 import com.mygdx.game.managers.LevelManager;
 import com.mygdx.game.utils.Assets;
 import com.mygdx.game.utils.Node;
@@ -80,6 +74,7 @@ public class EntityFactory {
 		HealthComponent healthComponent = new HealthComponent(100);
 		VelocityComponent velocityComponent = new VelocityComponent(100f);
 		DirectionComponent directionComponent = new DirectionComponent();
+		AngleComponent angleComponent = new AngleComponent();
 		RenderableComponent renderableComponent = new RenderableComponent();
 		ArrayList<Node> path = PathFinder.findPath(new Vector2(_spawnX, _spawnY), new Vector2(_endX, _endY), false,
 				false);
@@ -88,7 +83,7 @@ public class EntityFactory {
 		skeletonComp.animationState.setAnimation(0, "MOVING", true);
 		pathComponent.path = path;
 		entity.add(pathComponent).add(positionComponent).add(skeletonComp).add(healthComponent).add(velocityComponent)
-				.add(directionComponent).add(renderableComponent);
+				.add(directionComponent).add(renderableComponent).add(angleComponent);
 		return entity;
 	}
 
@@ -100,8 +95,8 @@ public class EntityFactory {
 		HealthComponent healthComponent = new HealthComponent(100);
 		VelocityComponent velocityComponent = new VelocityComponent(100f);
 		DirectionComponent directionComponent = new DirectionComponent();
+        AngleComponent angleComponent = new AngleComponent();
 		RenderableComponent renderableComponent = new RenderableComponent();
-
 		ArrayList<Node> path = PathFinder.findPath(new Vector2(_spawnX, _spawnY), new Vector2(_endX, _endY), true,
 				true);
 		skeletonComp.animationState.setData(Assets.birdAnimationState.getData());
@@ -109,7 +104,7 @@ public class EntityFactory {
 		skeletonComp.animationState.setAnimation(0, "MOVING", true);
 		pathComponent.path = path;
 		entity.add(pathComponent).add(positionComponent).add(skeletonComp).add(healthComponent).add(velocityComponent)
-				.add(directionComponent).add(renderableComponent);
+				.add(directionComponent).add(renderableComponent).add(angleComponent);
 		return entity;
 	}
 

@@ -5,10 +5,10 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.Factory.EntityFactory;
-import com.mygdx.game.entites.systems.CameraDirComponent;
+import com.mygdx.game.entites.entitiycomponents.DirectionComponent;
 import com.mygdx.game.entites.systems.CameraMovementSystem;
 import com.mygdx.game.entites.systems.HealthSystem;
-import com.mygdx.game.entites.systems.InputHandler;
+import com.mygdx.game.entites.input.InputHandler;
 import com.mygdx.game.entites.systems.MoveToSystem;
 import com.mygdx.game.entites.systems.PlayerInputSystem;
 import com.mygdx.game.entites.systems.RenderSystem;
@@ -21,9 +21,10 @@ public class EntityManager {
 	private InputHandler inputhandler;
 
     public EntityManager(Engine ashleyEngine , SpriteBatch batch, OrthographicCamera gameCamera, InputHandler inputhandler){
+        // player entity
         Entity playerEntity = new Entity();
-        CameraDirComponent dirComp = new CameraDirComponent();
-        playerEntity.add(dirComp);
+        // component for camera (only need direction)
+        playerEntity.add(new DirectionComponent());
     	
     	this._ashleyEngine = ashleyEngine;
 		this._gameCamera = gameCamera;
@@ -40,6 +41,7 @@ public class EntityManager {
         ashleyEngine.addSystem(healthSystem);
         ashleyEngine.addSystem(playerInputSys);
         ashleyEngine.addSystem(camSys);
+        // add player entity
         ashleyEngine.addEntity(playerEntity);
         _waveManager = new WaveTimeManager(_entityFactory);
     }

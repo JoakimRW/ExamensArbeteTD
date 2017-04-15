@@ -8,26 +8,31 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
+import com.mygdx.game.entites.entitiycomponents.*;
 import com.mygdx.game.managers.LevelManager;
 
 public class CameraMovementSystem extends IteratingSystem {
 
     private Camera _camera;
-    private ComponentMapper<CameraDirComponent> cm;
+    private ComponentMapper<DirectionComponent> cm;
 
     public CameraMovementSystem(OrthographicCamera newCam) {
-        super(Family.all(CameraDirComponent.class).get());
-        cm = ComponentMapper.getFor(CameraDirComponent.class);
+        super(Family.one(DirectionComponent.class).exclude(SkeletonComponent.class
+                , RenderableComponent.class
+                , PathComponent.class
+                , TextureComponent.class
+                , RenderableComponent.class).get());
+        cm = ComponentMapper.getFor(DirectionComponent.class);
         _camera = newCam;
     }
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        CameraDirComponent d = cm.get(entity);
+        DirectionComponent d = cm.get(entity);
         moveCamera(d);
     }
 
-    private void moveCamera(CameraDirComponent d) {
+    private void moveCamera(DirectionComponent d) {
         final float cameraSpeed = 10f;
         _camera.viewportWidth = Gdx.graphics.getWidth() / 3;
         _camera.viewportHeight = Gdx.graphics.getHeight() / 3;

@@ -1,9 +1,9 @@
-package com.mygdx.game.entites.systems;
+package com.mygdx.game.entites.input;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.entites.input.InputHandlerIF;
 
 public class InputHandler implements InputProcessor{
 	private InputHandlerIF _inputHandler;

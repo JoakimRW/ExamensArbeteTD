@@ -5,18 +5,14 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.esotericsoftware.spine.SkeletonRenderer;
-import com.mygdx.game.entites.entitiycomponents.DirectionComponent;
-import com.mygdx.game.entites.entitiycomponents.HealthComponent;
-import com.mygdx.game.entites.entitiycomponents.PositionComponent;
-import com.mygdx.game.entites.entitiycomponents.RenderableComponent;
-import com.mygdx.game.entites.entitiycomponents.SkeletonComponent;
+import com.mygdx.game.entites.entitiycomponents.*;
 
 public class RenderSystem extends IteratingSystem{
     private SpriteBatch batch;
     private SkeletonRenderer<SpriteBatch> renderer;
 
     public RenderSystem(SpriteBatch batch){
-        super(Family.one(SkeletonComponent.class,RenderableComponent.class , HealthComponent.class  , DirectionComponent.class).get()); //
+        super(Family.one(SkeletonComponent.class,RenderableComponent.class , HealthComponent.class  , AngleComponent.class).get()); //
         //Family enemy = Family.all(SkeletonComponent.class,RenderableComponent.class , HealthComponent.class , StateComponent.class , DirectionComponent.class , DimensionComponent.class).get();
         this.batch = batch;
         renderer = new SkeletonRenderer<>();
@@ -30,12 +26,12 @@ public class RenderSystem extends IteratingSystem{
         final int offsetX = 16;
         final int offsetY = 16;
         PositionComponent pos = entity.getComponent(PositionComponent.class);
-        DirectionComponent dirComp = entity.getComponent(DirectionComponent.class);
+        AngleComponent angleComp = entity.getComponent(AngleComponent.class);
         SkeletonComponent skeletonComponent = entity.getComponent(SkeletonComponent.class);
         skeletonComponent.animationState.update(deltaTime);
         skeletonComponent.animationState.apply(skeletonComponent.skeleton);
         skeletonComponent.skeleton.setPosition(pos.position.x + offsetX, pos.position.y + offsetY);
-        skeletonComponent.skeleton.getRootBone().setRotation(dirComp.spriteAngle);
+        skeletonComponent.skeleton.getRootBone().setRotation(angleComp.spriteAngle);
         skeletonComponent.skeleton.updateWorldTransform();
         renderer.draw(batch,skeletonComponent.skeleton);
     }
