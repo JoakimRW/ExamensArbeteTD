@@ -7,12 +7,10 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.mygdx.game.entites.systems.InputHandler;
 import com.mygdx.game.managers.EntityManager;
 import com.mygdx.game.managers.GameStateManager;
 import com.mygdx.game.managers.LevelManager;
-import com.mygdx.game.stages.GameStage;
 import com.mygdx.game.stages.UiStage;
 import com.mygdx.game.utils.Tile;
 import com.mygdx.game.utils.TileType;
@@ -23,7 +21,6 @@ public class PlayState extends GameState {
 	public static boolean GAME_OVER = false;
 	public static boolean START_GAME = false;
 
-	private GameStage _gameStage;
 	private UiStage _uIStage;
 	PlayStateHelper _playStateHelper;
 	EntityManager _entityManager;
@@ -40,10 +37,9 @@ public class PlayState extends GameState {
 		_entityManager = new EntityManager(ashleyEngine, _batch,_gameCamera,inputhandler);
 		
 		_uiCamera = new OrthographicCamera();
-		_gameStage = new GameStage(gsm,ashleyEngine,_entityManager,_batch);
 		_uIStage = new UiStage(_entityManager,_batch,_uiCamera);
 		
-		_playStateHelper = new PlayStateHelper(_batch, _gameStage, _uIStage, ashleyEngine);
+		_playStateHelper = new PlayStateHelper(_batch, _uIStage, ashleyEngine);
 
 		Table table = _uIStage.getTable();
 		_playStateHelper.UiStageControl(table);
@@ -53,6 +49,8 @@ public class PlayState extends GameState {
 		multi.addProcessor(inputhandler);
 		multi.addProcessor(_uIStage);
 		Gdx.input.setInputProcessor(multi);
+		
+		System.out.println("*************** To Start the game , Press Enter! ***************");
 	}
 
 	@Override
@@ -67,20 +65,17 @@ public class PlayState extends GameState {
 		if (PLAYER_HEALTH == 0) {
 			GAME_OVER = true;
 		}
-		_gameStage.act();
 		_uIStage.act();
 	}
 
 	@Override
 	public void render() {
 		// batch.setProjectionMatrix(game.getCamera().combined);
-		_gameStage.draw();
 		_uIStage.draw();
 	}
 
 	@Override
 	public void dispose() {
-		_gameStage.dispose();
 		_uIStage.dispose();
 	}
 	TileType getMousePosInGameWorld() {

@@ -11,27 +11,20 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
-import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Payload;
-import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Source;
-import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Target;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.mygdx.game.actors.DropListener;
 import com.mygdx.game.actors.SelectListener;
 import com.mygdx.game.entites.towers.LaserTurret;
-import com.mygdx.game.stages.GameStage;
 import com.mygdx.game.stages.UiStage;
 import com.mygdx.game.utils.Tile;
 
 public final class PlayStateHelper {
 
-	private GameStage _gameStage;
 	private UiStage _uIStage;
 	private SpriteBatch _batch;
 
-	public PlayStateHelper(SpriteBatch batch, GameStage gameStage, UiStage uIStage,
+	public PlayStateHelper(SpriteBatch batch, UiStage uIStage,
 			Engine ashleyEngine) {
-		_gameStage = gameStage;
 		_uIStage = uIStage;
 		_batch = batch;
 //		createBasicTower();
@@ -111,7 +104,6 @@ public final class PlayStateHelper {
 			@Override
 			public void drop(Actor actor, float x, float y, InputEvent event) {
 				System.out.println("TEST!");
-				createNewTurretOnGameStage(event.getStageX(), event.getStageY());
 			}
 		});
 
@@ -130,12 +122,5 @@ public final class PlayStateHelper {
 	private void fireEvent(InputEvent event) {
 	}
 
-	public void createNewTurretOnGameStage(float x, float y) {
-		TextureRegion region = new TextureRegion(new Texture(Gdx.files.internal("towers/lvl1/turret.png")));
-		LaserTurret turret = new LaserTurret(region);
-		_gameStage.addActor(turret);
-		turret.setPosition(x, y);
-
-	}
 
 }

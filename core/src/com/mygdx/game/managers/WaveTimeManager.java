@@ -6,7 +6,7 @@ import java.util.TimerTask;
 
 import com.mygdx.game.Factory.EnemyType;
 import com.mygdx.game.Factory.EntityFactory;
-import com.mygdx.game.stages.GameStage;
+import com.mygdx.game.states.PlayState;
 
 public class WaveTimeManager {
 	
@@ -23,8 +23,8 @@ public class WaveTimeManager {
 	}
 	
 	public void tick(float delta){
-		if(!GameStage.START_GAME) currentWaveTime = 0;
-		if(GameStage.START_GAME){			
+		if(!PlayState.START_GAME) currentWaveTime = 0;
+		if(PlayState.START_GAME){			
 			time += delta;
 			if(time >= 1) {
 				currentWaveTime--;

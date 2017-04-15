@@ -1,12 +1,15 @@
 package com.mygdx.game.entites.systems;
 
-import com.badlogic.ashley.core.*;
+import com.badlogic.ashley.core.ComponentMapper;
+import com.badlogic.ashley.core.Entity;
+import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.entites.entitiycomponents.*;
-import com.mygdx.game.managers.LevelManager;
-import com.mygdx.game.stages.GameStage;
+import com.mygdx.game.entites.entitiycomponents.DirectionComponent;
+import com.mygdx.game.entites.entitiycomponents.PathComponent;
+import com.mygdx.game.entites.entitiycomponents.PositionComponent;
+import com.mygdx.game.entites.entitiycomponents.VelocityComponent;
+import com.mygdx.game.states.PlayState;
 
 
 
@@ -38,7 +41,7 @@ public class MoveToSystem extends IteratingSystem {
             }else {
                 entity.removeAll();
                 getEngine().removeEntity(entity);
-                GameStage.PlAYER_HEALTH = GameStage.PlAYER_HEALTH != 0 ? GameStage.PlAYER_HEALTH - 1 : -1;
+                PlayState.PLAYER_HEALTH = PlayState.PLAYER_HEALTH != 0 ? PlayState.PLAYER_HEALTH - 1 : -1;
             }
         }
 
