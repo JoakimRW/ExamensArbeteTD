@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.Factory.EntityFactory;
 import com.mygdx.game.entites.systems.HealthSystem;
+import com.mygdx.game.entites.systems.InputHandler;
 import com.mygdx.game.entites.systems.MoveToSystem;
 import com.mygdx.game.entites.systems.RenderSystem;
 
@@ -13,10 +14,12 @@ public class EntityManager {
     private Engine _ashleyEngine;
 	private WaveTimeManager _waveManager;
 	private OrthographicCamera _gameCamera;
+	private InputHandler inputhandler;
 
-    public EntityManager(Engine ashleyEngine , SpriteBatch batch, OrthographicCamera gameCamera){
+    public EntityManager(Engine ashleyEngine , SpriteBatch batch, OrthographicCamera gameCamera, InputHandler inputhandler){
         this._ashleyEngine = ashleyEngine;
 		this._gameCamera = gameCamera;
+		this.inputhandler = inputhandler;
         _entityFactory = new EntityFactory(ashleyEngine);
         MoveToSystem moveToSystem = new MoveToSystem();
         RenderSystem renderSystem = new RenderSystem(batch);

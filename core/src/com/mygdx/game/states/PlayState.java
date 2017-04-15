@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
+import com.mygdx.game.entites.systems.InputHandler;
 import com.mygdx.game.managers.EntityManager;
 import com.mygdx.game.managers.GameStateManager;
 import com.mygdx.game.managers.LevelManager;
@@ -35,7 +36,8 @@ public class PlayState extends GameState {
 		ashleyEngine.update(Gdx.graphics.getDeltaTime());
 		LevelManager.loadLevel("maps/simple-map.tmx");
 		_gameCamera = new OrthographicCamera();
-		_entityManager = new EntityManager(ashleyEngine, _batch,_gameCamera);
+		InputHandler inputhandler = new InputHandler();
+		_entityManager = new EntityManager(ashleyEngine, _batch,_gameCamera,inputhandler);
 		
 		_uiCamera = new OrthographicCamera();
 		_gameStage = new GameStage(gsm,ashleyEngine,_entityManager,_batch);
@@ -47,7 +49,8 @@ public class PlayState extends GameState {
 		_playStateHelper.UiStageControl(table);
 
 		InputMultiplexer multi = new InputMultiplexer();
-		multi.addProcessor(_gameStage);
+		
+		multi.addProcessor(inputhandler);
 		multi.addProcessor(_uIStage);
 		Gdx.input.setInputProcessor(multi);
 	}
