@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.mygdx.game.entites.systems.InputHandler;
@@ -27,6 +28,7 @@ public class PlayState extends GameState {
 	EntityManager _entityManager;
 	OrthographicCamera _gameCamera;
 	OrthographicCamera _uiCamera;
+	private OrthogonalTiledMapRenderer _renderer;
 
 	public PlayState(GameStateManager gsm, Engine ashleyEngine) {
 		super(gsm);
@@ -34,6 +36,7 @@ public class PlayState extends GameState {
 		
 		ashleyEngine.update(Gdx.graphics.getDeltaTime());
 		LevelManager.loadLevel("maps/simple-map.tmx");
+		_renderer = new OrthogonalTiledMapRenderer(LevelManager.tiledMap);
 		_gameCamera = new OrthographicCamera();
 		InputHandler inputhandler = new InputHandler();
 		_entityManager = new EntityManager(ashleyEngine, _batch,_gameCamera,inputhandler);
@@ -67,12 +70,23 @@ public class PlayState extends GameState {
 		if (PLAYER_HEALTH == 0) {
 			GAME_OVER = true;
 		}
+		
+		
+		
 		_uIStage.act();
 	}
 
 	@Override
 	public void render() {
 		// batch.setProjectionMatrix(game.getCamera().combined);
+		
+		_renderer.setView(_gameCamera);
+		_renderer.render();
+		_batch.setProjectionMatrix(_gameCamera.combined);
+		
+		_batch.begin();
+		_entityManager.update(Gdx.graphics.getDeltaTime());
+		_batch.end();
 		_uIStage.draw();
 	}
 
