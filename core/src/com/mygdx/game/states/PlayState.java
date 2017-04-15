@@ -24,7 +24,7 @@ public class PlayState extends GameState {
 		ashleyEngine.update(Gdx.graphics.getDeltaTime());
 		LevelManager.loadLevel("maps/simple-map.tmx");
 		_entityManager = new EntityManager(ashleyEngine, _batch);
-		_gameStage = new GameStage(ashleyEngine,_entityManager,_batch);
+		_gameStage = new GameStage(gsm,ashleyEngine,_entityManager,_batch);
 		_uIStage = new UiStage(_entityManager,_batch);
 		
 		_playStateHelper = new PlayStateHelper(_batch, _gameStage, _uIStage, _dragAndDrop, ashleyEngine);

@@ -4,16 +4,19 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.MathUtils;
 import com.esotericsoftware.spine.SkeletonRenderer;
-import com.mygdx.game.entites.entitiycomponents.*;
+import com.mygdx.game.entites.entitiycomponents.DirectionComponent;
+import com.mygdx.game.entites.entitiycomponents.HealthComponent;
+import com.mygdx.game.entites.entitiycomponents.PositionComponent;
+import com.mygdx.game.entites.entitiycomponents.RenderableComponent;
+import com.mygdx.game.entites.entitiycomponents.SkeletonComponent;
 
 public class RenderSystem extends IteratingSystem{
     private SpriteBatch batch;
     private SkeletonRenderer<SpriteBatch> renderer;
 
     public RenderSystem(SpriteBatch batch){
-        super(Family.all(SkeletonComponent.class,RenderableComponent.class , HealthComponent.class  , DirectionComponent.class).get());
+        super(Family.one(SkeletonComponent.class,RenderableComponent.class , HealthComponent.class  , DirectionComponent.class).get()); //
         //Family enemy = Family.all(SkeletonComponent.class,RenderableComponent.class , HealthComponent.class , StateComponent.class , DirectionComponent.class , DimensionComponent.class).get();
         this.batch = batch;
         renderer = new SkeletonRenderer<>();
