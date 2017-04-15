@@ -12,6 +12,7 @@ import com.mygdx.game.managers.EntityManager;
 import com.mygdx.game.managers.GameStateManager;
 import com.mygdx.game.managers.LevelManager;
 import com.mygdx.game.stages.UiStage;
+import com.mygdx.game.utils.Assets;
 import com.mygdx.game.utils.Tile;
 import com.mygdx.game.utils.TileType;
 
@@ -29,6 +30,7 @@ public class PlayState extends GameState {
 
 	public PlayState(GameStateManager gsm, Engine ashleyEngine) {
 		super(gsm);
+		Assets.loadGameStageAssets();
 		
 		ashleyEngine.update(Gdx.graphics.getDeltaTime());
 		LevelManager.loadLevel("maps/simple-map.tmx");
