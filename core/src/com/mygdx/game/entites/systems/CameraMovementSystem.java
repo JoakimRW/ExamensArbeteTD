@@ -8,6 +8,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
+import com.mygdx.game.managers.LevelManager;
 
 public class CameraMovementSystem extends IteratingSystem {
 
@@ -41,9 +42,9 @@ public class CameraMovementSystem extends IteratingSystem {
         float startY = _camera.viewportHeight / 2;
         float width = startX * 2;
         float height = startY * 2;
-        //_camera.position
-      //  setCameraBoundary(_camera, startX, startY, LevelManager.mapPixelWidth - width,
-       //         LevelManager.mapPixelHeight - height);
+       
+      setCameraBoundary( startX, startY, LevelManager.mapPixelWidth - width,
+        LevelManager.mapPixelHeight - height);
     }
 
     private void setCameraBoundary( float startX, float startY, float width, float height) {
