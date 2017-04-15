@@ -28,15 +28,13 @@ public class CameraMovementSystem extends IteratingSystem {
     }
 
     private void moveCamera(CameraDirComponent d) {
-        _camera.update();
-        System.out.println(d.dir);
         final float cameraSpeed = 10f;
         _camera.viewportWidth = Gdx.graphics.getWidth() / 3;
         _camera.viewportHeight = Gdx.graphics.getHeight() / 3;
         float cameraPosX = _camera.position.x;
         float cameraPosY = _camera.position.y;
-        _camera.position.set((int) cameraPosX + d.dir.x * cameraSpeed,
-                (int) cameraPosY + d.dir.y * cameraSpeed, 0);
+        _camera.position.set((int) cameraPosX + d.xAxis * cameraSpeed,
+                (int) cameraPosY + d.yAxis* cameraSpeed, 0);
         _camera.update();
         float startX = _camera.viewportWidth / 2;
         float startY = _camera.viewportHeight / 2;

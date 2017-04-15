@@ -46,6 +46,7 @@ public class EntityManager {
 
     public void update(float deltaTime){
         _ashleyEngine.update(deltaTime);
+        inputhandler.pullInput();
         _waveManager.tick(deltaTime);
     }
     public EntityFactory getEntityFactory(){

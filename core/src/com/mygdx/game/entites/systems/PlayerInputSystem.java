@@ -22,7 +22,8 @@ public class PlayerInputSystem extends EntitySystem implements InputHandlerIF{
     }
 
     @Override
-    public void moveCam(Vector2 dir) {
-    	playerList.get(0).getComponent(CameraDirComponent.class).dir.set(dir);
+    public void moveCam(int xAxis , int yAxis) {
+    	playerList.get(0).getComponent(CameraDirComponent.class).xAxis = xAxis;
+    	playerList.get(0).getComponent(CameraDirComponent.class).yAxis = yAxis;
     }
 }

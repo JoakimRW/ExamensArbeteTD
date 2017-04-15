@@ -6,38 +6,46 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 
 public class InputHandler implements InputProcessor{
-	private InputHandlerIF _inputhandler;
-	private Vector2 camDir = new Vector2();
-	
+	private InputHandlerIF _inputHandler;
+	private int xAxis = 0;
+	private int yAxis = 0;
+
 	public void registerInputHandlerSystem(InputHandlerIF inputHandler){
-		_inputhandler = inputHandler; 
+        _inputHandler = inputHandler;
 	}
+	/** kallas i update **/
+	public void pullInput(){
+        setCameraDirection();
+    }
+
+    public void setCameraDirection(){
+        if(Gdx.input.isKeyPressed(Input.Keys.W)){
+            yAxis = 1;
+        }
+        else if(Gdx.input.isKeyPressed(Input.Keys.S)){
+            yAxis = -1;
+        }else {
+            yAxis = 0;
+        }
+
+        if(Gdx.input.isKeyPressed(Input.Keys.D)){
+            xAxis = 1;
+        }
+        else if(Gdx.input.isKeyPressed(Input.Keys.A)){
+            xAxis = -1;
+        }else {
+            xAxis = 0;
+        }
+        _inputHandler.moveCam(xAxis , yAxis);
+    }
 	@Override
 	public boolean keyDown(int keycode) {
-		// TODO Auto-generated method stub
-		if(keycode ==  Input.Keys.W){
-			_inputhandler.moveCam(camDir.set( camDir.y , 1));
-		}
-		else if(keycode ==  Input.Keys.S){
-			_inputhandler.moveCam(camDir.set( camDir.y , -1));
-		}else {
-			_inputhandler.moveCam(camDir.set( camDir.y , 0));
-		}
-		
-		if(keycode ==  Input.Keys.D){
-			_inputhandler.moveCam(camDir.set( 1 , camDir.y));
-		}
-		else if(keycode ==  Input.Keys.A){
-			_inputhandler.moveCam(camDir.set( -1 , camDir.y));
-		}else {
-			_inputhandler.moveCam(camDir.set( 0 , camDir.y));
-		}
+
 		return false;
 	}
 
 	@Override
 	public boolean keyUp(int keycode) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
