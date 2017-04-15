@@ -27,14 +27,12 @@ public final class PlayStateHelper {
 
 	private GameStage _gameStage;
 	private UiStage _uIStage;
-	private DragAndDrop _dragAndDrop;
 	private SpriteBatch _batch;
 
-	public PlayStateHelper(SpriteBatch batch, GameStage gameStage, UiStage uIStage, DragAndDrop dragAndDrop,
+	public PlayStateHelper(SpriteBatch batch, GameStage gameStage, UiStage uIStage,
 			Engine ashleyEngine) {
 		_gameStage = gameStage;
 		_uIStage = uIStage;
-		_dragAndDrop = dragAndDrop;
 		_batch = batch;
 //		createBasicTower();
 	}
@@ -56,37 +54,37 @@ public final class PlayStateHelper {
 		Image turretActor = _uIStage.getTurretActor();
 
 		Skin turretSkin = _uIStage.getTurretSkin();
-		_dragAndDrop.addSource(new Source(turretActor) {
-
-			public Payload dragStart(InputEvent event, float x, float y, int pointer) {
-				System.out.println("Drag Started");
-				// _gameStage.addActor(turretActor);
-				event.setStage(_gameStage);
-				Payload payload = new Payload();
-				turretActor.toFront();
-				payload.setObject(turretActor);
-				payload.setInvalidDragActor(turretActor);
-				payload.setValidDragActor(turretActor);
-				payload.setDragActor(new Image(turretSkin.getDrawable("turret1")));
-
-				// Label validLabel = new Label("turret1", skin);
-				// payload.setValidDragActor(validLabel);
-				//
-				// Label invalidLabel = new Label("turret1", skin);
-				// payload.setInvalidDragActor(invalidLabel);
-
-				return payload;
-			}
-
-			@Override
-			public void dragStop(InputEvent event, float x, float y, int pointer, Payload payload, Target target) {
-				event.setStage(_gameStage);
-				System.out.println("STOP target = " + target);
-				super.dragStop(event, x, y, pointer, payload, target);
-
-			}
-
-		});
+//		_dragAndDrop.addSource(new Source(turretActor) {
+//
+//			public Payload dragStart(InputEvent event, float x, float y, int pointer) {
+//				System.out.println("Drag Started");
+//				// _gameStage.addActor(turretActor);
+//				event.setStage(_gameStage);
+//				Payload payload = new Payload();
+//				turretActor.toFront();
+//				payload.setObject(turretActor);
+//				payload.setInvalidDragActor(turretActor);
+//				payload.setValidDragActor(turretActor);
+//				payload.setDragActor(new Image(turretSkin.getDrawable("turret1")));
+//
+//				// Label validLabel = new Label("turret1", skin);
+//				// payload.setValidDragActor(validLabel);
+//				//
+//				// Label invalidLabel = new Label("turret1", skin);
+//				// payload.setInvalidDragActor(invalidLabel);
+//
+//				return payload;
+//			}
+//
+//			@Override
+//			public void dragStop(InputEvent event, float x, float y, int pointer, Payload payload, Target target) {
+//				event.setStage(_gameStage);
+//				System.out.println("STOP target = " + target);
+//				super.dragStop(event, x, y, pointer, payload, target);
+//
+//			}
+//
+//		});
 	}
 
 	public void UiStageControl(Table table) {

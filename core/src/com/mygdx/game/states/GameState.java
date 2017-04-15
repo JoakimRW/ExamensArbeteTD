@@ -8,13 +8,13 @@ import com.mygdx.game.managers.GameStateManager;
 public abstract class GameState {
 
 	// References
-	protected GameStateManager gsm;
+	protected GameStateManager _gsm;
 	protected Game game;
 	protected SpriteBatch _batch;
 	protected OrthographicCamera camera;
 	
 	protected GameState(GameStateManager gsm) {
-		this.gsm = gsm;
+		_gsm = gsm;
 		this.game = gsm.game();
 		_batch = game.getBatch();
 		camera = game.getCamera();

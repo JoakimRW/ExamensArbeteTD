@@ -21,7 +21,7 @@ public class SplashState extends GameState {
 	public void update(float delta) {
 		acc += delta;
 		if (acc > 3) {
-			gsm.setState(GameStateManager.State.MAINMENU);
+			_gsm.setState(GameStateManager.State.MAINMENU);
 		}
 	}
 

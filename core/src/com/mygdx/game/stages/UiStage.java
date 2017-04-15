@@ -18,22 +18,23 @@ public class UiStage extends Stage {
 	private Skin _turretsSkin;
 	Table _table;
 	private Image _turret1;
-	private OrthographicCamera _camera;
 	EntityManager _entityManager;
+	private OrthographicCamera _uiCamera;
 
-	public UiStage(EntityManager entityManager, SpriteBatch _batch) {
+	public UiStage(EntityManager entityManager, SpriteBatch _batch, OrthographicCamera _uiCamera) {
 		super();
 		_entityManager = entityManager;
-		_camera = new OrthographicCamera();
+		this._uiCamera = _uiCamera;
 		initUi();
 
 	}
 
 	public OrthographicCamera getCamera() {
-		return _camera;
+		return _uiCamera;
 	}
 
 	private void initUi() {
+		getViewport().setCamera(_uiCamera);
 		_skin = new Skin(Gdx.files.internal("MainMenuSkin.json"));
 		_turretsSkin = new Skin();
 		_turretsSkin.add("turret1", new Texture(Gdx.files.internal("towers/lvl1/turret.png")));
