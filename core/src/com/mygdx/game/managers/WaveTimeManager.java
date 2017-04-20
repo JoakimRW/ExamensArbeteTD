@@ -9,37 +9,43 @@ import com.mygdx.game.Factory.EntityFactory;
 import com.mygdx.game.states.PlayState;
 
 public class WaveTimeManager {
-	
-	private int currentWaveTime = 0;
-	private int wave = 0;
+
+
+
+	public static int CURRENT_WAVE_TIME = 0;
+	public static int WAVE = 0;
 	// keeps track of amount of enemies spawned each wave
 	public static int amountSpawned = 0;
-
 	private float time = 0;
-
 	private EntityFactory entityFactory;
+
+	public EnemyType getEnemyType() {
+		return enemyType;
+	}
+
+	private EnemyType enemyType;
+
 	public WaveTimeManager(EntityFactory entityFactory){
 		this.entityFactory = entityFactory;
 	}
 	
 	public void tick(float delta){
-		if(!PlayState.START_GAME) currentWaveTime = 0;
+		if(!PlayState.START_GAME) CURRENT_WAVE_TIME = 0;
 		if(PlayState.START_GAME){			
 			time += delta;
 			if(time >= 1) {
-				currentWaveTime--;
+				CURRENT_WAVE_TIME--;
 				time = 0;
-				System.out.println(currentWaveTime);
+				System.out.println(CURRENT_WAVE_TIME);
 			}
-			if(currentWaveTime <= 0){
+			if(CURRENT_WAVE_TIME <= 0){
 				final int rand = new Random().nextInt(EnemyType.values().length);
-                EnemyType enemyType = EnemyType.values()[rand];
+				enemyType = EnemyType.values()[rand];
                 System.out.println(enemyType);
                 spawnEnemies( enemyType , 500 , 10);
-				wave++;
-				System.out.println("Wave ---------- " + wave);
+				WAVE++;
 				int timeBetweenWave = 15;
-				currentWaveTime = timeBetweenWave;
+				CURRENT_WAVE_TIME = timeBetweenWave;
 			}
 		}
 	}
@@ -51,6 +57,7 @@ public class WaveTimeManager {
 		Timer timer = new Timer();
 		timer.scheduleAtFixedRate(new Enemy(enemyType , amount ) , delayInSec  , 500 );
 	}
+
 
 	private class Enemy extends TimerTask {
 		int amount;

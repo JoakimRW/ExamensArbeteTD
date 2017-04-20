@@ -18,6 +18,11 @@ public class SplashState extends GameState {
 	}
 
 	@Override
+	public void resize(int w, int h) {
+
+	}
+
+	@Override
 	public void update(float delta) {
 		acc += delta;
 		if (acc > 3) {
@@ -41,6 +46,16 @@ public class SplashState extends GameState {
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void pause() {
+
+	}
+
+	@Override
+	public void resume() {
 
 	}
 

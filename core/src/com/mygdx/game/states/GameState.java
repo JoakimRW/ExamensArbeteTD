@@ -20,10 +20,10 @@ public abstract class GameState {
 		camera = game.getCamera();
 	}
 	
-	public void resize(int w, int h){
-		camera.setToOrtho(false, w, h);
-	}
+	public abstract void resize(int w, int h);
 	public abstract void update(float delta);
 	public abstract void render();
 	public abstract void dispose();
+	public abstract void pause();
+	public abstract void resume();
 }

@@ -9,10 +9,10 @@ import com.mygdx.game.managers.GameStateManager;
 public class Game extends ApplicationAdapter {
 	SpriteBatch batch;
 	private GameStateManager gsm;
-	
+
 	private OrthographicCamera camera;
 	
-	public static final float SCALE = 2.0f;
+	public static final float SCALE = 2f;
 	
 	
 	
@@ -49,6 +49,16 @@ public class Game extends ApplicationAdapter {
 	
 	public OrthographicCamera getCamera(){
 		return camera;
+	}
+
+	@Override
+	public void pause(){
+		gsm.pause();
+	}
+
+	@Override
+	public void resume(){
+		gsm.resume();
 	}
 	
 	public SpriteBatch getBatch(){

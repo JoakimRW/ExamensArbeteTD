@@ -15,9 +15,7 @@ public class GameStateManager {
 
 	// Application Reference
 	private final Game game;
-	Engine ashleyEngine;
 	private List<OrthographicCamera> _cameraList;
-
 	private Stack<GameState> states;
 
 	public enum State {
@@ -29,7 +27,6 @@ public class GameStateManager {
 		this.game = game;
 		this.states = new Stack<GameState>();
 		this.setState(State.MAINMENU);
-		ashleyEngine = new Engine();
 	}
 
 	public Game game() {
@@ -42,6 +39,14 @@ public class GameStateManager {
 
 	public void render() {
 		states.peek().render();
+	}
+
+    public void pause() {
+        states.peek().pause();
+    }
+
+    public void resume() {
+        states.peek().resume();
 	}
 
 	public void dispose() {
@@ -64,7 +69,7 @@ public class GameStateManager {
 	private GameState getState(State state) {
 		switch (state) {
 		case PLAY:
-			return new PlayState(this, ashleyEngine);
+			return new PlayState(this);
 		case SPLASH:
 			return new SplashState(this);
 		case MAINMENU:

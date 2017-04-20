@@ -64,13 +64,6 @@ public class MainMenuStage extends Stage {
 
 	@Override
 	public void draw() {
-		
-		SpriteBatch batch = new SpriteBatch();
-		Sprite sprite = new Sprite(new Texture(Gdx.files.internal("badlogic.jpg")));
-		sprite.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		batch.begin();
-		sprite.draw(batch);
-		batch.end();
 		this.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		super.draw();
 	}
