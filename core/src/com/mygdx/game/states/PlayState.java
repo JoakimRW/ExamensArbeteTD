@@ -75,6 +75,7 @@ public class PlayState extends GameState {
         GAME_OVER = false;
         START_GAME = false;
         PAUSE = false;
+        _entityManager.dispose();
         LevelManager.dispose();
     }
 

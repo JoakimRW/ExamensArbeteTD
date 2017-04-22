@@ -19,8 +19,8 @@ import com.mygdx.game.stages.UiView;
 import com.mygdx.game.states.PlayState;
 
 public class EntityManager {
-    private final EntityFactory _entityFactory;
-    private final UIStageController uiController;
+    private EntityFactory _entityFactory;
+    private UIStageController uiController;
     private Engine _ashleyEngine;
 	private WaveTimeManager _waveManager;
 	private OrthographicCamera _gameCamera;
@@ -71,4 +71,8 @@ public class EntityManager {
         }
     }
 
+    public void dispose() {
+        _entityFactory = null;
+        _waveManager = null;
+    }
 }
