@@ -31,20 +31,20 @@ public class UIStageController extends ClickListener {
                     uistage.get_nextWaveBtn().setText("Next Wave");
                 } else {
                     uistage.get_nextEnemyText().setText(model.getNextWave());
-                    model.startNextWave();
+                    EntityModel.startNextWave();
                 }
             }
         });
 
-        uistage.get_laserTowerIcon().addListener(new InputListener(){
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                super.touchDown(event, x, y, pointer, button);
-                uistage.get_tooltip().hide();
-                model.beginTowerPlacing(BASIC_LASER_TURRET);
-                return false;
-            }
-
+        uistage.get_laserTowerIcon().addListener(new ClickListener(){
+        	
+        	
+        	@Override
+        	public void clicked(InputEvent event, float x, float y) {
+        	    uistage.get_tooltip().hide();
+                EntityModel.beginTowerPlacing(BASIC_LASER_TURRET);
+                System.out.println("TURRET PLACEMENT STARTED");
+        	}
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
                 super.enter(event, x, y, pointer, fromActor);

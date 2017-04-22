@@ -20,14 +20,14 @@ public class EntityManager {
     private final EntityFactory _entityFactory;
     private Engine _ashleyEngine;
 	private WaveTimeManager _waveManager;
-	private OrthographicCamera _gameCamera;
+//	private OrthographicCamera _gameCamera;
 	private InputHandler inputhandler;
 
-    public EntityManager(Engine ashleyEngine , SpriteBatch batch, OrthographicCamera gameCamera, InputHandler inputhandler , UiView _uiView){
+    public EntityManager(Engine ashleyEngine , SpriteBatch batch, OrthographicCamera gameCamera, InputHandler inputhandler , UiView _uiView, GameStateManager gsm){
 
         _entityFactory = new EntityFactory(ashleyEngine);
         _waveManager = new WaveTimeManager(_entityFactory);
-        EntityModel _entityModel = new EntityModel(_waveManager , _entityFactory);
+        EntityModel _entityModel = new EntityModel(_waveManager , _entityFactory,gsm,gameCamera);
         new UIStageController(_uiView , _entityModel);
         // player entity
         Entity playerEntity = new Entity();
@@ -35,7 +35,7 @@ public class EntityManager {
         playerEntity.add(new DirectionComponent());
 
     	this._ashleyEngine = ashleyEngine;
-		this._gameCamera = gameCamera;
+//		this._gameCamera = gameCamera;
 		this.inputhandler = inputhandler;
         MoveToSystem moveToSystem = new MoveToSystem();
         RenderSystem renderSystem = new RenderSystem(batch);

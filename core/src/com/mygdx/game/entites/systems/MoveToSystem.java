@@ -47,7 +47,7 @@ public class MoveToSystem extends IteratingSystem {
 
     }
 
-    private void moveTo(PositionComponent pos , DirectionComponent dir, AngleComponent angleComp , float deltaTime , PathComponent pathComp , VelocityComponent vel){
+    private static void moveTo(PositionComponent pos , DirectionComponent dir, AngleComponent angleComp , float deltaTime , PathComponent pathComp , VelocityComponent vel){
         // a xy point in the path array that the entity will go to
         float pointX = pathComp.path.get(pathComp.path.size() - pathComp.index ).getCordinates().x * 32;
         float pointY = pathComp.path.get(pathComp.path.size() - pathComp.index ).getCordinates().y * 32;
@@ -80,7 +80,7 @@ public class MoveToSystem extends IteratingSystem {
 
     }
 
-    private float approach(float goal , float current , float deltaTime){
+    private static float approach(float goal , float current , float deltaTime){
         float diffrence = goal - current;
         if(diffrence > deltaTime)
             return current + deltaTime;

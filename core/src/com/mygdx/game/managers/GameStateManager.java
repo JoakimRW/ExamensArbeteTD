@@ -3,7 +3,6 @@ package com.mygdx.game.managers;
 import java.util.List;
 import java.util.Stack;
 
-import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.mygdx.game.Game;
 import com.mygdx.game.states.GameState;
@@ -41,12 +40,12 @@ public class GameStateManager {
 		states.peek().render();
 	}
 
-    public void pause() {
-        states.peek().pause();
-    }
+	public void pause() {
+		states.peek().pause();
+	}
 
-    public void resume() {
-        states.peek().resume();
+	public void resume() {
+		states.peek().resume();
 	}
 
 	public void dispose() {

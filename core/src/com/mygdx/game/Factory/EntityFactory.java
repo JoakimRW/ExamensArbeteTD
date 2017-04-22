@@ -56,12 +56,14 @@ public class EntityFactory {
 	private static Entity createTurretEntity(TowerType type ,float x , float y) {
 		Entity entity = new Entity();
 		SkeletonComponent skeletonComponent = new SkeletonComponent(Assets.laserTowerSkeleton);
-		PositionComponent positionComponent = new PositionComponent(new Vector2(x*32,y*32));
+		PositionComponent positionComponent = new PositionComponent(new Vector2(x,y));
 		RenderableComponent renderableComponent = new RenderableComponent();
 		DirectionComponent directionComponent = new DirectionComponent();
+		AngleComponent angleComponent = new AngleComponent();
 		skeletonComponent.skeleton.setPosition(x, y);
 		skeletonComponent.animationState.setData(Assets.laserTowerAnimationState.getData());
-		entity.add(skeletonComponent).add(directionComponent).add(positionComponent).add(renderableComponent);
+		entity.add(skeletonComponent).add(directionComponent).add(positionComponent).add(angleComponent).add(renderableComponent);
+		System.out.println("Tower Entity Created");
 		return entity;
 	}
 
