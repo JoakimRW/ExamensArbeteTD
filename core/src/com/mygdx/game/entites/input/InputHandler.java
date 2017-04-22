@@ -1,5 +1,7 @@
 package com.mygdx.game.entites.input;
 
+import com.badlogic.ashley.core.Engine;
+import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
@@ -7,6 +9,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.Factory.EntityFactory;
 import com.mygdx.game.Factory.TowerType;
+import com.mygdx.game.entites.entitiycomponents.HealthComponent;
 import com.mygdx.game.entites.input.InputHandlerIF;
 import com.mygdx.game.managers.GameStateManager;
 import com.mygdx.game.managers.LevelManager;
@@ -21,6 +24,7 @@ public class InputHandler implements InputProcessor {
 	private static GameStateManager _gsm;
 	private static EntityFactory _ef;
 	private static OrthographicCamera _gameCamera;
+	private static Engine _ashleyEngine;
 
 	public void registerInputHandlerSystem(InputHandlerIF inputHandler) {
 		_inputHandler = inputHandler;
@@ -103,7 +107,13 @@ public class InputHandler implements InputProcessor {
 
 	@Override
 	public boolean mouseMoved(int screenX, int screenY) {
-		// TODO Auto-generated method stub
+		
+		
+		Vector3 mousePos = _gameCamera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+		
+		Family towerFamily = Family.exclude(HealthComponent.class).get();
+//		getAshleyEngine().getEntities().
+		
 		return false;
 	}
 
@@ -118,7 +128,7 @@ public class InputHandler implements InputProcessor {
 	}
 
 	public static void setPlacementMode(boolean isPlacementMode) {
-		InputHandler._isPlacementMode = isPlacementMode;
+		_isPlacementMode = isPlacementMode;
 	}
 
 	public static TowerType getTowerType() {
@@ -146,12 +156,13 @@ public class InputHandler implements InputProcessor {
 	}
 
 	public static void setTowerInfoForPlacement(boolean isPlacementMode, GameStateManager gsm, EntityFactory ef,
-			TowerType towerType, OrthographicCamera gameCamera) {
-		InputHandler.setGameCamera(gameCamera);
-		InputHandler.setEf(ef);
-		InputHandler.setGsm(gsm);
-		InputHandler.setPlacementMode(isPlacementMode);
-		InputHandler.setTowerType(towerType);
+			TowerType towerType, OrthographicCamera gameCamera, Engine ashleyEngine) {
+		setAshleyEngine(ashleyEngine);
+		setGameCamera(gameCamera);
+		setEf(ef);
+		setGsm(gsm);
+		setPlacementMode(isPlacementMode);
+		setTowerType(towerType);
 	}
 
 	public static OrthographicCamera getGameCamera() {
@@ -160,6 +171,14 @@ public class InputHandler implements InputProcessor {
 
 	public static void setGameCamera(OrthographicCamera gameCamera) {
 		_gameCamera = gameCamera;
+	}
+
+	public static Engine getAshleyEngine() {
+		return _ashleyEngine;
+	}
+
+	public static void setAshleyEngine(Engine ashleyEngine) {
+		_ashleyEngine = ashleyEngine;
 	}
 
 }

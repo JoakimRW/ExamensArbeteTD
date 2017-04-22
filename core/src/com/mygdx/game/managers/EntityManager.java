@@ -30,7 +30,7 @@ public class EntityManager {
 
 		_entityFactory = new EntityFactory(ashleyEngine);
 		_waveManager = new WaveTimeManager(_entityFactory);
-		EntityModel _entityModel = new EntityModel(_waveManager, _entityFactory, gsm, gameCamera);
+		EntityModel _entityModel = new EntityModel(_waveManager, _entityFactory, gsm, gameCamera,ashleyEngine);
 		uiController = new UIStageController(_uiView, _entityModel);
 		// player entity
 		Entity playerEntity = new Entity();

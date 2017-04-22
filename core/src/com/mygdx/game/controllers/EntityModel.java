@@ -1,5 +1,6 @@
 package com.mygdx.game.controllers;
 
+import com.badlogic.ashley.core.Engine;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.mygdx.game.Factory.EntityFactory;
@@ -14,13 +15,15 @@ public class EntityModel extends InputAdapter {
 	private static EntityFactory _factory;
 	private static GameStateManager _gsm;
 	private static OrthographicCamera _gameCamera;
+	private static Engine _ashleyEngine;
 
-	public EntityModel(WaveTimeManager waveMngr, EntityFactory factory, GameStateManager gsm, OrthographicCamera gameCamera) {
+	public EntityModel(WaveTimeManager waveMngr, EntityFactory factory, GameStateManager gsm, OrthographicCamera gameCamera, Engine ashleyEngine) {
 
 		this.waveMngr = waveMngr;
 		_factory = factory;
 		_gsm = gsm;
 		_gameCamera = gameCamera;
+		_ashleyEngine = ashleyEngine;
 	}
 
 	public static void startNextWave() {
@@ -31,7 +34,7 @@ public class EntityModel extends InputAdapter {
 	public static void beginTowerPlacing(TowerType towerType) {
 
 		System.out.println("TURRET TYPE =  " + towerType);
-		InputHandler.setTowerInfoForPlacement(true, _gsm, _factory, towerType,_gameCamera);
+		InputHandler.setTowerInfoForPlacement(true, _gsm, _factory, towerType,_gameCamera,_ashleyEngine);
 
 	}
 
