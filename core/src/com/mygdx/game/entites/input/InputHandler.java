@@ -10,6 +10,7 @@ import com.mygdx.game.Factory.TowerType;
 import com.mygdx.game.entites.input.InputHandlerIF;
 import com.mygdx.game.managers.GameStateManager;
 import com.mygdx.game.managers.LevelManager;
+import com.mygdx.game.states.PlayState;
 import com.mygdx.game.utils.Tile;
 
 public class InputHandler implements InputProcessor {
@@ -52,12 +53,13 @@ public class InputHandler implements InputProcessor {
 
 	@Override
 	public boolean keyDown(int keycode) {
-
+        if (keycode == Input.Keys.ESCAPE) PlayState.PAUSE = !PlayState.PAUSE;
 		return false;
 	}
 
 	@Override
 	public boolean keyUp(int keycode) {
+
 		return false;
 	}
 
