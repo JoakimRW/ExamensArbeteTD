@@ -1,9 +1,6 @@
 package com.mygdx.game.stages;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -32,6 +29,7 @@ public class MainMenuStage extends Stage {
 
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
+				gsm.dispose();
 				gsm.setState(GameStateManager.State.PLAY);
 			}
 

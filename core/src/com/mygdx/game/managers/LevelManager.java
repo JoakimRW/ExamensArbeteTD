@@ -180,4 +180,13 @@ public abstract class LevelManager {
             }
         }
     }
+
+    public static void dispose() {
+        tiledMap.dispose();
+        tiles = null;
+        tileSpawn = null;
+        tileEnd = null;
+        tileHeight = 0;
+        tileWidth = 0;
+    }
 }

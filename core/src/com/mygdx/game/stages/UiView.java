@@ -7,11 +7,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.scenes.scene2d.*;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.mygdx.game.managers.GameStateManager;
 import com.mygdx.game.managers.WaveTimeManager;
 import com.mygdx.game.states.PlayState;
 
@@ -49,8 +51,11 @@ public class UiView implements Screen {
     private Label toolTip_val_special_lbl;
     private Label toolTip_stat_price_lbl;
     private Label toolTip_val_price_lbl;
+    private Window _pauseWindow;
+    private GameStateManager _gsm;
 
-    public UiView(){
+    public UiView(GameStateManager gsm){
+        _gsm = gsm;
     }
 
     @Override
@@ -65,7 +70,8 @@ public class UiView implements Screen {
         _skin.add("default-font",font16);
         _skin.add("tooltipFont",font10);
         _skin.load(Gdx.files.internal("interface/ui/uiSkin.json"));
-
+        // create pause window
+        createPauseWindow();
         Table waveInfoContainer = new Table(_skin);
         Table towerTargetContainer = new Table(_skin);
         Table towerListContainer = new Table(_skin);
@@ -150,7 +156,6 @@ public class UiView implements Screen {
         waveInfoContainer.row();
         waveInfoContainer.add(_nextWaveBtn).height(40).align(Align.left).expand();
         towerTargetContainer.add(_grayPanel1).prefHeight(110).expand().fill().padRight(2);
-        waveInfoContainer.debug();
         // add to root
         _rootTable.add(towerListContainer).expand().fill();
         _rootTable.add(towerTargetContainer).expand().fill();
@@ -160,7 +165,35 @@ public class UiView implements Screen {
         _rootTable.getCell(towerTargetContainer).getActor().getCell(_grayPanel1).expand();
         // add root table to stage
         _uiStage.addActor(_rootTable);
-        _rootTable.debug();
+        _pauseWindow.setSize(Gdx.graphics.getWidth() , Gdx.graphics.getHeight());
+        _uiStage.addActor(_pauseWindow);
+    }
+
+    private void createPauseWindow() {
+        _pauseWindow = new Window("Pause",_skin);
+        _pauseWindow.setVisible(false);
+        Table root = new Table(_skin);
+        TextButton resumeButton = new TextButton("Resume",_skin);
+        TextButton mainMenuButton = new TextButton("Main Menu",_skin);
+        root.add(resumeButton).padBottom(10).row();
+        root.add(mainMenuButton);
+        _pauseWindow.add(root);
+        resumeButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                _pauseWindow.setVisible(false);
+                PlayState.PAUSE = false;
+            }
+        });
+
+        mainMenuButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                _pauseWindow.setVisible(false);
+                _gsm.dispose();
+                _gsm.setState(GameStateManager.State.MAINMENU);
+            }
+        });
     }
 
     private BitmapFont createFont(int fontSize) {
@@ -186,6 +219,7 @@ public class UiView implements Screen {
     @Override
     public void resize(int width, int height) {
         _rootTable.setWidth(Gdx.graphics.getWidth());
+        _pauseWindow.setSize(Gdx.graphics.getWidth() , Gdx.graphics.getHeight());
         _uiStage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
     }
 
@@ -304,5 +338,9 @@ public class UiView implements Screen {
     /** action listeners ***/
     public void addNextWaveButtonnListener(ClickListener clickListener) {
         _nextWaveBtn.addListener(clickListener);
+    }
+
+    public Window get_pauseWindow() {
+        return _pauseWindow;
     }
 }

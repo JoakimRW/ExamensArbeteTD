@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.mygdx.game.entites.input.InputHandlerIF;
+import com.mygdx.game.states.PlayState;
 
 public class InputHandler implements InputProcessor{
 	private InputHandlerIF _inputHandler;
@@ -40,7 +41,10 @@ public class InputHandler implements InputProcessor{
     }
 	@Override
 	public boolean keyDown(int keycode) {
-
+		if(keycode == Input.Keys.ESCAPE){
+            PlayState.PAUSE = !PlayState.PAUSE;
+            System.out.println(PlayState.PAUSE);
+        }
 		return false;
 	}
 

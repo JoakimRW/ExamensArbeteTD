@@ -2,6 +2,7 @@ package com.mygdx.game.managers;
 
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.Factory.EntityFactory;
@@ -15,9 +16,11 @@ import com.mygdx.game.entites.systems.MoveToSystem;
 import com.mygdx.game.entites.systems.PlayerInputSystem;
 import com.mygdx.game.entites.systems.RenderSystem;
 import com.mygdx.game.stages.UiView;
+import com.mygdx.game.states.PlayState;
 
 public class EntityManager {
     private final EntityFactory _entityFactory;
+    private final UIStageController uiController;
     private Engine _ashleyEngine;
 	private WaveTimeManager _waveManager;
 	private OrthographicCamera _gameCamera;
@@ -28,7 +31,7 @@ public class EntityManager {
         _entityFactory = new EntityFactory(ashleyEngine);
         _waveManager = new WaveTimeManager(_entityFactory);
         EntityModel _entityModel = new EntityModel(_waveManager , _entityFactory);
-        new UIStageController(_uiView , _entityModel);
+        uiController = new UIStageController(_uiView , _entityModel);
         // player entity
         Entity playerEntity = new Entity();
         // component for camera (only need direction)
@@ -53,11 +56,19 @@ public class EntityManager {
     }
 
     public void update(float deltaTime){
-        _ashleyEngine.update(deltaTime);
-        inputhandler.pullInput();
-        _waveManager.tick(deltaTime);
+        if(PlayState.PAUSE) {
+            if(!uiController.getPauseWindow().isVisible())
+                System.out.println("show pause window");
+                uiController.getPauseWindow().setVisible(true);
+        }else{
+            if(uiController.getPauseWindow().isVisible()){
+                System.out.println("hide pause window");
+                uiController.getPauseWindow().setVisible(false);
+            }
+            inputhandler.pullInput();
+            _waveManager.tick(deltaTime);
+            _ashleyEngine.update(deltaTime);
+        }
     }
-    public EntityFactory getEntityFactory(){
-    	return _entityFactory;
-    }
+
 }

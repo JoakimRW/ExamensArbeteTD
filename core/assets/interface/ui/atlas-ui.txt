@@ -1,5 +1,5 @@
 atlas-ui.png
-size: 927, 385
+size: 927, 785
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
@@ -24,30 +24,44 @@ button-small
   orig: 100, 37
   offset: 0, 0
   index: -1
-coin
+button
   rotate: false
   xy: 434, 0
+  size: 391, 92
+  orig: 391, 92
+  offset: 0, 0
+  index: -1
+coin
+  rotate: false
+  xy: 825, 0
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 gray-panel
   rotate: false
-  xy: 466, 0
+  xy: 0, 155
   size: 167, 78
   orig: 167, 78
   offset: 0, 0
   index: -1
+pause-bg
+  rotate: false
+  xy: 167, 155
+  size: 640, 400
+  orig: 640, 400
+  offset: 0, 0
+  index: -1
 turret-icon
   rotate: false
-  xy: 633, 0
+  xy: 807, 155
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 uibg
   rotate: false
-  xy: 0, 155
+  xy: 0, 555
   size: 927, 230
   orig: 927, 230
   offset: 0, 0

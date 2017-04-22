@@ -1,5 +1,6 @@
 package com.mygdx.game.controllers;
 import com.badlogic.gdx.scenes.scene2d.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.stages.UiView;
 import com.mygdx.game.states.PlayState;
@@ -11,6 +12,7 @@ public class UIStageController extends ClickListener {
 
     private UiView uistage;
     private EntityModel model;
+    private Window pauseWindow;
 
     public UIStageController(UiView uistage, EntityModel model) {
         this.uistage = uistage;
@@ -51,5 +53,13 @@ public class UIStageController extends ClickListener {
                 uistage.get_tooltip().setInstant(true);
             }
         });
+    }
+
+    public void showPauseWindow() {
+
+    }
+
+    public Window getPauseWindow() {
+        return uistage.get_pauseWindow();
     }
 }
