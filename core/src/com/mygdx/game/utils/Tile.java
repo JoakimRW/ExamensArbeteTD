@@ -1,13 +1,8 @@
 package com.mygdx.game.utils;
-
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 
-/**
- * Created by MichaelSjogren on 2017-02-19.
- */
-public class Tile extends Actor {
+public class Tile {
 	private Vector2 cords;
 	private int tileWidth;
 	private int tileHeight;
@@ -29,6 +24,7 @@ public class Tile extends Actor {
 	public Tile() {
 
 	}
+
 
 	public Vector2 getCords() {
 		return cords;

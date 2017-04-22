@@ -13,6 +13,10 @@
   },
   "com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle": {
     "default": {"label": {"font": "tooltipFont"}, "background": "black-rectangle-hover"}
+  },
+
+  "com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle": {
+    "default":{"background":"pause-bg","titleFont":"default-font"}
   }
 
 }

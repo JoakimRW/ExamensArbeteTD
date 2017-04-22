@@ -29,6 +29,7 @@ public class MainMenuStage extends Stage {
 
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
+				gsm.dispose();
 				gsm.setState(GameStateManager.State.PLAY);
 			}
 

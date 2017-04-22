@@ -17,6 +17,7 @@ public class PlayState extends GameState {
 	public static int PLAYER_HEALTH = 30;
 	public static boolean GAME_OVER = false;
 	public static boolean START_GAME = false;
+	public static boolean PAUSE = false;
 	private final UiView _uiView;
 	private EntityManager _entityManager;
 	private OrthographicCamera _gameCamera;
@@ -32,11 +33,12 @@ public class PlayState extends GameState {
 		_gameCamera = new OrthographicCamera();
 		InputHandler inputhandler = new InputHandler();
 		// behöver deklarera uiview här för att registrera inputprocessor
-		_uiView = new UiView();
+		_uiView = new UiView(gsm);
 		_uiView.show();
 		_entityManager = new EntityManager(ashleyEngine, _batch, _gameCamera, inputhandler, _uiView, gsm);
 
 		InputMultiplexer multi = new InputMultiplexer();
+
 
 		multi.addProcessor(_uiView.getStage());
 		multi.addProcessor(inputhandler);
@@ -52,7 +54,6 @@ public class PlayState extends GameState {
 
 	@Override
 	public void update(float delta) {
-
 		if (PLAYER_HEALTH == 0) {
 			GAME_OVER = true;
 		}
@@ -71,16 +72,21 @@ public class PlayState extends GameState {
 
 	@Override
 	public void dispose() {
-
-	}
+        PLAYER_HEALTH = 30;
+        GAME_OVER = false;
+        START_GAME = false;
+        PAUSE = false;
+        _entityManager.dispose();
+        LevelManager.dispose();
+    }
 
 	@Override
 	public void pause() {
-
+		System.out.println("Pause");
 	}
 
 	@Override
 	public void resume() {
-
+		System.out.println("Resume");
 	}
 }
