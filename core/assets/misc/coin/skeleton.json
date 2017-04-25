@@ -1,0 +1,34 @@
+{
+"skeleton": {
+	"hash": "SC6HKz5sGM8gtLVAFOcirgmMKSg",
+	"spine": "3.5.51",
+	"width": 24,
+	"height": 24,
+},
+"bones": [
+	{ "name": "root", "color": "ffffffff" }
+],
+"slots": [
+	{ "name": "coin", "bone": "root", "attachment": "coin3" }
+],
+"skins": {
+	"default": {
+		"coin": {
+			"coin3": { "width": 24, "height": 24 }
+		}
+	}
+},
+"animations": {
+	"flip": {
+		"bones": {
+			"root": {
+				"shear": [
+					{ "time": 0, "x": 0, "y": 0 },
+					{ "time": 0.1667, "x": 0, "y": 90 },
+					{ "time": 0.3333, "x": 0, "y": 179 }
+				]
+			}
+		}
+	}
+}
+}
