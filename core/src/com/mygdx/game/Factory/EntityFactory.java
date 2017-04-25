@@ -6,6 +6,7 @@ import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entites.entitiycomponents.*;
+import com.mygdx.game.entites.systems.TimeComponent;
 import com.mygdx.game.managers.LevelManager;
 import com.mygdx.game.utils.Assets;
 import com.mygdx.game.utils.Node;
@@ -108,6 +109,21 @@ public class EntityFactory {
 		entity.add(pathComponent).add(positionComponent).add(skeletonComp).add(healthComponent).add(velocityComponent)
 				.add(directionComponent).add(renderableComponent).add(angleComponent);
 		return entity;
+	}
+	
+	public void createCoinEntity(float x , float y){
+		Entity entity = new Entity();
+		SkeletonComponent scomp = new SkeletonComponent(Assets.coinSkeleton);
+		TimeComponent tcomp = new TimeComponent(0.40f);
+		VelocityComponent vcomp = new VelocityComponent(35f);
+		PositionComponent pcomp = new PositionComponent(new Vector2(x , y));
+		DirectionComponent dcomp = new DirectionComponent();
+		dcomp.direction.setToRandomDirection();
+		AngleComponent acomp = new AngleComponent();
+		scomp.animationState.setData(Assets.coinAnimationState.getData());
+		scomp.animationState.setAnimation(0, "flip", false);
+		entity.add(dcomp).add(pcomp).add(vcomp).add(tcomp).add(scomp).add(acomp);
+		_engine.addEntity(entity);
 	}
 
 }

@@ -12,7 +12,7 @@ public class RenderSystem extends IteratingSystem{
     private SkeletonRenderer<SpriteBatch> renderer;
 
     public RenderSystem(SpriteBatch batch){
-        super(Family.one(SkeletonComponent.class,RenderableComponent.class , HealthComponent.class  , AngleComponent.class).get()); //
+        super(Family.one(SkeletonComponent.class,RenderableComponent.class ).get()); //
         //Family enemy = Family.all(SkeletonComponent.class,RenderableComponent.class , HealthComponent.class , StateComponent.class , DirectionComponent.class , DimensionComponent.class).get();
         this.batch = batch;
         renderer = new SkeletonRenderer<>();
@@ -31,8 +31,11 @@ public class RenderSystem extends IteratingSystem{
         skeletonComponent.animationState.update(deltaTime);
         skeletonComponent.animationState.apply(skeletonComponent.skeleton);
         skeletonComponent.skeleton.setPosition(pos.position.x + offsetX, pos.position.y + offsetY);
+        if(angleComp != null)
         skeletonComponent.skeleton.getRootBone().setRotation(angleComp.spriteAngle);
         skeletonComponent.skeleton.updateWorldTransform();
+        batch.begin();
         renderer.draw(batch,skeletonComponent.skeleton);
+        batch.end();
     }
 }

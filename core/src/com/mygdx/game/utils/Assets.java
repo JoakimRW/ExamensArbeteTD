@@ -4,15 +4,18 @@ package com.mygdx.game.utils;
 
 import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Cursor;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.esotericsoftware.spine.*;
 
 public class Assets {
-    public static Sprite enemyGreenHealthbarBG;
+	public static Sprite enemyGreenHealthbarBG;
     public static Sprite enemyRedHealthbarBG;
 
 	public static Skeleton bloodWormSkeleton;
@@ -23,6 +26,16 @@ public class Assets {
 
     public static Skeleton laserTowerSkeleton;
     public static AnimationState laserTowerAnimationState;
+    
+    public static Skeleton coinSkeleton;
+    public static AnimationState coinAnimationState;
+    
+    public static BitmapFont font10;
+    public static BitmapFont font12;
+    public static BitmapFont font16;
+	private static com.badlogic.gdx.graphics.Cursor slickArrow;
+	public static BitmapFont fontVera10;
+	
 
     private static Texture loadTexture(String file){
         return new Texture(Gdx.files.internal(file));
@@ -41,8 +54,16 @@ public class Assets {
         // Tower
         laserTowerSkeleton = loadSkeleton("towers/lvl1/skeleton.atlas","towers/lvl1/skeleton.json");
         laserTowerAnimationState = new AnimationState(new AnimationStateData(laserTowerSkeleton.getData()));
-
-        Cursor slickArrow = Gdx.graphics.newCursor(new Pixmap(Gdx.files.getFileHandle("slick_arrow-arrow.png", Files.FileType.Internal)), 0, 0);
+        // Coin
+        coinSkeleton = loadSkeleton("misc/coin/skeleton.atlas", "misc/coin/skeleton.json");
+        coinSkeleton.getRootBone().setScale(0.30f);
+        coinAnimationState = new AnimationState(new AnimationStateData(coinSkeleton.getData()));
+        // fonts
+        fontVera10 = createFont(10 , Fonts.VERA);
+        font10 = createFont(10 , Fonts.VERA_BD);
+        font12 = createFont(12 , Fonts.VERA_BD);
+        font16 = createFont(16 , Fonts.VERA_BD);
+        slickArrow = Gdx.graphics.newCursor(new Pixmap(Gdx.files.getFileHandle("slick_arrow-arrow.png", Files.FileType.Internal)), 0, 0);
         Gdx.graphics.setCursor(slickArrow);
     }
 
@@ -67,6 +88,30 @@ public class Assets {
         SkeletonJson json = new SkeletonJson(atlas);
         SkeletonData data = json.readSkeletonData(Gdx.files.internal(jsonPath));
         return new Skeleton(data);
+    }
+    
+    private static BitmapFont createFont(int fontSize , Fonts type) {
+    	FileHandle fontFile = null;
+    	switch(type){
+    		case HEMI_HEAD: fontFile = Gdx.files.internal("fonts/HEMIHEAD.TTF"); break;
+    		case VERA: fontFile = Gdx.files.internal("fonts/Vera.ttf"); break;
+    		case VERA_BD: fontFile = Gdx.files.internal("fonts/VeraBd.ttf"); break;
+    	}
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(fontFile);
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = fontSize;
+        
+        BitmapFont font = generator.generateFont(parameter);
+        generator.dispose();
+        return font;
+    }
+    
+    public static enum Fonts{
+    	HEMI_HEAD,
+    	VERA, 
+    	VERA_BD,
+    	VERA_BI,
+    	VERA_IT
     }
 }
 

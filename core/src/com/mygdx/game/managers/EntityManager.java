@@ -10,6 +10,7 @@ import com.mygdx.game.controllers.UIStageController;
 import com.mygdx.game.entites.entitiycomponents.DirectionComponent;
 import com.mygdx.game.entites.input.InputHandler;
 import com.mygdx.game.entites.systems.CameraMovementSystem;
+import com.mygdx.game.entites.systems.CoinSystem;
 import com.mygdx.game.entites.systems.HealthSystem;
 import com.mygdx.game.entites.systems.MoveToSystem;
 import com.mygdx.game.entites.systems.PlayerInputSystem;
@@ -41,8 +42,9 @@ public class EntityManager {
 //		this._gameCamera = gameCamera;
 		this.inputhandler = inputhandler;
 		MoveToSystem moveToSystem = new MoveToSystem();
+		CoinSystem coinSystem = new CoinSystem(batch , gameCamera);
 		RenderSystem renderSystem = new RenderSystem(batch);
-		HealthSystem healthSystem = new HealthSystem(batch);
+		HealthSystem healthSystem = new HealthSystem(batch , _entityFactory);
 		PlayerInputSystem playerInputSys = new PlayerInputSystem();
 		inputhandler.registerInputHandlerSystem(playerInputSys);
 		CameraMovementSystem camSys = new CameraMovementSystem(gameCamera);
@@ -51,6 +53,7 @@ public class EntityManager {
 		ashleyEngine.addSystem(healthSystem);
 		ashleyEngine.addSystem(playerInputSys);
 		ashleyEngine.addSystem(camSys);
+		ashleyEngine.addSystem(coinSystem);
 		// add player entity
 		ashleyEngine.addEntity(playerEntity);
 	}

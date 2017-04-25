@@ -64,9 +64,7 @@ public class PlayState extends GameState {
 		_renderer.setView(_gameCamera);
 		_renderer.render();
 		_batch.setProjectionMatrix(_gameCamera.combined);
-		_batch.begin();
 		_entityManager.update(Gdx.graphics.getDeltaTime());
-		_batch.end();
 		_uiView.render(Gdx.graphics.getDeltaTime());
 	}
 
