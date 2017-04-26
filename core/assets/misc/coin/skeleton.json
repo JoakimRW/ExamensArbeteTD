@@ -1,4 +1,5 @@
 {
+"skeleton": { "hash": "s6OckyE0qtoNrI/7M3T0yaLuIiM", "spine": "3.5.51", "width": 48, "height": 48, "images": "" },
 "bones": [
 	{ "name": "root", "color": "ffffffff" }
 ],
@@ -8,6 +9,7 @@
 "skins": {
 	"default": {
 		"coin": {
+			"Coin/coin4": { "width": 48, "height": 48 }
 		}
 	}
 },
