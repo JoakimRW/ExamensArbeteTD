@@ -55,11 +55,11 @@ public class Assets {
         laserTowerAnimationState = new AnimationState(new AnimationStateData(laserTowerSkeleton.getData()));
         // Coin
         coinSkeleton = loadSkeleton("misc/coin/skeleton.atlas", "misc/coin/skeleton.json");
-        coinSkeleton.getRootBone().setScale(0.30f);
+        coinSkeleton.getRootBone().setScale(0.18f);
         coinAnimationState = new AnimationState(new AnimationStateData(coinSkeleton.getData()));
         // fonts
-        fontVera10 = createFont(10 , Fonts.VERA_BD);
-        font10 = createFont(10 , Fonts.HEMI_HEAD);
+        fontVera10 = createFont(12 , Fonts.VERA);
+        font10 = createFont(12 , Fonts.HEMI_HEAD);
         //font12 = createFont(12 , Fonts.HEMI_HEAD);
         font16 = createFont(16 , Fonts.HEMI_HEAD);
         Cursor slickArrow = Gdx.graphics.newCursor(new Pixmap(Gdx.files.getFileHandle("slick_arrow-arrow.png", Files.FileType.Internal)), 0, 0);

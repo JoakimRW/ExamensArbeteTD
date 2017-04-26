@@ -1,21 +1,13 @@
 {
-"skeleton": {
-	"hash": "SC6HKz5sGM8gtLVAFOcirgmMKSg",
-	"spine": "3.5.51",
-	"width": 24,
-	"height": 24,
-	"images": ""
-},
 "bones": [
 	{ "name": "root", "color": "ffffffff" }
 ],
 "slots": [
-	{ "name": "coin", "bone": "root", "attachment": "coin3" }
+	{ "name": "coin", "bone": "root", "attachment": "Coin/coin4" }
 ],
 "skins": {
 	"default": {
 		"coin": {
-			"coin3": { "width": 24, "height": 24 }
 		}
 	}
 },

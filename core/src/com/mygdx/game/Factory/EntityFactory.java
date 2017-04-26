@@ -128,7 +128,6 @@ public class EntityFactory {
 		MoneyComponent mcomp = new MoneyComponent(moneyValue);
 		RenderableComponent rcomp = new RenderableComponent();
 		scomp.animationState.setData(Assets.coinAnimationState.getData());
-		scomp.animationState.setAnimation(0, "flip", false);
 		entity.add(pcomp)
                 .add(vcomp)
                 .add(tcomp)
