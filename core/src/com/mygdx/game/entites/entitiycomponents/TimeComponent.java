@@ -1,4 +1,4 @@
-package com.mygdx.game.entites.systems;
+package com.mygdx.game.entites.entitiycomponents;
 
 import com.badlogic.ashley.core.Component;
 

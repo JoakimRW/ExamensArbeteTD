@@ -9,35 +9,31 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.Factory.EntityFactory;
 import com.mygdx.game.entites.entitiycomponents.HealthComponent;
+import com.mygdx.game.entites.entitiycomponents.Mappers;
 import com.mygdx.game.entites.entitiycomponents.PositionComponent;
 import com.mygdx.game.utils.Assets;
 
 public class HealthSystem extends IteratingSystem {
 	private SpriteBatch _batch;
-
-	private ComponentMapper<HealthComponent> _hpm;
-	private ComponentMapper<PositionComponent> _pm;
 	private EntityFactory _entityFactory;
 
 	public HealthSystem(SpriteBatch batch , EntityFactory factory) {
 		super(Family.all(HealthComponent.class , PositionComponent.class).get());
-		_pm = ComponentMapper.getFor(PositionComponent.class);
-		_hpm = ComponentMapper.getFor(HealthComponent.class);
 		_entityFactory = factory;
 		_batch = batch;
 	}
 
 	@Override
 	protected void processEntity(Entity entity, float deltaTime) {
-		HealthComponent hpComp = _hpm.get(entity);
-		PositionComponent posComp = _pm.get(entity);
+		HealthComponent hpComp = Mappers.HEALTH_M.get(entity);
+		PositionComponent posComp = Mappers.POSITION_M.get(entity);
 		hpComp.health -= 1f;
 		if(hpComp.health <= 0){
 			float deathX = posComp.position.x;
 			float deathY = posComp.position.y;
 			entity.removeAll();
 			getEngine().removeEntity(entity);
-			_entityFactory.createCoinEntity(deathX, deathY);
+			_entityFactory.createCoinEntity(deathX, deathY , 1);
 		}	
         drawHealthBar(hpComp, posComp);
 	}

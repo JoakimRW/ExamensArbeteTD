@@ -6,7 +6,7 @@ import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entites.entitiycomponents.*;
-import com.mygdx.game.entites.systems.TimeComponent;
+import com.mygdx.game.entites.entitiycomponents.TimeComponent;
 import com.mygdx.game.managers.LevelManager;
 import com.mygdx.game.utils.Assets;
 import com.mygdx.game.utils.Node;
@@ -59,11 +59,10 @@ public class EntityFactory {
 		SkeletonComponent skeletonComponent = new SkeletonComponent(Assets.laserTowerSkeleton);
 		PositionComponent positionComponent = new PositionComponent(new Vector2(x,y));
 		RenderableComponent renderableComponent = new RenderableComponent();
-		DirectionComponent directionComponent = new DirectionComponent();
 		AngleComponent angleComponent = new AngleComponent();
 		skeletonComponent.skeleton.setPosition(x, y);
 		skeletonComponent.animationState.setData(Assets.laserTowerAnimationState.getData());
-		entity.add(skeletonComponent).add(directionComponent).add(positionComponent).add(angleComponent).add(renderableComponent);
+		entity.add(skeletonComponent).add(positionComponent).add(angleComponent).add(renderableComponent);
 		System.out.println("Tower Entity Created");
 		return entity;
 	}
@@ -71,6 +70,7 @@ public class EntityFactory {
 	private Entity createBloodWormEntity() {
 		// Components
 		Entity entity = new Entity();
+        OffsetComponent ocomp = new OffsetComponent(16,16);
 		PathComponent pathComponent = new PathComponent();
 		SkeletonComponent skeletonComp = new SkeletonComponent(Assets.bloodWormSkeleton);
 		PositionComponent positionComponent = new PositionComponent(new Vector2(_spawnX * 32, _spawnY * 32));
@@ -86,12 +86,13 @@ public class EntityFactory {
 		skeletonComp.animationState.setAnimation(0, "MOVING", true);
 		pathComponent.path = path;
 		entity.add(pathComponent).add(positionComponent).add(skeletonComp).add(healthComponent).add(velocityComponent)
-				.add(directionComponent).add(renderableComponent).add(angleComponent);
+				.add(directionComponent).add(renderableComponent).add(ocomp).add(angleComponent);
 		return entity;
 	}
 
 	private Entity createBirdEntity() {
 		Entity entity = new Entity();
+        OffsetComponent ocomp = new OffsetComponent(16,16);
 		PathComponent pathComponent = new PathComponent();
 		SkeletonComponent skeletonComp = new SkeletonComponent(Assets.birdSkeleton);
 		PositionComponent positionComponent = new PositionComponent(new Vector2(_spawnX * 32, _spawnY * 32));
@@ -106,23 +107,35 @@ public class EntityFactory {
 		skeletonComp.skeleton.setPosition(_spawnX * 32, _spawnY * 32);
 		skeletonComp.animationState.setAnimation(0, "MOVING", true);
 		pathComponent.path = path;
-		entity.add(pathComponent).add(positionComponent).add(skeletonComp).add(healthComponent).add(velocityComponent)
-				.add(directionComponent).add(renderableComponent).add(angleComponent);
+		entity.add(pathComponent).add(positionComponent)
+                .add(skeletonComp)
+                .add(healthComponent)
+                .add(velocityComponent)
+				.add(directionComponent)
+                .add(renderableComponent)
+                .add(ocomp)
+                .add(angleComponent);
 		return entity;
 	}
 	
-	public void createCoinEntity(float x , float y){
+	public void createCoinEntity(float x , float y , int moneyValue){
 		Entity entity = new Entity();
+		OffsetComponent ocomp = new OffsetComponent(16,16);
 		SkeletonComponent scomp = new SkeletonComponent(Assets.coinSkeleton);
-		TimeComponent tcomp = new TimeComponent(0.40f);
-		VelocityComponent vcomp = new VelocityComponent(35f);
+		TimeComponent tcomp = new TimeComponent(0.5f);
+		VelocityComponent vcomp = new VelocityComponent(25f);
 		PositionComponent pcomp = new PositionComponent(new Vector2(x , y));
-		DirectionComponent dcomp = new DirectionComponent();
-		dcomp.direction.setToRandomDirection();
-		AngleComponent acomp = new AngleComponent();
+		MoneyComponent mcomp = new MoneyComponent(moneyValue);
+		RenderableComponent rcomp = new RenderableComponent();
 		scomp.animationState.setData(Assets.coinAnimationState.getData());
 		scomp.animationState.setAnimation(0, "flip", false);
-		entity.add(dcomp).add(pcomp).add(vcomp).add(tcomp).add(scomp).add(acomp);
+		entity.add(pcomp)
+                .add(vcomp)
+                .add(tcomp)
+                .add(scomp)
+                .add(ocomp)
+                .add(mcomp)
+                .add(rcomp);
 		_engine.addEntity(entity);
 	}
 

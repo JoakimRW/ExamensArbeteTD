@@ -5,9 +5,9 @@ package com.mygdx.game.utils;
 import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Cursor;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -31,10 +31,9 @@ public class Assets {
     public static AnimationState coinAnimationState;
     
     public static BitmapFont font10;
-    public static BitmapFont font12;
+   // public static BitmapFont font12;
     public static BitmapFont font16;
-	private static com.badlogic.gdx.graphics.Cursor slickArrow;
-	public static BitmapFont fontVera10;
+    public static BitmapFont fontVera10;
 	
 
     private static Texture loadTexture(String file){
@@ -59,11 +58,11 @@ public class Assets {
         coinSkeleton.getRootBone().setScale(0.30f);
         coinAnimationState = new AnimationState(new AnimationStateData(coinSkeleton.getData()));
         // fonts
-        fontVera10 = createFont(10 , Fonts.VERA);
-        font10 = createFont(10 , Fonts.VERA_BD);
-        font12 = createFont(12 , Fonts.VERA_BD);
-        font16 = createFont(16 , Fonts.VERA_BD);
-        slickArrow = Gdx.graphics.newCursor(new Pixmap(Gdx.files.getFileHandle("slick_arrow-arrow.png", Files.FileType.Internal)), 0, 0);
+        fontVera10 = createFont(10 , Fonts.VERA_BD);
+        font10 = createFont(10 , Fonts.HEMI_HEAD);
+        //font12 = createFont(12 , Fonts.HEMI_HEAD);
+        font16 = createFont(16 , Fonts.HEMI_HEAD);
+        Cursor slickArrow = Gdx.graphics.newCursor(new Pixmap(Gdx.files.getFileHandle("slick_arrow-arrow.png", Files.FileType.Internal)), 0, 0);
         Gdx.graphics.setCursor(slickArrow);
     }
 
@@ -106,7 +105,7 @@ public class Assets {
         return font;
     }
     
-    public static enum Fonts{
+    public enum Fonts{
     	HEMI_HEAD,
     	VERA, 
     	VERA_BD,

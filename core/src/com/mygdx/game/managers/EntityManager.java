@@ -8,6 +8,7 @@ import com.mygdx.game.Factory.EntityFactory;
 import com.mygdx.game.controllers.EntityModel;
 import com.mygdx.game.controllers.UIStageController;
 import com.mygdx.game.entites.entitiycomponents.DirectionComponent;
+import com.mygdx.game.entites.entitiycomponents.MoneyComponent;
 import com.mygdx.game.entites.input.InputHandler;
 import com.mygdx.game.entites.systems.CameraMovementSystem;
 import com.mygdx.game.entites.systems.CoinSystem;
@@ -19,6 +20,7 @@ import com.mygdx.game.stages.UiView;
 import com.mygdx.game.states.PlayState;
 
 public class EntityManager {
+	private final CoinSystem coinSystem;
 	private EntityFactory _entityFactory;
 	private UIStageController uiController;
 	private Engine _ashleyEngine;
@@ -37,12 +39,14 @@ public class EntityManager {
 		Entity playerEntity = new Entity();
 		// component for camera (only need direction)
 		playerEntity.add(new DirectionComponent());
+        playerEntity.add(new MoneyComponent(100));
+		ashleyEngine.addEntity(playerEntity);
 
 		this._ashleyEngine = ashleyEngine;
 //		this._gameCamera = gameCamera;
 		this.inputhandler = inputhandler;
 		MoveToSystem moveToSystem = new MoveToSystem();
-		CoinSystem coinSystem = new CoinSystem(batch , gameCamera);
+		coinSystem = new CoinSystem(gameCamera);
 		RenderSystem renderSystem = new RenderSystem(batch);
 		HealthSystem healthSystem = new HealthSystem(batch , _entityFactory);
 		PlayerInputSystem playerInputSys = new PlayerInputSystem();
@@ -55,7 +59,6 @@ public class EntityManager {
 		ashleyEngine.addSystem(camSys);
 		ashleyEngine.addSystem(coinSystem);
 		// add player entity
-		ashleyEngine.addEntity(playerEntity);
 	}
 
 	public void update(float deltaTime) {
@@ -75,6 +78,7 @@ public class EntityManager {
 	}
 
 	public void dispose() {
+		coinSystem.dispose();
 		_entityFactory = null;
 		_waveManager = null;
 	}
