@@ -3,10 +3,7 @@ package com.mygdx.game.stages;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -20,7 +17,7 @@ import com.mygdx.game.utils.Assets;
 
 public class UiView implements Screen {
 
-    private Table _rootTable , _nxtEnemyPanel , _grayPanel1 , _grayPanel2 , _towerListPanel;
+    private Table _rootTable , _nxtEnemyPanel , _grayPanel1 , _grayPanel2 ;
     private Tooltip<Table> _tooltip;
     private Image _laserTowerIcon;
     private TextButton _nextWaveBtn , _sellBtn , _upgradeBtn;

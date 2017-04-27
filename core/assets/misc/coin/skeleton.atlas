@@ -4,10 +4,10 @@ size: 64,64
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-Coin/coin4
+coin4
   rotate: false
   xy: 2, 2
-  size: 47, 46
+  size: 48, 48
   orig: 48, 48
-  offset: 1, 1
+  offset: 0, 0
   index: -1

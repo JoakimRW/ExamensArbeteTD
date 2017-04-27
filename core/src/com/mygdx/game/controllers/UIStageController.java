@@ -12,7 +12,6 @@ public class UIStageController extends ClickListener {
 
     private UiView uistage;
     private EntityModel model;
-    private Window pauseWindow;
 
     public UIStageController(UiView uistage, EntityModel model) {
         this.uistage = uistage;

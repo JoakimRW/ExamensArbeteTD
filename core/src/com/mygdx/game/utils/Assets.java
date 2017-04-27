@@ -55,7 +55,7 @@ public class Assets {
         laserTowerAnimationState = new AnimationState(new AnimationStateData(laserTowerSkeleton.getData()));
         // Coin
         coinSkeleton = loadSkeleton("misc/coin/skeleton.atlas", "misc/coin/skeleton.json");
-        coinSkeleton.getRootBone().setScale(0.18f);
+        coinSkeleton.getRootBone().setScale(0.16f);
         coinAnimationState = new AnimationState(new AnimationStateData(coinSkeleton.getData()));
         // fonts
         fontVera10 = createFont(12 , Fonts.VERA);
