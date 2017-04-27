@@ -1,16 +1,11 @@
 package com.mygdx.game.managers;
 
 import com.badlogic.ashley.core.Engine;
-import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.Factory.EntityFactory;
 import com.mygdx.game.controllers.EntityModel;
 import com.mygdx.game.controllers.UIStageController;
-import com.mygdx.game.entites.entitiycomponents.DirectionComponent;
-import com.mygdx.game.entites.entitiycomponents.HealthComponent;
-import com.mygdx.game.entites.entitiycomponents.MoneyComponent;
-import com.mygdx.game.entites.entitiycomponents.PlayerComponent;
 import com.mygdx.game.entites.input.InputHandler;
 import com.mygdx.game.entites.systems.*;
 import com.mygdx.game.stages.UiView;
@@ -22,7 +17,6 @@ public class EntityManager {
 	private UIStageController uiController;
 	private Engine _ashleyEngine;
 	private WaveTimeManager _waveManager;
-//	private OrthographicCamera _gameCamera;
 	private InputHandler inputhandler;
 
 	public EntityManager(Engine ashleyEngine, SpriteBatch batch, OrthographicCamera gameCamera,
