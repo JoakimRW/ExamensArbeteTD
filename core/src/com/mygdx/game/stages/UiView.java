@@ -46,6 +46,9 @@ public class UiView implements Screen {
     private Label toolTip_val_price_lbl;
     private Window _pauseWindow;
     private GameStateManager _gsm;
+    private Label healthLabel;
+    private Label moneyLabel;
+	
 
     public UiView(GameStateManager gsm){
         _gsm = gsm;
@@ -115,28 +118,38 @@ public class UiView implements Screen {
         _tooltipTable.align(Align.left);
         // labels
         _nextEnemyLbl = new Label("Next Enemy in:",_skin );
-        _nextEnemyText = new Label("FLYING",_skin,"default");
+        _nextEnemyText = new Label("",_skin,"default");
         _nextWaveTimeValue = new Label("--",_skin);
+
+        healthLabel = new Label("",_skin);
+        moneyLabel = new Label("",_skin);
         // buttons
         _nextWaveBtn = new TextButton("START",_skin);
         // tables
-        _nxtEnemyPanel = new Table(_skin);
-        _nxtEnemyPanel.setBackground(_skin.getDrawable("gray-panel"));
+        _nxtEnemyPanel = createGrayPanel();
         _nxtEnemyPanel.add(_nextEnemyText);
+        // stats panels that show hp , and money
+        Table moneyStatPanel = createStatPanel();
+        Table healthStatPanel = createStatPanel();
+        moneyStatPanel.add(moneyLabel);
+        healthStatPanel.add(healthLabel);
+        HorizontalGroup statGroup = new HorizontalGroup();
+        statGroup.addActor(moneyStatPanel);
+        statGroup.addActor(healthStatPanel);
+        statGroup.setHeight(1f);
 
         // root table
         _rootTable = new Table(_skin);
         _rootTable.setBackground("uibg");
         // PANEL that show info about the selected tower
-        _grayPanel1 = new Table(_skin);
-        _grayPanel1.setBackground(_skin.getDrawable("gray-panel"));
-        _grayPanel2 = new Table(_skin);
-        _grayPanel2.setBackground(_skin.getDrawable("gray-panel"));
+        _grayPanel1 = createGrayPanel();
+        _grayPanel2 = createGrayPanel();
         _grayPanel2.add(_laserTowerIcon).size(32,32).pad(2).align(Align.topLeft).expand();
         // PANELS
         _rootTable.setBounds(0 , 0 , Gdx.graphics.getWidth() , 120);
-
+        towerListContainer.add(statGroup).align(Align.left).row();
         towerListContainer.add(_grayPanel2).prefHeight(110).expand().fill();
+        
        //  add ui components to root table
         Table nextEnemyTable = new Table(_skin);
         nextEnemyTable.add(_nextEnemyLbl).align(Align.left).expand();
@@ -148,8 +161,8 @@ public class UiView implements Screen {
         waveInfoContainer.add(_nextWaveBtn).height(40).align(Align.left).expand();
         towerTargetContainer.add(_grayPanel1).prefHeight(110).expand().fill().padRight(2);
         // add to root
-        _rootTable.add(towerListContainer).expand().fill();
         _rootTable.add(towerTargetContainer).expand().fill();
+        _rootTable.add(towerListContainer).expand().fill();
         _rootTable.add(waveInfoContainer).expand().fill();
         // align stuff
         _rootTable.align(Align.bottomRight).pad(5 , 5 , 5 , 5);
@@ -158,6 +171,18 @@ public class UiView implements Screen {
         _uiStage.addActor(_rootTable);
         _pauseWindow.setSize(Gdx.graphics.getWidth() , Gdx.graphics.getHeight());
         _uiStage.addActor(_pauseWindow);
+    }
+    
+    public Table createStatPanel(){
+    	Table table = new Table(_skin);
+    	table.setBackground("statPanel");
+    	return table;
+    }
+    
+    public Table createGrayPanel(){
+    	Table table = new Table(_skin);
+    	table.setBackground("gray-panel");
+    	return table;
     }
 
     private void createPauseWindow() {
@@ -300,7 +325,6 @@ public class UiView implements Screen {
         return _uiStage;
     }
 
-
     public Table get_tooltipTable() {
         return _tooltipTable;
     }
@@ -309,13 +333,18 @@ public class UiView implements Screen {
         return _manager;
     }
 
+    public Label getMoneyLabel() { return moneyLabel; }
+    
+    public Window get_pauseWindow() {
+        return _pauseWindow;
+    }
 
+    public Label getHealthLabel() {
+        return healthLabel;
+    }
     /** action listeners ***/
     public void addNextWaveButtonnListener(ClickListener clickListener) {
         _nextWaveBtn.addListener(clickListener);
     }
 
-    public Window get_pauseWindow() {
-        return _pauseWindow;
-    }
 }

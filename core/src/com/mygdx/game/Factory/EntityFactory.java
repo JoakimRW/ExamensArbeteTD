@@ -6,7 +6,6 @@ import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entites.entitiycomponents.*;
-import com.mygdx.game.entites.entitiycomponents.TimeComponent;
 import com.mygdx.game.managers.LevelManager;
 import com.mygdx.game.utils.Assets;
 import com.mygdx.game.utils.Node;
@@ -136,6 +135,16 @@ public class EntityFactory {
                 .add(mcomp)
                 .add(rcomp);
 		_engine.addEntity(entity);
+	}
+	
+	public void createPlayerEntity(){
+		// player entity
+        Entity player = new Entity();
+        player.add(new DirectionComponent())
+   		.add(new MoneyComponent(100))
+		.add(new HealthComponent(30))
+		.add(new PlayerComponent());
+        _engine.addEntity(player);
 	}
 
 }

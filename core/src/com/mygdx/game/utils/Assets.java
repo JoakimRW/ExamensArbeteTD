@@ -95,6 +95,8 @@ public class Assets {
     		case HEMI_HEAD: fontFile = Gdx.files.internal("fonts/HEMIHEAD.TTF"); break;
     		case VERA: fontFile = Gdx.files.internal("fonts/Vera.ttf"); break;
     		case VERA_BD: fontFile = Gdx.files.internal("fonts/VeraBd.ttf"); break;
+		default:
+			break;
     	}
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(fontFile);
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();

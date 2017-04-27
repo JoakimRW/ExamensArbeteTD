@@ -1,19 +1,27 @@
 package com.mygdx.game.entites.systems;
 
+import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entites.entitiycomponents.*;
-import com.mygdx.game.states.PlayState;
+
 
 
 
 public class MoveToSystem extends IteratingSystem {
 
+    Entity player;
     public MoveToSystem(){
         super(Families.ENEMY);
     }
 
+    @Override
+    public void addedToEngine(Engine engine) {
+        super.addedToEngine(engine);
+        player = getEngine().getEntitiesFor(Family.all(PlayerComponent.class).get()).first();
+    }
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
@@ -28,7 +36,8 @@ public class MoveToSystem extends IteratingSystem {
             }else {
                 entity.removeAll();
                 getEngine().removeEntity(entity);
-                PlayState.PLAYER_HEALTH = PlayState.PLAYER_HEALTH != 0 ? PlayState.PLAYER_HEALTH - 1 : -1;
+                player.getComponent(HealthComponent.class).health--;
+
             }
         }
 

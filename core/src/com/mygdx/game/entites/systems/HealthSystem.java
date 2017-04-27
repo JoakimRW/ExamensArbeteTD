@@ -1,6 +1,5 @@
 package com.mygdx.game.entites.systems;
 
-import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
@@ -15,20 +14,19 @@ import com.mygdx.game.utils.Assets;
 
 public class HealthSystem extends IteratingSystem {
 	private SpriteBatch _batch;
-	private EntityFactory _entityFactory;
+    private EntityFactory _entityFactory;
 
 	public HealthSystem(SpriteBatch batch , EntityFactory factory) {
 		super(Family.all(HealthComponent.class , PositionComponent.class).get());
 		_entityFactory = factory;
 		_batch = batch;
-	}
+    }
 
 	@Override
 	protected void processEntity(Entity entity, float deltaTime) {
 		HealthComponent hpComp = Mappers.HEALTH_M.get(entity);
 		PositionComponent posComp = Mappers.POSITION_M.get(entity);
-		hpComp.health -= 1f;
-		if(hpComp.health <= 0){
+		if(hpComp.isDead){
 			float deathX = posComp.position.x;
 			float deathY = posComp.position.y;
 			entity.removeAll();

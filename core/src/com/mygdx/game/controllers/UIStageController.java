@@ -30,11 +30,13 @@ public class UIStageController extends ClickListener {
                 if (!PlayState.START_GAME) {
                     PlayState.START_GAME = true;
                     uistage.get_nextWaveBtn().setText("Next Wave");
+                    updateNextEnemyText();
                 } else {
-                    uistage.get_nextEnemyText().setText(model.getNextWave());
+                    updateNextEnemyText();
                     EntityModel.startNextWave();
                 }
             }
+
         });
 
         uistage.get_laserTowerIcon().addListener(new ClickListener(){
@@ -61,4 +63,16 @@ public class UIStageController extends ClickListener {
     public Window getPauseWindow() {
         return uistage.get_pauseWindow();
     }
+
+    public void updateHealth(int health) {
+        uistage.getHealthLabel().setText(String.format("Health: %d" ,health));
+    }
+
+    public void setPlayerMoney(int playerMoney) {
+        uistage.getMoneyLabel().setText(String.format("Money: %d",playerMoney));
+    }
+    
+	public void updateNextEnemyText() {
+		uistage.get_nextEnemyText().setText(model.getNextWave());
+	}
 }

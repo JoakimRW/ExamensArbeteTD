@@ -4,18 +4,16 @@ import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
-import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.game.entites.entitiycomponents.*;
 import com.mygdx.game.utils.Assets;
 
-public class CoinSystem extends IteratingSystem implements Disposable{
+public class CoinSystem extends IteratingSystem {
 
 	private SpriteBatch batch;
     private OrthographicCamera camera;
-    private ImmutableArray<Entity> player;
+    private Entity player;
 
     public CoinSystem(OrthographicCamera camera) {
 		super(Family.all(SkeletonComponent.class,OffsetComponent.class , PositionComponent.class , TimeComponent.class , VelocityComponent.class ,  MoneyComponent.class ).get());
@@ -26,7 +24,7 @@ public class CoinSystem extends IteratingSystem implements Disposable{
     @Override
     public void addedToEngine(Engine engine) {
         super.addedToEngine(engine);
-        player = getEngine().getEntitiesFor(Families.PLAYER);
+        player = getEngine().getEntitiesFor(Families.PLAYER).first();
         System.out.println();
     }
 
@@ -48,14 +46,15 @@ public class CoinSystem extends IteratingSystem implements Disposable{
 		batch.end();
 		// despawn coin when it has reach its lifetime
 		if (tcomp.time > tcomp.lifeTime) {
-            player.get(0).getComponent(MoneyComponent.class).money += mcomp.money;
+            player.getComponent(MoneyComponent.class).money += mcomp.money;
             entity.removeAll();
 			getEngine().removeEntity(entity);
 		}
 	}
 
 
-    @Override
+
     public void dispose() {
+        batch.dispose();
     }
 }
