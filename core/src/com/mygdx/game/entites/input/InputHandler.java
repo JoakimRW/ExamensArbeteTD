@@ -115,10 +115,10 @@ public class InputHandler implements InputProcessor {
 	public boolean mouseMoved(int screenX, int screenY) {
 		
 		
-		Vector3 mousePos = _gameCamera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+//		Vector3 mousePos = _gameCamera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
 		
 		Family towerFamily = Family.exclude(HealthComponent.class).get();
-		ImmutableArray<Entity> towerEntitys = getAshleyEngine().getEntitiesFor(towerFamily);
+//		ImmutableArray<Entity> towerEntitys = getAshleyEngine().getEntitiesFor(towerFamily);
 		
 		return false;
 	}
