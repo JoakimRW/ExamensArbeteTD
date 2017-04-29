@@ -1,7 +1,9 @@
 package com.mygdx.game.entites.input;
 
 import com.badlogic.ashley.core.Engine;
+import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
+import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
@@ -10,6 +12,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.Factory.EntityFactory;
 import com.mygdx.game.Factory.TowerType;
 import com.mygdx.game.entites.entitiycomponents.HealthComponent;
+import com.mygdx.game.entites.entitiycomponents.MouseImageComponent;
 import com.mygdx.game.entites.input.InputHandlerIF;
 import com.mygdx.game.managers.GameStateManager;
 import com.mygdx.game.managers.LevelManager;
@@ -46,7 +49,7 @@ public class InputHandler implements InputProcessor {
 		}
 
 		if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-			xAxis = 1;
+			xAxis = 1; 
 		} else if (Gdx.input.isKeyPressed(Input.Keys.A)) {
 			xAxis = -1;
 		} else {
@@ -88,7 +91,8 @@ public class InputHandler implements InputProcessor {
 			System.out.println("MOUSEPOS = " + mousePos);
 			System.out.println("TILE = " + tile);
 			System.out.println("Tile Coordinates = " + tile.getCords());
-			_ef.createTowerEntity(_towerType, tile.getCords().x, tile.getCords().y);
+			Entity te = _ef.createTowerEntity(_towerType, tile.getCords().x, tile.getCords().y);
+			te.remove(MouseImageComponent.class);
 			InputHandler.setPlacementMode(false);
 		}
 
@@ -114,7 +118,7 @@ public class InputHandler implements InputProcessor {
 		Vector3 mousePos = _gameCamera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
 		
 		Family towerFamily = Family.exclude(HealthComponent.class).get();
-//		getAshleyEngine().getEntities().
+		ImmutableArray<Entity> towerEntitys = getAshleyEngine().getEntitiesFor(towerFamily);
 		
 		return false;
 	}

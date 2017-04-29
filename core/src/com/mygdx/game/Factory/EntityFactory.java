@@ -41,15 +41,16 @@ public class EntityFactory {
 			System.out.println("Failed to create entity in entity factory :: cause :: entity is null");
 	}
 
-	public void createTowerEntity(TowerType towerType, float x, float y) {
+	public Entity createTowerEntity(TowerType towerType, float x, float y) {
 		
 		switch (towerType) {
 		case BASIC_LASER_TURRET:
-			_engine.addEntity(createTurretEntity(towerType, x, y));
-			break;
+			Entity turretEntity = createTurretEntity(towerType, x, y);
+			_engine.addEntity(turretEntity);
+			return turretEntity;
 		default:
 			System.out.println("Failed to create entity in entity factory :: cause :: entity is null");
-			break;
+			return null;
 		}
 	}
 	
@@ -60,9 +61,10 @@ public class EntityFactory {
 		RenderableComponent renderableComponent = new RenderableComponent();
 		DirectionComponent directionComponent = new DirectionComponent();
 		AngleComponent angleComponent = new AngleComponent();
+		MouseImageComponent mouseImageComponent = new MouseImageComponent();
 		skeletonComponent.skeleton.setPosition(x, y);
 		skeletonComponent.animationState.setData(Assets.laserTowerAnimationState.getData());
-		entity.add(skeletonComponent).add(directionComponent).add(positionComponent).add(angleComponent).add(renderableComponent);
+		entity.add(skeletonComponent).add(directionComponent).add(mouseImageComponent).add(positionComponent).add(angleComponent).add(renderableComponent);
 		System.out.println("Tower Entity Created");
 		return entity;
 	}
