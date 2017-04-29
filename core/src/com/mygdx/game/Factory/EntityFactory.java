@@ -59,12 +59,11 @@ public class EntityFactory {
 		SkeletonComponent skeletonComponent = new SkeletonComponent(Assets.laserTowerSkeleton);
 		PositionComponent positionComponent = new PositionComponent(new Vector2(x,y));
 		RenderableComponent renderableComponent = new RenderableComponent();
-		DirectionComponent directionComponent = new DirectionComponent();
 		AngleComponent angleComponent = new AngleComponent();
 		MouseImageComponent mouseImageComponent = new MouseImageComponent();
 		skeletonComponent.skeleton.setPosition(x, y);
 		skeletonComponent.animationState.setData(Assets.laserTowerAnimationState.getData());
-		entity.add(skeletonComponent).add(directionComponent).add(mouseImageComponent).add(positionComponent).add(angleComponent).add(renderableComponent);
+		entity.add(skeletonComponent).add(mouseImageComponent).add(positionComponent).add(angleComponent).add(renderableComponent);
 		System.out.println("Tower Entity Created");
 		return entity;
 	}
@@ -72,6 +71,7 @@ public class EntityFactory {
 	private Entity createBloodWormEntity() {
 		// Components
 		Entity entity = new Entity();
+        OffsetComponent ocomp = new OffsetComponent(16,16);
 		PathComponent pathComponent = new PathComponent();
 		SkeletonComponent skeletonComp = new SkeletonComponent(Assets.bloodWormSkeleton);
 		PositionComponent positionComponent = new PositionComponent(new Vector2(_spawnX * 32, _spawnY * 32));
@@ -87,12 +87,13 @@ public class EntityFactory {
 		skeletonComp.animationState.setAnimation(0, "MOVING", true);
 		pathComponent.path = path;
 		entity.add(pathComponent).add(positionComponent).add(skeletonComp).add(healthComponent).add(velocityComponent)
-				.add(directionComponent).add(renderableComponent).add(angleComponent);
+				.add(directionComponent).add(renderableComponent).add(ocomp).add(angleComponent);
 		return entity;
 	}
 
 	private Entity createBirdEntity() {
 		Entity entity = new Entity();
+        OffsetComponent ocomp = new OffsetComponent(16,16);
 		PathComponent pathComponent = new PathComponent();
 		SkeletonComponent skeletonComp = new SkeletonComponent(Assets.birdSkeleton);
 		PositionComponent positionComponent = new PositionComponent(new Vector2(_spawnX * 32, _spawnY * 32));
@@ -107,9 +108,45 @@ public class EntityFactory {
 		skeletonComp.skeleton.setPosition(_spawnX * 32, _spawnY * 32);
 		skeletonComp.animationState.setAnimation(0, "MOVING", true);
 		pathComponent.path = path;
-		entity.add(pathComponent).add(positionComponent).add(skeletonComp).add(healthComponent).add(velocityComponent)
-				.add(directionComponent).add(renderableComponent).add(angleComponent);
+		entity.add(pathComponent).add(positionComponent)
+                .add(skeletonComp)
+                .add(healthComponent)
+                .add(velocityComponent)
+				.add(directionComponent)
+                .add(renderableComponent)
+                .add(ocomp)
+                .add(angleComponent);
 		return entity;
+	}
+	
+	public void createCoinEntity(float x , float y , int moneyValue){
+		Entity entity = new Entity();
+		OffsetComponent ocomp = new OffsetComponent(16,16);
+		SkeletonComponent scomp = new SkeletonComponent(Assets.coinSkeleton);
+		TimeComponent tcomp = new TimeComponent(0.5f);
+		VelocityComponent vcomp = new VelocityComponent(25f);
+		PositionComponent pcomp = new PositionComponent(new Vector2(x , y));
+		MoneyComponent mcomp = new MoneyComponent(moneyValue);
+		RenderableComponent rcomp = new RenderableComponent();
+		scomp.animationState.setData(Assets.coinAnimationState.getData());
+		entity.add(pcomp)
+                .add(vcomp)
+                .add(tcomp)
+                .add(scomp)
+                .add(ocomp)
+                .add(mcomp)
+                .add(rcomp);
+		_engine.addEntity(entity);
+	}
+	
+	public void createPlayerEntity(){
+		// player entity
+        Entity player = new Entity();
+        player.add(new DirectionComponent())
+   		.add(new MoneyComponent(100))
+		.add(new HealthComponent(30))
+		.add(new PlayerComponent());
+        _engine.addEntity(player);
 	}
 
 }

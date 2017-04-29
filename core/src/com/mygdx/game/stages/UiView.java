@@ -3,10 +3,7 @@ package com.mygdx.game.stages;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -16,26 +13,22 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.managers.GameStateManager;
 import com.mygdx.game.managers.WaveTimeManager;
 import com.mygdx.game.states.PlayState;
+import com.mygdx.game.utils.Assets;
 
 public class UiView implements Screen {
 
-    private Table _rootTable , _nxtEnemyPanel , _grayPanel1 , _grayPanel2 , _towerListPanel;
+    private Table _rootTable , _nxtEnemyPanel , _grayPanel1 , _grayPanel2 ;
     private Tooltip<Table> _tooltip;
     private Image _laserTowerIcon;
-    private Dialog _towerHoverTooptip;
     private TextButton _nextWaveBtn , _sellBtn , _upgradeBtn;
-    private Label _towersLbl;
     private Label _nextEnemyLbl;
     private Label sellPriceLbl;
     private Label upgradePriceLbl;
     private Label _nextEnemyText;
-    private Label _nextWaveTimeLbl;
     private Label _nextWaveTimeValue;
     private Skin _skin;
     private TextureAtlas _atlas;
     private Stage _uiStage;
-    private BitmapFont font16;
-    private BitmapFont font10;
     private Table _tooltipTable;
     private TooltipManager _manager;
 
@@ -53,6 +46,9 @@ public class UiView implements Screen {
     private Label toolTip_val_price_lbl;
     private Window _pauseWindow;
     private GameStateManager _gsm;
+    private Label healthLabel;
+    private Label moneyLabel;
+	
 
     public UiView(GameStateManager gsm){
         _gsm = gsm;
@@ -60,15 +56,13 @@ public class UiView implements Screen {
 
     @Override
     public void show() {
-        font16 = createFont(16);
-        font10 = createFont(10);
         OrthographicCamera _uiCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         _uiStage = new Stage(new ScreenViewport(_uiCamera));
         _skin = new Skin();
         _atlas = new TextureAtlas("interface/ui/atlas-ui.txt");
         _skin.addRegions(_atlas);
-        _skin.add("default-font",font16);
-        _skin.add("tooltipFont",font10);
+        _skin.add("default-font",Assets.font16);
+        _skin.add("tooltipFont",Assets.font10);
         _skin.load(Gdx.files.internal("interface/ui/uiSkin.json"));
         // create pause window
         createPauseWindow();
@@ -124,28 +118,38 @@ public class UiView implements Screen {
         _tooltipTable.align(Align.left);
         // labels
         _nextEnemyLbl = new Label("Next Enemy in:",_skin );
-        _nextEnemyText = new Label("FLYING",_skin,"default");
+        _nextEnemyText = new Label("",_skin,"default");
         _nextWaveTimeValue = new Label("--",_skin);
+
+        healthLabel = new Label("",_skin);
+        moneyLabel = new Label("",_skin);
         // buttons
         _nextWaveBtn = new TextButton("START",_skin);
         // tables
-        _nxtEnemyPanel = new Table(_skin);
-        _nxtEnemyPanel.setBackground(_skin.getDrawable("gray-panel"));
+        _nxtEnemyPanel = createGrayPanel();
         _nxtEnemyPanel.add(_nextEnemyText);
+        // stats panels that show hp , and money
+        Table moneyStatPanel = createStatPanel();
+        Table healthStatPanel = createStatPanel();
+        moneyStatPanel.add(moneyLabel);
+        healthStatPanel.add(healthLabel);
+        HorizontalGroup statGroup = new HorizontalGroup();
+        statGroup.addActor(moneyStatPanel);
+        statGroup.addActor(healthStatPanel);
+        statGroup.setHeight(1f);
 
         // root table
         _rootTable = new Table(_skin);
         _rootTable.setBackground("uibg");
         // PANEL that show info about the selected tower
-        _grayPanel1 = new Table(_skin);
-        _grayPanel1.setBackground(_skin.getDrawable("gray-panel"));
-        _grayPanel2 = new Table(_skin);
-        _grayPanel2.setBackground(_skin.getDrawable("gray-panel"));
+        _grayPanel1 = createGrayPanel();
+        _grayPanel2 = createGrayPanel();
         _grayPanel2.add(_laserTowerIcon).size(32,32).pad(2).align(Align.topLeft).expand();
         // PANELS
         _rootTable.setBounds(0 , 0 , Gdx.graphics.getWidth() , 120);
-
+        towerListContainer.add(statGroup).align(Align.left).row();
         towerListContainer.add(_grayPanel2).prefHeight(110).expand().fill();
+        
        //  add ui components to root table
         Table nextEnemyTable = new Table(_skin);
         nextEnemyTable.add(_nextEnemyLbl).align(Align.left).expand();
@@ -157,8 +161,8 @@ public class UiView implements Screen {
         waveInfoContainer.add(_nextWaveBtn).height(40).align(Align.left).expand();
         towerTargetContainer.add(_grayPanel1).prefHeight(110).expand().fill().padRight(2);
         // add to root
-        _rootTable.add(towerListContainer).expand().fill();
         _rootTable.add(towerTargetContainer).expand().fill();
+        _rootTable.add(towerListContainer).expand().fill();
         _rootTable.add(waveInfoContainer).expand().fill();
         // align stuff
         _rootTable.align(Align.bottomRight).pad(5 , 5 , 5 , 5);
@@ -167,6 +171,18 @@ public class UiView implements Screen {
         _uiStage.addActor(_rootTable);
         _pauseWindow.setSize(Gdx.graphics.getWidth() , Gdx.graphics.getHeight());
         _uiStage.addActor(_pauseWindow);
+    }
+    
+    public Table createStatPanel(){
+    	Table table = new Table(_skin);
+    	table.setBackground("statPanel");
+    	return table;
+    }
+    
+    public Table createGrayPanel(){
+    	Table table = new Table(_skin);
+    	table.setBackground("gray-panel");
+    	return table;
     }
 
     private void createPauseWindow() {
@@ -194,19 +210,6 @@ public class UiView implements Screen {
                 _gsm.setState(GameStateManager.State.MAINMENU);
             }
         });
-    }
-
-    private static BitmapFont createFont(int fontSize) {
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/HEMIHEAD.TTF"));
-        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = fontSize;
-        parameter.genMipMaps = true;
-        parameter.minFilter = Texture.TextureFilter.Linear;
-        parameter.magFilter = Texture.TextureFilter.Linear;
-        parameter.gamma = 1f;
-        BitmapFont font = generator.generateFont(parameter);
-        generator.dispose();
-        return font;
     }
 
     @Override
@@ -322,10 +325,6 @@ public class UiView implements Screen {
         return _uiStage;
     }
 
-    public BitmapFont getFont16() {
-        return font16;
-    }
-
     public Table get_tooltipTable() {
         return _tooltipTable;
     }
@@ -334,13 +333,18 @@ public class UiView implements Screen {
         return _manager;
     }
 
+    public Label getMoneyLabel() { return moneyLabel; }
+    
+    public Window get_pauseWindow() {
+        return _pauseWindow;
+    }
 
+    public Label getHealthLabel() {
+        return healthLabel;
+    }
     /** action listeners ***/
     public void addNextWaveButtonnListener(ClickListener clickListener) {
         _nextWaveBtn.addListener(clickListener);
     }
 
-    public Window get_pauseWindow() {
-        return _pauseWindow;
-    }
 }

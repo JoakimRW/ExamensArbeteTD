@@ -1,7 +1,6 @@
 package com.mygdx.game.entites.systems;
 
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.esotericsoftware.spine.SkeletonRenderer;
@@ -12,8 +11,7 @@ public class RenderSystem extends IteratingSystem{
     private SkeletonRenderer<SpriteBatch> renderer;
 
     public RenderSystem(SpriteBatch batch){
-        super(Family.one(SkeletonComponent.class,RenderableComponent.class , HealthComponent.class  , AngleComponent.class).get()); //
-        //Family enemy = Family.all(SkeletonComponent.class,RenderableComponent.class , HealthComponent.class , StateComponent.class , DirectionComponent.class , DimensionComponent.class).get();
+        super(Families.RENDERABLE);
         this.batch = batch;
         renderer = new SkeletonRenderer<>();
         renderer.setPremultipliedAlpha(true);
@@ -23,16 +21,24 @@ public class RenderSystem extends IteratingSystem{
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        final int offsetX = 16;
-        final int offsetY = 16;
-        PositionComponent pos = entity.getComponent(PositionComponent.class);
-        AngleComponent angleComp = entity.getComponent(AngleComponent.class);
-        SkeletonComponent skeletonComponent = entity.getComponent(SkeletonComponent.class);
+        OffsetComponent ocomp = Mappers.OFFSET_M.get(entity);
+        PositionComponent pos = Mappers.POSITION_M.get(entity);
+        AngleComponent angleComp = Mappers.ANGLE_M.get(entity);
+        SkeletonComponent skeletonComponent = Mappers.SKELETON_M.get(entity);
         skeletonComponent.animationState.update(deltaTime);
         skeletonComponent.animationState.apply(skeletonComponent.skeleton);
-        skeletonComponent.skeleton.setPosition(pos.position.x + offsetX, pos.position.y + offsetY);
+        float offsetX = 16;
+        float offsetY = 16;
+        if (ocomp != null){
+            offsetX = ocomp.offsetX;
+            offsetY = ocomp.offsetY;
+        }
+        skeletonComponent.skeleton.setPosition(pos.position.x + offsetX, pos.position.y + offsetY );
+        if (angleComp != null)
         skeletonComponent.skeleton.getRootBone().setRotation(angleComp.spriteAngle);
         skeletonComponent.skeleton.updateWorldTransform();
+        batch.begin();
         renderer.draw(batch,skeletonComponent.skeleton);
+        batch.end();
     }
 }

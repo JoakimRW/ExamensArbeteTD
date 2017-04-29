@@ -1,34 +1,38 @@
 package com.mygdx.game.entites.systems;
 
-import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.game.Factory.EntityFactory;
 import com.mygdx.game.entites.entitiycomponents.HealthComponent;
+import com.mygdx.game.entites.entitiycomponents.Mappers;
 import com.mygdx.game.entites.entitiycomponents.PositionComponent;
 import com.mygdx.game.utils.Assets;
 
 public class HealthSystem extends IteratingSystem {
 	private SpriteBatch _batch;
+    private EntityFactory _entityFactory;
 
-	private ComponentMapper<HealthComponent> _hpm;
-	private ComponentMapper<PositionComponent> _pm;
-
-	public HealthSystem(SpriteBatch batch) {
+	public HealthSystem(SpriteBatch batch , EntityFactory factory) {
 		super(Family.all(HealthComponent.class , PositionComponent.class).get());
-		_pm = ComponentMapper.getFor(PositionComponent.class);
-		_hpm = ComponentMapper.getFor(HealthComponent.class);
+		_entityFactory = factory;
 		_batch = batch;
-	}
+    }
 
 	@Override
 	protected void processEntity(Entity entity, float deltaTime) {
-		HealthComponent hpComp = _hpm.get(entity);
-		PositionComponent posComp = _pm.get(entity);
-		checkEntityHealth(entity, hpComp);
+		HealthComponent hpComp = Mappers.HEALTH_M.get(entity);
+		PositionComponent posComp = Mappers.POSITION_M.get(entity);
+		if(hpComp.isDead){
+			float deathX = posComp.position.x;
+			float deathY = posComp.position.y;
+			entity.removeAll();
+			getEngine().removeEntity(entity);
+			_entityFactory.createCoinEntity(deathX, deathY , 1);
+		}	
         drawHealthBar(hpComp, posComp);
 	}
 
@@ -53,16 +57,10 @@ public class HealthSystem extends IteratingSystem {
     	if(healthComp.health <= 0.25 * healthComp.maxHealth) sprite.setColor(Color.RED);
     	// if enemy isn't hurt don't draw health.
     	if(healthComp.health != healthComp.maxHealth){
+    		_batch.begin();
         	spriteBg.draw(_batch);
         	sprite.draw(_batch);
+        	_batch.end();
     	}
-    }
-    
-    private void checkEntityHealth(Entity entity , HealthComponent hpComp){
-		if(hpComp.health <= 0){
-			entity.removeAll();
-			getEngine().removeEntity(entity);
-		}	
-    }
-	
+    }	
 }

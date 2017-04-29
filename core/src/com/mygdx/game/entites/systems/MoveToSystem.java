@@ -1,47 +1,43 @@
 package com.mygdx.game.entites.systems;
 
-import com.badlogic.ashley.core.ComponentMapper;
+import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entites.entitiycomponents.*;
-import com.mygdx.game.states.PlayState;
+
 
 
 
 public class MoveToSystem extends IteratingSystem {
 
-    private ComponentMapper<PositionComponent> pm;
-    private ComponentMapper<VelocityComponent> vm;
-    private ComponentMapper<DirectionComponent> dm;
-    private ComponentMapper<AngleComponent> am;
-    private ComponentMapper<PathComponent> pam;
-
+    Entity player;
     public MoveToSystem(){
-        super(Family.all(PositionComponent.class , VelocityComponent.class , DirectionComponent.class , AngleComponent.class , PathComponent.class).get());
-        pm = ComponentMapper.getFor(PositionComponent.class);
-        vm = ComponentMapper.getFor(VelocityComponent.class);
-        dm = ComponentMapper.getFor(DirectionComponent.class);
-        am = ComponentMapper.getFor(AngleComponent.class);
-        pam = ComponentMapper.getFor(PathComponent.class);
+        super(Families.ENEMY);
     }
 
+    @Override
+    public void addedToEngine(Engine engine) {
+        super.addedToEngine(engine);
+        player = getEngine().getEntitiesFor(Family.all(PlayerComponent.class).get()).first();
+    }
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        PositionComponent posComp = pm.get(entity);
-        DirectionComponent dirComp = dm.get(entity);
-        PathComponent pathComp = pam.get(entity);
-        AngleComponent angleComp = am.get(entity);
-        VelocityComponent velocityComp = vm.get(entity);
+        PositionComponent posComp = Mappers.POSITION_M.get(entity);
+        DirectionComponent dirComp = Mappers.DIRECTION_M.get(entity);
+        PathComponent pathComp = Mappers.PATH_M.get(entity);
+        AngleComponent angleComp = Mappers.ANGLE_M.get(entity);
+        VelocityComponent velocityComp = Mappers.VELCOITY_M.get(entity);
         if (pathComp.path != null){
             if(pathComp.path.size() >= pathComp.index){
                 moveTo(posComp , dirComp , angleComp , deltaTime , pathComp , velocityComp);
             }else {
                 entity.removeAll();
                 getEngine().removeEntity(entity);
-                PlayState.PLAYER_HEALTH = PlayState.PLAYER_HEALTH != 0 ? PlayState.PLAYER_HEALTH - 1 : -1;
+                player.getComponent(HealthComponent.class).health--;
+
             }
         }
 

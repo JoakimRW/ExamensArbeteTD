@@ -39,6 +39,6 @@ public class EntityModel extends InputAdapter {
 	}
 
 	public String getNextWave() {
-		return waveMngr.getEnemyType().toString();
+		return waveMngr.getEnemyType() != null ? waveMngr.getEnemyType().toString() : "";
 	}
 }
