@@ -8,6 +8,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.Factory.EntityFactory;
 import com.mygdx.game.Factory.TowerType;
@@ -83,8 +84,10 @@ public class InputHandler implements InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		
-		
+
+		if (isRightButtonClicked(button)) {
+			return false;
+		}
 		if (_isPlacementMode && isLegalPlacement()) {
 			placeTowers(button);
 		}
@@ -92,32 +95,41 @@ public class InputHandler implements InputProcessor {
 		return false;
 	}
 
+	private boolean isRightButtonClicked(int button) {
+		if (button == Input.Buttons.RIGHT) {
+			ImmutableArray<Entity> towerEntitys = getAshleyEngine().getEntitiesFor(_towerFamily);
+			Entity first = towerEntitys.first();
+			getAshleyEngine().removeEntity(first);
+			InputHandler.setPlacementMode(false);
+			return true;
+		}
+		return false;
+	}
 
 	private boolean isLegalPlacement() {
 		Vector3 mousePos = _gameCamera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
 		Tile tile = LevelManager.getTile((int) mousePos.x >> 5, (int) mousePos.y >> 5);
-		
-		isTowerBlockingPath(tile);
-		return tile.getType() == TileType.FLOOR;
+
+		if (!isTowerBlockingPath(tile)) {
+			return tile.getType() == TileType.FLOOR;
+		}
+		return false;
 	}
 
 	private boolean isTowerBlockingPath(Tile tile) {
-		if (PathFinder.findPath(LevelManager.tileSpawn.getCords(), LevelManager.tileEnd.getCords(), false, false) == null) {
-			return true;
+		if (tile.getType() == TileType.FLOOR) {
+			 tile.setType(TileType.WALL);
+			if (PathFinder.findPath(new Vector2(LevelManager.tileSpawn.getCords().x/32,LevelManager.tileSpawn.getCords().y/32),new Vector2(LevelManager.tileEnd.getCords().x/32,LevelManager.tileEnd.getCords().y/32), false, false) == null) {
+				tile.setType(TileType.FLOOR);
+				return true;
+			}
+			tile.setType(TileType.FLOOR);
 		}
 		return false;
 	}
 
 	private void placeTowers(int button) {
 		if (_isPlacementMode) {
-
-			if (button == Input.Buttons.RIGHT) {
-				ImmutableArray<Entity> towerEntitys = getAshleyEngine().getEntitiesFor(_towerFamily);
-				Entity first = towerEntitys.first();
-				getAshleyEngine().removeEntity(first);
-				InputHandler.setPlacementMode(false);
-				return;
-			}
 
 			Vector3 mousePos = _gameCamera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
 			Tile tile = LevelManager.getTile((int) mousePos.x >> 5, (int) mousePos.y >> 5);
@@ -161,10 +173,11 @@ public class InputHandler implements InputProcessor {
 
 		return false;
 	}
+
 	private void mouseOverTintTiles() {
 		Vector3 mousePos = _gameCamera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
 		Tile tile = LevelManager.getTile((int) mousePos.x >> 5, (int) mousePos.y >> 5);
-		
+
 		getAshleyEngine().getSystem(TowerPlacementSystem.class).tintTile(tile);
 	}
 

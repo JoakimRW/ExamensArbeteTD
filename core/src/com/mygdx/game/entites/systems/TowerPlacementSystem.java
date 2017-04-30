@@ -7,8 +7,11 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Factory.EntityFactory;
 import com.mygdx.game.entites.entitiycomponents.MousePositionComponent;
+import com.mygdx.game.managers.LevelManager;
+import com.mygdx.game.utils.PathFinder;
 import com.mygdx.game.utils.Tile;
 import com.mygdx.game.utils.TileType;
 
@@ -16,7 +19,6 @@ public class TowerPlacementSystem extends IteratingSystem {
 
 	private SpriteBatch _batch;
 	private Tile _tile;
-	private EntityFactory _entityFactory;
 
 	public TowerPlacementSystem(SpriteBatch batch) {
 		super(Family.one(MousePositionComponent.class).get());
@@ -31,7 +33,7 @@ public class TowerPlacementSystem extends IteratingSystem {
 			TextureRegion textureRegion = _tile.getCell().getTile().getTextureRegion();
 			Sprite sprite = new Sprite(textureRegion);
 
-			if (_tile.getType() == TileType.WALL) {
+			if (!isLegalPlacement()) {
 				sprite.setColor(Color.RED);
 				sprite.setAlpha(0.5f);
 			} else {
@@ -55,4 +57,33 @@ public class TowerPlacementSystem extends IteratingSystem {
 	public void moveTower() {
 
 	}
+
+	public void placeTower() {
+
+		_tile.setType(TileType.WALL);
+	}
+
+	private boolean isLegalPlacement() {
+
+		if (!isTowerBlockingPath(_tile)) {
+			return _tile.getType() == TileType.FLOOR;
+		}
+		return false;
+	}
+
+	private boolean isTowerBlockingPath(Tile tile) {
+		if (tile.getType() == TileType.FLOOR) {
+			tile.setType(TileType.WALL);
+			if (PathFinder.findPath(
+					new Vector2(LevelManager.tileSpawn.getCords().x / 32, LevelManager.tileSpawn.getCords().y / 32),
+					new Vector2(LevelManager.tileEnd.getCords().x / 32, LevelManager.tileEnd.getCords().y / 32), false,
+					false) == null) {
+				tile.setType(TileType.FLOOR);
+				return true;
+			}
+			tile.setType(TileType.FLOOR);
+		}
+		return false;
+	}
+
 }
