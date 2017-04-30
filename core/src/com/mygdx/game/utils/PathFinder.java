@@ -1,5 +1,9 @@
 package com.mygdx.game.utils;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.managers.LevelManager;
@@ -16,6 +20,7 @@ public abstract class PathFinder {
      * @param canGoDiag - if true: path will include calculation of nodes that are diagonal ,
      *                  else will only calculate up , down left , right
      * **/
+	
     public static ArrayList<Node> findPath(Vector2 startNode , Vector2 endNode , boolean canGoDiag , boolean isFlying){
         ArrayList<Node> openList = new ArrayList<>();
         ArrayList<Node> closedList = new ArrayList<>();
@@ -92,6 +97,20 @@ public abstract class PathFinder {
 
         System.out.println("found no path, returning null :: START :: " + startNode + " END :: "  + endNode);
         return null;
+    }
+    
+    
+    public static void drawPath(ArrayList<Node> path , ShapeRenderer sr , OrthographicCamera camera){
+    	sr.setAutoShapeType(true);
+    	sr.setProjectionMatrix(camera.combined);
+    	sr.begin();
+    	for(Node node : path){
+    		Vector2 start = node.getParent() != null ? node.getParent().getCordinates().cpy().scl(32) : LevelManager.tileSpawn.getTileCenter();
+    		sr.setColor(Color.WHITE);
+    		sr.set(ShapeType.Line);
+    		sr.line(start , node.getCordinates().cpy().scl(32));
+    	}
+    	sr.end();
     }
 
 
