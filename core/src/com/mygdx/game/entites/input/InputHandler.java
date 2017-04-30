@@ -11,9 +11,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.Factory.EntityFactory;
 import com.mygdx.game.Factory.TowerType;
-import com.mygdx.game.entites.entitiycomponents.HealthComponent;
 import com.mygdx.game.entites.entitiycomponents.MouseImageComponent;
-import com.mygdx.game.entites.input.InputHandlerIF;
+import com.mygdx.game.entites.entitiycomponents.OffsetComponent;
+import com.mygdx.game.entites.entitiycomponents.PositionComponent;
 import com.mygdx.game.managers.GameStateManager;
 import com.mygdx.game.managers.LevelManager;
 import com.mygdx.game.states.PlayState;
@@ -29,6 +29,7 @@ public class InputHandler implements InputProcessor {
 	private static EntityFactory _ef;
 	private static OrthographicCamera _gameCamera;
 	private static Engine _ashleyEngine;
+	private Family _towerFamily = Family.all(MouseImageComponent.class).get();;
 
 	public void registerInputHandlerSystem(InputHandlerIF inputHandler) {
 		_inputHandler = inputHandler;
@@ -49,7 +50,7 @@ public class InputHandler implements InputProcessor {
 		}
 
 		if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-			xAxis = 1; 
+			xAxis = 1;
 		} else if (Gdx.input.isKeyPressed(Input.Keys.A)) {
 			xAxis = -1;
 		} else {
@@ -60,7 +61,8 @@ public class InputHandler implements InputProcessor {
 
 	@Override
 	public boolean keyDown(int keycode) {
-        if (keycode == Input.Keys.ESCAPE) PlayState.PAUSE = !PlayState.PAUSE;
+		if (keycode == Input.Keys.ESCAPE)
+			PlayState.PAUSE = !PlayState.PAUSE;
 		return false;
 	}
 
@@ -79,20 +81,23 @@ public class InputHandler implements InputProcessor {
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		if (_isPlacementMode) {
-			
+
 			if (button == Input.Buttons.RIGHT) {
-				System.out.println("DISABLING PLACEMENT MODE");
+				ImmutableArray<Entity> towerEntitys = getAshleyEngine().getEntitiesFor(_towerFamily);
+				Entity first = towerEntitys.first();
+				getAshleyEngine().removeEntity(first);
 				InputHandler.setPlacementMode(false);
 				return false;
 			}
-			
+
 			Vector3 mousePos = _gameCamera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
 			Tile tile = LevelManager.getTile((int) mousePos.x >> 5, (int) mousePos.y >> 5);
-			System.out.println("MOUSEPOS = " + mousePos);
-			System.out.println("TILE = " + tile);
-			System.out.println("Tile Coordinates = " + tile.getCords());
-			Entity te = _ef.createTowerEntity(_towerType, tile.getCords().x, tile.getCords().y);
-			te.remove(MouseImageComponent.class);
+			ImmutableArray<Entity> towerEntitys = getAshleyEngine().getEntitiesFor(_towerFamily);
+			Entity first = towerEntitys.first();
+			 first.remove(MouseImageComponent.class);
+			 first.getComponent(PositionComponent.class).position.x = tile.getCords().x;
+			 first.getComponent(PositionComponent.class).position.y = tile.getCords().y;
+			 first.add(new OffsetComponent(16, 16));
 			InputHandler.setPlacementMode(false);
 		}
 
@@ -113,13 +118,17 @@ public class InputHandler implements InputProcessor {
 
 	@Override
 	public boolean mouseMoved(int screenX, int screenY) {
-		
-		
-//		Vector3 mousePos = _gameCamera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
-		
-		Family towerFamily = Family.exclude(HealthComponent.class).get();
-//		ImmutableArray<Entity> towerEntitys = getAshleyEngine().getEntitiesFor(towerFamily);
-		
+
+		if (_isPlacementMode) {
+			ImmutableArray<Entity> towerEntitys = getAshleyEngine().getEntitiesFor(_towerFamily);
+			Entity first = towerEntitys.first();
+			first.add(new OffsetComponent(0, 0));
+			Vector3 mousePos = _gameCamera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+			PositionComponent component = first.getComponent(PositionComponent.class);
+			component.position.x = mousePos.x;
+			component.position.y = mousePos.y;
+		}
+
 		return false;
 	}
 

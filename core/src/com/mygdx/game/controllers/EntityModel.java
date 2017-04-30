@@ -1,8 +1,10 @@
 package com.mygdx.game.controllers;
 
 import com.badlogic.ashley.core.Engine;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.Factory.EntityFactory;
 import com.mygdx.game.Factory.TowerType;
 import com.mygdx.game.entites.input.InputHandler;
@@ -17,7 +19,8 @@ public class EntityModel extends InputAdapter {
 	private static OrthographicCamera _gameCamera;
 	private static Engine _ashleyEngine;
 
-	public EntityModel(WaveTimeManager waveMngr, EntityFactory factory, GameStateManager gsm, OrthographicCamera gameCamera, Engine ashleyEngine) {
+	public EntityModel(WaveTimeManager waveMngr, EntityFactory factory, GameStateManager gsm,
+			OrthographicCamera gameCamera, Engine ashleyEngine) {
 
 		this.waveMngr = waveMngr;
 		_factory = factory;
@@ -34,7 +37,9 @@ public class EntityModel extends InputAdapter {
 	public static void beginTowerPlacing(TowerType towerType) {
 
 		System.out.println("TURRET TYPE =  " + towerType);
-		InputHandler.setTowerInfoForPlacement(true, _gsm, _factory, towerType,_gameCamera,_ashleyEngine);
+		InputHandler.setTowerInfoForPlacement(true, _gsm, _factory, towerType, _gameCamera, _ashleyEngine);
+		Vector3 mousePos = _gameCamera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+		_factory.createTowerEntity(towerType, mousePos.x, mousePos.y);
 
 	}
 
