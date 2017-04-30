@@ -56,7 +56,7 @@ public class InputHandler implements InputProcessor {
 		} else {
 			xAxis = 0;
 		}
-		_inputHandler.moveCam(xAxis, yAxis);
+		_inputHandler.setCamDir(xAxis, yAxis);
 	}
 
 	@Override
