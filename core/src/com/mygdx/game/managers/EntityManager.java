@@ -33,6 +33,7 @@ public class EntityManager {
 		MoveToSystem moveToSystem = new MoveToSystem();
 		coinSystem = new CoinSystem(gameCamera);
 		PlayerStatSystem statSystem = new PlayerStatSystem(uiController);
+		TowerPlacementSystem towerSystem = new TowerPlacementSystem(batch);
 		RenderSystem renderSystem = new RenderSystem(batch);
 		HealthSystem healthSystem = new HealthSystem(batch , _entityFactory);
 		PlayerInputSystem playerInputSys = new PlayerInputSystem();
@@ -40,6 +41,7 @@ public class EntityManager {
 		CameraMovementSystem camSys = new CameraMovementSystem(gameCamera);
 		ashleyEngine.addSystem(statSystem);
 		ashleyEngine.addSystem(moveToSystem);
+		ashleyEngine.addSystem(towerSystem);
 		ashleyEngine.addSystem(renderSystem);
 		ashleyEngine.addSystem(healthSystem);
 		ashleyEngine.addSystem(playerInputSys);

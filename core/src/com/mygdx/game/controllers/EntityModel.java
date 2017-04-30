@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.Factory.EntityFactory;
 import com.mygdx.game.Factory.TowerType;
 import com.mygdx.game.entites.input.InputHandler;
+import com.mygdx.game.entites.systems.TowerPlacementSystem;
 import com.mygdx.game.managers.GameStateManager;
 import com.mygdx.game.managers.WaveTimeManager;
 
@@ -40,6 +41,7 @@ public class EntityModel extends InputAdapter {
 		InputHandler.setTowerInfoForPlacement(true, _gsm, _factory, towerType, _gameCamera, _ashleyEngine);
 		Vector3 mousePos = _gameCamera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
 		_factory.createTowerEntity(towerType, mousePos.x, mousePos.y);
+		
 
 	}
 

@@ -1,4 +1,5 @@
 package com.mygdx.game.utils;
+import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector2;
 
@@ -9,6 +10,7 @@ public class Tile {
 	private Vector2 tileCenter;
 	private TileType type;
 	private TiledMapTileLayer.Cell cell;
+	private Entity _entity;
 
 	public Tile(Vector2 cords, int tileWidth, int tileHeight, TileType type, TiledMapTileLayer.Cell cell) {
 		this.cords = cords;
@@ -72,5 +74,13 @@ public class Tile {
 
 	public void setCell(TiledMapTileLayer.Cell cell) {
 		this.cell = cell;
+	}
+
+	public Entity getEntity() {
+		return _entity;
+	}
+
+	public void setEntity(Entity entity) {
+		_entity = entity;
 	}
 }
