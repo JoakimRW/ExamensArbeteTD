@@ -17,7 +17,7 @@ public class PlayerInputSystem extends IteratingSystem implements InputHandlerIF
 	}
 
 	@Override
-	public void moveCam(int xAxis, int yAxis) {
+	public void setCamDir(int xAxis, int yAxis) {
 		camXdir = xAxis;
 		camYdir = yAxis;
 	}
