@@ -1,18 +1,18 @@
 atlas-ui.png
-size: 929, 467
+size: 929, 682
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 black-rectangle-hover
   rotate: false
-  xy: 494, 80
+  xy: 743, 94
   size: 174, 155
   orig: 174, 155
   offset: 0, 0
   index: -1
 button-large
   rotate: false
-  xy: 295, 1
+  xy: 299, 1
   size: 160, 60
   orig: 160, 60
   offset: 0, 0
@@ -26,7 +26,7 @@ button-small
   index: -1
 button
   rotate: false
-  xy: 1, 80
+  xy: 525, 1
   size: 391, 92
   orig: 391, 92
   offset: 0, 0
@@ -34,27 +34,27 @@ button
 coin
   rotate: false
   xy: 248, 1
-  size: 46, 46
-  orig: 46, 46
+  size: 50, 46
+  orig: 50, 46
   offset: 0, 0
   index: -1
 gray-panel
   rotate: false
-  xy: 521, 1
-  size: 167, 78
-  orig: 167, 78
+  xy: 1, 250
+  size: 400, 200
+  orig: 400, 200
   offset: 0, 0
   index: -1
 heart
   rotate: false
-  xy: 456, 1
+  xy: 460, 1
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 pause-bg
   rotate: false
-  xy: 393, 80
+  xy: 1, 94
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
@@ -73,9 +73,16 @@ turret-icon
   orig: 16, 16
   offset: 0, 0
   index: -1
+ui-bg2
+  rotate: false
+  xy: 102, 94
+  size: 640, 110
+  orig: 640, 110
+  offset: 0, 0
+  index: -1
 uibg
   rotate: false
-  xy: 1, 236
+  xy: 1, 451
   size: 927, 230
   orig: 927, 230
   offset: 0, 0
