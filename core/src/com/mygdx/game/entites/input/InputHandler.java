@@ -96,12 +96,16 @@ public class InputHandler implements InputProcessor {
 	}
 
 	private boolean isRightButtonClicked(int button) {
-		if (button == Input.Buttons.RIGHT) {
-			ImmutableArray<Entity> towerEntitys = getAshleyEngine().getEntitiesFor(_towerFamily);
-			Entity first = towerEntitys.first();
-			getAshleyEngine().removeEntity(first);
-			InputHandler.setPlacementMode(false);
-			return true;
+
+		if (_isPlacementMode) {
+
+			if (button == Input.Buttons.RIGHT) {
+				ImmutableArray<Entity> towerEntitys = getAshleyEngine().getEntitiesFor(_towerFamily);
+				Entity first = towerEntitys.first();
+				getAshleyEngine().removeEntity(first);
+				InputHandler.setPlacementMode(false);
+				return true;
+			}
 		}
 		return false;
 	}
@@ -118,8 +122,11 @@ public class InputHandler implements InputProcessor {
 
 	private boolean isTowerBlockingPath(Tile tile) {
 		if (tile.getType() == TileType.FLOOR) {
-			 tile.setType(TileType.WALL);
-			if (PathFinder.findPath(new Vector2(LevelManager.tileSpawn.getCords().x/32,LevelManager.tileSpawn.getCords().y/32),new Vector2(LevelManager.tileEnd.getCords().x/32,LevelManager.tileEnd.getCords().y/32), false, false) == null) {
+			tile.setType(TileType.WALL);
+			if (PathFinder.findPath(
+					new Vector2(LevelManager.tileSpawn.getCords().x / 32, LevelManager.tileSpawn.getCords().y / 32),
+					new Vector2(LevelManager.tileEnd.getCords().x / 32, LevelManager.tileEnd.getCords().y / 32), false,
+					false) == null) {
 				tile.setType(TileType.FLOOR);
 				return true;
 			}
