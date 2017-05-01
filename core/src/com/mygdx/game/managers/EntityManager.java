@@ -30,7 +30,7 @@ public class EntityManager {
 		uiController = new UIStageController(_uiView, _entityModel);
 		_entityFactory.createPlayerEntity();
 		
-		MoveToSystem moveToSystem = new MoveToSystem();
+		MoveToSystem moveToSystem = new MoveToSystem(gameCamera);
 		coinSystem = new CoinSystem(gameCamera);
 		PlayerStatSystem statSystem = new PlayerStatSystem(uiController);
 		TowerPlacementSystem towerSystem = new TowerPlacementSystem(batch);

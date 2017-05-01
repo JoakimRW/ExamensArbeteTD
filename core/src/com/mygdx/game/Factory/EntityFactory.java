@@ -13,11 +13,11 @@ import com.mygdx.game.utils.PathFinder;
 
 public class EntityFactory {
 	// Spawning location
-	private final float _spawnX = LevelManager.tileSpawn.getCords().x / 32;
-	private final float _spawnY = LevelManager.tileSpawn.getCords().y / 32;
+	private final float _spawnX =  (LevelManager.tileSpawn.getCords().x +16) / 32;
+	private final float _spawnY =  (LevelManager.tileSpawn.getCords().y +16) / 32;
 	// End location
-	private final float _endX = LevelManager.tileEnd.getCords().x / 32;
-	private final float _endY = LevelManager.tileEnd.getCords().y / 32;
+	private final float _endX = ( LevelManager.tileEnd.getCords().x +16 ) / 32;
+	private final float _endY = ( LevelManager.tileEnd.getCords().y +16 ) / 32;
 	private Engine _engine;
 
 	public EntityFactory(Engine engine) {
@@ -73,29 +73,29 @@ public class EntityFactory {
 		// Components
 		Entity entity = new Entity();
         OffsetComponent ocomp = new OffsetComponent(16,16);
-		PathComponent pathComponent = new PathComponent();
+		PathComponent pComp = new PathComponent(false , false);
 		SkeletonComponent skeletonComp = new SkeletonComponent(Assets.bloodWormSkeleton);
-		PositionComponent positionComponent = new PositionComponent(new Vector2(_spawnX * 32, _spawnY * 32));
+		PositionComponent positionComponent = new PositionComponent(new Vector2(_spawnX * 32 - ocomp.offsetX , _spawnY * 32 - ocomp.offsetY));
 		HealthComponent healthComponent = new HealthComponent(100);
-		VelocityComponent velocityComponent = new VelocityComponent(100f);
+		VelocityComponent velocityComponent = new VelocityComponent(75f);
 		DirectionComponent directionComponent = new DirectionComponent();
 		AngleComponent angleComponent = new AngleComponent();
 		RenderableComponent renderableComponent = new RenderableComponent();
-		ArrayList<Node> path = PathFinder.findPath(new Vector2(_spawnX, _spawnY), new Vector2(_endX, _endY), false,
-				false);
+		ArrayList<Node> path = PathFinder.findPath(new Vector2(_spawnX, _spawnY), new Vector2(_endX, _endY), pComp.canGoDiag,
+				pComp.isFlying);
 		skeletonComp.animationState.setData(Assets.bloodWormAnimationState.getData());
-		skeletonComp.skeleton.setPosition(_spawnX * 32, _spawnY * 32);
+		skeletonComp.skeleton.setPosition(_spawnX * 32, (_spawnY ) * 32);
 		skeletonComp.animationState.setAnimation(0, "MOVING", true);
-		pathComponent.path = path;
-		entity.add(pathComponent).add(positionComponent).add(skeletonComp).add(healthComponent).add(velocityComponent)
+		pComp.path = path;
+		entity.add(pComp).add(positionComponent).add(skeletonComp).add(healthComponent).add(velocityComponent)
 				.add(directionComponent).add(renderableComponent).add(ocomp).add(angleComponent);
 		return entity;
 	}
 
 	private Entity createBirdEntity() {
 		Entity entity = new Entity();
-        OffsetComponent ocomp = new OffsetComponent(16,16);
-		PathComponent pathComponent = new PathComponent();
+        OffsetComponent ocomp = new OffsetComponent(16,0);
+		PathComponent pComp = new PathComponent(true , true);
 		SkeletonComponent skeletonComp = new SkeletonComponent(Assets.birdSkeleton);
 		PositionComponent positionComponent = new PositionComponent(new Vector2(_spawnX * 32, _spawnY * 32));
 		HealthComponent healthComponent = new HealthComponent(100);
@@ -103,19 +103,21 @@ public class EntityFactory {
 		DirectionComponent directionComponent = new DirectionComponent();
         AngleComponent angleComponent = new AngleComponent();
 		RenderableComponent renderableComponent = new RenderableComponent();
-		ArrayList<Node> path = PathFinder.findPath(new Vector2(_spawnX, _spawnY), new Vector2(_endX, _endY), true,
-				true);
+		ArrayList<Node> path = new ArrayList<>();
+		path.add(new Node(new Vector2(_spawnX , _spawnY),null , 0 ,0));
+		path.add(new Node(new Vector2(_endX , _endY),null , 0 ,0));
 		skeletonComp.animationState.setData(Assets.birdAnimationState.getData());
 		skeletonComp.skeleton.setPosition(_spawnX * 32, _spawnY * 32);
 		skeletonComp.animationState.setAnimation(0, "MOVING", true);
-		pathComponent.path = path;
-		entity.add(pathComponent).add(positionComponent)
+		pComp.path = path;
+		entity.add(pComp).add(positionComponent)
                 .add(skeletonComp)
                 .add(healthComponent)
                 .add(velocityComponent)
 				.add(directionComponent)
                 .add(renderableComponent)
                 .add(ocomp)
+                .add(new FlyingComponent())
                 .add(angleComponent);
 		return entity;
 	}

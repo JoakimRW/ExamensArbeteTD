@@ -5,10 +5,14 @@ import com.mygdx.game.utils.Node;
 
 import java.util.ArrayList;
 
-/**
- * Created by MichaelSjogren on 2017-03-18.
- */
 public class PathComponent implements Component {
     public ArrayList<Node> path;
-    public int index = 1;
+    public boolean isFlying = false;
+    public boolean canGoDiag = false;
+    // this variable stores the time
+    public float pathTimer = 0;
+    public PathComponent(boolean isFlying , boolean canGoDiag){
+        this.isFlying = isFlying;
+        this.canGoDiag = canGoDiag;
+    }
 }
