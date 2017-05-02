@@ -21,7 +21,7 @@ public class UiView implements Screen {
     private Table _rootTable , _nxtEnemyPanel , _grayPanel1 , _grayPanel2 ;
     private Tooltip<Table> _tooltip;
     private Image _laserTowerIcon;
-    private TextButton _nextWaveBtn , _sellBtn , _upgradeBtn;
+    private TextButton _nextWaveBtn;
     private Label _next_enemy_text;
     private Label _next_enemy_value;
     private Label sellPriceLbl;
@@ -53,6 +53,16 @@ public class UiView implements Screen {
 
     private GameStateManager _gsm;
     private Table uiPanel;
+    // tower select widgets
+    private Label _towerSelectName;
+    private Label _towerSelectUpgradePrice;
+    private Label _towerSelectSellPrice;
+    private TextButton  _sellBtn , _upgradeBtn;
+    private Label _towerSelectFireRate;
+    private Label _towerSelectDamage;
+    private Label _towerSelectRange;
+    private Label _towerSelectSpecial;
+    private Table _towerInfoSection;
 
 
     public UiView(GameStateManager gsm){
@@ -80,15 +90,13 @@ public class UiView implements Screen {
         Table midSection = createMidSection();
         Table rightSection = createRightSection();
         uiPanel = createUiPanel();
-        uiPanel.add(leftSection).size(328,165).expand().align(Align.bottomRight).pad(3,3,3,3);
+        uiPanel.add(leftSection).size(328,175).expand().align(Align.bottomRight).pad(3);
         uiPanel.add(midSection).fill().align(Align.center).pad(3,3,3,3);
-        uiPanel.add(rightSection).size(328,165).expand().align(Align.bottomLeft).pad(3,3,3,3);
-        uiPanel.debug();
+        uiPanel.add(rightSection).size(328,175).expand().align(Align.bottomLeft).pad(3);
         _rootTable.add(uiPanel)
-                .prefHeight(165)
                 .align(Align.center)
                 .fill(true , true)
-                .prefWidth(leftSection.getPrefWidth() + midSection.getPrefWidth() + rightSection.getPrefWidth());
+                .prefWidth(leftSection.getPrefWidth() + midSection.getPrefWidth() + rightSection.getPrefWidth() + 100);
         // align stuff
         _rootTable.align(Align.bottom);
         // add root table to stage
@@ -109,6 +117,7 @@ public class UiView implements Screen {
         skin.addRegions(_atlas);
         skin.add("default-font", Assets.font16);
         skin.add("statPanelFont", Assets.font24);
+        skin.add("statPanelFontWaveInfo", Assets.font20);
         skin.add("tooltipFont",Assets.font24);
         skin.load(Gdx.files.internal("interface/ui/uiSkin.json"));
         return skin;
@@ -122,8 +131,68 @@ public class UiView implements Screen {
         Table healthStatPanel = createStatPanel();
         healthStatPanel.add(heart).size(21,18).align(Align.left).pad(5).expand();
         healthStatPanel.add(healthLabel).align(Align.right).pad(5,5,5,10);
-        towerTargetContainer.add(healthStatPanel).size(90,30).align(Align.left).expand().row();
-        towerTargetContainer.add(_grayPanel1).prefHeight(110).expand().fill();
+        towerTargetContainer.add(healthStatPanel).size(120,30).align(Align.topLeft).expand().spaceBottom(2).row();
+        towerTargetContainer.add(_grayPanel1).expand().fill();
+
+        // table to contain tower operations
+        Table leftTowerSelectSection = new Table(_skin);
+            // tower name
+            _towerSelectName = new Label("Laser Tower MK2",_skin);
+            // sell label and value
+            Label towerSelectUpgradeText = new Label("Upgrade",_skin);
+            _towerSelectUpgradePrice = new Label("1920",_skin );
+            // upgrade label and value
+            Label towerSelectSellText = new Label("Sell",_skin,"default");
+            _towerSelectSellPrice = new Label("13245",_skin );
+            // sell button
+            _sellBtn = new TextButton("SELL",_skin);
+            // upgrade button
+            _upgradeBtn = new TextButton("UPGRADE",_skin);
+            leftTowerSelectSection.pad(5);
+        leftTowerSelectSection.add(_towerSelectName).align(Align.center).height(20).colspan(2).row();
+        leftTowerSelectSection.add(towerSelectSellText);
+        leftTowerSelectSection.add(_towerSelectSellPrice).width(60).pad(5).row();
+        leftTowerSelectSection.add(towerSelectUpgradeText);
+        leftTowerSelectSection.add(_towerSelectUpgradePrice).width(60).pad(5).row();
+        leftTowerSelectSection.add(_sellBtn).height(35).width(60).align(Align.left).spaceRight(5);
+        leftTowerSelectSection.add(_upgradeBtn).height(35).width(75).align(Align.left);
+        leftTowerSelectSection.align(Align.bottomLeft);
+        leftTowerSelectSection.left();
+
+        Table fireRateTblRow = createStatPanel();
+        Table dmgTblRow = createStatPanel();
+        Table rangeTblRow = createStatPanel();
+        Table specialTblrow = createStatPanel();
+        // table to contain tower information
+        _towerInfoSection = new Table(_skin);
+        // firerate text then value
+        Label fireRate = new Label("Fire rate",_skin);
+        _towerSelectFireRate = new Label("1.5",_skin);
+        fireRateTblRow.add(_towerSelectFireRate);
+        // damage text and then value
+        Label damage = new Label("Damage",_skin);
+        _towerSelectDamage = new Label("150",_skin);
+        dmgTblRow.add(_towerSelectDamage);
+        // range text and then value
+        Label range = new Label("Range",_skin);
+        _towerSelectRange = new Label("200",_skin);
+        rangeTblRow.add(_towerSelectRange);
+        // special text the value
+        Label special = new Label("Special",_skin);
+        _towerSelectSpecial = new Label("Frost",_skin);
+        specialTblrow.add(_towerSelectSpecial);
+        // add widgets to tower info section
+        _towerInfoSection.add(fireRate).align(Align.left).spaceRight(5);
+        _towerInfoSection.add(fireRateTblRow).row();
+        _towerInfoSection.add(damage).align(Align.left).spaceRight(5);
+        _towerInfoSection.add(dmgTblRow).row();
+        _towerInfoSection.add(range).align(Align.left).spaceRight(5);
+        _towerInfoSection.add(rangeTblRow).row();
+        _towerInfoSection.add(special).align(Align.left).spaceRight(5);
+        _towerInfoSection.add(specialTblrow).row();
+        // add left and right container for tower select
+        _grayPanel1.add(leftTowerSelectSection).expand().fill();
+        _grayPanel1.add(_towerInfoSection).expand().fill().align(Align.bottomRight).pad(5);
         return towerTargetContainer;
     }
 
@@ -134,7 +203,7 @@ public class UiView implements Screen {
         moneyLabel = new Label("",_skin , "statPanelFont" , "white");
         moneyStatPanel.add(coin).pad(5).align(Align.left).expand().size(23 , 21);
         moneyStatPanel.add(moneyLabel).align(Align.right).pad(5 , 5 , 5 ,10).expand();
-        towerListContainer.add(moneyStatPanel).align(Align.right).size(90 , 30).spaceBottom(2).row();
+        towerListContainer.add(moneyStatPanel).align(Align.right).size(120 , 30).spaceBottom(2).row();
 
         _grayPanel2 = createGrayPanel();
         _grayPanel2.add(_laserTowerIcon).size(32,32).pad(2).align(Align.topLeft).expand();
@@ -144,7 +213,7 @@ public class UiView implements Screen {
 
     private Table createRootTable(){
         Table root = new Table(_skin);
-        root.setBounds(0 , 0 , Gdx.graphics.getWidth() , 165);
+        root.setBounds(0 , 0 , Gdx.graphics.getWidth() , 175);
         return root;
     }
 
@@ -156,30 +225,26 @@ public class UiView implements Screen {
         Table buttonContainer = new Table(_skin);
         Table MidContainer = new Table(_skin);
 
-
         // labels
-        _next_enemy_text = new Label("Next Enemy",_skin);
-        _next_enemy_value = new Label("",_skin);
+        _next_enemy_text = new Label("Next Enemy",_skin , "statPanelFontWaveInfo","white");
+        _next_enemy_value = new Label("",_skin , "statPanelFontWaveInfo","white");
 
-        _next_wave_time_text = new Label("In:",_skin);
-        _next_wave_time_value = new Label("",_skin);
+        _next_wave_time_text = new Label("In:",_skin , "statPanelFontWaveInfo","white");
+        _next_wave_time_value = new Label("",_skin , "statPanelFontWaveInfo","white");
         // buttons
         _nextWaveBtn = new TextButton("START",_skin);
         // tables
-        _nxtEnemyPanel = new Table(_skin );
-        waveInfoContainer.add(_next_enemy_text).align(Align.left);
-        waveInfoContainer.add(_next_wave_time_text).align(Align.left).row();
-        nextEnemyTable.add(_next_enemy_value).align(Align.center).prefSize(103, 31).pad(5);
-        nextWaveTable.add(_next_wave_time_value).align(Align.center).prefSize(103 , 31).pad(5);
-        waveInfoContainer.add(nextEnemyTable).align(Align.left).expand().spaceRight(3f);
-        waveInfoContainer.add(nextWaveTable).align(Align.right).expand().spaceLeft(3f);
-        waveInfoContainer.row();
-        waveInfoContainer.add(_nxtEnemyPanel).height(45).align(Align.left).expand();
-        waveInfoContainer.row();
-        waveInfoContainer.setWidth(204);
-        MidContainer.add(waveInfoContainer).expand().row();
-        buttonContainer.add(_nextWaveBtn).expandX();
-        MidContainer.add(buttonContainer).expand();
+        waveInfoContainer.add(_next_enemy_text).align(Align.bottomLeft);
+        waveInfoContainer.add(_next_wave_time_text).align(Align.bottomLeft).row();
+        nextEnemyTable.add(_next_enemy_value).align(Align.center);
+        nextWaveTable.add(_next_wave_time_value).align(Align.bottom).prefSize(40 , 31);
+        waveInfoContainer.add(nextEnemyTable).align(Align.bottomLeft).expand().spaceRight(3f);
+        waveInfoContainer.add(nextWaveTable).align(Align.bottomRight).expand().spaceLeft(3f);
+        waveInfoContainer.setWidth(150);
+        MidContainer.add(waveInfoContainer).expand().align(Align.bottom).row();
+        buttonContainer.add(_nextWaveBtn).expand().fill().spaceTop(0);
+        MidContainer.add(buttonContainer).expand().fillX().spaceTop(0).align(Align.bottom).padBottom(2);
+        //MidContainer.debug();
         return MidContainer;
     }
 
@@ -275,7 +340,7 @@ public class UiView implements Screen {
     @Override
     public void render(float delta) {
         getStage().act(delta);
-        if (PlayState.START_GAME) _next_wave_time_value.setText(String.valueOf(WaveTimeManager.CURRENT_WAVE_TIME));
+        if (PlayState.START_GAME) _next_wave_time_value.setText(String.format("%d : %d",WaveTimeManager.CURRENT_WAVE_TIME ,  WaveTimeManager.CURRENT_WAVE_TIME_MILLIS));
         getStage().draw();
     }
 

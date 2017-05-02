@@ -24,9 +24,9 @@ public class EntityFactory {
 		_engine = engine;
 	}
 
-	public void createEnemyEntity(EnemyType enemyType) {
+	public void createEnemyEntity(EnemyName enemy) {
 		Entity entity = null;
-		switch (enemyType) {
+		switch (enemy) {
 		case BIRD:
 			entity = createBirdEntity();
 			break;

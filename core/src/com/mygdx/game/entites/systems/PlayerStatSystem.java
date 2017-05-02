@@ -21,6 +21,7 @@ public class PlayerStatSystem extends IteratingSystem {
         HealthComponent h = Mappers.HEALTH_M.get(entity);
         MoneyComponent m = Mappers.MONEY_M.get(entity);
         uiController.setPlayerMoney(m.money);
-        uiController.updateHealth(h.health);
+        // Player should have integer values , enemies do not
+        uiController.updateHealth((int)h.health);
     }
 }

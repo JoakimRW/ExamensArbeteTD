@@ -3,7 +3,7 @@ package com.mygdx.game.entites.entitiycomponents;
 import com.badlogic.ashley.core.Component;
 
 public class HealthComponent implements Component {
-	public int health = 0;
+	public float health = 0;
 	public int maxHealth = 0;
 	public boolean isDead = false;
 
@@ -12,7 +12,7 @@ public class HealthComponent implements Component {
 		this.maxHealth = maxHealth;
 	}
 	
-	public void takeDamage(int dmg){
+	public void takeDamage(float dmg){
 		health -= dmg;
 		if (health <= 0) isDead = true;
 	}

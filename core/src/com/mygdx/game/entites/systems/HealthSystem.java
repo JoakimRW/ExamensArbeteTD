@@ -6,16 +6,19 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.mygdx.game.Factory.EntityFactory;
 import com.mygdx.game.entites.entitiycomponents.HealthComponent;
 import com.mygdx.game.entites.entitiycomponents.Mappers;
 import com.mygdx.game.entites.entitiycomponents.PositionComponent;
+import com.mygdx.game.managers.WaveTimeManager;
 import com.mygdx.game.utils.Assets;
+
+import java.util.Random;
 
 public class HealthSystem extends IteratingSystem {
 	private SpriteBatch _batch;
     private EntityFactory _entityFactory;
-
 	public HealthSystem(SpriteBatch batch , EntityFactory factory) {
 		super(Family.all(HealthComponent.class , PositionComponent.class).get());
 		_entityFactory = factory;
@@ -31,7 +34,7 @@ public class HealthSystem extends IteratingSystem {
 			float deathY = posComp.position.y;
 			entity.removeAll();
 			getEngine().removeEntity(entity);
-			_entityFactory.createCoinEntity(deathX, deathY , 1);
+			_entityFactory.createCoinEntity(deathX, deathY , WaveTimeManager.WAVE + MathUtils.random(1));
 		}	
         drawHealthBar(hpComp, posComp);
 	}
@@ -54,7 +57,7 @@ public class HealthSystem extends IteratingSystem {
     	// 50%
     	if(healthComp.health <= 0.50 * healthComp.maxHealth) sprite.setColor(Color.ORANGE);
     	// 25%
-    	if(healthComp.health <= 0.25 * healthComp.maxHealth) sprite.setColor(Color.RED);
+    	if(healthComp.health <= 0.25 * healthComp.maxHealth) sprite.setColor(Color.BROWN);
     	// if enemy isn't hurt don't draw health.
     	if(healthComp.health != healthComp.maxHealth){
     		_batch.begin();
