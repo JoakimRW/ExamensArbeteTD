@@ -92,11 +92,11 @@ public class UiView implements Screen {
         uiPanel = createUiPanel();
         uiPanel.add(leftSection).size(328,175).expand().align(Align.bottomRight).pad(3);
         uiPanel.add(midSection).fill().align(Align.center).pad(3,3,3,3);
-        uiPanel.add(rightSection).size(328,175).expand().align(Align.bottomLeft).pad(3);
+        uiPanel.add(rightSection).size(355,175).expand().align(Align.bottomLeft).pad(3);
         _rootTable.add(uiPanel)
                 .align(Align.center)
                 .fill(true , true)
-                .prefWidth(leftSection.getPrefWidth() + midSection.getPrefWidth() + rightSection.getPrefWidth() + 100);
+                .minWidth(leftSection.getPrefWidth() + midSection.getPrefWidth() + rightSection.getPrefWidth() + 50);
         // align stuff
         _rootTable.align(Align.bottom);
         // add root table to stage
@@ -138,22 +138,29 @@ public class UiView implements Screen {
         Table leftTowerSelectSection = new Table(_skin);
             // tower name
             _towerSelectName = new Label("Laser Tower MK2",_skin);
+            Table name = createStatPanel();
+
+            name.add(_towerSelectName).pad(0 , 10,  0 ,10).align(Align.center);
             // sell label and value
             Label towerSelectUpgradeText = new Label("Upgrade",_skin);
             _towerSelectUpgradePrice = new Label("1920",_skin );
+            Table upgrade = createStatPanel();
+            upgrade.add(_towerSelectUpgradePrice).align(Align.right).pad(2);
             // upgrade label and value
             Label towerSelectSellText = new Label("Sell",_skin,"default");
             _towerSelectSellPrice = new Label("13245",_skin );
+            Table sell = createStatPanel();
+            sell.add(_towerSelectSellPrice).align(Align.right).pad(2);
             // sell button
-            _sellBtn = new TextButton("SELL",_skin);
+            _sellBtn = new TextButton("Sell",_skin);
             // upgrade button
-            _upgradeBtn = new TextButton("UPGRADE",_skin);
+            _upgradeBtn = new TextButton("Upgrade",_skin);
             leftTowerSelectSection.pad(5);
-        leftTowerSelectSection.add(_towerSelectName).align(Align.center).height(20).colspan(2).row();
-        leftTowerSelectSection.add(towerSelectSellText);
-        leftTowerSelectSection.add(_towerSelectSellPrice).width(60).pad(5).row();
-        leftTowerSelectSection.add(towerSelectUpgradeText);
-        leftTowerSelectSection.add(_towerSelectUpgradePrice).width(60).pad(5).row();
+        leftTowerSelectSection.add(name).align(Align.right).colspan(2).pad(0).row();
+        leftTowerSelectSection.add(towerSelectSellText).align(Align.left);
+        leftTowerSelectSection.add(sell).align(Align.right).width(60).pad(0).row();
+        leftTowerSelectSection.add(towerSelectUpgradeText).align(Align.left);
+        leftTowerSelectSection.add(upgrade).align(Align.right).width(60).pad(0).row();
         leftTowerSelectSection.add(_sellBtn).height(35).width(60).align(Align.left).spaceRight(5);
         leftTowerSelectSection.add(_upgradeBtn).height(35).width(75).align(Align.left);
         leftTowerSelectSection.align(Align.bottomLeft);
