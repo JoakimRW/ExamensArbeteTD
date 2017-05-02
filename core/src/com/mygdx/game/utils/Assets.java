@@ -34,7 +34,8 @@ public class Assets {
    // public static BitmapFont font12;
     public static BitmapFont font16;
     public static BitmapFont fontVera10;
-	
+    public static BitmapFont font24;
+
 
     private static Texture loadTexture(String file){
         return new Texture(Gdx.files.internal(file));
@@ -62,6 +63,7 @@ public class Assets {
         font10 = createFont(12 , Fonts.HEMI_HEAD);
         //font12 = createFont(12 , Fonts.HEMI_HEAD);
         font16 = createFont(16 , Fonts.HEMI_HEAD);
+        font24 = createFont(24 ,Fonts.HEMI_HEAD);
         Cursor slickArrow = Gdx.graphics.newCursor(new Pixmap(Gdx.files.getFileHandle("slick_arrow-arrow.png", Files.FileType.Internal)), 0, 0);
         Gdx.graphics.setCursor(slickArrow);
     }

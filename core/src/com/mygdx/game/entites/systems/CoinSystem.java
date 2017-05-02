@@ -55,6 +55,6 @@ public class CoinSystem extends IteratingSystem {
 
 
     public void dispose() {
-        batch.dispose();
+        //batch.dispose();
     }
 }

@@ -6,7 +6,8 @@
 
   "com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle": {
     "default": { "font": "default-font" , "fontColor":"white"},
-    "green-font": { "font": "default-font" , "fontColor":"green"}
+    "green-font": { "font": "default-font" , "fontColor":"green"},
+    "statpanel-font": { "font": "default-font" , "fontColor":"white"}
   }	,
   "com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle": {
     "default": {"font": "default-font" , "up":"button-large" , "down" : "button-large", "pressedOffsetX":1, "pressedOffsetY":-1}

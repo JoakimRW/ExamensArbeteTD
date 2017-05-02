@@ -65,14 +65,14 @@ public class UIStageController extends ClickListener {
     }
 
     public void updateHealth(int health) {
-        uistage.getHealthLabel().setText(String.format("Health: %d" ,health));
+        uistage.getHealthLabel().setText(String.valueOf(health));
     }
 
-    public void setPlayerMoney(int playerMoney) {
-        uistage.getMoneyLabel().setText(String.format("Money: %d",playerMoney));
+    public void setPlayerMoney(int money) {
+        uistage.getMoneyLabel().setText(String.valueOf(money));
     }
     
 	public void updateNextEnemyText() {
-		uistage.get_nextEnemyText().setText(model.getNextWave());
+		uistage.get_next_enemy_value().setText(model.getNextWave());
 	}
 }
