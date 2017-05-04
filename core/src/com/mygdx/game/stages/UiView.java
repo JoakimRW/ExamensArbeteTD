@@ -18,7 +18,7 @@ import com.mygdx.game.utils.Assets;
 
 public class UiView implements Screen {
 
-    private Table _rootTable , _nxtEnemyPanel , _grayPanel1 , _grayPanel2 ;
+    private Table _rootTable , _grayPanel1 , _grayPanel2 ;
     private Tooltip<Table> _tooltip;
     private Image _laserTowerIcon;
     private TextButton _nextWaveBtn;
@@ -145,12 +145,12 @@ public class UiView implements Screen {
             Label towerSelectUpgradeText = new Label("Upgrade",_skin);
             _towerSelectUpgradePrice = new Label("1920",_skin );
             Table upgrade = createStatPanel();
-            upgrade.add(_towerSelectUpgradePrice).align(Align.right).pad(2);
+            upgrade.add(_towerSelectUpgradePrice).expand().align(Align.right).pad(5);
             // upgrade label and value
             Label towerSelectSellText = new Label("Sell",_skin,"default");
             _towerSelectSellPrice = new Label("13245",_skin );
             Table sell = createStatPanel();
-            sell.add(_towerSelectSellPrice).align(Align.right).pad(2);
+            sell.add(_towerSelectSellPrice).expand().align(Align.right).pad(5);
             // sell button
             _sellBtn = new TextButton("Sell",_skin);
             // upgrade button
@@ -165,7 +165,7 @@ public class UiView implements Screen {
         leftTowerSelectSection.add(_upgradeBtn).height(35).width(75).align(Align.left);
         leftTowerSelectSection.align(Align.bottomLeft);
         leftTowerSelectSection.left();
-
+        // right select section	
         Table fireRateTblRow = createStatPanel();
         Table dmgTblRow = createStatPanel();
         Table rangeTblRow = createStatPanel();
@@ -175,28 +175,28 @@ public class UiView implements Screen {
         // firerate text then value
         Label fireRate = new Label("Fire rate",_skin);
         _towerSelectFireRate = new Label("1.5",_skin);
-        fireRateTblRow.add(_towerSelectFireRate);
+        fireRateTblRow.add(_towerSelectFireRate).align(Align.right).expand().padRight(5);
         // damage text and then value
         Label damage = new Label("Damage",_skin);
         _towerSelectDamage = new Label("150",_skin);
-        dmgTblRow.add(_towerSelectDamage);
+        dmgTblRow.add(_towerSelectDamage).align(Align.right).expand().padRight(5);
         // range text and then value
         Label range = new Label("Range",_skin);
         _towerSelectRange = new Label("200",_skin);
-        rangeTblRow.add(_towerSelectRange);
+        rangeTblRow.add(_towerSelectRange).align(Align.right).expand().padRight(5);
         // special text the value
         Label special = new Label("Special",_skin);
         _towerSelectSpecial = new Label("Frost",_skin);
-        specialTblrow.add(_towerSelectSpecial);
+        specialTblrow.add(_towerSelectSpecial).align(Align.right).expand().padRight(5);
         // add widgets to tower info section
         _towerInfoSection.add(fireRate).align(Align.left).spaceRight(5);
-        _towerInfoSection.add(fireRateTblRow).row();
+        _towerInfoSection.add(fireRateTblRow).align(Align.right).row();
         _towerInfoSection.add(damage).align(Align.left).spaceRight(5);
-        _towerInfoSection.add(dmgTblRow).row();
+        _towerInfoSection.add(dmgTblRow).align(Align.right).row();
         _towerInfoSection.add(range).align(Align.left).spaceRight(5);
-        _towerInfoSection.add(rangeTblRow).row();
+        _towerInfoSection.add(rangeTblRow).align(Align.right).row();
         _towerInfoSection.add(special).align(Align.left).spaceRight(5);
-        _towerInfoSection.add(specialTblrow).row();
+        _towerInfoSection.add(specialTblrow).align(Align.right).row();
         // add left and right container for tower select
         _grayPanel1.add(leftTowerSelectSection).expand().fill();
         _grayPanel1.add(_towerInfoSection).expand().fill().align(Align.bottomRight).pad(5);
