@@ -34,6 +34,7 @@ public class EntityManager {
 		coinSystem = new CoinSystem(gameCamera);
 		PlayerStatSystem statSystem = new PlayerStatSystem(uiController);
 		TowerPlacementSystem towerSystem = new TowerPlacementSystem(batch);
+		ShootingSystem shootingSystem = new ShootingSystem();
 		RenderSystem renderSystem = new RenderSystem(batch);
 		HealthSystem healthSystem = new HealthSystem(batch , _entityFactory);
 		PlayerInputSystem playerInputSys = new PlayerInputSystem();
@@ -47,6 +48,7 @@ public class EntityManager {
 		ashleyEngine.addSystem(playerInputSys);
 		ashleyEngine.addSystem(camSys);
 		ashleyEngine.addSystem(coinSystem);
+		ashleyEngine.addSystem(shootingSystem);
 	}
 
 

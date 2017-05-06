@@ -16,9 +16,10 @@ public class ShootingSystem extends IteratingSystem {
 
 	private Engine _engine;
 
-	public ShootingSystem(Family family, Engine engine) {
-		super(family);
-		_engine = engine;
+	public ShootingSystem() {
+		super(Families.PROJECTILE);
+		_engine = getEngine();
+		
 	}
 
 	@Override
