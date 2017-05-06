@@ -71,7 +71,7 @@ public class TowerPlacementSystem extends IteratingSystem {
 		return false;
 	}
 
-	private boolean isTowerBlockingPath(Tile tile) {
+	private static boolean isTowerBlockingPath(Tile tile) {
 		if (tile.getType() == TileType.FLOOR) {
 			tile.setType(TileType.WALL);
 			if (PathFinder.findPath(

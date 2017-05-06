@@ -110,7 +110,7 @@ public class InputHandler implements InputProcessor {
 		return false;
 	}
 
-	private boolean isLegalPlacement() {
+	private static boolean isLegalPlacement() {
 		Vector3 mousePos = _gameCamera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
 		Tile tile = LevelManager.getTile((int) mousePos.x >> 5, (int) mousePos.y >> 5);
 
@@ -120,7 +120,7 @@ public class InputHandler implements InputProcessor {
 		return false;
 	}
 
-	private boolean isTowerBlockingPath(Tile tile) {
+	private static boolean isTowerBlockingPath(Tile tile) {
 		if (tile.getType() == TileType.FLOOR) {
 			tile.setType(TileType.WALL);
 			if (PathFinder.findPath(
@@ -181,7 +181,7 @@ public class InputHandler implements InputProcessor {
 		return false;
 	}
 
-	private void mouseOverTintTiles() {
+	private static void mouseOverTintTiles() {
 		Vector3 mousePos = _gameCamera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
 		Tile tile = LevelManager.getTile((int) mousePos.x >> 5, (int) mousePos.y >> 5);
 

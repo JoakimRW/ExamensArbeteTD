@@ -54,6 +54,23 @@ public class EntityFactory {
 		}
 	}
 	
+	public static Entity createProjectileEntity(ProjectileType projectileType, Entity startEntity , Entity targetEntity){
+		Entity entity = new Entity();
+		SkeletonComponent skeletonComponent = new SkeletonComponent(Assets.coinSkeleton); //TODO Real projectile data
+		PositionComponent positionComponent = new PositionComponent(startEntity.getComponent(PositionComponent.class).position);
+		RenderableComponent renderableComponent = new RenderableComponent();
+		AngleComponent angleComponent = new AngleComponent();
+		DestinationComponent destinationComponent = new DestinationComponent(targetEntity);
+		VelocityComponent velocityComponent = new VelocityComponent(200f); //TODO modular data
+		DamageComponent damageComponent = new DamageComponent(20d); //TODO modular data
+		skeletonComponent.skeleton.setPosition(positionComponent.position.x, positionComponent.position.y);
+		skeletonComponent.animationState.setData(Assets.coinAnimationState.getData());//TODO Real projectile data
+		entity.add(destinationComponent).add(angleComponent).add(renderableComponent).add(positionComponent).add(skeletonComponent).add(velocityComponent).add(damageComponent);
+		
+		System.out.println("Projectile Created");
+		return entity;
+	}
+	
 	private static Entity createTurretEntity(TowerType type ,float x , float y) {
 		Entity entity = new Entity();
 		SkeletonComponent skeletonComponent = new SkeletonComponent(Assets.laserTowerSkeleton);
@@ -65,6 +82,7 @@ public class EntityFactory {
 		skeletonComponent.skeleton.setPosition(x, y);
 		skeletonComponent.animationState.setData(Assets.laserTowerAnimationState.getData());
 		entity.add(skeletonComponent).add(mouseImageComponent).add(mousePositionComponent).add(positionComponent).add(angleComponent).add(renderableComponent);
+		
 		System.out.println("Tower Entity Created");
 		return entity;
 	}
