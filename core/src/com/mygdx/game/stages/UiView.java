@@ -4,13 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.mygdx.game.managers.GameStateManager;
 import com.mygdx.game.managers.WaveTimeManager;
 import com.mygdx.game.states.PlayState;
 import com.mygdx.game.utils.Assets;
@@ -18,15 +15,11 @@ import com.mygdx.game.utils.Assets;
 
 public class UiView implements Screen {
 
-    private Table _rootTable , _grayPanel1 , _grayPanel2 ;
+    private Table _rootTable;
     private Tooltip<Table> _tooltip;
     private Image _laserTowerIcon;
     private TextButton _nextWaveBtn;
-    private Label _next_enemy_text;
     private Label _next_enemy_value;
-    private Label sellPriceLbl;
-    private Label upgradePriceLbl;
-    private Label _next_wave_time_text;
     private Label _next_wave_time_value;
     private Skin _skin;
     private TextureAtlas _atlas;
@@ -43,17 +36,11 @@ public class UiView implements Screen {
     private Label toolTip_val_range_lbl;
     private Label toolTip_val_special_lbl;
     private Label toolTip_val_price_lbl;
-    private Label toolTip_text_fireRate_lbl;
-    private Label toolTip_text_damage_lbl;
-    private Label toolTip_text_range_lbl;
-    private Label toolTip_text_special_lbl;
-    private Label toolTip_text_price_lbl;
     // pause window
     private Window _pauseWindow;
 
-    private GameStateManager _gsm;
-    private Table uiPanel;
     // tower select widgets
+    private Table _towerSelectPanel;
     private Label _towerSelectName;
     private Label _towerSelectUpgradePrice;
     private Label _towerSelectSellPrice;
@@ -62,11 +49,13 @@ public class UiView implements Screen {
     private Label _towerSelectDamage;
     private Label _towerSelectRange;
     private Label _towerSelectSpecial;
-    private Table _towerInfoSection;
+    private TextButton _resumeButton;
+
+    private TextButton _mainMenuButton;
 
 
-    public UiView(GameStateManager gsm){
-        _gsm = gsm;
+    public UiView(){
+
     }
 
     @Override
@@ -83,13 +72,11 @@ public class UiView implements Screen {
         // root table
         _rootTable = createRootTable();
         // PANEL that show info about the selected tower
-        _grayPanel1 = createGrayPanel();
-
         // add to root
         Table leftSection = createLeftSection();
         Table midSection = createMidSection();
         Table rightSection = createRightSection();
-        uiPanel = createUiPanel();
+        Table uiPanel = createUiPanel();
         uiPanel.add(leftSection).size(328,175).expand().align(Align.bottomRight).pad(3);
         uiPanel.add(midSection).fill().align(Align.center).pad(3,3,3,3);
         uiPanel.add(rightSection).size(355,175).expand().align(Align.bottomLeft).pad(3);
@@ -124,7 +111,9 @@ public class UiView implements Screen {
     }
 
     private Table createRightSection() {
-        Table towerTargetContainer = new Table(_skin);
+        Table towerTargetContainer = new Table();
+        Table grayPanel = createGrayPanel();
+        _towerSelectPanel = new Table(_skin);
         healthLabel = new Label("",_skin , "statPanelFont" , "white");
         Image heart = new Image(_skin,"heart");
         // stats panels that show hp , and money
@@ -132,30 +121,29 @@ public class UiView implements Screen {
         healthStatPanel.add(heart).size(21,18).align(Align.left).pad(5).expand();
         healthStatPanel.add(healthLabel).align(Align.right).pad(5,5,5,10);
         towerTargetContainer.add(healthStatPanel).size(120,30).align(Align.topLeft).expand().spaceBottom(2).row();
-        towerTargetContainer.add(_grayPanel1).expand().fill();
 
         // table to contain tower operations
         Table leftTowerSelectSection = new Table(_skin);
             // tower name
-            _towerSelectName = new Label("Laser Tower MK2",_skin);
-            Table name = createStatPanel();
+            _towerSelectName = new Label("",_skin);
+        Table name = createStatPanel();
 
-            name.add(_towerSelectName).pad(0 , 10,  0 ,10).align(Align.center);
+        name.add(_towerSelectName).pad(0 , 10,  0 ,10).align(Align.center);
             // sell label and value
-            Label towerSelectUpgradeText = new Label("Upgrade",_skin);
-            _towerSelectUpgradePrice = new Label("1920",_skin );
-            Table upgrade = createStatPanel();
-            upgrade.add(_towerSelectUpgradePrice).expand().align(Align.right).pad(5);
-            // upgrade label and value
-            Label towerSelectSellText = new Label("Sell",_skin,"default");
-            _towerSelectSellPrice = new Label("13245",_skin );
-            Table sell = createStatPanel();
-            sell.add(_towerSelectSellPrice).expand().align(Align.right).pad(5);
-            // sell button
-            _sellBtn = new TextButton("Sell",_skin);
-            // upgrade button
-            _upgradeBtn = new TextButton("Upgrade",_skin);
-            leftTowerSelectSection.pad(5);
+        Label towerSelectUpgradeText = new Label("Upgrade",_skin);
+        _towerSelectUpgradePrice = new Label("",_skin );
+        Table upgrade = createStatPanel();
+        upgrade.add(_towerSelectUpgradePrice).expand().align(Align.right).pad(10);
+        // upgrade label and value
+        Label towerSelectSellText = new Label("Sell",_skin,"default");
+        _towerSelectSellPrice = new Label("",_skin );
+        Table sell = createStatPanel();
+        sell.add(_towerSelectSellPrice).expand().align(Align.right).pad(10);
+        // sell button
+        _sellBtn = new TextButton("Sell",_skin);
+        // upgrade button
+        _upgradeBtn = new TextButton("Upgrade",_skin);
+        leftTowerSelectSection.pad(5);
         leftTowerSelectSection.add(name).align(Align.right).colspan(2).pad(0).row();
         leftTowerSelectSection.add(towerSelectSellText).align(Align.left);
         leftTowerSelectSection.add(sell).align(Align.right).width(60).pad(0).row();
@@ -171,35 +159,38 @@ public class UiView implements Screen {
         Table rangeTblRow = createStatPanel();
         Table specialTblrow = createStatPanel();
         // table to contain tower information
-        _towerInfoSection = new Table(_skin);
-        // firerate text then value
+        Table towerInfoSection = new Table(_skin);
+        // fire rate text then value
         Label fireRate = new Label("Fire rate",_skin);
-        _towerSelectFireRate = new Label("1.5",_skin);
-        fireRateTblRow.add(_towerSelectFireRate).align(Align.right).expand().padRight(5);
+        _towerSelectFireRate = new Label("",_skin);
+        fireRateTblRow.add(_towerSelectFireRate).align(Align.right).expand().padRight(10);
         // damage text and then value
         Label damage = new Label("Damage",_skin);
-        _towerSelectDamage = new Label("150",_skin);
-        dmgTblRow.add(_towerSelectDamage).align(Align.right).expand().padRight(5);
+        _towerSelectDamage = new Label("",_skin);
+        dmgTblRow.add(_towerSelectDamage).align(Align.right).expand().padRight(10);
         // range text and then value
         Label range = new Label("Range",_skin);
-        _towerSelectRange = new Label("200",_skin);
-        rangeTblRow.add(_towerSelectRange).align(Align.right).expand().padRight(5);
+        _towerSelectRange = new Label("",_skin);
+        rangeTblRow.add(_towerSelectRange).align(Align.right).expand().padRight(10);
         // special text the value
         Label special = new Label("Special",_skin);
-        _towerSelectSpecial = new Label("Frost",_skin);
-        specialTblrow.add(_towerSelectSpecial).align(Align.right).expand().padRight(5);
+        _towerSelectSpecial = new Label("",_skin);
+        specialTblrow.add(_towerSelectSpecial).align(Align.right).expand().padRight(10);
         // add widgets to tower info section
-        _towerInfoSection.add(fireRate).align(Align.left).spaceRight(5);
-        _towerInfoSection.add(fireRateTblRow).align(Align.right).row();
-        _towerInfoSection.add(damage).align(Align.left).spaceRight(5);
-        _towerInfoSection.add(dmgTblRow).align(Align.right).row();
-        _towerInfoSection.add(range).align(Align.left).spaceRight(5);
-        _towerInfoSection.add(rangeTblRow).align(Align.right).row();
-        _towerInfoSection.add(special).align(Align.left).spaceRight(5);
-        _towerInfoSection.add(specialTblrow).align(Align.right).row();
+        towerInfoSection.add(fireRate).align(Align.left).spaceRight(5);
+        towerInfoSection.add(fireRateTblRow).align(Align.right).row();
+        towerInfoSection.add(damage).align(Align.left).spaceRight(5);
+        towerInfoSection.add(dmgTblRow).align(Align.right).row();
+        towerInfoSection.add(range).align(Align.left).spaceRight(5);
+        towerInfoSection.add(rangeTblRow).align(Align.right).row();
+        towerInfoSection.add(special).align(Align.left).spaceRight(5);
+        towerInfoSection.add(specialTblrow).align(Align.right).row();
         // add left and right container for tower select
-        _grayPanel1.add(leftTowerSelectSection).expand().fill();
-        _grayPanel1.add(_towerInfoSection).expand().fill().align(Align.bottomRight).pad(5);
+        _towerSelectPanel.add(leftTowerSelectSection).expand().fill();
+        _towerSelectPanel.add(towerInfoSection).expand().fill();
+        grayPanel.add(_towerSelectPanel).expand().fill();
+        towerTargetContainer.add(grayPanel);
+        _towerSelectPanel.setVisible(false);
         return towerTargetContainer;
     }
 
@@ -211,10 +202,9 @@ public class UiView implements Screen {
         moneyStatPanel.add(coin).pad(5).align(Align.left).expand().size(23 , 21);
         moneyStatPanel.add(moneyLabel).align(Align.right).pad(5 , 5 , 5 ,10).expand();
         towerListContainer.add(moneyStatPanel).align(Align.right).size(120 , 30).spaceBottom(2).row();
-
-        _grayPanel2 = createGrayPanel();
-        _grayPanel2.add(_laserTowerIcon).size(32,32).pad(2).align(Align.topLeft).expand();
-        towerListContainer.add(_grayPanel2).prefHeight(110).expand().fill();
+        Table grayPanel2 = createGrayPanel();
+        grayPanel2.add(_laserTowerIcon).size(32,32).pad(2).align(Align.topLeft).expand();
+        towerListContainer.add(grayPanel2).prefHeight(110).expand().fill();
         return towerListContainer;
     }
 
@@ -233,16 +223,16 @@ public class UiView implements Screen {
         Table MidContainer = new Table(_skin);
 
         // labels
-        _next_enemy_text = new Label("Next Enemy",_skin , "statPanelFontWaveInfo","white");
+        Label nextEnemyText = new Label("Next Enemy", _skin, "statPanelFontWaveInfo", "white");
         _next_enemy_value = new Label("",_skin , "statPanelFontWaveInfo","white");
 
-        _next_wave_time_text = new Label("In:",_skin , "statPanelFontWaveInfo","white");
+        Label nextWaveTimeText = new Label("In:", _skin, "statPanelFontWaveInfo", "white");
         _next_wave_time_value = new Label("",_skin , "statPanelFontWaveInfo","white");
         // buttons
         _nextWaveBtn = new TextButton("START",_skin);
         // tables
-        waveInfoContainer.add(_next_enemy_text).align(Align.bottomLeft);
-        waveInfoContainer.add(_next_wave_time_text).align(Align.bottomLeft).row();
+        waveInfoContainer.add(nextEnemyText).align(Align.bottomLeft);
+        waveInfoContainer.add(nextWaveTimeText).align(Align.bottomLeft).row();
         nextEnemyTable.add(_next_enemy_value).align(Align.center);
         nextWaveTable.add(_next_wave_time_value).align(Align.bottom).prefSize(40 , 31);
         waveInfoContainer.add(nextEnemyTable).align(Align.bottomLeft).expand().spaceRight(3f);
@@ -271,28 +261,11 @@ public class UiView implements Screen {
         _pauseWindow = new Window("Pause",_skin);
         _pauseWindow.setVisible(false);
         Table root = new Table(_skin);
-        TextButton resumeButton = new TextButton("Resume",_skin);
-        TextButton mainMenuButton = new TextButton("Main Menu",_skin);
-        root.add(resumeButton).padBottom(10).row();
-        root.add(mainMenuButton);
+        _resumeButton = new TextButton("Resume",_skin);
+        _mainMenuButton = new TextButton("Main Menu",_skin);
+        root.add(_resumeButton).padBottom(10).row();
+        root.add(_mainMenuButton);
         _pauseWindow.add(root);
-        // TODO put tease in controller
-        resumeButton.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                _pauseWindow.setVisible(false);
-                PlayState.PAUSE = false;
-            }
-        });
-
-        mainMenuButton.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                _pauseWindow.setVisible(false);
-                _gsm.dispose();
-                _gsm.setState(GameStateManager.State.MAINMENU);
-            }
-        });
     }
 
     private void createTooltipTable(){
@@ -311,15 +284,15 @@ public class UiView implements Screen {
 
         // labels for tooltip
         toolTip_towerName_lbl = new Label("Laser Tower",_skin , "tooltipFont" , "white");
-        toolTip_text_fireRate_lbl = new Label("Fire rate:",_skin);
+        Label toolTip_text_fireRate_lbl = new Label("Fire rate:", _skin);
         toolTip_val_fireRate_lbl = new Label("134" , _skin);
-        toolTip_text_damage_lbl = new Label("Damage:",_skin);
+        Label toolTip_text_damage_lbl = new Label("Damage:", _skin);
         toolTip_val_damage_lbl = new Label("140",_skin);
-        toolTip_text_range_lbl = new Label("Range:" , _skin);
+        Label toolTip_text_range_lbl = new Label("Range:", _skin);
         toolTip_val_range_lbl = new Label("20",_skin);
-        toolTip_text_special_lbl = new Label("Special:" , _skin);
+        Label toolTip_text_special_lbl = new Label("Special:", _skin);
         toolTip_val_special_lbl = new Label("None",_skin);
-        toolTip_text_price_lbl = new Label("Price:",_skin);
+        Label toolTip_text_price_lbl = new Label("Price:", _skin);
         toolTip_val_price_lbl = new Label("250",_skin);
         // Add labels to tooltip table
         _tooltipTable.defaults().grow();
@@ -384,6 +357,43 @@ public class UiView implements Screen {
 
 
     /** getters **/
+
+    public TextButton getResumeButton() {
+        return _resumeButton;
+    }
+
+    public TextButton getMainMenuButton() {
+        return _mainMenuButton;
+    }
+
+    public Label getTowerSelectName() {
+        return _towerSelectName;
+    }
+
+    public Label getTowerSelectUpgradePrice() {
+        return _towerSelectUpgradePrice;
+    }
+
+    public Label getTowerSelectSellPrice() {
+        return _towerSelectSellPrice;
+    }
+
+    public Label getTowerSelectFireRate() {
+        return _towerSelectFireRate;
+    }
+
+    public Label getTowerSelectDamage() {
+        return _towerSelectDamage;
+    }
+
+    public Label getTowerSelectRange() {
+        return _towerSelectRange;
+    }
+
+    public Label getTowerSelectSpecial() {
+        return _towerSelectSpecial;
+    }
+
     public Label get_nextWaveTimeValue() {return _next_wave_time_value;}
 
     public Label gettoolTip_towerName_lbl() {return toolTip_towerName_lbl;}
@@ -397,10 +407,6 @@ public class UiView implements Screen {
     public Label getToolTip_val_special_lbl() {return toolTip_val_special_lbl;}
 
     public Label getToolTip_val_price_lbl() {return toolTip_val_price_lbl;}
-
-    public Skin getSkin() {
-        return _skin;
-    }
 
     public Stage getStage(){
         return _uiStage;
@@ -422,11 +428,11 @@ public class UiView implements Screen {
         return _nextWaveBtn;
     }
 
-    public TextButton get_sellBtn() {
+    public TextButton getSellBtn() {
         return _sellBtn;
     }
 
-    public TextButton get_upgradeBtn() {
+    public TextButton getUpgradeBtn() {
         return _upgradeBtn;
     }
 
@@ -434,20 +440,11 @@ public class UiView implements Screen {
         return _next_enemy_value;
     }
 
-    public Label getSellPriceLbl() {
-        return sellPriceLbl;
-    }
-
-    public Label getUpgradePriceLbl() {
-        return upgradePriceLbl;
-    }
-
-
-    public Skin get_skin() {
+    public Skin getSkin() {
         return _skin;
     }
 
-    public TextureAtlas get_atlas() {
+    public TextureAtlas getAtlas() {
         return _atlas;
     }
 
@@ -457,6 +454,10 @@ public class UiView implements Screen {
 
     public Table get_tooltipTable() {
         return _tooltipTable;
+    }
+
+    public Table getTowerSelectPanel() {
+        return _towerSelectPanel;
     }
 
     public TooltipManager get_manager() {
@@ -471,10 +472,6 @@ public class UiView implements Screen {
 
     public Label getHealthLabel() {
         return healthLabel;
-    }
-    /** action listeners ***/
-    public void addNextWaveButtonnListener(ClickListener clickListener) {
-        _nextWaveBtn.addListener(clickListener);
     }
 
 }

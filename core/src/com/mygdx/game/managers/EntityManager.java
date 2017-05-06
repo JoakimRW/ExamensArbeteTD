@@ -27,7 +27,7 @@ public class EntityManager {
 		_entityFactory = new EntityFactory(ashleyEngine);
 		_waveManager = new WaveTimeManager(_entityFactory);
 		EntityModel _entityModel = new EntityModel(_waveManager, _entityFactory, gsm, gameCamera,ashleyEngine);
-		uiController = new UIStageController(_uiView, _entityModel);
+		uiController = new UIStageController(_uiView, _entityModel , gsm);
 		_entityFactory.createPlayerEntity();
 		
 		MoveToSystem moveToSystem = new MoveToSystem(gameCamera);
@@ -52,14 +52,9 @@ public class EntityManager {
 
     public void update(float deltaTime) {
 		if (PlayState.PAUSE) {
-			if (!uiController.getPauseWindow().isVisible())
-				System.out.println("show pause window");
-			uiController.getPauseWindow().setVisible(true);
+				uiController.showPauseWindow();
 		} else {
-			if (uiController.getPauseWindow().isVisible()) {
-				System.out.println("hide pause window");
-				uiController.getPauseWindow().setVisible(false);
-			}
+			uiController.hidePauseWindow();
 			inputhandler.pullInput();
 			_waveManager.tick(deltaTime);
 			_ashleyEngine.update(deltaTime);
