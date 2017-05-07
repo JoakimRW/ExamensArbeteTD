@@ -62,7 +62,7 @@ public class EntityFactory {
 		AngleComponent angleComponent = new AngleComponent();
 		DestinationComponent destinationComponent = new DestinationComponent(targetEntity);
 		VelocityComponent velocityComponent = new VelocityComponent(200f); //TODO modular data
-		DamageComponent damageComponent = new DamageComponent(20d); //TODO modular data
+		DamageComponent damageComponent = new DamageComponent(20f); //TODO modular data
 		skeletonComponent.skeleton.setPosition(positionComponent.position.x, positionComponent.position.y);
 		skeletonComponent.animationState.setData(Assets.coinAnimationState.getData());//TODO Real projectile data
 		entity.add(destinationComponent).add(angleComponent).add(renderableComponent).add(positionComponent).add(skeletonComponent).add(velocityComponent).add(damageComponent);
