@@ -2,6 +2,7 @@ package com.mygdx.game.entites.entitiycomponents;
 
 import com.badlogic.ashley.core.ComponentMapper;
 import com.mygdx.game.entites.entitiycomponents.enemy.EnemyComponent;
+import com.mygdx.game.entites.entitiycomponents.projectile.DestinationComponent;
 import com.mygdx.game.entites.entitiycomponents.tower.*;
 
 /** call tease mappers to avoid writing them in the systems

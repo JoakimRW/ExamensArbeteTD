@@ -11,11 +11,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Factory.EntityFactory;
 import com.mygdx.game.Factory.ProjectileType;
 import com.mygdx.game.entites.entitiycomponents.AngleComponent;
-import com.mygdx.game.entites.entitiycomponents.DestinationComponent;
 import com.mygdx.game.entites.entitiycomponents.Families;
 import com.mygdx.game.entites.entitiycomponents.HealthComponent;
 import com.mygdx.game.entites.entitiycomponents.PositionComponent;
 import com.mygdx.game.entites.entitiycomponents.VelocityComponent;
+import com.mygdx.game.entites.entitiycomponents.projectile.DestinationComponent;
 import com.mygdx.game.entites.entitiycomponents.tower.DamageComponent;
 import com.mygdx.game.entites.entitiycomponents.tower.RangeComponent;
 
@@ -57,11 +57,11 @@ public class ShootingSystem extends IteratingSystem {
 
 	private void moveToEnemy(Entity projectileEntity, float deltaTime) {
 
-		Vector2 position = projectileEntity.getComponent(PositionComponent.class).position;
+		Vector2 position = projectileEntity.getComponent(PositionComponent.class).position.cpy();
 		AngleComponent angle = projectileEntity.getComponent(AngleComponent.class);
 		VelocityComponent velocity = projectileEntity.getComponent(VelocityComponent.class);
 		Vector2 destination = projectileEntity.getComponent(DestinationComponent.class).getDestinationEntity()
-				.getComponent(PositionComponent.class).position;
+				.getComponent(PositionComponent.class).position.cpy();
 		double damage = projectileEntity.getComponent(DamageComponent.class).getDamage();
 
 		float destinationX = destination.x;
@@ -110,13 +110,12 @@ public class ShootingSystem extends IteratingSystem {
 		if (distanceMap.isEmpty()) {
 			return null;
 		}
-		
+
 		Double minKey = Collections.min(distanceMap.keySet());
 		RangeComponent component = towerEntity.getComponent(RangeComponent.class);
 		if (component == null) {
 			return null;
 		}
-		System.out.println("RANGECOMPONENT = " + component);
 		Double range = component.getRange();
 		if (range <= minKey) {
 			return distanceMap.get(minKey);
