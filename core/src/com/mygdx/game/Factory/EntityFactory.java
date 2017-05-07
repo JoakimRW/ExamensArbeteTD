@@ -79,9 +79,10 @@ public class EntityFactory {
 		AngleComponent angleComponent = new AngleComponent();
 		MouseImageComponent mouseImageComponent = new MouseImageComponent();
 		MousePositionComponent mousePositionComponent = new MousePositionComponent();
+		TowerStatusComponent towerStatusComponent = new TowerStatusComponent(1d, 500d, 20d);
 		skeletonComponent.skeleton.setPosition(x, y);
 		skeletonComponent.animationState.setData(Assets.laserTowerAnimationState.getData());
-		entity.add(skeletonComponent).add(mouseImageComponent).add(mousePositionComponent).add(positionComponent).add(angleComponent).add(renderableComponent);
+		entity.add(skeletonComponent).add(mouseImageComponent).add(mousePositionComponent).add(positionComponent).add(angleComponent).add(renderableComponent).add(towerStatusComponent);
 		
 		System.out.println("Tower Entity Created");
 		return entity;
