@@ -1,6 +1,8 @@
 package com.mygdx.game.entites.entitiycomponents;
 
 import com.badlogic.ashley.core.ComponentMapper;
+import com.mygdx.game.entites.entitiycomponents.enemy.EnemyComponent;
+import com.mygdx.game.entites.entitiycomponents.tower.*;
 
 /** call tease mappers to avoid writing them in the systems
  *      to get component of entity do this:
@@ -24,4 +26,8 @@ public class Mappers {
     public static final ComponentMapper<DestinationComponent> DESTINATION_M = ComponentMapper.getFor(DestinationComponent.class);
     public static final ComponentMapper<EnemyComponent> ENEMY_M = ComponentMapper.getFor(EnemyComponent.class);
     public static final ComponentMapper<TowerStatComponent> TOWER_STATS_M = ComponentMapper.getFor(TowerStatComponent.class);
+    public static final ComponentMapper<DamageComponent> DAMAGE_M = ComponentMapper.getFor(DamageComponent.class);
+    public static final ComponentMapper<FireRateComponent> FIRE_RATE_M = ComponentMapper.getFor(FireRateComponent.class);
+    public static final ComponentMapper<RangeComponent> RANGE_M = ComponentMapper.getFor(RangeComponent.class);
+    public static final ComponentMapper<SpecialTowerComponent>  SPECIAL_M = ComponentMapper.getFor(SpecialTowerComponent.class);
 }

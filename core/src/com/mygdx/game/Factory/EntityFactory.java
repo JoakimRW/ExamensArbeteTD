@@ -6,6 +6,9 @@ import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entites.entitiycomponents.*;
+import com.mygdx.game.entites.entitiycomponents.enemy.EnemyComponent;
+import com.mygdx.game.entites.entitiycomponents.player.PlayerComponent;
+import com.mygdx.game.entites.entitiycomponents.tower.*;
 import com.mygdx.game.managers.LevelManager;
 import com.mygdx.game.utils.Assets;
 import com.mygdx.game.utils.Node;
@@ -79,7 +82,7 @@ public class EntityFactory {
 		AngleComponent angleComponent = new AngleComponent();
 		MouseImageComponent mouseImageComponent = new MouseImageComponent();
 		MousePositionComponent mousePositionComponent = new MousePositionComponent();
-        TowerStatComponent towerStatComponent = new TowerStatComponent(1d, 500d, 20d);
+        TowerStatComponent towerStatComponent = new TowerStatComponent(25,"Laser Tower");
 		SpecialTowerComponent specialTowerComponent = new SpecialTowerComponent();
 		skeletonComponent.skeleton.setPosition(x, y);
 		skeletonComponent.animationState.setData(Assets.laserTowerAnimationState.getData());
@@ -87,11 +90,15 @@ public class EntityFactory {
                 .add(mouseImageComponent)
                 .add(mousePositionComponent)
                 .add(positionComponent)
+                .add(new FireRateComponent(1d))
+                .add(new RangeComponent(250d))
+                .add(positionComponent)
                 .add(angleComponent)
                 .add(renderableComponent)
                 .add(towerStatComponent)
-                .add(specialTowerComponent);
-		
+                .add(specialTowerComponent)
+                .add(new DamageComponent(20d));
+
 		System.out.println("Tower Entity Created");
 		return entity;
 	}

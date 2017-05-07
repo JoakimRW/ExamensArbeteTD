@@ -89,7 +89,9 @@ public class InputHandler implements InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        _inputHandler.setAsSelectedTower(getTowerEntityFromTile());
+	    if (button == Input.Buttons.LEFT){
+            _inputHandler.setAsSelectedTower(getTowerEntityFromTile());
+        }
 		if (isRightButtonClicked(button)) {
 			return false;
 		}

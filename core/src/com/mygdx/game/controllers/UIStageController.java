@@ -101,7 +101,7 @@ public class UIStageController extends ClickListener {
 			double range, String special) {
 		uistage.getTowerSelectName().setText(towerName);
 		uistage.getTowerSelectSellPrice().setText(String.valueOf(sellPrice));
-		uistage.getTowerSelectDamage().setText(String.valueOf(upgradePrice));
+		uistage.getTowerSelectUpgradePrice().setText(String.valueOf(upgradePrice));
 		uistage.getTowerSelectFireRate().setText(String.valueOf(fireRate));
 		uistage.getTowerSelectDamage().setText(String.valueOf(damage));
 		uistage.getTowerSelectRange().setText(String.valueOf(range));

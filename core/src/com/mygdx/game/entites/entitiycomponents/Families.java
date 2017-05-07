@@ -1,6 +1,8 @@
 package com.mygdx.game.entites.entitiycomponents;
 
 import com.badlogic.ashley.core.Family;
+import com.mygdx.game.entites.entitiycomponents.player.PlayerComponent;
+import com.mygdx.game.entites.entitiycomponents.tower.DamageComponent;
 
 public class Families {
     public final static Family ENEMY = Family.all(SkeletonComponent.class , PathComponent.class).get();

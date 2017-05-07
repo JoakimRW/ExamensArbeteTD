@@ -5,9 +5,10 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.mygdx.game.controllers.UIStageController;
 import com.mygdx.game.entites.entitiycomponents.*;
+import com.mygdx.game.entites.entitiycomponents.tower.*;
 
 
-/** updates player stats to ui via controller */
+/** updates player and tower selection info stats to ui via controller */
 public class PlayerStatSystem extends IteratingSystem {
     private UIStageController uiController;
 
@@ -24,7 +25,11 @@ public class PlayerStatSystem extends IteratingSystem {
         uiController.setPlayerMoney(m.money);
         if (d.getDestinationEntity() != null){
             TowerStatComponent stats = Mappers.TOWER_STATS_M.get(d.getDestinationEntity());
-            uiController.setTowerSelectionInfo("Laser Tower",stats.getCost() , stats.getCost() , stats.getFireRate() , stats.getFireRate() , stats.getRange() , "None");
+            DamageComponent dmg = Mappers.DAMAGE_M.get(d.getDestinationEntity());
+            FireRateComponent f = Mappers.FIRE_RATE_M.get(d.getDestinationEntity());
+            RangeComponent r = Mappers.RANGE_M.get(d.getDestinationEntity());
+            SpecialTowerComponent s = Mappers.SPECIAL_M.get(entity);
+            uiController.setTowerSelectionInfo(stats._towerName, stats._sellValue , stats._upgradePrice , f._fireRate  , dmg.getDamage()  , r._range , "None");
         }else{
             uiController.hideTowerSelectionPanel();
         }
