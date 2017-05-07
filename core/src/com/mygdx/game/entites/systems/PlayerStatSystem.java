@@ -23,6 +23,7 @@ public class PlayerStatSystem extends IteratingSystem {
         DestinationComponent d = Mappers.DESTINATION_M.get(entity);
         uiController.setPlayerMoney(m.money);
         if (d.getDestinationEntity() != null){
+            TowerStatComponent stats = Mappers.TOWER_STATS_M.get(d.getDestinationEntity());
             uiController.setTowerSelectionInfo("Laser Tower",stats.getCost() , stats.getCost() , stats.getFireRate() , stats.getFireRate() , stats.getRange() , "None");
         }else{
             uiController.hideTowerSelectionPanel();
