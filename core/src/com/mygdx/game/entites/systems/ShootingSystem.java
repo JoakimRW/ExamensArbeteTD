@@ -94,8 +94,8 @@ public class ShootingSystem extends IteratingSystem {
 		_engine.removeEntity(projectileEntity);
 	}
 
-	private Entity findNearestEnemy(Entity entity) throws OutOfRangeException {
-		Vector2 towerPosition = entity.getComponent(PositionComponent.class).position;
+	private Entity findNearestEnemy(Entity towerEntity) throws OutOfRangeException {
+		Vector2 towerPosition = towerEntity.getComponent(PositionComponent.class).position;
 
 		if (getEngine().getEntitiesFor(Families.ENEMY) == null) {
 			return null;
@@ -107,9 +107,17 @@ public class ShootingSystem extends IteratingSystem {
 			double distance = compareDistance(towerPosition, enemyPosition);
 			distanceMap.put(distance, enemy);
 		}
+		if (distanceMap.isEmpty()) {
+			return null;
+		}
+		
 		Double minKey = Collections.min(distanceMap.keySet());
-
-		Double range = entity.getComponent(RangeComponent.class).getRange();
+		RangeComponent component = towerEntity.getComponent(RangeComponent.class);
+		if (component == null) {
+			return null;
+		}
+		System.out.println("RANGECOMPONENT = " + component);
+		Double range = component.getRange();
 		if (range <= minKey) {
 			return distanceMap.get(minKey);
 		}

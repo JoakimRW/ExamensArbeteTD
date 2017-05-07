@@ -66,6 +66,7 @@ public class EntityFactory {
 		DestinationComponent destinationComponent = new DestinationComponent(targetEntity);
 		VelocityComponent velocityComponent = new VelocityComponent(200f); //TODO modular data
 		DamageComponent damageComponent = new DamageComponent(20d); //TODO modular data
+		
 		skeletonComponent.skeleton.setPosition(positionComponent.position.x, positionComponent.position.y);
 		skeletonComponent.animationState.setData(Assets.coinAnimationState.getData());//TODO Real projectile data
 		entity.add(destinationComponent).add(angleComponent).add(renderableComponent).add(positionComponent).add(skeletonComponent).add(velocityComponent).add(damageComponent);
@@ -82,7 +83,7 @@ public class EntityFactory {
 		AngleComponent angleComponent = new AngleComponent();
 		MouseImageComponent mouseImageComponent = new MouseImageComponent();
 		MousePositionComponent mousePositionComponent = new MousePositionComponent();
-        TowerStatComponent towerStatComponent = new TowerStatComponent(25,"Laser Tower");
+        RangeComponent rangeComponent = new RangeComponent(500d); //TODO Modular data
 		SpecialTowerComponent specialTowerComponent = new SpecialTowerComponent();
 		skeletonComponent.skeleton.setPosition(x, y);
 		skeletonComponent.animationState.setData(Assets.laserTowerAnimationState.getData());
@@ -95,7 +96,7 @@ public class EntityFactory {
                 .add(positionComponent)
                 .add(angleComponent)
                 .add(renderableComponent)
-                .add(towerStatComponent)
+                .add(rangeComponent)
                 .add(specialTowerComponent)
                 .add(new DamageComponent(20d));
 
