@@ -102,7 +102,6 @@ public class InputHandler implements InputProcessor {
 
     private Entity getTowerEntityFromTile(){
             if (!_isPlacementMode){
-                System.out.println("get tower");
                 Tile tile = getTileAtMouse();
                 if (tile != null) return tile.getEntity();
             }
