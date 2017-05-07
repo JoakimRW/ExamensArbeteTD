@@ -1,5 +1,6 @@
 package com.mygdx.game.desktop;
 
+import com.badlogic.gdx.Files;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.mygdx.game.Game;
@@ -9,6 +10,8 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.width = 960;
 		config.height = 720;
+		config.addIcon("interface/icons/turret-icon.png", Files.FileType.Internal);
+		config.title = "ExamensArbeteTD";
 		config.fullscreen = false;
 		new LwjglApplication(new Game(), config);
 	}

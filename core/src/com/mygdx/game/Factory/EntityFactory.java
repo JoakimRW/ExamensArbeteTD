@@ -6,6 +6,9 @@ import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entites.entitiycomponents.*;
+import com.mygdx.game.entites.entitiycomponents.enemy.EnemyComponent;
+import com.mygdx.game.entites.entitiycomponents.player.PlayerComponent;
+import com.mygdx.game.entites.entitiycomponents.tower.*;
 import com.mygdx.game.managers.LevelManager;
 import com.mygdx.game.utils.Assets;
 import com.mygdx.game.utils.Node;
@@ -62,7 +65,7 @@ public class EntityFactory {
 		AngleComponent angleComponent = new AngleComponent();
 		DestinationComponent destinationComponent = new DestinationComponent(targetEntity);
 		VelocityComponent velocityComponent = new VelocityComponent(200f); //TODO modular data
-		DamageComponent damageComponent = new DamageComponent(20f); //TODO modular data
+		DamageComponent damageComponent = new DamageComponent(20d); //TODO modular data
 		skeletonComponent.skeleton.setPosition(positionComponent.position.x, positionComponent.position.y);
 		skeletonComponent.animationState.setData(Assets.coinAnimationState.getData());//TODO Real projectile data
 		entity.add(destinationComponent).add(angleComponent).add(renderableComponent).add(positionComponent).add(skeletonComponent).add(velocityComponent).add(damageComponent);
@@ -79,12 +82,23 @@ public class EntityFactory {
 		AngleComponent angleComponent = new AngleComponent();
 		MouseImageComponent mouseImageComponent = new MouseImageComponent();
 		MousePositionComponent mousePositionComponent = new MousePositionComponent();
-		TowerStatusComponent towerStatusComponent = new TowerStatusComponent(1d, 500d, 20d);
+        TowerStatComponent towerStatComponent = new TowerStatComponent(25,"Laser Tower");
 		SpecialTowerComponent specialTowerComponent = new SpecialTowerComponent();
 		skeletonComponent.skeleton.setPosition(x, y);
 		skeletonComponent.animationState.setData(Assets.laserTowerAnimationState.getData());
-		entity.add(skeletonComponent).add(mouseImageComponent).add(mousePositionComponent).add(positionComponent).add(angleComponent).add(renderableComponent).add(towerStatusComponent).add(specialTowerComponent);
-		
+		entity.add(skeletonComponent)
+                .add(mouseImageComponent)
+                .add(mousePositionComponent)
+                .add(positionComponent)
+                .add(new FireRateComponent(1d))
+                .add(new RangeComponent(250d))
+                .add(positionComponent)
+                .add(angleComponent)
+                .add(renderableComponent)
+                .add(towerStatComponent)
+                .add(specialTowerComponent)
+                .add(new DamageComponent(20d));
+
 		System.out.println("Tower Entity Created");
 		return entity;
 	}
@@ -107,8 +121,16 @@ public class EntityFactory {
 		skeletonComp.skeleton.setPosition(_spawnX * 32, (_spawnY ) * 32);
 		skeletonComp.animationState.setAnimation(0, "MOVING", true);
 		pComp.path = path;
-		entity.add(pComp).add(positionComponent).add(skeletonComp).add(healthComponent).add(velocityComponent)
-				.add(directionComponent).add(renderableComponent).add(ocomp).add(angleComponent);
+		entity.add(pComp)
+				.add(positionComponent)
+				.add(skeletonComp)
+				.add(healthComponent)
+				.add(velocityComponent)
+				.add(directionComponent)
+				.add(renderableComponent)
+				.add(ocomp)
+				.add(angleComponent)
+				.add(new EnemyComponent());
 		return entity;
 	}
 
@@ -138,7 +160,8 @@ public class EntityFactory {
                 .add(renderableComponent)
                 .add(ocomp)
                 .add(new FlyingComponent())
-                .add(angleComponent);
+                .add(angleComponent)
+				.add(new EnemyComponent());
 		return entity;
 	}
 	
@@ -168,7 +191,8 @@ public class EntityFactory {
         player.add(new DirectionComponent())
    		.add(new MoneyComponent(100))
 		.add(new HealthComponent(30))
-		.add(new PlayerComponent());
+		.add(new PlayerComponent())
+		.add(new DestinationComponent(null));
         _engine.addEntity(player);
 	}
 

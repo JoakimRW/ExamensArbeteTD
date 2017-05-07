@@ -35,6 +35,9 @@ public class InputHandler implements InputProcessor {
 	private static Engine _ashleyEngine;
 	private Family _towerFamily = Family.all(MouseImageComponent.class).get();;
 
+	public InputHandler(OrthographicCamera gameCamera){
+	    _gameCamera = gameCamera;
+    }
 	public void registerInputHandlerSystem(InputHandlerIF inputHandler) {
 		_inputHandler = inputHandler;
 	}
@@ -82,9 +85,13 @@ public class InputHandler implements InputProcessor {
 		return false;
 	}
 
+
+
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-
+	    if (button == Input.Buttons.LEFT){
+            _inputHandler.setAsSelectedTower(getTowerEntityFromTile());
+        }
 		if (isRightButtonClicked(button)) {
 			return false;
 		}
@@ -95,6 +102,13 @@ public class InputHandler implements InputProcessor {
 		return false;
 	}
 
+    private Entity getTowerEntityFromTile(){
+            if (!_isPlacementMode){
+                Tile tile = getTileAtMouse();
+                if (tile != null) return tile.getEntity();
+            }
+	    return null;
+    }
 	private boolean isRightButtonClicked(int button) {
 
 		if (_isPlacementMode) {
@@ -110,12 +124,18 @@ public class InputHandler implements InputProcessor {
 		return false;
 	}
 
-	private static boolean isLegalPlacement() {
+	private static Tile getTileAtMouse(){
 		Vector3 mousePos = _gameCamera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
 		Tile tile = LevelManager.getTile((int) mousePos.x >> 5, (int) mousePos.y >> 5);
-
-		if (!isTowerBlockingPath(tile)) {
-			return tile.getType() == TileType.FLOOR;
+		if (tile != null) return tile;
+		return null;
+	}
+	private static boolean isLegalPlacement() {
+		Tile tile = getTileAtMouse();
+		if (tile != null){
+			if (!isTowerBlockingPath(tile)) {
+				return tile.getType() == TileType.FLOOR;
+			}
 		}
 		return false;
 	}
@@ -137,9 +157,7 @@ public class InputHandler implements InputProcessor {
 
 	private void placeTowers(int button) {
 		if (_isPlacementMode) {
-
-			Vector3 mousePos = _gameCamera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
-			Tile tile = LevelManager.getTile((int) mousePos.x >> 5, (int) mousePos.y >> 5);
+			Tile tile = getTileAtMouse();
 			ImmutableArray<Entity> towerEntitys = getAshleyEngine().getEntitiesFor(_towerFamily);
 			Entity first = towerEntitys.first();
 			first.remove(MouseImageComponent.class);
@@ -147,6 +165,7 @@ public class InputHandler implements InputProcessor {
 			first.getComponent(PositionComponent.class).position.y = tile.getCords().y;
 			first.add(new OffsetComponent(16, 16));
 			tile.setType(TileType.WALL);
+			tile.setEntity(first);
 			getAshleyEngine().getSystem(TowerPlacementSystem.class).tintTile(null);
 			InputHandler.setPlacementMode(false);
 		}
@@ -182,9 +201,9 @@ public class InputHandler implements InputProcessor {
 	}
 
 	private static void mouseOverTintTiles() {
-		Vector3 mousePos = _gameCamera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
-		Tile tile = LevelManager.getTile((int) mousePos.x >> 5, (int) mousePos.y >> 5);
 
+		Tile tile = getTileAtMouse();
+		if (tile != null)
 		getAshleyEngine().getSystem(TowerPlacementSystem.class).tintTile(tile);
 	}
 
@@ -227,9 +246,8 @@ public class InputHandler implements InputProcessor {
 	}
 
 	public static void setTowerInfoForPlacement(boolean isPlacementMode, GameStateManager gsm, EntityFactory ef,
-			TowerType towerType, OrthographicCamera gameCamera, Engine ashleyEngine) {
+			TowerType towerType, Engine ashleyEngine) {
 		setAshleyEngine(ashleyEngine);
-		setGameCamera(gameCamera);
 		setEf(ef);
 		setGsm(gsm);
 		setPlacementMode(isPlacementMode);

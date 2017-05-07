@@ -11,13 +11,13 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Factory.EntityFactory;
 import com.mygdx.game.Factory.ProjectileType;
 import com.mygdx.game.entites.entitiycomponents.AngleComponent;
-import com.mygdx.game.entites.entitiycomponents.DamageComponent;
 import com.mygdx.game.entites.entitiycomponents.DestinationComponent;
 import com.mygdx.game.entites.entitiycomponents.Families;
 import com.mygdx.game.entites.entitiycomponents.HealthComponent;
 import com.mygdx.game.entites.entitiycomponents.PositionComponent;
-import com.mygdx.game.entites.entitiycomponents.TowerStatusComponent;
 import com.mygdx.game.entites.entitiycomponents.VelocityComponent;
+import com.mygdx.game.entites.entitiycomponents.tower.DamageComponent;
+import com.mygdx.game.entites.entitiycomponents.tower.RangeComponent;
 
 public class ShootingSystem extends IteratingSystem {
 
@@ -62,7 +62,7 @@ public class ShootingSystem extends IteratingSystem {
 		VelocityComponent velocity = projectileEntity.getComponent(VelocityComponent.class);
 		Vector2 destination = projectileEntity.getComponent(DestinationComponent.class).getDestinationEntity()
 				.getComponent(PositionComponent.class).position;
-		float damage = projectileEntity.getComponent(DamageComponent.class).getDamage();
+		double damage = projectileEntity.getComponent(DamageComponent.class).getDamage();
 
 		float destinationX = destination.x;
 		float destinationY = destination.y;
@@ -87,7 +87,8 @@ public class ShootingSystem extends IteratingSystem {
 		}
 
 	}
-	private void dealDamage(Entity projectileEntity, float damage) {
+
+	private void dealDamage(Entity projectileEntity, double damage) {
 		projectileEntity.getComponent(DestinationComponent.class).getDestinationEntity()
 				.getComponent(HealthComponent.class).takeDamage(damage);
 		_engine.removeEntity(projectileEntity);
@@ -108,7 +109,7 @@ public class ShootingSystem extends IteratingSystem {
 		}
 		Double minKey = Collections.min(distanceMap.keySet());
 
-		Double range = entity.getComponent(TowerStatusComponent.class).getRange();
+		Double range = entity.getComponent(RangeComponent.class).getRange();
 		if (range <= minKey) {
 			return distanceMap.get(minKey);
 		}

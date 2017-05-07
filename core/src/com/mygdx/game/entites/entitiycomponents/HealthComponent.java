@@ -12,7 +12,7 @@ public class HealthComponent implements Component {
 		this.maxHealth = maxHealth;
 	}
 	
-	public void takeDamage(float dmg){
+	public void takeDamage(double dmg){
 		health -= dmg;
 		if (health <= 0) isDead = true;
 	}
