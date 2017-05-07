@@ -55,9 +55,21 @@ public class UIStageController extends ClickListener {
 			}
 		});
 
+		/* upgrade selected tower */
+		uistage.getSellBtn().addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+
+            }
+        });
+        /* sell selected tower */
+		uistage.getUpgradeBtn().addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+            }
+        });
 		/* laser tower icon */
 		uistage.get_laserTowerIcon().addListener(new ClickListener() {
-
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				uistage.get_tooltip().hide();
