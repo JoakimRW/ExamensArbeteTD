@@ -2,14 +2,14 @@ package com.mygdx.game.entites.entitiycomponents;
 
 import com.badlogic.ashley.core.Component;
 
-public class TowerStatusComponent implements Component {
+public class TowerStatComponent implements Component {
 	
 
 	private Double _fireRate;
 	private Double _range;
 	private Double _cost;
 
-	public TowerStatusComponent(Double fireRate, Double range , Double cost) {
+	public TowerStatComponent(Double fireRate, Double range , Double cost) {
 		_fireRate = fireRate;
 		_range = range;
 		_cost = cost;

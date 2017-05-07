@@ -37,7 +37,7 @@ public class EntityModel extends InputAdapter {
 	public static void beginTowerPlacing(TowerType towerType) {
 
 		System.out.println("TURRET TYPE =  " + towerType);
-		InputHandler.setTowerInfoForPlacement(true, _gsm, _factory, towerType, _gameCamera, _ashleyEngine);
+		InputHandler.setTowerInfoForPlacement(true, _gsm, _factory, towerType, _ashleyEngine);
 		Vector3 mousePos = _gameCamera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
 		_factory.createTowerEntity(towerType, mousePos.x, mousePos.y);
 

@@ -79,11 +79,18 @@ public class EntityFactory {
 		AngleComponent angleComponent = new AngleComponent();
 		MouseImageComponent mouseImageComponent = new MouseImageComponent();
 		MousePositionComponent mousePositionComponent = new MousePositionComponent();
-		TowerStatusComponent towerStatusComponent = new TowerStatusComponent(1d, 500d, 20d);
+        TowerStatComponent towerStatComponent = new TowerStatComponent(1d, 500d, 20d);
 		SpecialTowerComponent specialTowerComponent = new SpecialTowerComponent();
 		skeletonComponent.skeleton.setPosition(x, y);
 		skeletonComponent.animationState.setData(Assets.laserTowerAnimationState.getData());
-		entity.add(skeletonComponent).add(mouseImageComponent).add(mousePositionComponent).add(positionComponent).add(angleComponent).add(renderableComponent).add(towerStatusComponent).add(specialTowerComponent);
+		entity.add(skeletonComponent)
+                .add(mouseImageComponent)
+                .add(mousePositionComponent)
+                .add(positionComponent)
+                .add(angleComponent)
+                .add(renderableComponent)
+                .add(towerStatComponent)
+                .add(specialTowerComponent);
 		
 		System.out.println("Tower Entity Created");
 		return entity;
@@ -107,8 +114,16 @@ public class EntityFactory {
 		skeletonComp.skeleton.setPosition(_spawnX * 32, (_spawnY ) * 32);
 		skeletonComp.animationState.setAnimation(0, "MOVING", true);
 		pComp.path = path;
-		entity.add(pComp).add(positionComponent).add(skeletonComp).add(healthComponent).add(velocityComponent)
-				.add(directionComponent).add(renderableComponent).add(ocomp).add(angleComponent);
+		entity.add(pComp)
+				.add(positionComponent)
+				.add(skeletonComp)
+				.add(healthComponent)
+				.add(velocityComponent)
+				.add(directionComponent)
+				.add(renderableComponent)
+				.add(ocomp)
+				.add(angleComponent)
+				.add(new EnemyComponent());
 		return entity;
 	}
 
@@ -138,7 +153,8 @@ public class EntityFactory {
                 .add(renderableComponent)
                 .add(ocomp)
                 .add(new FlyingComponent())
-                .add(angleComponent);
+                .add(angleComponent)
+				.add(new EnemyComponent());
 		return entity;
 	}
 	
@@ -168,7 +184,8 @@ public class EntityFactory {
         player.add(new DirectionComponent())
    		.add(new MoneyComponent(100))
 		.add(new HealthComponent(30))
-		.add(new PlayerComponent());
+		.add(new PlayerComponent())
+		.add(new DestinationComponent(null));
         _engine.addEntity(player);
 	}
 

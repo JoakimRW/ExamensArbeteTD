@@ -11,6 +11,7 @@ public class PlayerInputSystem extends IteratingSystem implements InputHandlerIF
 
 	private int camXdir = 0;
 	private int camYdir = 0;
+	private Entity selectedTower;
 
 	public PlayerInputSystem() {
 		super(Family.all(PlayerComponent.class).get());
@@ -23,8 +24,15 @@ public class PlayerInputSystem extends IteratingSystem implements InputHandlerIF
 	}
 
 	@Override
+	public void setAsSelectedTower(Entity tower) {
+            selectedTower = tower;
+	}
+
+	@Override
 	protected void processEntity(Entity entity, float deltaTime) {
 		DirectionComponent dcomp = Mappers.DIRECTION_M.get(entity);
+        DestinationComponent destionation = Mappers.DESTINATION_M.get(entity);
+        destionation.setDestinationEntity(selectedTower);
 		dcomp.xAxis = camXdir;
 		dcomp.yAxis = camYdir;
 	}

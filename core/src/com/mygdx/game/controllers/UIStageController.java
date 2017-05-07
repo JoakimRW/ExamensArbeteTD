@@ -97,8 +97,8 @@ public class UIStageController extends ClickListener {
 	/**
 	 * When the player has selected a tile with a tower on it, call this method
 	 **/
-	public void setTowerSelectionInfo(String towerName, int sellPrice, int upgradePrice, float fireRate, float damage,
-			float range, String special) {
+	public void setTowerSelectionInfo(String towerName, double sellPrice, double upgradePrice, double fireRate, double damage,
+			double range, String special) {
 		uistage.getTowerSelectName().setText(towerName);
 		uistage.getTowerSelectSellPrice().setText(String.valueOf(sellPrice));
 		uistage.getTowerSelectDamage().setText(String.valueOf(upgradePrice));

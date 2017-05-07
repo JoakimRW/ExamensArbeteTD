@@ -7,7 +7,8 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.Scaling;
+import com.badlogic.gdx.utils.viewport.*;
 import com.mygdx.game.managers.WaveTimeManager;
 import com.mygdx.game.states.PlayState;
 import com.mygdx.game.utils.Assets;
@@ -203,7 +204,7 @@ public class UiView implements Screen {
         moneyStatPanel.add(moneyLabel).align(Align.right).pad(5 , 5 , 5 ,10).expand();
         towerListContainer.add(moneyStatPanel).align(Align.right).size(120 , 30).spaceBottom(2).row();
         Table grayPanel2 = createGrayPanel();
-        grayPanel2.add(_laserTowerIcon).size(32,32).pad(2).align(Align.topLeft).expand();
+        grayPanel2.add(_laserTowerIcon).size(32,32).pad(10).align(Align.topLeft).expand();
         towerListContainer.add(grayPanel2).prefHeight(110).expand().fill();
         return towerListContainer;
     }
@@ -326,7 +327,6 @@ public class UiView implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        System.out.println(Gdx.graphics.getWidth() + " :: " + Gdx.graphics.getHeight());
         _rootTable.setWidth(Gdx.graphics.getWidth());
         _pauseWindow.setSize(Gdx.graphics.getWidth() , Gdx.graphics.getHeight());
         _uiStage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);

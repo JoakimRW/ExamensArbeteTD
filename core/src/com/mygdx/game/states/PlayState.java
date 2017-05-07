@@ -30,7 +30,7 @@ public class PlayState extends GameState {
 		LevelManager.loadLevel("maps/simple-map.tmx");
 		_renderer = new OrthogonalTiledMapRenderer(LevelManager.tiledMap);
 		_gameCamera = new OrthographicCamera();
-		InputHandler inputhandler = new InputHandler();
+		InputHandler inputhandler = new InputHandler(_gameCamera);
 		// behöver deklarera uiview här för att registrera inputprocessor
 		_uiView = new UiView();
 		_uiView.show();

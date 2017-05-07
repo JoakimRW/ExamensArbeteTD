@@ -6,17 +6,7 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.entites.entitiycomponents.AngleComponent;
-import com.mygdx.game.entites.entitiycomponents.DirectionComponent;
-import com.mygdx.game.entites.entitiycomponents.Families;
-import com.mygdx.game.entites.entitiycomponents.FlyingComponent;
-import com.mygdx.game.entites.entitiycomponents.HealthComponent;
-import com.mygdx.game.entites.entitiycomponents.Mappers;
-import com.mygdx.game.entites.entitiycomponents.OffsetComponent;
-import com.mygdx.game.entites.entitiycomponents.PathComponent;
-import com.mygdx.game.entites.entitiycomponents.PlayerComponent;
-import com.mygdx.game.entites.entitiycomponents.PositionComponent;
-import com.mygdx.game.entites.entitiycomponents.VelocityComponent;
+import com.mygdx.game.entites.entitiycomponents.*;
 import com.mygdx.game.managers.LevelManager;
 import com.mygdx.game.utils.PathFinder;
 
@@ -46,6 +36,7 @@ public class MoveToSystem extends IteratingSystem {
 		AngleComponent angleComp = Mappers.ANGLE_M.get(entity);
 		VelocityComponent velocityComp = Mappers.VELCOITY_M.get(entity);
 		OffsetComponent offComp = Mappers.OFFSET_M.get(entity);
+		EnemyComponent ecomp = Mappers.ENEMY_M.get(entity);
 
 		Vector2 start = new Vector2((posComp.position.x + offComp.offsetX) / 32,
 				(posComp.position.y + offComp.offsetY) / 32);
@@ -61,13 +52,13 @@ public class MoveToSystem extends IteratingSystem {
 		}
 
 		if (pathComp.path != null) {
-			// PathFinder.drawPath(pathComp.path , sr , camera);
 			float distance = start.cpy().scl(32).dst(end.cpy().scl(32));
 			if (distance > 32) {
 				moveTo(posComp, dirComp, angleComp, deltaTime, pathComp, velocityComp);
 			} else {
 				entity.removeAll();
 				getEngine().removeEntity(entity);
+                if (ecomp != null)
 				player.getComponent(HealthComponent.class).health--;
 			}
 		}
@@ -79,6 +70,7 @@ public class MoveToSystem extends IteratingSystem {
 		// a xy point in the path array that the entity will go to
 		float pointX = pathComp.path.get(pathComp.path.size() - 1).getCordinates().x * 32;
 		float pointY = pathComp.path.get(pathComp.path.size() - 1).getCordinates().y * 32;
+
 		double difX = pointX - pos.position.x;
 		double difY = pointY - pos.position.y;
 		// set direction
@@ -86,16 +78,16 @@ public class MoveToSystem extends IteratingSystem {
 		float rotAng = (float) Math.toDegrees(Math.atan2(difY, difX));
 		angleComp.spriteAngle = sprAng;
 		angleComp.angle = rotAng;
-		// check if entity has the same cords that the point x and y has , if it
-		// has go to next point
-		float angleGoalX = (float) Math.cos(Math.toRadians(angleComp.angle));
-		float angleGoalY = (float) Math.sin(Math.toRadians(angleComp.angle));
 
-		dir.direction.x = angleGoalX;
-		dir.direction.y = angleGoalY;
+		float angleX = (float) Math.cos(Math.toRadians(angleComp.angle));
+		float angleY = (float) Math.sin(Math.toRadians(angleComp.angle));
+
+		dir.direction.x = angleX;
+		dir.direction.y = angleY;
 
 		if (dir.direction.len() > 0)
 			dir.direction = dir.direction.nor();
+
 		vel.velocity.x = dir.direction.x * vel.maxSpeed;
 		vel.velocity.y = dir.direction.y * vel.maxSpeed;
 
@@ -103,7 +95,7 @@ public class MoveToSystem extends IteratingSystem {
 		pos.position.y += vel.velocity.y * deltaTime;
 
 	}
-
+	/** linear interpolation **/
 	private static float approach(float goal, float current, float deltaTime) {
 		float diffrence = goal - current;
 		if (diffrence > deltaTime)

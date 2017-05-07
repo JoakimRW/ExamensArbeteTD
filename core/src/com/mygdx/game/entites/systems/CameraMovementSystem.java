@@ -14,28 +14,27 @@ import com.mygdx.game.managers.LevelManager;
 public class CameraMovementSystem extends IteratingSystem {
 
     private Camera _camera;
-    private ComponentMapper<DirectionComponent> cm;
 
     public CameraMovementSystem(OrthographicCamera newCam) {
-        super(Family.one(DirectionComponent.class).exclude(SkeletonComponent.class
+        super(Family.one(DirectionComponent.class).exclude(
+                SkeletonComponent.class
                 , RenderableComponent.class
                 , PathComponent.class
                 , TextureComponent.class
                 , RenderableComponent.class).get());
-        cm = ComponentMapper.getFor(DirectionComponent.class);
         _camera = newCam;
     }
 
     @Override
     protected void processEntity(Entity entity, float deltaTime) {
-        DirectionComponent d = cm.get(entity);
+        DirectionComponent d = Mappers.DIRECTION_M.get(entity);
         moveCamera(d);
     }
 
     private void moveCamera(DirectionComponent d) {
         final float cameraSpeed = 10f;
-        _camera.viewportWidth = Gdx.graphics.getWidth() / 3;
-        _camera.viewportHeight = Gdx.graphics.getHeight() / 3;
+        _camera.viewportWidth = Gdx.graphics.getWidth() / 2.3f;
+        _camera.viewportHeight = Gdx.graphics.getHeight() / 2.3f;
         float cameraPosX = _camera.position.x;
         float cameraPosY = _camera.position.y;
         _camera.position.set((int) cameraPosX + d.xAxis * cameraSpeed,
