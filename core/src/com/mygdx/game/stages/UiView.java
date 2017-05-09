@@ -50,10 +50,10 @@ public class UiView implements Screen {
     private Label _towerSelectDamage;
     private Label _towerSelectRange;
     private Label _towerSelectSpecial;
+
     private TextButton _resumeButton;
-
     private TextButton _mainMenuButton;
-
+    private Table uiPanel;
 
     public UiView(){
 
@@ -77,7 +77,7 @@ public class UiView implements Screen {
         Table leftSection = createLeftSection();
         Table midSection = createMidSection();
         Table rightSection = createRightSection();
-        Table uiPanel = createUiPanel();
+        uiPanel = createUiPanel();
         uiPanel.add(leftSection).size(328,175).expand().align(Align.bottomRight).pad(3);
         uiPanel.add(midSection).fill().align(Align.center).pad(3,3,3,3);
         uiPanel.add(rightSection).size(355,175).expand().align(Align.bottomLeft).pad(3);
@@ -357,6 +357,12 @@ public class UiView implements Screen {
 
 
     /** getters **/
+    public Table getRoot(){
+        return _rootTable;
+    }
+    public Table getUiPanel() {
+        return uiPanel;
+    }
 
     public TextButton getResumeButton() {
         return _resumeButton;

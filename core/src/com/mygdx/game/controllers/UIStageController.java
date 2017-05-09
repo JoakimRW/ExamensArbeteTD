@@ -4,6 +4,8 @@ import static com.mygdx.game.Factory.TowerType.BASIC_LASER_TURRET;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.managers.GameStateManager;
 import com.mygdx.game.stages.UiView;
@@ -39,7 +41,14 @@ public class UIStageController extends ClickListener {
 			}
 
 		});
-
+		// setting this to be touchable so there's no events passing through to game input listener when click on ui background
+		uistage.getUiPanel().setTouchable(Touchable.enabled);
+		uistage.getUiPanel().addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+            }
+        });
 		/* resume button in pause mode */
 		uistage.getResumeButton().addListener(new ClickListener() {
 			@Override
@@ -56,18 +65,20 @@ public class UIStageController extends ClickListener {
 		});
 
 		/* upgrade selected tower */
-		uistage.getSellBtn().addListener(new ClickListener(){
+		uistage.getUpgradeBtn().addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
 
             }
         });
         /* sell selected tower */
-		uistage.getUpgradeBtn().addListener(new ClickListener(){
+		uistage.getSellBtn().addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                model.sellSelectedTower();
             }
         });
+
 		/* laser tower icon */
 		uistage.get_laserTowerIcon().addListener(new ClickListener() {
 			@Override

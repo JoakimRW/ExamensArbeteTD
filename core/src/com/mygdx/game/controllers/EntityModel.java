@@ -1,15 +1,22 @@
 package com.mygdx.game.controllers;
 
 import com.badlogic.ashley.core.Engine;
+import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.Factory.EntityFactory;
 import com.mygdx.game.Factory.TowerType;
+import com.mygdx.game.entites.entitiycomponents.PositionComponent;
+import com.mygdx.game.entites.entitiycomponents.tower.TowerStatComponent;
 import com.mygdx.game.entites.input.InputHandler;
 import com.mygdx.game.managers.GameStateManager;
+import com.mygdx.game.managers.LevelManager;
 import com.mygdx.game.managers.WaveTimeManager;
+import com.mygdx.game.utils.Tile;
+import com.mygdx.game.utils.TileType;
 
 public class EntityModel extends InputAdapter {
 
@@ -18,8 +25,9 @@ public class EntityModel extends InputAdapter {
 	private static GameStateManager _gsm;
 	private static OrthographicCamera _gameCamera;
 	private static Engine _ashleyEngine;
+	private Entity _selectedTower;
 
-	public EntityModel(WaveTimeManager waveMngr, EntityFactory factory, GameStateManager gsm,
+    public EntityModel(WaveTimeManager waveMngr, EntityFactory factory, GameStateManager gsm,
 			OrthographicCamera gameCamera, Engine ashleyEngine) {
 
 		this.waveMngr = waveMngr;
@@ -43,7 +51,32 @@ public class EntityModel extends InputAdapter {
 
 	}
 
+	public void setSelectedTower(Entity entity){
+        _selectedTower = entity;
+	}
+
+	public Entity getSelectedTower(){
+	 return _selectedTower;
+    }
+
 	public String getNextWave() {
 		return waveMngr.getEnemyName() != null ? waveMngr.getEnemyName().toString() : "";
 	}
+
+    public void sellSelectedTower() {
+	    if (_selectedTower != null){
+            Vector2 pos = _selectedTower.getComponent(PositionComponent.class).position.cpy();
+            Tile tile = LevelManager.getTile((int) pos.x >> 5, (int) pos.y >> 5);
+            if (tile != null) {
+                tile.setEntity(null);
+                tile.setType(TileType.FLOOR);
+            }
+            double sellValue = _selectedTower.getComponent(TowerStatComponent.class)._sellValue;
+            _factory.createCoinEntity(pos.x, pos.y, (int) sellValue);
+            _selectedTower.removeAll();
+            _ashleyEngine.removeEntity(_selectedTower);
+            setSelectedTower(null);
+        }
+    }
+
 }

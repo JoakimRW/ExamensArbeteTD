@@ -32,7 +32,7 @@ public class EntityManager {
 		
 		MoveToSystem moveToSystem = new MoveToSystem(gameCamera);
 		coinSystem = new CoinSystem(gameCamera);
-		PlayerStatSystem statSystem = new PlayerStatSystem(uiController);
+		PlayerStatSystem statSystem = new PlayerStatSystem(uiController , _entityModel);
 		TowerPlacementSystem towerSystem = new TowerPlacementSystem(batch);
 		ShootingSystem shootingSystem = new ShootingSystem();
 		RenderSystem renderSystem = new RenderSystem(batch);
