@@ -38,15 +38,26 @@ public class PlayerStatSystem extends IteratingSystem {
             FireRateComponent f = Mappers.FIRE_RATE_M.get(_entityModel.getSelectedTower());
             RangeComponent r = Mappers.RANGE_M.get(_entityModel.getSelectedTower());
             SpecialTowerComponent s = Mappers.SPECIAL_M.get(_entityModel.getSelectedTower());
-            if(stats != null || dmg != null || f != null || r != null ){
-                uiController.setTowerSelectionInfo(stats.getTowerName(), stats._sellValue , stats._upgradePrice , f._fireRate  , dmg.getDamage()  , r.getRange() , "None");
+
+            double fireRate;
+            double damage;
+            double range;
+            if(uiController.isOverUpgradeBtn()){
+                fireRate = f._fireRate + (f._fireRate * f.percentageIncrease);
+                damage = dmg.getDamage() + dmg.dmgIncrease;
+                range = r.getRange() + (r.getRange() * r.percentageIncrease);
+            }else {
+                fireRate = f._fireRate;
+                damage = dmg.getDamage();
+                range = r.getRange();
+            }
+                uiController.setTowerSelectionInfo(stats.getTowerName() , stats._sellValue , stats._upgradePrice , fireRate , damage , range , "None");
             }else {
                 uiController.hideTowerSelectionPanel();
             }
-        }else{
-            uiController.hideTowerSelectionPanel();
-        }
+
         // Player should have integer values , enemies do not
         uiController.updateHealth((int)h.health);
+        }
     }
-}
+

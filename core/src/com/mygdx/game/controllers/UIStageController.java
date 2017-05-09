@@ -16,8 +16,9 @@ public class UIStageController extends ClickListener {
 	private UiView uistage;
 	private EntityModel model;
 	private GameStateManager _gsm;
+    private boolean _isOverUpgradeBtn;
 
-	public UIStageController(UiView uistage, EntityModel model, GameStateManager gsm) {
+    public UIStageController(UiView uistage, EntityModel model, GameStateManager gsm) {
 		this.uistage = uistage;
 		this.model = model;
 		_gsm = gsm;
@@ -70,7 +71,20 @@ public class UIStageController extends ClickListener {
             public void clicked(InputEvent event, float x, float y) {
                 model.upgradeSelectedTower();
             }
+
+            @Override
+            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                super.enter(event, x, y, pointer, fromActor);
+                showUpgradeInfo();
+            }
+
+            @Override
+            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                super.exit(event, x, y, pointer, toActor);
+                hideUpgradeInfo();
+            }
         });
+
         /* sell selected tower */
 		uistage.getSellBtn().addListener(new ClickListener(){
             @Override
@@ -96,7 +110,14 @@ public class UIStageController extends ClickListener {
 		});
 	}
 
-	public void showPauseWindow() {
+    private void showUpgradeInfo() {
+	    _isOverUpgradeBtn = true;
+    }
+    private void hideUpgradeInfo(){
+        _isOverUpgradeBtn = false;
+    }
+
+    public void showPauseWindow() {
 		PlayState.PAUSE = true;
 		uistage.get_pauseWindow().setVisible(true);
 	}
@@ -125,7 +146,7 @@ public class UIStageController extends ClickListener {
 		uistage.getTowerSelectName().setText(towerName);
 		uistage.getTowerSelectSellPrice().setText(String.valueOf((int)sellPrice));
 		uistage.getTowerSelectUpgradePrice().setText(String.valueOf((int)upgradePrice));
-		uistage.getTowerSelectFireRate().setText(String.valueOf(fireRate));
+		uistage.getTowerSelectFireRate().setText(String.format("%.1f",fireRate));
 		uistage.getTowerSelectDamage().setText(String.valueOf((int)damage));
 		uistage.getTowerSelectRange().setText(String.valueOf((int)range));
 		uistage.getTowerSelectSpecial().setText(special);
@@ -143,4 +164,8 @@ public class UIStageController extends ClickListener {
 	public void updateNextEnemyText() {
 		uistage.get_next_enemy_value().setText(model.getNextWave());
 	}
+
+    public boolean isOverUpgradeBtn() {
+        return _isOverUpgradeBtn;
+    }
 }

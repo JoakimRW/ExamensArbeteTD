@@ -4,6 +4,8 @@ import com.badlogic.ashley.core.Component;
 
 public class RangeComponent implements Component {
     private double _range = 0;
+	public double percentageIncrease = 0;
+
     public RangeComponent(double range){
         setRange(range);
     }

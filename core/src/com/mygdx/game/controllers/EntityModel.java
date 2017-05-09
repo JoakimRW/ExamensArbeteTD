@@ -31,6 +31,11 @@ public class EntityModel extends InputAdapter {
 	private static Engine _ashleyEngine;
 	private Entity _selectedTower;
 
+	// upgrade info
+    private double upgradeRange = 0;
+    private double upgradeDmg = 0;
+    private double upgradeFireRate = 0;
+
     public EntityModel(WaveTimeManager waveMngr, EntityFactory factory, GameStateManager gsm,
 			OrthographicCamera gameCamera, Engine ashleyEngine) {
 
@@ -110,4 +115,27 @@ public class EntityModel extends InputAdapter {
         }
     }
 
+    public double getUpgradeRange() {
+        return upgradeRange;
+    }
+
+    public void setUpgradeRange(double upgradeRange) {
+        this.upgradeRange = upgradeRange;
+    }
+
+    public double getUpgradeDmg() {
+        return upgradeDmg;
+    }
+
+    public void setUpgradeDmg(double upgradeDmg) {
+        this.upgradeDmg = upgradeDmg;
+    }
+
+    public double getUpgradeFireRate() {
+        return upgradeFireRate;
+    }
+
+    public void setUpgradeFireRate(double upgradeFireRate) {
+        this.upgradeFireRate = upgradeFireRate;
+    }
 }

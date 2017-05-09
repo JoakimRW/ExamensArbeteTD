@@ -321,7 +321,7 @@ public class UiView implements Screen {
         _tooltipTable.add(toolTip_text_special_lbl).align(Align.left);
         _tooltipTable.add(toolTip_val_special_lbl).align(Align.right);
         _tooltipTable.row();
-        _tooltipTable.add(description).align(Align.left);
+        _tooltipTable.add(description).align(Align.left).colspan(2);
         _tooltipTable.row();
         _tooltipTable.add(toolTip_text_price_lbl).align(Align.left);
         _tooltipTable.add(toolTip_val_price_lbl).align(Align.right);
