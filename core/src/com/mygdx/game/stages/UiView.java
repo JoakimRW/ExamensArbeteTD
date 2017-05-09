@@ -2,6 +2,7 @@ package com.mygdx.game.stages;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -55,12 +56,16 @@ public class UiView implements Screen {
     private TextButton _mainMenuButton;
     private Table uiPanel;
 
+    private Color green;
+
     public UiView(){
 
     }
 
     @Override
     public void show() {
+        // colors for fonts
+        green = new Color(0.1f , 0.8f , 0.1f,1f);
         OrthographicCamera _uiCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         _uiStage = new Stage(new ScreenViewport(_uiCamera));
         // create skin
@@ -127,9 +132,10 @@ public class UiView implements Screen {
         Table leftTowerSelectSection = new Table(_skin);
             // tower name
             _towerSelectName = new Label("",_skin);
+            _towerSelectName.setColor(green);
         Table name = createStatPanel();
 
-        name.add(_towerSelectName).pad(0 , 10,  0 ,10).align(Align.center);
+        name.add(_towerSelectName).pad(0 , 10,  0 ,10).align(Align.left).expand().fill();
             // sell label and value
         Label towerSelectUpgradeText = new Label("Upgrade",_skin);
         _towerSelectUpgradePrice = new Label("",_skin );
@@ -145,7 +151,7 @@ public class UiView implements Screen {
         // upgrade button
         _upgradeBtn = new TextButton("Upgrade",_skin);
         leftTowerSelectSection.pad(5);
-        leftTowerSelectSection.add(name).align(Align.right).colspan(2).pad(0).row();
+        leftTowerSelectSection.add(name).align(Align.left).expand().fill().colspan(2).pad(0).row();
         leftTowerSelectSection.add(towerSelectSellText).align(Align.left);
         leftTowerSelectSection.add(sell).align(Align.right).width(60).pad(0).row();
         leftTowerSelectSection.add(towerSelectUpgradeText).align(Align.left);
@@ -285,16 +291,20 @@ public class UiView implements Screen {
 
         // labels for tooltip
         toolTip_towerName_lbl = new Label("Laser Tower",_skin , "tooltipFont" , "white");
+        toolTip_towerName_lbl.setColor(green);
         Label toolTip_text_fireRate_lbl = new Label("Fire rate:", _skin);
-        toolTip_val_fireRate_lbl = new Label("134" , _skin);
+        toolTip_val_fireRate_lbl = new Label("2/s" , _skin);
         Label toolTip_text_damage_lbl = new Label("Damage:", _skin);
-        toolTip_val_damage_lbl = new Label("140",_skin);
+        toolTip_val_damage_lbl = new Label("10",_skin);
         Label toolTip_text_range_lbl = new Label("Range:", _skin);
         toolTip_val_range_lbl = new Label("20",_skin);
+        Label description = new Label("The Laser Turret fires quickly but with moderate damage.", _skin);
+        description.setColor(green);
+        description.setWrap(true);
         Label toolTip_text_special_lbl = new Label("Special:", _skin);
-        toolTip_val_special_lbl = new Label("None",_skin);
+        toolTip_val_special_lbl = new Label("Fast",_skin);
         Label toolTip_text_price_lbl = new Label("Price:", _skin);
-        toolTip_val_price_lbl = new Label("250",_skin);
+        toolTip_val_price_lbl = new Label("25",_skin);
         // Add labels to tooltip table
         _tooltipTable.defaults().grow();
         _tooltipTable.add(toolTip_towerName_lbl).align(Align.left);
@@ -311,10 +321,11 @@ public class UiView implements Screen {
         _tooltipTable.add(toolTip_text_special_lbl).align(Align.left);
         _tooltipTable.add(toolTip_val_special_lbl).align(Align.right);
         _tooltipTable.row();
+        _tooltipTable.add(description).align(Align.left);
         _tooltipTable.row();
         _tooltipTable.add(toolTip_text_price_lbl).align(Align.left);
         _tooltipTable.add(toolTip_val_price_lbl).align(Align.right);
-        _tooltipTable.pad(5);
+        _tooltipTable.pad(8);
         _tooltipTable.align(Align.left);
     }
 

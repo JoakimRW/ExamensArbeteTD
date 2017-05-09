@@ -37,6 +37,7 @@ public class EntityFactory {
 	private final float _endX = (LevelManager.tileEnd.getCords().x + 16) / 32;
 	private final float _endY = (LevelManager.tileEnd.getCords().y + 16) / 32;
 	private Engine _engine;
+	private Entity player;
 
 	public EntityFactory(Engine engine) {
 		_engine = engine;
@@ -63,7 +64,7 @@ public class EntityFactory {
 
 		switch (towerType) {
 		case BASIC_LASER_TURRET:
-			Entity turretEntity = createTurretEntity(towerType, x, y);
+			Entity turretEntity = createLaserTurret(x, y);
 			_engine.addEntity(turretEntity);
 			return turretEntity;
 		default:
@@ -99,7 +100,7 @@ public class EntityFactory {
 		return entity;
 	}
 
-	private static Entity createTurretEntity(TowerType type, float x, float y) {
+	private static Entity createLaserTurret(float x, float y) {
 		Entity entity = new Entity();
 		SkeletonComponent skeletonComponent = new SkeletonComponent(Assets.laserTowerSkeleton);
 		PositionComponent positionComponent = new PositionComponent(new Vector2(x, y));
@@ -109,7 +110,7 @@ public class EntityFactory {
 		MousePositionComponent mousePositionComponent = new MousePositionComponent();
 		RangeComponent rangeComponent = new RangeComponent(500d); // TODO
 		TowerComponent towerComponent = new TowerComponent();
-        TowerStatComponent towerStatComponent = new TowerStatComponent(25,"Laser Tower");
+        TowerStatComponent towerStatComponent = new TowerStatComponent(25,"Laser Tower" , TowerType.BASIC_LASER_TURRET);
 		SpecialTowerComponent specialTowerComponent = new SpecialTowerComponent();
 		skeletonComponent.skeleton.setPosition(x, y);
 		skeletonComponent.animationState.setData(Assets.laserTowerAnimationState.getData());
@@ -117,15 +118,13 @@ public class EntityFactory {
 				.add(mouseImageComponent) //
 				.add(mousePositionComponent)//
 				.add(positionComponent).add(new FireRateComponent(1d))//
-				.add(new RangeComponent(250d))//
 				.add(positionComponent)//
 				.add(angleComponent).add(renderableComponent)//
 				.add(rangeComponent)//
 				.add(specialTowerComponent)//
 				.add(new DamageComponent(20d)).add(towerComponent)
 				.add(towerStatComponent);
-
-		System.out.println("Tower Entity Created");
+		System.out.println("Laser tower Created");
 		return entity;
 	}
 
@@ -194,10 +193,13 @@ public class EntityFactory {
 
 	public void createPlayerEntity() {
 		// player entity
-		Entity player = new Entity();
+		player = new Entity();
 		player.add(new DirectionComponent()).add(new MoneyComponent(100)).add(new HealthComponent(30))
 				.add(new PlayerComponent()).add(new DestinationComponent(null));
 		_engine.addEntity(player);
 	}
 
+	public Entity getPlayer() {
+		return player;
+	}
 }

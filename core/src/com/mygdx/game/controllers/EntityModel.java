@@ -9,7 +9,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.Factory.EntityFactory;
 import com.mygdx.game.Factory.TowerType;
+import com.mygdx.game.entites.entitiycomponents.MoneyComponent;
 import com.mygdx.game.entites.entitiycomponents.PositionComponent;
+import com.mygdx.game.entites.entitiycomponents.tower.DamageComponent;
+import com.mygdx.game.entites.entitiycomponents.tower.FireRateComponent;
+import com.mygdx.game.entites.entitiycomponents.tower.RangeComponent;
 import com.mygdx.game.entites.entitiycomponents.tower.TowerStatComponent;
 import com.mygdx.game.entites.input.InputHandler;
 import com.mygdx.game.managers.GameStateManager;
@@ -76,6 +80,33 @@ public class EntityModel extends InputAdapter {
             _selectedTower.removeAll();
             _ashleyEngine.removeEntity(_selectedTower);
             setSelectedTower(null);
+        }
+    }
+
+    public void upgradeSelectedTower() {
+        if (_selectedTower != null){
+
+            DamageComponent dmgComp = _selectedTower.getComponent(DamageComponent.class);
+            FireRateComponent fireRateComp = _selectedTower.getComponent(FireRateComponent.class);
+            RangeComponent rangeComp = _selectedTower.getComponent(RangeComponent.class);
+            TowerStatComponent stats = _selectedTower.getComponent(TowerStatComponent.class);
+
+            int playerMoney = _factory.getPlayer().getComponent(MoneyComponent.class).money;
+            int upgradePrice = (int)stats._upgradePrice;
+            TowerType towerType = stats._towerType;
+
+            if (playerMoney >= upgradePrice){
+                switch (towerType){
+                    case BASIC_LASER_TURRET:
+                        fireRateComp._fireRate += fireRateComp.percentageIncrease * stats._towerLevel;
+                        dmgComp.setDamage(dmgComp.getDamage() + dmgComp.dmgIncrease * stats._towerLevel);
+                        break;
+                    default:
+                        return;
+                }
+                _factory.getPlayer().getComponent(MoneyComponent.class).money -= upgradePrice;
+                _selectedTower.getComponent(TowerStatComponent.class).upgrade();
+            }
         }
     }
 

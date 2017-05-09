@@ -39,7 +39,7 @@ public class PlayerStatSystem extends IteratingSystem {
             RangeComponent r = Mappers.RANGE_M.get(_entityModel.getSelectedTower());
             SpecialTowerComponent s = Mappers.SPECIAL_M.get(_entityModel.getSelectedTower());
             if(stats != null || dmg != null || f != null || r != null ){
-                uiController.setTowerSelectionInfo(stats._towerName, stats._sellValue , stats._upgradePrice , f._fireRate  , dmg.getDamage()  , r.getRange() , "None");
+                uiController.setTowerSelectionInfo(stats.getTowerName(), stats._sellValue , stats._upgradePrice , f._fireRate  , dmg.getDamage()  , r.getRange() , "None");
             }else {
                 uiController.hideTowerSelectionPanel();
             }

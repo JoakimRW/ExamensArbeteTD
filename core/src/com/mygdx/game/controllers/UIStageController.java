@@ -68,7 +68,7 @@ public class UIStageController extends ClickListener {
 		uistage.getUpgradeBtn().addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-
+                model.upgradeSelectedTower();
             }
         });
         /* sell selected tower */
@@ -123,11 +123,11 @@ public class UIStageController extends ClickListener {
 	public void setTowerSelectionInfo(String towerName, double sellPrice, double upgradePrice, double fireRate, double damage,
 			double range, String special) {
 		uistage.getTowerSelectName().setText(towerName);
-		uistage.getTowerSelectSellPrice().setText(String.valueOf(sellPrice));
-		uistage.getTowerSelectUpgradePrice().setText(String.valueOf(upgradePrice));
+		uistage.getTowerSelectSellPrice().setText(String.valueOf((int)sellPrice));
+		uistage.getTowerSelectUpgradePrice().setText(String.valueOf((int)upgradePrice));
 		uistage.getTowerSelectFireRate().setText(String.valueOf(fireRate));
-		uistage.getTowerSelectDamage().setText(String.valueOf(damage));
-		uistage.getTowerSelectRange().setText(String.valueOf(range));
+		uistage.getTowerSelectDamage().setText(String.valueOf((int)damage));
+		uistage.getTowerSelectRange().setText(String.valueOf((int)range));
 		uistage.getTowerSelectSpecial().setText(special);
 		showTowerSelectionPanel();
 	}

@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.Component;
 
 public class DamageComponent implements Component{
 	private Double _damage;
+	public double dmgIncrease = 10;
 
 	public DamageComponent(Double damage) {
 		setDamage(damage);
