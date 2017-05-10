@@ -4,6 +4,8 @@ package com.mygdx.game.utils;
 
 import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.loaders.MusicLoader;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Cursor;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -36,13 +38,19 @@ public class Assets {
     public static BitmapFont fontVera10;
     public static BitmapFont font24;
     public static BitmapFont font20;
+    public static Music laserMillenium;
 
 
     private static Texture loadTexture(String file){
         return new Texture(Gdx.files.internal(file));
     }
 
-    public static void loadGameStageAssets(){
+    public static void loadGameStageAssets() {
+        // music
+        laserMillenium = Gdx.audio.newMusic(Gdx.files.internal("music/Laser Millenium.wav"));
+        laserMillenium.setVolume(0.1f);
+        laserMillenium.setLooping(true);
+        laserMillenium.play();
         // bloodworm
         bloodWormSkeleton = loadSkeleton("enemies/bloodworm/skeleton.atlas","enemies/bloodworm/skeleton.json");
         bloodWormAnimationState = new AnimationState(new AnimationStateData(bloodWormSkeleton.getData()));

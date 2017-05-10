@@ -26,7 +26,6 @@ public class PlayState extends GameState {
 		super(gsm);
 		Assets.loadGameStageAssets();
 		Engine ashleyEngine = new Engine();
-		ashleyEngine.update(Gdx.graphics.getDeltaTime());
 		LevelManager.loadLevel("maps/simple-map.tmx");
 		_renderer = new OrthogonalTiledMapRenderer(LevelManager.tiledMap);
 		_gameCamera = new OrthographicCamera();
