@@ -241,7 +241,7 @@ public class UiView implements Screen {
         waveInfoContainer.add(nextEnemyText).align(Align.bottomLeft);
         waveInfoContainer.add(nextWaveTimeText).align(Align.bottomLeft).row();
         nextEnemyTable.add(_next_enemy_value).align(Align.center);
-        nextWaveTable.add(_next_wave_time_value).align(Align.bottom).prefSize(40 , 31);
+        nextWaveTable.add(_next_wave_time_value).align(Align.bottom).expand().prefWidth(62).align(Align.center);
         waveInfoContainer.add(nextEnemyTable).align(Align.bottomLeft).expand().spaceRight(3f);
         waveInfoContainer.add(nextWaveTable).align(Align.bottomRight).expand().spaceLeft(3f);
         waveInfoContainer.setWidth(150);
@@ -333,7 +333,7 @@ public class UiView implements Screen {
     public void render(float delta) {
         getStage().act(delta);
         isOverUpgradeButton = _upgradeBtn.isOver();
-        if (PlayState.START_GAME) _next_wave_time_value.setText(String.format("%d : %d",WaveTimeManager.CURRENT_WAVE_TIME ,  WaveTimeManager.CURRENT_WAVE_TIME_MILLIS));
+        if (PlayState.START_GAME) _next_wave_time_value.setText(String.format("%d : %.0f",WaveTimeManager.CURRENT_WAVE_TIME ,  WaveTimeManager.CURRENT_WAVE_TIME_MILLIS * 100));
         getStage().draw();
     }
 

@@ -17,9 +17,10 @@ public class WaveTimeManager {
 	public static int WAVE = 0;
 	// keeps track of amount of enemies spawned each wave
 	public static int amountSpawned = 0;
-	public static int CURRENT_WAVE_TIME_MILLIS = 100;
+	public static double CURRENT_WAVE_TIME_MILLIS = 0;
 	private float time = 0;
 	private float timeMs = 0;
+	private double totalTime = 0;
 	private EntityFactory entityFactory;
 
 	public EnemyName getEnemyName() {
@@ -34,16 +35,13 @@ public class WaveTimeManager {
 	
 	public void tick(float delta){
 		if(!PlayState.START_GAME) CURRENT_WAVE_TIME = 0;
-		if(PlayState.START_GAME){			
+		if(PlayState.START_GAME){
+			totalTime += delta;
 			time += delta;
 			timeMs += delta;
-            if(timeMs >= 0.01){
-                if (CURRENT_WAVE_TIME_MILLIS <= 0)
-                    CURRENT_WAVE_TIME_MILLIS = 100;
-				CURRENT_WAVE_TIME_MILLIS--;
-				timeMs = 0;
-			}
-			if(time >= 1) {
+			CURRENT_WAVE_TIME_MILLIS = timeMs - Math.floor(timeMs);
+			if (timeMs >= 1) timeMs = 0;
+				if(time >= 1) {
 				CURRENT_WAVE_TIME--;
 				time = 0;
 			}
