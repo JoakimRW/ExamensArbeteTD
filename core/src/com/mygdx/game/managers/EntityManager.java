@@ -40,7 +40,9 @@ public class EntityManager {
 		PlayerInputSystem playerInputSys = new PlayerInputSystem();
 		inputhandler.registerInputHandlerSystem(playerInputSys);
 		CameraMovementSystem camSys = new CameraMovementSystem(gameCamera);
+		TowerSelectionSystem towerSelectSystem = new TowerSelectionSystem(_entityFactory, gameCamera);
 		ashleyEngine.addSystem(statSystem);
+		ashleyEngine.addSystem(towerSelectSystem);
 		ashleyEngine.addSystem(moveToSystem);
 		ashleyEngine.addSystem(towerSystem);
 		ashleyEngine.addSystem(renderSystem);

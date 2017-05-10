@@ -30,7 +30,7 @@ public class PlayerStatSystem extends IteratingSystem {
         // if target isnt null set selected tower in model to the selected entity
         _entityModel.setSelectedTower(d.getDestinationEntity());
 
-
+        // TODO make function / separate system for some of this
         // show the panel if a tower is selected
         if (_entityModel.getSelectedTower() != null) {
             TowerStatComponent stats = Mappers.TOWER_STATS_M.get(_entityModel.getSelectedTower());
@@ -56,12 +56,12 @@ public class PlayerStatSystem extends IteratingSystem {
             } else {
                 uiController.hideTowerSelectionPanel();
             }
-
-            // Player should have integer values , enemies do not
-            uiController.updateHealth((int) h.health);
         } else {
             uiController.hideTowerSelectionPanel();
         }
+        
+        // Player should have integer values , enemies do not
+        uiController.updateHealth((int) h.health);
     }
 }
 
