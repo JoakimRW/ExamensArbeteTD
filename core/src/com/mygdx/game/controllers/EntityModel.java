@@ -35,6 +35,9 @@ public class EntityModel extends InputAdapter {
     private double upgradeRange = 0;
     private double upgradeDmg = 0;
     private double upgradeFireRate = 0;
+    private boolean isRangeGreenText;
+    private boolean isDamageGreenText;
+    private boolean isfireRateGreenText;
 
     public EntityModel(WaveTimeManager waveMngr, EntityFactory factory, GameStateManager gsm,
 			OrthographicCamera gameCamera, Engine ashleyEngine) {
@@ -137,5 +140,29 @@ public class EntityModel extends InputAdapter {
 
     public void setUpgradeFireRate(double upgradeFireRate) {
         this.upgradeFireRate = upgradeFireRate;
+    }
+
+    public void setisfireRateGreenText(boolean isfireRateGreenText) {
+        this.isfireRateGreenText = isfireRateGreenText;
+    }
+
+    public boolean isRangeGreenText() {
+        return isRangeGreenText;
+    }
+
+    public boolean isDamageGreenText() {
+        return isDamageGreenText;
+    }
+
+    public boolean isIsfireRateGreenText() {
+        return isfireRateGreenText;
+    }
+
+    public void setisDamageGreenText(boolean isDamageGreenText) {
+        this.isDamageGreenText = isDamageGreenText;
+    }
+
+    public void setisRangeGreenText(boolean isRangeGreenText) {
+        this.isRangeGreenText = isRangeGreenText;
     }
 }

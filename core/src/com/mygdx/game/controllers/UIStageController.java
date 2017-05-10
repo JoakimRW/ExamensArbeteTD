@@ -2,6 +2,7 @@ package com.mygdx.game.controllers;
 
 import static com.mygdx.game.Factory.TowerType.BASIC_LASER_TURRET;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -70,12 +71,6 @@ public class UIStageController extends ClickListener {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 model.upgradeSelectedTower();
-            }
-
-            @Override
-            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                super.enter(event, x, y, pointer, fromActor);
-                showUpgradeInfo();
             }
 
             @Override
@@ -166,6 +161,22 @@ public class UIStageController extends ClickListener {
 	}
 
     public boolean isOverUpgradeBtn() {
-        return _isOverUpgradeBtn;
+        return uistage.isOverUpgradeButton();
+    }
+
+    public void updateUpgradeInfo() {
+        if (isOverUpgradeBtn()){
+            showUpgradeInfo();
+            if (model.isDamageGreenText()) uistage.getTowerSelectDamage().setColor(uistage.getGreen());
+            else uistage.getTowerSelectDamage().setColor(Color.WHITE);
+            if (model.isIsfireRateGreenText()) uistage.getTowerSelectFireRate().setColor(uistage.getGreen());
+            else uistage.getTowerSelectFireRate().setColor(Color.WHITE);
+            if (model.isRangeGreenText()) uistage.getTowerSelectRange().setColor(uistage.getGreen());
+            else uistage.getTowerSelectRange().setColor(Color.WHITE);
+        }else {
+            uistage.getTowerSelectRange().setColor(Color.WHITE);
+            uistage.getTowerSelectFireRate().setColor(Color.WHITE);
+            uistage.getTowerSelectDamage().setColor(Color.WHITE);
+        }
     }
 }

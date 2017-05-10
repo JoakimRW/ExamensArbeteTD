@@ -43,10 +43,14 @@ public class PlayerStatSystem extends IteratingSystem {
             double damage;
             double range;
             if (stats != null && dmg != null && f != null && r != null && s != null) {
+                    uiController.updateUpgradeInfo();
                 if (uiController.isOverUpgradeBtn()) {
                     fireRate = f._fireRate + (f._fireRate * f.percentageIncrease);
                     damage = dmg.getDamage() + dmg.dmgIncrease;
                     range = r.getRange() + (r.getRange() * r.percentageIncrease);
+                    _entityModel.setisfireRateGreenText(fireRate > f._fireRate);
+                    _entityModel.setisDamageGreenText(damage > dmg.getDamage());
+                    _entityModel.setisRangeGreenText(range > r.getRange());
                 } else {
                     fireRate = f._fireRate;
                     damage = dmg.getDamage();

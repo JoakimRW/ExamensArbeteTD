@@ -6,6 +6,7 @@ import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.loaders.MusicLoader;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Cursor;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -39,6 +40,7 @@ public class Assets {
     public static BitmapFont font24;
     public static BitmapFont font20;
     public static Music laserMillenium;
+    public static Sound laserTurretFire;
 
 
     private static Texture loadTexture(String file){
@@ -51,6 +53,10 @@ public class Assets {
         laserMillenium.setVolume(0.1f);
         laserMillenium.setLooping(true);
         laserMillenium.play();
+        // sounds
+        laserTurretFire = Gdx.audio.newSound(Gdx.files.internal("towers/lasertower/fx/bubaproducer__laser-shot-silenced.wav"));
+        //laserTurretFire.play(0.5f);
+
         // bloodworm
         bloodWormSkeleton = loadSkeleton("enemies/bloodworm/skeleton.atlas","enemies/bloodworm/skeleton.json");
         bloodWormAnimationState = new AnimationState(new AnimationStateData(bloodWormSkeleton.getData()));
@@ -61,7 +67,7 @@ public class Assets {
         enemyGreenHealthbarBG = new Sprite(loadTexture("enemies/healthbar-green.png"));
         enemyRedHealthbarBG = new Sprite(loadTexture("enemies/healthbar-red.png"));
         // Tower
-        laserTowerSkeleton = loadSkeleton("towers/lvl1/skeleton.atlas","towers/lvl1/skeleton.json");
+        laserTowerSkeleton = loadSkeleton("towers/lasertower/skeleton.atlas","towers/lasertower/skeleton.json");
         laserTowerAnimationState = new AnimationState(new AnimationStateData(laserTowerSkeleton.getData()));
         // Coin
         coinSkeleton = loadSkeleton("misc/coin/skeleton.atlas", "misc/coin/skeleton.json");

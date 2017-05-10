@@ -55,8 +55,8 @@ public class UiView implements Screen {
     private TextButton _resumeButton;
     private TextButton _mainMenuButton;
     private Table uiPanel;
-
     private Color green;
+    private boolean isOverUpgradeButton;
 
     public UiView(){
 
@@ -332,6 +332,7 @@ public class UiView implements Screen {
     @Override
     public void render(float delta) {
         getStage().act(delta);
+        isOverUpgradeButton = _upgradeBtn.isOver();
         if (PlayState.START_GAME) _next_wave_time_value.setText(String.format("%d : %d",WaveTimeManager.CURRENT_WAVE_TIME ,  WaveTimeManager.CURRENT_WAVE_TIME_MILLIS));
         getStage().draw();
     }
@@ -491,4 +492,11 @@ public class UiView implements Screen {
         return healthLabel;
     }
 
+    public Color getGreen() {
+        return green;
+    }
+
+    public boolean isOverUpgradeButton() {
+        return isOverUpgradeButton;
+    }
 }
