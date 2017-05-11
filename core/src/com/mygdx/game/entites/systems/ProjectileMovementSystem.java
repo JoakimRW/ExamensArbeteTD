@@ -46,24 +46,24 @@ public class ProjectileMovementSystem extends IteratingSystem {
 		double difY = destinationY - position.y;
 		// set direction
 		float spriteAngle = (float) Math.toDegrees(Math.atan2(difX, -difY));
-		float entityAngle = (float) Math.toDegrees(Math.atan2(difY, difX));
+        float rotAng = (float) Math.toDegrees(Math.atan2(difY, difX));
 		angle.spriteAngle = spriteAngle;
-		angle.angle = entityAngle;
+		angle.angle = rotAng;
 
-		if (destination.len() > 0) {
-			destination = destination.nor();
-		}
-		velocity.velocity.x = destination.x * velocity.maxSpeed;
-		velocity.velocity.y = destination.y * velocity.maxSpeed;
+        float angleX = (float) Math.cos(Math.toRadians(angle.angle));
+        float angleY = (float) Math.sin(Math.toRadians(angle.angle));
+
+		velocity.velocity.x = angleX * velocity.maxSpeed;
+		velocity.velocity.y = angleY * velocity.maxSpeed;
 
 		position.x += velocity.velocity.x * deltaTime;
 		position.y += velocity.velocity.y * deltaTime;
 
 		
 
-		if (position.dst(position) < 1) {
-			
-			System.out.println("Distance to enemy : " + position.dst(destination));
+		if (position.dst(destination) < 1) {
+            System.out.println("distance reaced");
+            System.out.println("Distance to enemy : " + position.dst(destination));
 			dealDamage(projectileEntity, damage);
 		}
 
