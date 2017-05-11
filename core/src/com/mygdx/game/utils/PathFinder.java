@@ -95,7 +95,7 @@ public abstract class PathFinder {
         }
         closedList.clear();
 
-        System.out.println("found no path, returning null :: START :: " + startNode + " END :: "  + endNode);
+//        System.out.println("found no path, returning null :: START :: " + startNode + " END :: "  + endNode);
         return null;
     }
     

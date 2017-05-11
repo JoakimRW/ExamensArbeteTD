@@ -23,7 +23,13 @@ import com.mygdx.game.entites.entitiycomponents.enemy.EnemyComponent;
 import com.mygdx.game.entites.entitiycomponents.player.PlayerComponent;
 import com.mygdx.game.entites.entitiycomponents.projectile.DestinationComponent;
 import com.mygdx.game.entites.entitiycomponents.projectile.ProjectileComponent;
-import com.mygdx.game.entites.entitiycomponents.tower.*;
+import com.mygdx.game.entites.entitiycomponents.tower.DamageComponent;
+import com.mygdx.game.entites.entitiycomponents.tower.FireRateComponent;
+import com.mygdx.game.entites.entitiycomponents.tower.RangeComponent;
+import com.mygdx.game.entites.entitiycomponents.tower.SpecialTowerComponent;
+import com.mygdx.game.entites.entitiycomponents.tower.TargetComponent;
+import com.mygdx.game.entites.entitiycomponents.tower.TowerComponent;
+import com.mygdx.game.entites.entitiycomponents.tower.TowerStatComponent;
 import com.mygdx.game.managers.LevelManager;
 import com.mygdx.game.utils.Assets;
 import com.mygdx.game.utils.Node;
@@ -78,11 +84,11 @@ public class EntityFactory {
 		Entity entity = new Entity();
 		SkeletonComponent skeletonComponent = new SkeletonComponent(Assets.coinSkeleton); // TODO
 		PositionComponent positionComponent = new PositionComponent(
-				startEntity.getComponent(PositionComponent.class).position);
+				startEntity.getComponent(PositionComponent.class).position.cpy());
 		RenderableComponent renderableComponent = new RenderableComponent();
 		AngleComponent angleComponent = new AngleComponent();
 		DestinationComponent destinationComponent = new DestinationComponent(targetEntity);
-		VelocityComponent velocityComponent = new VelocityComponent(200f); // TODO
+		VelocityComponent velocityComponent = new VelocityComponent(20f); // TODO
 		DamageComponent damageComponent = new DamageComponent(20d); // TODO
 		ProjectileComponent projectileComponent = new ProjectileComponent();
 
@@ -91,7 +97,8 @@ public class EntityFactory {
 		entity.add(projectileComponent) //
 				.add(destinationComponent) //
 				.add(angleComponent) //
-				.add(renderableComponent).add(positionComponent) //
+				.add(renderableComponent)//
+				.add(positionComponent) //
 				.add(skeletonComponent) //
 				.add(velocityComponent)//
 				.add(damageComponent);
@@ -110,8 +117,10 @@ public class EntityFactory {
 		MousePositionComponent mousePositionComponent = new MousePositionComponent();
 		RangeComponent rangeComponent = new RangeComponent(75d); // TODO
 		TowerComponent towerComponent = new TowerComponent();
-        TowerStatComponent towerStatComponent = new TowerStatComponent(25,"Laser Tower" , TowerType.BASIC_LASER_TURRET);
+		TowerStatComponent towerStatComponent = new TowerStatComponent(25, "Laser Tower", TowerType.BASIC_LASER_TURRET);
 		SpecialTowerComponent specialTowerComponent = new SpecialTowerComponent();
+		TargetComponent targetComponent = new TargetComponent();
+
 		skeletonComponent.skeleton.setPosition(x, y);
 		skeletonComponent.animationState.setData(Assets.laserTowerAnimationState.getData());
 		entity.add(skeletonComponent)//
@@ -122,8 +131,10 @@ public class EntityFactory {
 				.add(angleComponent).add(renderableComponent)//
 				.add(rangeComponent)//
 				.add(specialTowerComponent)//
-				.add(new DamageComponent(20d)).add(towerComponent)
-				.add(towerStatComponent);
+				.add(new DamageComponent(20d))//
+				.add(towerComponent)//
+				.add(towerStatComponent)//
+				.add(targetComponent);
 		System.out.println("Laser tower Created");
 		return entity;
 	}
