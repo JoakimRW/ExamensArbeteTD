@@ -61,7 +61,9 @@ public class ProjectileMovementSystem extends IteratingSystem {
 
 		
 
-		if (position == destination) {
+		if (position.dst(position) < 1) {
+			
+			System.out.println("Distance to enemy : " + position.dst(destination));
 			dealDamage(projectileEntity, damage);
 		}
 

@@ -16,7 +16,7 @@ import com.mygdx.game.entites.systems.PlayerStatSystem;
 import com.mygdx.game.entites.systems.ProjectileMovementSystem;
 import com.mygdx.game.entites.systems.RenderSystem;
 import com.mygdx.game.entites.systems.ShootingSystem;
-import com.mygdx.game.entites.systems.TargetFinderSystem;
+import com.mygdx.game.entites.systems.AimingSystem;
 import com.mygdx.game.entites.systems.TowerPlacementSystem;
 import com.mygdx.game.entites.systems.TowerSelectionSystem;
 import com.mygdx.game.stages.UiView;
@@ -47,7 +47,7 @@ public class EntityManager {
 		TowerPlacementSystem towerSystem = new TowerPlacementSystem(batch);
 		ShootingSystem shootingSystem = new ShootingSystem();
 		ProjectileMovementSystem projectileMovementSystem = new ProjectileMovementSystem();
-		TargetFinderSystem targetFinderSystem = new TargetFinderSystem();
+		AimingSystem targetFinderSystem = new AimingSystem();
 		RenderSystem renderSystem = new RenderSystem(batch);
 		HealthSystem healthSystem = new HealthSystem(batch, _entityFactory);
 		PlayerInputSystem playerInputSys = new PlayerInputSystem();

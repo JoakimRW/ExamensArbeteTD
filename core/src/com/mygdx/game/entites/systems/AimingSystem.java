@@ -12,9 +12,9 @@ import com.mygdx.game.entites.entitiycomponents.PositionComponent;
 import com.mygdx.game.entites.entitiycomponents.tower.RangeComponent;
 import com.mygdx.game.entites.entitiycomponents.tower.TargetComponent;
 
-public class TargetFinderSystem extends IntervalIteratingSystem {
+public class AimingSystem extends IntervalIteratingSystem {
 
-	public TargetFinderSystem() {
+	public AimingSystem() {
 		super(Families.TOWER, 0.1f);
 	}
 
@@ -25,7 +25,6 @@ public class TargetFinderSystem extends IntervalIteratingSystem {
 		if (nearestEnemy == null) {
 			return;
 		}
-		System.out.println("Nearest enemy = " + nearestEnemy);
 		entity.getComponent(TargetComponent.class).setTarget(nearestEnemy);
 
 	}
