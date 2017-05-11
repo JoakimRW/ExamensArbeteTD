@@ -31,4 +31,5 @@ public class Mappers {
     public static final ComponentMapper<FireRateComponent> FIRE_RATE_M = ComponentMapper.getFor(FireRateComponent.class);
     public static final ComponentMapper<RangeComponent> RANGE_M = ComponentMapper.getFor(RangeComponent.class);
     public static final ComponentMapper<SpecialTowerComponent>  SPECIAL_M = ComponentMapper.getFor(SpecialTowerComponent.class);
+	public static final ComponentMapper<TargetComponent> TARGET_M = ComponentMapper.getFor(TargetComponent.class);
 }

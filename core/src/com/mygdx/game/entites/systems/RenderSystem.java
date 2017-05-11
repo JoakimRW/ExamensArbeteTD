@@ -34,8 +34,13 @@ public class RenderSystem extends IteratingSystem{
             offsetY = ocomp.offsetY;
         }
         skeletonComponent.skeleton.setPosition(pos.position.x + offsetX, pos.position.y + offsetY );
-        if (angleComp != null)
-        skeletonComponent.skeleton.getRootBone().setRotation(angleComp.spriteAngle);
+        if (angleComp != null){
+        	if(Families.TOWER.matches(entity)){
+        		skeletonComponent.skeleton.getBones().get(1).setRotation(angleComp.spriteAngle);
+        	}else {
+        		skeletonComponent.skeleton.getRootBone().setRotation(angleComp.spriteAngle);
+        	}
+        }
         skeletonComponent.skeleton.updateWorldTransform();
         batch.begin();
         renderer.draw(batch,skeletonComponent.skeleton);
