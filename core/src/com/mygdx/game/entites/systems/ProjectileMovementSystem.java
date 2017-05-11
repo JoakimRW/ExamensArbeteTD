@@ -1,6 +1,7 @@
 package com.mygdx.game.entites.systems;
 
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.ashley.core.EntityListener;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entites.entitiycomponents.AngleComponent;
@@ -11,7 +12,7 @@ import com.mygdx.game.entites.entitiycomponents.VelocityComponent;
 import com.mygdx.game.entites.entitiycomponents.projectile.DestinationComponent;
 import com.mygdx.game.entites.entitiycomponents.tower.DamageComponent;
 
-public class ProjectileMovementSystem extends IteratingSystem {
+public class ProjectileMovementSystem extends IteratingSystem implements EntityListener {
 
 	public ProjectileMovementSystem() {
 		super(Families.PROJECTILE);
@@ -20,16 +21,18 @@ public class ProjectileMovementSystem extends IteratingSystem {
 	@Override
 	protected void processEntity(Entity entity, float deltaTime) {
 
-//		System.out.println("STARTING PROJECTILE MOVEMENT");
+		// System.out.println("STARTING PROJECTILE MOVEMENT");
 		moveToEnemy(entity, deltaTime);
-		
-//		getEntities().forEach(projectile -> System.out.println("projectile nr :" + projectile.getComponent(PositionComponent.class).position));
+
+		// getEntities().forEach(projectile -> System.out.println("projectile nr
+		// :" + projectile.getComponent(PositionComponent.class).position));
 
 	}
 
 	private void moveToEnemy(Entity projectileEntity, float deltaTime) {
-		
-		if (projectileEntity.getComponent(DestinationComponent.class).getDestinationEntity().getComponent(PositionComponent.class) == null) {
+
+		if (projectileEntity.getComponent(DestinationComponent.class).getDestinationEntity()
+				.getComponent(PositionComponent.class) == null) {
 			return;
 		}
 
@@ -46,12 +49,12 @@ public class ProjectileMovementSystem extends IteratingSystem {
 		double difY = destinationY - position.y;
 		// set direction
 		float spriteAngle = (float) Math.toDegrees(Math.atan2(difX, -difY));
-        float rotAng = (float) Math.toDegrees(Math.atan2(difY, difX));
+		float rotAng = (float) Math.toDegrees(Math.atan2(difY, difX));
 		angle.spriteAngle = spriteAngle;
 		angle.angle = rotAng;
 
-        float angleX = (float) Math.cos(Math.toRadians(angle.angle));
-        float angleY = (float) Math.sin(Math.toRadians(angle.angle));
+		float angleX = (float) Math.cos(Math.toRadians(angle.angle));
+		float angleY = (float) Math.sin(Math.toRadians(angle.angle));
 
 		velocity.velocity.x = angleX * velocity.maxSpeed;
 		velocity.velocity.y = angleY * velocity.maxSpeed;
@@ -59,11 +62,9 @@ public class ProjectileMovementSystem extends IteratingSystem {
 		position.x += velocity.velocity.x * deltaTime;
 		position.y += velocity.velocity.y * deltaTime;
 
-		
-
 		if (position.dst(destination) < 1) {
-            System.out.println("distance reaced");
-            System.out.println("Distance to enemy : " + position.dst(destination));
+			System.out.println("distance reaced");
+			System.out.println("Distance to enemy : " + position.dst(destination));
 			dealDamage(projectileEntity, damage);
 		}
 
@@ -74,6 +75,24 @@ public class ProjectileMovementSystem extends IteratingSystem {
 		projectileEntity.getComponent(DestinationComponent.class).getDestinationEntity()
 				.getComponent(HealthComponent.class).takeDamage(damage);
 		getEngine().removeEntity(projectileEntity);
+	}
+
+	@Override
+	public void entityAdded(Entity entity) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void entityRemoved(Entity entity) {
+
+		System.out.println("Enemy removed , removing remaining projectiles");
+		for (Entity projectile : getEntities()) {
+			if (projectile.getComponent(DestinationComponent.class).getDestinationEntity() == entity) {
+				getEngine().removeEntity(projectile);
+			}
+		}
+
 	}
 
 }

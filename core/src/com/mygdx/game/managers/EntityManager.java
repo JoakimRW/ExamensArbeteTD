@@ -6,7 +6,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.Factory.EntityFactory;
 import com.mygdx.game.controllers.EntityModel;
 import com.mygdx.game.controllers.UIStageController;
+import com.mygdx.game.entites.entitiycomponents.Families;
 import com.mygdx.game.entites.input.InputHandler;
+import com.mygdx.game.entites.systems.AimingSystem;
 import com.mygdx.game.entites.systems.CameraMovementSystem;
 import com.mygdx.game.entites.systems.CoinSystem;
 import com.mygdx.game.entites.systems.HealthSystem;
@@ -16,7 +18,6 @@ import com.mygdx.game.entites.systems.PlayerStatSystem;
 import com.mygdx.game.entites.systems.ProjectileMovementSystem;
 import com.mygdx.game.entites.systems.RenderSystem;
 import com.mygdx.game.entites.systems.ShootingSystem;
-import com.mygdx.game.entites.systems.AimingSystem;
 import com.mygdx.game.entites.systems.TowerPlacementSystem;
 import com.mygdx.game.entites.systems.TowerSelectionSystem;
 import com.mygdx.game.stages.UiView;
@@ -66,6 +67,8 @@ public class EntityManager {
 		ashleyEngine.addSystem(shootingSystem);
 		ashleyEngine.addSystem(projectileMovementSystem);
 		ashleyEngine.addSystem(targetFinderSystem);
+
+		ashleyEngine.addEntityListener(Families.ENEMY, projectileMovementSystem);
 
 	}
 

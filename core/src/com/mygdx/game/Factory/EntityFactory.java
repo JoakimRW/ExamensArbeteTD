@@ -88,7 +88,7 @@ public class EntityFactory {
 		RenderableComponent renderableComponent = new RenderableComponent();
 		AngleComponent angleComponent = new AngleComponent();
 		DestinationComponent destinationComponent = new DestinationComponent(targetEntity);
-		VelocityComponent velocityComponent = new VelocityComponent(150f); // TODO
+		VelocityComponent velocityComponent = new VelocityComponent(600f); // TODO
 		DamageComponent damageComponent = new DamageComponent(20d); // TODO
 		ProjectileComponent projectileComponent = new ProjectileComponent();
 
