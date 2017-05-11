@@ -35,9 +35,10 @@ public class InputHandler implements InputProcessor {
 	private static Engine _ashleyEngine;
 	private Family _towerFamily = Family.all(MouseImageComponent.class).get();;
 
-	public InputHandler(OrthographicCamera gameCamera){
-	    _gameCamera = gameCamera;
-    }
+	public InputHandler(OrthographicCamera gameCamera) {
+		_gameCamera = gameCamera;
+	}
+
 	public void registerInputHandlerSystem(InputHandlerIF inputHandler) {
 		_inputHandler = inputHandler;
 	}
@@ -85,13 +86,11 @@ public class InputHandler implements InputProcessor {
 		return false;
 	}
 
-
-
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-	    if (button == Input.Buttons.LEFT){
-            _inputHandler.setAsSelectedTower(getTowerEntityFromTile());
-        }
+		if (button == Input.Buttons.LEFT) {
+			_inputHandler.setAsSelectedTower(getTowerEntityFromTile());
+		}
 		if (isRightButtonClicked(button)) {
 			return false;
 		}
@@ -102,13 +101,15 @@ public class InputHandler implements InputProcessor {
 		return false;
 	}
 
-    private Entity getTowerEntityFromTile(){
-            if (!_isPlacementMode){
-                Tile tile = getTileAtMouse();
-                if (tile != null) return tile.getEntity();
-            }
-	    return null;
-    }
+	private Entity getTowerEntityFromTile() {
+		if (!_isPlacementMode) {
+			Tile tile = getTileAtMouse();
+			if (tile != null)
+				return tile.getEntity();
+		}
+		return null;
+	}
+
 	private boolean isRightButtonClicked(int button) {
 
 		if (_isPlacementMode) {
@@ -118,21 +119,24 @@ public class InputHandler implements InputProcessor {
 				Entity first = towerEntitys.first();
 				getAshleyEngine().removeEntity(first);
 				InputHandler.setPlacementMode(false);
+				getAshleyEngine().getSystem(TowerPlacementSystem.class).tintTile(null);
 				return true;
 			}
 		}
 		return false;
 	}
 
-	private static Tile getTileAtMouse(){
+	private static Tile getTileAtMouse() {
 		Vector3 mousePos = _gameCamera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
 		Tile tile = LevelManager.getTile((int) mousePos.x >> 5, (int) mousePos.y >> 5);
-		if (tile != null) return tile;
+		if (tile != null)
+			return tile;
 		return null;
 	}
+
 	private static boolean isLegalPlacement() {
 		Tile tile = getTileAtMouse();
-		if (tile != null){
+		if (tile != null) {
 			if (!isTowerBlockingPath(tile)) {
 				return tile.getType() == TileType.FLOOR;
 			}
@@ -203,8 +207,10 @@ public class InputHandler implements InputProcessor {
 	private static void mouseOverTintTiles() {
 
 		Tile tile = getTileAtMouse();
-		if (tile != null)
-		getAshleyEngine().getSystem(TowerPlacementSystem.class).tintTile(tile);
+		if (tile != null) {
+			getAshleyEngine().getSystem(TowerPlacementSystem.class).tintTile(tile);
+		}
+
 	}
 
 	@Override
