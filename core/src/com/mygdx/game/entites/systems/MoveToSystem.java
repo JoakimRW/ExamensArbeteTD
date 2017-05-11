@@ -5,6 +5,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entites.entitiycomponents.*;
 import com.mygdx.game.entites.entitiycomponents.enemy.EnemyComponent;
@@ -76,10 +77,11 @@ public class MoveToSystem extends IteratingSystem {
 		double difX = pointX - pos.position.x;
 		double difY = pointY - pos.position.y;
 		// set direction
-		float sprAng = (float) Math.toDegrees(Math.atan2(difX, -difY));
-		float rotAng = (float) Math.toDegrees(Math.atan2(difY, difX));
-		angleComp.spriteAngle = sprAng;
-		angleComp.angle = rotAng;
+		float goalSpritelAngle = (float) Math.toDegrees(Math.atan2(difX, -difY));
+		float goalRotAng = (float) Math.toDegrees(Math.atan2(difY, difX));
+		
+		angleComp.spriteAngle = MathUtils.lerpAngleDeg(angleComp.spriteAngle, goalSpritelAngle, 0.5f);
+		angleComp.angle = MathUtils.lerpAngleDeg(angleComp.angle , goalRotAng , 0.5f);
 
 		float angleX = (float) Math.cos(Math.toRadians(angleComp.angle));
 		float angleY = (float) Math.sin(Math.toRadians(angleComp.angle));

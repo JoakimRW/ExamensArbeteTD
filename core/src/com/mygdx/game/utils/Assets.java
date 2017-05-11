@@ -4,7 +4,6 @@ package com.mygdx.game.utils;
 
 import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.loaders.MusicLoader;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
@@ -50,9 +49,9 @@ public class Assets {
     public static void loadGameStageAssets() {
         // music
         laserMillenium = Gdx.audio.newMusic(Gdx.files.internal("music/Laser Millenium.wav"));
-        laserMillenium.setVolume(0.1f);
-        laserMillenium.setLooping(true);
-        laserMillenium.play();
+        //laserMillenium.setVolume(0.1f);
+        //laserMillenium.setLooping(true);
+       // laserMillenium.play();
         // sounds
         laserTurretFire = Gdx.audio.newSound(Gdx.files.internal("towers/lasertower/fx/bubaproducer__laser-shot-silenced.wav"));
         //laserTurretFire.play(0.5f);
