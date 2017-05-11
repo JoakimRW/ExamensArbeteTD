@@ -101,7 +101,7 @@ public class InputHandler implements InputProcessor {
 		return false;
 	}
 
-	private Entity getTowerEntityFromTile() {
+	private static Entity getTowerEntityFromTile() {
 		if (!_isPlacementMode) {
 			Tile tile = getTileAtMouse();
 			if (tile != null)
