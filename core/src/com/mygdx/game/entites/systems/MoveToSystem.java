@@ -80,7 +80,7 @@ public class MoveToSystem extends IteratingSystem {
 		float goalSpritelAngle = (float) Math.toDegrees(Math.atan2(difX, -difY));
 		float goalRotAng = (float) Math.toDegrees(Math.atan2(difY, difX));
 		
-		angleComp.spriteAngle = MathUtils.lerpAngleDeg(angleComp.spriteAngle, goalSpritelAngle, 0.5f);
+		angleComp.spriteAngle = MathUtils.lerpAngleDeg(angleComp.spriteAngle, goalSpritelAngle, 0.2f);
 		angleComp.angle = MathUtils.lerpAngleDeg(angleComp.angle , goalRotAng , 0.5f);
 
 		float angleX = (float) Math.cos(Math.toRadians(angleComp.angle));
