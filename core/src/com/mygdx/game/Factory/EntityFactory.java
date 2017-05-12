@@ -126,7 +126,6 @@ public class EntityFactory {
 				.add(mouseImageComponent) //
 				.add(mousePositionComponent)//
 				.add(positionComponent)//
-				.add(new FireRateComponent(0.05d))//
 				.add(positionComponent)//
 				.add(angleComponent).add(renderableComponent)//
 				.add(rangeComponent)//

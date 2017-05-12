@@ -64,7 +64,7 @@ public class ShootingSystem extends IteratingSystem {
 		}
 		
 		counter += deltaTime;
-		if (counter > towerEntity.getComponent(FireRateComponent.class)._fireRate) {
+		if (counter > 1 / towerEntity.getComponent(FireRateComponent.class)._fireRate) {
 			getEngine().addEntity(EntityFactory.createProjectileEntity(ProjectileType.LASER, towerEntity, target));
 			counter = 0;
 		}
