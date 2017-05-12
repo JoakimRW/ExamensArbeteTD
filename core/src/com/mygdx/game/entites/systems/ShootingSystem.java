@@ -14,6 +14,7 @@ import com.mygdx.game.entites.entitiycomponents.MouseImageComponent;
 import com.mygdx.game.entites.entitiycomponents.PositionComponent;
 import com.mygdx.game.entites.entitiycomponents.TimeComponent;
 import com.mygdx.game.entites.entitiycomponents.enemy.EnemyComponent;
+import com.mygdx.game.entites.entitiycomponents.tower.DamageComponent;
 import com.mygdx.game.entites.entitiycomponents.tower.FireRateComponent;
 import com.mygdx.game.entites.entitiycomponents.tower.RangeComponent;
 
@@ -47,6 +48,7 @@ public class ShootingSystem extends IteratingSystem {
 		PositionComponent towerPos = Mappers.POSITION_M.get(towerEntity);
 		PositionComponent targetPos = Mappers.POSITION_M.get(target);
 		TimeComponent time = Mappers.TIME_M.get(towerEntity);
+		DamageComponent dmg = Mappers.DAMAGE_M.get(towerEntity);
 		if (targetPos != null) {
 			double difX = targetPos.position.x - towerPos.position.x;
 			double difY = targetPos.position.y - towerPos.position.y;
@@ -65,7 +67,7 @@ public class ShootingSystem extends IteratingSystem {
 		
 		time.time += deltaTime;
 		if (time.time > 1 / towerEntity.getComponent(FireRateComponent.class)._fireRate) {
-			getEngine().addEntity(EntityFactory.createProjectileEntity(ProjectileType.LASER, towerEntity, target));
+			getEngine().addEntity(EntityFactory.createProjectileEntity(ProjectileType.LASER, towerEntity, target , dmg.getDamage()));
 			time.time = 0;
 		}
 	}

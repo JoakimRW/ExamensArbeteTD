@@ -80,7 +80,7 @@ public class EntityFactory {
 	}
 
 	public static Entity createProjectileEntity(ProjectileType projectileType, Entity startEntity,
-			Entity targetEntity) {
+			Entity targetEntity , double damage) {
 		Entity entity = new Entity();
 		SkeletonComponent skeletonComponent = new SkeletonComponent(Assets.coinSkeleton); // TODO
 		PositionComponent positionComponent = new PositionComponent(
@@ -89,7 +89,7 @@ public class EntityFactory {
 		AngleComponent angleComponent = new AngleComponent();
 		DestinationComponent destinationComponent = new DestinationComponent(targetEntity);
 		VelocityComponent velocityComponent = new VelocityComponent(600f); // TODO
-		DamageComponent damageComponent = new DamageComponent(20d); // TODO
+		DamageComponent damageComponent = new DamageComponent(damage); // TODO
 		ProjectileComponent projectileComponent = new ProjectileComponent();
 
 		skeletonComponent.skeleton.setPosition(positionComponent.position.x, positionComponent.position.y);
