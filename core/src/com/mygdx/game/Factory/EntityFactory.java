@@ -126,6 +126,7 @@ public class EntityFactory {
 				.add(mouseImageComponent) //
 				.add(mousePositionComponent)//
 				.add(positionComponent)//
+				.add(new FireRateComponent(1d , 0.1))// 10 percent bonus on upgrade
 				.add(positionComponent)//
 				.add(angleComponent).add(renderableComponent)//
 				.add(rangeComponent)//
