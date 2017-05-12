@@ -103,7 +103,6 @@ public class EntityFactory {
 				.add(velocityComponent)//
 				.add(damageComponent);
 
-		System.out.println("Projectile Created");
 		return entity;
 	}
 

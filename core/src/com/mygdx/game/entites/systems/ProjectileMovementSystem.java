@@ -20,12 +20,12 @@ public class ProjectileMovementSystem extends IteratingSystem implements EntityL
 
 	@Override
 	protected void processEntity(Entity entity, float deltaTime) {
+		
+		if (entity.getComponent(DestinationComponent.class).getDestinationEntity() == null) {
+			getEngine().removeEntity(entity);
+		}
 
-		// System.out.println("STARTING PROJECTILE MOVEMENT");
 		moveToEnemy(entity, deltaTime);
-
-		// getEntities().forEach(projectile -> System.out.println("projectile nr
-		// :" + projectile.getComponent(PositionComponent.class).position));
 
 	}
 

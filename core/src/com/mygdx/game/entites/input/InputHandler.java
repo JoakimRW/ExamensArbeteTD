@@ -12,9 +12,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.Factory.EntityFactory;
 import com.mygdx.game.Factory.TowerType;
+import com.mygdx.game.entites.entitiycomponents.Families;
 import com.mygdx.game.entites.entitiycomponents.MouseImageComponent;
 import com.mygdx.game.entites.entitiycomponents.OffsetComponent;
 import com.mygdx.game.entites.entitiycomponents.PositionComponent;
+import com.mygdx.game.entites.entitiycomponents.projectile.DestinationComponent;
 import com.mygdx.game.entites.systems.TowerPlacementSystem;
 import com.mygdx.game.managers.GameStateManager;
 import com.mygdx.game.managers.LevelManager;
@@ -82,8 +84,22 @@ public class InputHandler implements InputProcessor {
 
 	@Override
 	public boolean keyTyped(char character) {
-		// TODO Auto-generated method stub
+
+		debug();
 		return false;
+	}
+
+	public static void debug() {
+		if (Gdx.input.isKeyJustPressed(Input.Keys.B)) {
+			ImmutableArray<Entity> projectiles = getAshleyEngine().getEntitiesFor(Families.PROJECTILE);
+			if (projectiles == null) {
+				return;
+			}
+			for (Entity projectile : projectiles) {
+				System.out.println(projectile.getComponent(DestinationComponent.class));
+
+			}
+		}
 	}
 
 	@Override

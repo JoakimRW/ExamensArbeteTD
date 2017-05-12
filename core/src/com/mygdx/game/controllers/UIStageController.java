@@ -5,7 +5,6 @@ import static com.mygdx.game.Factory.TowerType.BASIC_LASER_TURRET;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.managers.GameStateManager;
@@ -17,9 +16,9 @@ public class UIStageController extends ClickListener {
 	private UiView uistage;
 	private EntityModel model;
 	private GameStateManager _gsm;
-    private boolean _isOverUpgradeBtn;
+	private boolean _isOverUpgradeBtn;
 
-    public UIStageController(UiView uistage, EntityModel model, GameStateManager gsm) {
+	public UIStageController(UiView uistage, EntityModel model, GameStateManager gsm) {
 		this.uistage = uistage;
 		this.model = model;
 		_gsm = gsm;
@@ -43,14 +42,15 @@ public class UIStageController extends ClickListener {
 			}
 
 		});
-		// setting this to be touchable so there's no events passing through to game input listener when click on ui background
+		// setting this to be touchable so there's no events passing through to
+		// game input listener when click on ui background
 		uistage.getUiPanel().setTouchable(Touchable.enabled);
-		uistage.getUiPanel().addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                super.clicked(event, x, y);
-            }
-        });
+		uistage.getUiPanel().addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				super.clicked(event, x, y);
+			}
+		});
 		/* resume button in pause mode */
 		uistage.getResumeButton().addListener(new ClickListener() {
 			@Override
@@ -67,26 +67,26 @@ public class UIStageController extends ClickListener {
 		});
 
 		/* upgrade selected tower */
-		uistage.getUpgradeBtn().addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                model.upgradeSelectedTower();
-            }
+		uistage.getUpgradeBtn().addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				model.upgradeSelectedTower();
+			}
 
-            @Override
-            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
-                super.exit(event, x, y, pointer, toActor);
-                hideUpgradeInfo();
-            }
-        });
+			@Override
+			public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+				super.exit(event, x, y, pointer, toActor);
+				hideUpgradeInfo();
+			}
+		});
 
-        /* sell selected tower */
-		uistage.getSellBtn().addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                model.sellSelectedTower();
-            }
-        });
+		/* sell selected tower */
+		uistage.getSellBtn().addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				model.sellSelectedTower();
+			}
+		});
 
 		/* laser tower icon */
 		uistage.get_laserTowerIcon().addListener(new ClickListener() {
@@ -105,14 +105,15 @@ public class UIStageController extends ClickListener {
 		});
 	}
 
-    private void showUpgradeInfo() {
-	    _isOverUpgradeBtn = true;
-    }
-    private void hideUpgradeInfo(){
-        _isOverUpgradeBtn = false;
-    }
+	private void showUpgradeInfo() {
+		_isOverUpgradeBtn = true;
+	}
 
-    public void showPauseWindow() {
+	private void hideUpgradeInfo() {
+		_isOverUpgradeBtn = false;
+	}
+
+	public void showPauseWindow() {
 		PlayState.PAUSE = true;
 		uistage.get_pauseWindow().setVisible(true);
 	}
@@ -136,14 +137,14 @@ public class UIStageController extends ClickListener {
 	/**
 	 * When the player has selected a tile with a tower on it, call this method
 	 **/
-	public void setTowerSelectionInfo(String towerName, double sellPrice, double upgradePrice, double fireRate, double damage,
-			double range, String special) {
+	public void setTowerSelectionInfo(String towerName, double sellPrice, double upgradePrice, double fireRate,
+			double damage, double range, String special) {
 		uistage.getTowerSelectName().setText(towerName);
-		uistage.getTowerSelectSellPrice().setText(String.valueOf((int)sellPrice));
-		uistage.getTowerSelectUpgradePrice().setText(String.valueOf((int)upgradePrice));
-		uistage.getTowerSelectFireRate().setText(String.format("%.1f",fireRate));
-		uistage.getTowerSelectDamage().setText(String.valueOf((int)damage));
-		uistage.getTowerSelectRange().setText(String.valueOf((int)range));
+		uistage.getTowerSelectSellPrice().setText(String.valueOf((int) sellPrice));
+		uistage.getTowerSelectUpgradePrice().setText(String.valueOf((int) upgradePrice));
+		uistage.getTowerSelectFireRate().setText(String.format("%.1f", fireRate));
+		uistage.getTowerSelectDamage().setText(String.valueOf((int) damage));
+		uistage.getTowerSelectRange().setText(String.valueOf((int) range));
 		uistage.getTowerSelectSpecial().setText(special);
 		showTowerSelectionPanel();
 	}
@@ -160,23 +161,29 @@ public class UIStageController extends ClickListener {
 		uistage.get_next_enemy_value().setText(model.getNextWave());
 	}
 
-    public boolean isOverUpgradeBtn() {
-        return uistage.isOverUpgradeButton();
-    }
+	public boolean isOverUpgradeBtn() {
+		return uistage.isOverUpgradeButton();
+	}
 
-    public void updateUpgradeInfo() {
-        if (isOverUpgradeBtn()){
-            showUpgradeInfo();
-            if (model.isDamageGreenText()) uistage.getTowerSelectDamage().setColor(uistage.getGreen());
-            else uistage.getTowerSelectDamage().setColor(Color.WHITE);
-            if (model.isIsfireRateGreenText()) uistage.getTowerSelectFireRate().setColor(uistage.getGreen());
-            else uistage.getTowerSelectFireRate().setColor(Color.WHITE);
-            if (model.isRangeGreenText()) uistage.getTowerSelectRange().setColor(uistage.getGreen());
-            else uistage.getTowerSelectRange().setColor(Color.WHITE);
-        }else {
-            uistage.getTowerSelectRange().setColor(Color.WHITE);
-            uistage.getTowerSelectFireRate().setColor(Color.WHITE);
-            uistage.getTowerSelectDamage().setColor(Color.WHITE);
-        }
-    }
+	public void updateUpgradeInfo() {
+		if (isOverUpgradeBtn()) {
+			showUpgradeInfo();
+			if (model.isDamageGreenText())
+				uistage.getTowerSelectDamage().setColor(uistage.getGreen());
+			else
+				uistage.getTowerSelectDamage().setColor(Color.WHITE);
+			if (model.isIsfireRateGreenText())
+				uistage.getTowerSelectFireRate().setColor(uistage.getGreen());
+			else
+				uistage.getTowerSelectFireRate().setColor(Color.WHITE);
+			if (model.isRangeGreenText())
+				uistage.getTowerSelectRange().setColor(uistage.getGreen());
+			else
+				uistage.getTowerSelectRange().setColor(Color.WHITE);
+		} else {
+			uistage.getTowerSelectRange().setColor(Color.WHITE);
+			uistage.getTowerSelectFireRate().setColor(Color.WHITE);
+			uistage.getTowerSelectDamage().setColor(Color.WHITE);
+		}
+	}
 }
