@@ -13,7 +13,6 @@ import com.mygdx.game.entites.entitiycomponents.MoneyComponent;
 import com.mygdx.game.entites.entitiycomponents.PositionComponent;
 import com.mygdx.game.entites.entitiycomponents.tower.DamageComponent;
 import com.mygdx.game.entites.entitiycomponents.tower.FireRateComponent;
-import com.mygdx.game.entites.entitiycomponents.tower.RangeComponent;
 import com.mygdx.game.entites.entitiycomponents.tower.TowerStatComponent;
 import com.mygdx.game.entites.input.InputHandler;
 import com.mygdx.game.managers.GameStateManager;
@@ -32,14 +31,14 @@ public class EntityModel extends InputAdapter {
 	private Entity _selectedTower;
 
 	// upgrade info
-    private double upgradeRange = 0;
-    private double upgradeDmg = 0;
-    private double upgradeFireRate = 0;
-    private boolean isRangeGreenText;
-    private boolean isDamageGreenText;
-    private boolean isfireRateGreenText;
+	private double upgradeRange = 0;
+	private double upgradeDmg = 0;
+	private double upgradeFireRate = 0;
+	private boolean isRangeGreenText;
+	private boolean isDamageGreenText;
+	private boolean isfireRateGreenText;
 
-    public EntityModel(WaveTimeManager waveMngr, EntityFactory factory, GameStateManager gsm,
+	public EntityModel(WaveTimeManager waveMngr, EntityFactory factory, GameStateManager gsm,
 			OrthographicCamera gameCamera, Engine ashleyEngine) {
 
 		this.waveMngr = waveMngr;
@@ -63,106 +62,107 @@ public class EntityModel extends InputAdapter {
 
 	}
 
-	public void setSelectedTower(Entity entity){
-        _selectedTower = entity;
+	public void setSelectedTower(Entity entity) {
+		_selectedTower = entity;
 	}
 
-	public Entity getSelectedTower(){
-	 return _selectedTower;
-    }
+	public Entity getSelectedTower() {
+		return _selectedTower;
+	}
 
 	public String getNextWave() {
 		return waveMngr.getEnemyName() != null ? waveMngr.getEnemyName().toString() : "";
 	}
 
-    public void sellSelectedTower() {
-	    if (_selectedTower != null){
-            Vector2 pos = _selectedTower.getComponent(PositionComponent.class).position.cpy();
-            Tile tile = LevelManager.getTile((int) pos.x >> 5, (int) pos.y >> 5);
-            if (tile != null) {
-                tile.setEntity(null);
-                tile.setType(TileType.FLOOR);
-            }
-            double sellValue = _selectedTower.getComponent(TowerStatComponent.class)._sellValue;
-            _factory.createCoinEntity(pos.x, pos.y, (int) sellValue);
-            _selectedTower.removeAll();
-            _ashleyEngine.removeEntity(_selectedTower);
-            setSelectedTower(null);
-        }
-    }
+	public void sellSelectedTower() {
+		if (_selectedTower != null) {
+			Vector2 pos = _selectedTower.getComponent(PositionComponent.class).position.cpy();
+			Tile tile = LevelManager.getTile((int) pos.x >> 5, (int) pos.y >> 5);
+			if (tile != null) {
+				tile.setEntity(null);
+				tile.setType(TileType.FLOOR);
+			}
+			double sellValue = _selectedTower.getComponent(TowerStatComponent.class)._sellValue;
+			_factory.createCoinEntity(pos.x, pos.y, (int) sellValue);
+			_selectedTower.removeAll();
+			_ashleyEngine.removeEntity(_selectedTower);
+			setSelectedTower(null);
+		}
+	}
 
-    public void upgradeSelectedTower() {
-        if (_selectedTower != null){
+	public void upgradeSelectedTower() {
+		if (_selectedTower != null) {
 
-            DamageComponent dmgComp = _selectedTower.getComponent(DamageComponent.class);
-            FireRateComponent fireRateComp = _selectedTower.getComponent(FireRateComponent.class);
-            RangeComponent rangeComp = _selectedTower.getComponent(RangeComponent.class);
-            TowerStatComponent stats = _selectedTower.getComponent(TowerStatComponent.class);
+			DamageComponent dmgComp = _selectedTower.getComponent(DamageComponent.class);
+			FireRateComponent fireRateComp = _selectedTower.getComponent(FireRateComponent.class);
+			// RangeComponent rangeComp =
+			// _selectedTower.getComponent(RangeComponent.class);
+			TowerStatComponent stats = _selectedTower.getComponent(TowerStatComponent.class);
 
-            int playerMoney = _factory.getPlayer().getComponent(MoneyComponent.class).money;
-            int upgradePrice = (int)stats._upgradePrice;
-            TowerType towerType = stats._towerType;
+			int playerMoney = _factory.getPlayer().getComponent(MoneyComponent.class).money;
+			int upgradePrice = (int) stats._upgradePrice;
+			TowerType towerType = stats._towerType;
 
-            if (playerMoney >= upgradePrice){
-                switch (towerType){
-                    case BASIC_LASER_TURRET:
-                        fireRateComp._fireRate += fireRateComp.percentageIncrease * stats._towerLevel;
-                        dmgComp.setDamage(dmgComp.getDamage() + dmgComp.dmgIncrease * stats._towerLevel);
-                        break;
-                    default:
-                        return;
-                }
-                _factory.getPlayer().getComponent(MoneyComponent.class).money -= upgradePrice;
-                _selectedTower.getComponent(TowerStatComponent.class).upgrade();
-            }
-        }
-    }
+			if (playerMoney >= upgradePrice) {
+				switch (towerType) {
+				case BASIC_LASER_TURRET:
+					fireRateComp._fireRate += fireRateComp.percentageIncrease * stats._towerLevel;
+					dmgComp.setDamage(dmgComp.getDamage() + dmgComp.dmgIncrease * stats._towerLevel);
+					break;
+				default:
+					return;
+				}
+				_factory.getPlayer().getComponent(MoneyComponent.class).money -= upgradePrice;
+				_selectedTower.getComponent(TowerStatComponent.class).upgrade();
+			}
+		}
+	}
 
-    public double getUpgradeRange() {
-        return upgradeRange;
-    }
+	public double getUpgradeRange() {
+		return upgradeRange;
+	}
 
-    public void setUpgradeRange(double upgradeRange) {
-        this.upgradeRange = upgradeRange;
-    }
+	public void setUpgradeRange(double upgradeRange) {
+		this.upgradeRange = upgradeRange;
+	}
 
-    public double getUpgradeDmg() {
-        return upgradeDmg;
-    }
+	public double getUpgradeDmg() {
+		return upgradeDmg;
+	}
 
-    public void setUpgradeDmg(double upgradeDmg) {
-        this.upgradeDmg = upgradeDmg;
-    }
+	public void setUpgradeDmg(double upgradeDmg) {
+		this.upgradeDmg = upgradeDmg;
+	}
 
-    public double getUpgradeFireRate() {
-        return upgradeFireRate;
-    }
+	public double getUpgradeFireRate() {
+		return upgradeFireRate;
+	}
 
-    public void setUpgradeFireRate(double upgradeFireRate) {
-        this.upgradeFireRate = upgradeFireRate;
-    }
+	public void setUpgradeFireRate(double upgradeFireRate) {
+		this.upgradeFireRate = upgradeFireRate;
+	}
 
-    public void setisfireRateGreenText(boolean isfireRateGreenText) {
-        this.isfireRateGreenText = isfireRateGreenText;
-    }
+	public void setisfireRateGreenText(boolean isfireRateGreenText) {
+		this.isfireRateGreenText = isfireRateGreenText;
+	}
 
-    public boolean isRangeGreenText() {
-        return isRangeGreenText;
-    }
+	public boolean isRangeGreenText() {
+		return isRangeGreenText;
+	}
 
-    public boolean isDamageGreenText() {
-        return isDamageGreenText;
-    }
+	public boolean isDamageGreenText() {
+		return isDamageGreenText;
+	}
 
-    public boolean isIsfireRateGreenText() {
-        return isfireRateGreenText;
-    }
+	public boolean isIsfireRateGreenText() {
+		return isfireRateGreenText;
+	}
 
-    public void setisDamageGreenText(boolean isDamageGreenText) {
-        this.isDamageGreenText = isDamageGreenText;
-    }
+	public void setisDamageGreenText(boolean isDamageGreenText) {
+		this.isDamageGreenText = isDamageGreenText;
+	}
 
-    public void setisRangeGreenText(boolean isRangeGreenText) {
-        this.isRangeGreenText = isRangeGreenText;
-    }
+	public void setisRangeGreenText(boolean isRangeGreenText) {
+		this.isRangeGreenText = isRangeGreenText;
+	}
 }

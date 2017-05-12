@@ -13,6 +13,7 @@ import com.mygdx.game.entites.entitiycomponents.Mappers;
 import com.mygdx.game.entites.entitiycomponents.MouseImageComponent;
 import com.mygdx.game.entites.entitiycomponents.PositionComponent;
 import com.mygdx.game.entites.entitiycomponents.enemy.EnemyComponent;
+import com.mygdx.game.entites.entitiycomponents.tower.RangeComponent;
 
 public class ShootingSystem extends IteratingSystem {
 
@@ -53,6 +54,12 @@ public class ShootingSystem extends IteratingSystem {
 					Gdx.graphics.getDeltaTime() + 0.2f);
 		}
 
+		double range = towerEntity.getComponent(RangeComponent.class).getRange();
+		float distance = towerPos.position.dst(targetPos.position);
+
+		if (distance > range) {
+			return;
+		}
 		getEngine().addEntity(EntityFactory.createProjectileEntity(ProjectileType.LASER, towerEntity, target));
 	}
 }

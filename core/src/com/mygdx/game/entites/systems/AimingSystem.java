@@ -39,7 +39,9 @@ public class AimingSystem extends IntervalIteratingSystem {
 		HashMap<Double, Entity> distanceMap = new HashMap<>();
 		for (Entity enemy : enemies) {
 			Vector2 enemyPosition = enemy.getComponent(PositionComponent.class).position;
-			double distance = compareDistance(towerPosition, enemyPosition);
+			
+			double distance = towerPosition.dst(enemyPosition);
+//			double distance = compareDistance(towerPosition, enemyPosition);
 			distanceMap.put(distance, enemy);
 		}
 		if (distanceMap.isEmpty()) {
