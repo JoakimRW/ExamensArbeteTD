@@ -12,13 +12,12 @@ import com.mygdx.game.entites.entitiycomponents.Families;
 import com.mygdx.game.entites.entitiycomponents.Mappers;
 import com.mygdx.game.entites.entitiycomponents.MouseImageComponent;
 import com.mygdx.game.entites.entitiycomponents.PositionComponent;
+import com.mygdx.game.entites.entitiycomponents.TimeComponent;
 import com.mygdx.game.entites.entitiycomponents.enemy.EnemyComponent;
 import com.mygdx.game.entites.entitiycomponents.tower.FireRateComponent;
 import com.mygdx.game.entites.entitiycomponents.tower.RangeComponent;
 
 public class ShootingSystem extends IteratingSystem {
-	float counter = 0;
-
 	public ShootingSystem() {
 		super(Families.TOWER);
 	}
@@ -47,6 +46,7 @@ public class ShootingSystem extends IteratingSystem {
 		AngleComponent angle = Mappers.ANGLE_M.get(towerEntity);
 		PositionComponent towerPos = Mappers.POSITION_M.get(towerEntity);
 		PositionComponent targetPos = Mappers.POSITION_M.get(target);
+		TimeComponent time = Mappers.TIME_M.get(towerEntity);
 		if (targetPos != null) {
 			double difX = targetPos.position.x - towerPos.position.x;
 			double difY = targetPos.position.y - towerPos.position.y;
@@ -56,17 +56,17 @@ public class ShootingSystem extends IteratingSystem {
 					Gdx.graphics.getDeltaTime() + 0.2f);
 		}
 
-		double range = towerEntity.getComponent(RangeComponent.class).getRange();
+		double range = Mappers.RANGE_M.get(towerEntity).getRange();
 		float distance = towerPos.position.dst(targetPos.position);
 
 		if (distance > range) {
 			return;
 		}
 		
-		counter += deltaTime;
-		if (counter > 1 / towerEntity.getComponent(FireRateComponent.class)._fireRate) {
+		time.time += deltaTime;
+		if (time.time > 1 / towerEntity.getComponent(FireRateComponent.class)._fireRate) {
 			getEngine().addEntity(EntityFactory.createProjectileEntity(ProjectileType.LASER, towerEntity, target));
-			counter = 0;
+			time.time = 0;
 		}
 	}
 }

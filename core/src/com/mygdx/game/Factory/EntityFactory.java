@@ -119,7 +119,7 @@ public class EntityFactory {
 		TowerStatComponent towerStatComponent = new TowerStatComponent(25, "Laser Tower", TowerType.BASIC_LASER_TURRET);
 		SpecialTowerComponent specialTowerComponent = new SpecialTowerComponent();
 		TargetComponent targetComponent = new TargetComponent();
-
+		TimeComponent timeComponent = new TimeComponent(0);
 		skeletonComponent.skeleton.setPosition(x, y);
 		skeletonComponent.animationState.setData(Assets.laserTowerAnimationState.getData());
 		entity.add(skeletonComponent)//
@@ -134,7 +134,8 @@ public class EntityFactory {
 				.add(new DamageComponent(20d))//
 				.add(towerComponent)//
 				.add(towerStatComponent)//
-				.add(targetComponent);
+				.add(targetComponent)
+				.add(timeComponent);
 		System.out.println("Laser tower Created");
 		return entity;
 	}
