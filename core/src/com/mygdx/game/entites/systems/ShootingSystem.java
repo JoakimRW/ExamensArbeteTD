@@ -13,12 +13,14 @@ import com.mygdx.game.entites.entitiycomponents.Mappers;
 import com.mygdx.game.entites.entitiycomponents.MouseImageComponent;
 import com.mygdx.game.entites.entitiycomponents.PositionComponent;
 import com.mygdx.game.entites.entitiycomponents.enemy.EnemyComponent;
+import com.mygdx.game.entites.entitiycomponents.tower.FireRateComponent;
 import com.mygdx.game.entites.entitiycomponents.tower.RangeComponent;
 
 public class ShootingSystem extends IteratingSystem {
+	float counter = 0;
 
 	public ShootingSystem() {
-		super(Families.TOWER, 1);
+		super(Families.TOWER);
 	}
 
 	@Override
@@ -28,10 +30,10 @@ public class ShootingSystem extends IteratingSystem {
 
 	@Override
 	protected void processEntity(Entity entity, float deltaTime) {
-		fireAtNearestEnemy(entity);
+		fireAtNearestEnemy(entity,deltaTime);
 	}
 
-	private void fireAtNearestEnemy(Entity towerEntity) {
+	private void fireAtNearestEnemy(Entity towerEntity, float deltaTime) {
 
 		if (towerEntity.getComponent(MouseImageComponent.class) != null) {
 			return;
@@ -60,6 +62,11 @@ public class ShootingSystem extends IteratingSystem {
 		if (distance > range) {
 			return;
 		}
-		getEngine().addEntity(EntityFactory.createProjectileEntity(ProjectileType.LASER, towerEntity, target));
+		
+		counter += deltaTime;
+		if (counter > towerEntity.getComponent(FireRateComponent.class)._fireRate) {
+			getEngine().addEntity(EntityFactory.createProjectileEntity(ProjectileType.LASER, towerEntity, target));
+			counter = 0;
+		}
 	}
 }

@@ -17,6 +17,7 @@ import com.mygdx.game.entites.entitiycomponents.MouseImageComponent;
 import com.mygdx.game.entites.entitiycomponents.OffsetComponent;
 import com.mygdx.game.entites.entitiycomponents.PositionComponent;
 import com.mygdx.game.entites.entitiycomponents.projectile.DestinationComponent;
+import com.mygdx.game.entites.entitiycomponents.tower.TargetComponent;
 import com.mygdx.game.entites.systems.TowerPlacementSystem;
 import com.mygdx.game.managers.GameStateManager;
 import com.mygdx.game.managers.LevelManager;
@@ -91,12 +92,12 @@ public class InputHandler implements InputProcessor {
 
 	public static void debug() {
 		if (Gdx.input.isKeyJustPressed(Input.Keys.B)) {
-			ImmutableArray<Entity> projectiles = getAshleyEngine().getEntitiesFor(Families.PROJECTILE);
+			ImmutableArray<Entity> projectiles = getAshleyEngine().getEntitiesFor(Families.TOWER);
 			if (projectiles == null) {
 				return;
 			}
 			for (Entity projectile : projectiles) {
-				System.out.println(projectile.getComponent(DestinationComponent.class));
+				System.out.println(projectile.getComponent(TargetComponent.class));
 
 			}
 		}

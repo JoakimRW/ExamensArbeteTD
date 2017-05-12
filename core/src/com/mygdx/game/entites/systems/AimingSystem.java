@@ -4,29 +4,29 @@ import java.util.Collections;
 import java.util.HashMap;
 
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.ashley.systems.IntervalIteratingSystem;
+import com.badlogic.ashley.core.EntityListener;
+import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entites.entitiycomponents.Families;
+import com.mygdx.game.entites.entitiycomponents.Mappers;
 import com.mygdx.game.entites.entitiycomponents.PositionComponent;
 import com.mygdx.game.entites.entitiycomponents.tower.RangeComponent;
 import com.mygdx.game.entites.entitiycomponents.tower.TargetComponent;
 
-public class AimingSystem extends IntervalIteratingSystem {
+public class AimingSystem extends IteratingSystem {
 
 	public AimingSystem() {
-		super(Families.TOWER, 0.1f);
+		super(Families.TOWER);
 	}
 
 	@Override
-	protected void processEntity(Entity entity) {
-
+	protected void processEntity(Entity entity, float deltaTime) {
 		Entity nearestEnemy = findNearestEnemy(entity);
-		if (nearestEnemy == null) {
+		if (nearestEnemy == null || outOfRange(entity, nearestEnemy)) {
 			return;
 		}
-		entity.getComponent(TargetComponent.class).setTarget(nearestEnemy);
-
+		setNewTarget(entity, nearestEnemy);
 	}
 
 	private Entity findNearestEnemy(Entity towerEntity) {
@@ -39,9 +39,8 @@ public class AimingSystem extends IntervalIteratingSystem {
 		HashMap<Double, Entity> distanceMap = new HashMap<>();
 		for (Entity enemy : enemies) {
 			Vector2 enemyPosition = enemy.getComponent(PositionComponent.class).position;
-			
+
 			double distance = towerPosition.dst(enemyPosition);
-//			double distance = compareDistance(towerPosition, enemyPosition);
 			distanceMap.put(distance, enemy);
 		}
 		if (distanceMap.isEmpty()) {
@@ -54,19 +53,21 @@ public class AimingSystem extends IntervalIteratingSystem {
 			return null;
 		}
 		Double range = component.getRange();
-		if (range > minKey) {
+		if (range < minKey) {
 			return null;
 		}
 		return distanceMap.get(minKey);
 
 	}
 
-	private static double compareDistance(Vector2 towerPosition, Vector2 enemyPosition) {
-
-		float dx = towerPosition.x - enemyPosition.x;
-		float dy = towerPosition.y - enemyPosition.y;
-		return Math.sqrt(dx * dx + dy * dy);
-
+	private static boolean outOfRange(Entity tower, Entity target) {
+		return Mappers.POSITION_M.get(tower).position.dst(Mappers.POSITION_M.get(target).position) > Mappers.RANGE_M
+				.get(tower).getRange();
 	}
+
+	private static void setNewTarget(Entity tower, Entity target) {
+		tower.getComponent(TargetComponent.class).setTarget(target);
+	}
+
 
 }

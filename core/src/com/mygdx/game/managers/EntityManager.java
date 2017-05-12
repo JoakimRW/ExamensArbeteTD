@@ -48,7 +48,7 @@ public class EntityManager {
 		TowerPlacementSystem towerSystem = new TowerPlacementSystem(batch);
 		ShootingSystem shootingSystem = new ShootingSystem();
 		ProjectileMovementSystem projectileMovementSystem = new ProjectileMovementSystem();
-		AimingSystem targetFinderSystem = new AimingSystem();
+		AimingSystem aimingSystem = new AimingSystem();
 		RenderSystem renderSystem = new RenderSystem(batch);
 		HealthSystem healthSystem = new HealthSystem(batch, _entityFactory);
 		PlayerInputSystem playerInputSys = new PlayerInputSystem();
@@ -66,10 +66,9 @@ public class EntityManager {
 		ashleyEngine.addSystem(coinSystem);
 		ashleyEngine.addSystem(shootingSystem);
 		ashleyEngine.addSystem(projectileMovementSystem);
-		ashleyEngine.addSystem(targetFinderSystem);
+		ashleyEngine.addSystem(aimingSystem);
 
 		ashleyEngine.addEntityListener(Families.ENEMY, projectileMovementSystem);
-
 	}
 
 	public void update(float deltaTime) {

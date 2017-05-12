@@ -13,5 +13,10 @@ public class TargetComponent implements Component {
 	public void setTarget(Entity target) {
 		this.target = target;
 	}
+	
+	@Override
+	public String toString() {
+		return "target = " +target;
+	}
 
 }

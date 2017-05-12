@@ -114,7 +114,7 @@ public class EntityFactory {
 		AngleComponent angleComponent = new AngleComponent();
 		MouseImageComponent mouseImageComponent = new MouseImageComponent();
 		MousePositionComponent mousePositionComponent = new MousePositionComponent();
-		RangeComponent rangeComponent = new RangeComponent(75d); // TODO
+		RangeComponent rangeComponent = new RangeComponent(100d); // TODO
 		TowerComponent towerComponent = new TowerComponent();
 		TowerStatComponent towerStatComponent = new TowerStatComponent(25, "Laser Tower", TowerType.BASIC_LASER_TURRET);
 		SpecialTowerComponent specialTowerComponent = new SpecialTowerComponent();
@@ -125,7 +125,8 @@ public class EntityFactory {
 		entity.add(skeletonComponent)//
 				.add(mouseImageComponent) //
 				.add(mousePositionComponent)//
-				.add(positionComponent).add(new FireRateComponent(1d))//
+				.add(positionComponent)//
+				.add(new FireRateComponent(0.05d))//
 				.add(positionComponent)//
 				.add(angleComponent).add(renderableComponent)//
 				.add(rangeComponent)//

@@ -85,8 +85,6 @@ public class ProjectileMovementSystem extends IteratingSystem implements EntityL
 
 	@Override
 	public void entityRemoved(Entity entity) {
-
-		System.out.println("Enemy removed , removing remaining projectiles");
 		for (Entity projectile : getEntities()) {
 			if (projectile.getComponent(DestinationComponent.class).getDestinationEntity() == entity) {
 				getEngine().removeEntity(projectile);
