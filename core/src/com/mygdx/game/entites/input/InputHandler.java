@@ -38,8 +38,12 @@ public class InputHandler implements InputProcessor {
 	private static Engine _ashleyEngine;
 	private Family _towerFamily = Family.all(MouseImageComponent.class).get();;
 
-	public InputHandler(OrthographicCamera gameCamera) {
+	public InputHandler(OrthographicCamera gameCamera, EntityFactory entityFactory, GameStateManager gameStateManager,
+			Engine engine) {
 		_gameCamera = gameCamera;
+		_ef = entityFactory;
+		_gsm = gameStateManager;
+		_ashleyEngine = engine;
 	}
 
 	public void registerInputHandlerSystem(InputHandlerIF inputHandler) {
@@ -268,11 +272,7 @@ public class InputHandler implements InputProcessor {
 		_ef = ef;
 	}
 
-	public static void setTowerInfoForPlacement(boolean isPlacementMode, GameStateManager gsm, EntityFactory ef,
-			TowerType towerType, Engine ashleyEngine) {
-		setAshleyEngine(ashleyEngine);
-		setEf(ef);
-		setGsm(gsm);
+	public static void setTowerInfoForPlacement(boolean isPlacementMode, TowerType towerType) {
 		setPlacementMode(isPlacementMode);
 		setTowerType(towerType);
 	}

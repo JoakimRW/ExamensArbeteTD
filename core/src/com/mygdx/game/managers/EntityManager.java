@@ -33,15 +33,15 @@ public class EntityManager {
 	private InputHandler inputhandler;
 
 	public EntityManager(Engine ashleyEngine, SpriteBatch batch, OrthographicCamera gameCamera,
-			InputHandler inputhandler, UiView _uiView, GameStateManager gsm) {
+			InputHandler inputhandler, UiView _uiView, GameStateManager gsm,EntityFactory entityFactory) {
 		this._ashleyEngine = ashleyEngine;
 		this.inputhandler = inputhandler;
 
-		_entityFactory = new EntityFactory(ashleyEngine);
-		_waveManager = new WaveTimeManager(_entityFactory);
-		EntityModel _entityModel = new EntityModel(_waveManager, _entityFactory, gsm, gameCamera, ashleyEngine);
+		setEntityFactory(entityFactory);
+		_waveManager = new WaveTimeManager(getEntityFactory());
+		EntityModel _entityModel = new EntityModel(_waveManager, getEntityFactory(), gsm, gameCamera, ashleyEngine);
 		uiController = new UIStageController(_uiView, _entityModel, gsm);
-		_entityFactory.createPlayerEntity();
+		getEntityFactory().createPlayerEntity();
 
 		MoveToSystem moveToSystem = new MoveToSystem(gameCamera);
 		coinSystem = new CoinSystem(gameCamera);
@@ -51,11 +51,11 @@ public class EntityManager {
 		ProjectileMovementSystem projectileMovementSystem = new ProjectileMovementSystem();
 		AimingSystem aimingSystem = new AimingSystem();
 		RenderSystem renderSystem = new RenderSystem(batch);
-		HealthSystem healthSystem = new HealthSystem(batch, _entityFactory);
+		HealthSystem healthSystem = new HealthSystem(batch, getEntityFactory());
 		PlayerInputSystem playerInputSys = new PlayerInputSystem();
 		inputhandler.registerInputHandlerSystem(playerInputSys);
 		CameraMovementSystem camSys = new CameraMovementSystem(gameCamera);
-		TowerSelectionSystem towerSelectSystem = new TowerSelectionSystem(_entityFactory, gameCamera);
+		TowerSelectionSystem towerSelectSystem = new TowerSelectionSystem(getEntityFactory(), gameCamera);
 		ashleyEngine.addSystem(statSystem);
 		ashleyEngine.addSystem(towerSelectSystem);
 		ashleyEngine.addSystem(moveToSystem);
@@ -86,7 +86,15 @@ public class EntityManager {
 
 	public void dispose() {
 		coinSystem.dispose();
-		_entityFactory = null;
+		setEntityFactory(null);
 		_waveManager = null;
+	}
+
+	public EntityFactory getEntityFactory() {
+		return _entityFactory;
+	}
+
+	public void setEntityFactory(EntityFactory entityFactory) {
+		_entityFactory = entityFactory;
 	}
 }

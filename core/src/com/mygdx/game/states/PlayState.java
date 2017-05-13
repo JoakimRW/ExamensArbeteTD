@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.mygdx.game.Factory.EntityFactory;
 import com.mygdx.game.entites.input.InputHandler;
 import com.mygdx.game.managers.EntityManager;
 import com.mygdx.game.managers.GameStateManager;
@@ -29,11 +30,12 @@ public class PlayState extends GameState {
 		LevelManager.loadLevel("maps/simple-map.tmx");
 		_renderer = new OrthogonalTiledMapRenderer(LevelManager.tiledMap);
 		_gameCamera = new OrthographicCamera();
-		InputHandler inputhandler = new InputHandler(_gameCamera);
+		EntityFactory entityFactory = new EntityFactory(ashleyEngine);
+		InputHandler inputhandler = new InputHandler(_gameCamera,entityFactory,gsm,ashleyEngine);
 		// behöver deklarera uiview här för att registrera inputprocessor
 		_uiView = new UiView();
 		_uiView.show();
-		_entityManager = new EntityManager(ashleyEngine, _batch, _gameCamera, inputhandler, _uiView, gsm);
+		_entityManager = new EntityManager(ashleyEngine, _batch, _gameCamera, inputhandler, _uiView, gsm, entityFactory);
 
 		InputMultiplexer multi = new InputMultiplexer();
 
