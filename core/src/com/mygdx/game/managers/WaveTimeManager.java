@@ -21,6 +21,8 @@ public class WaveTimeManager {
 	private float time = 0;
 	private float timeMs = 0;
 	private double totalTime = 0;
+	private final double baseHp = 100;
+	private double currentEnemyHp = 0;
 	private EntityFactory entityFactory;
 
 	public EnemyName getEnemyName() {
@@ -48,11 +50,12 @@ public class WaveTimeManager {
 			if(CURRENT_WAVE_TIME <= 0){
 				final int rand = new Random().nextInt(EnemyName.values().length);
 				enemyName = EnemyName.values()[rand];
-                System.out.println(enemyName);
+                WAVE++;
+                double health = currentEnemyHp * 1.15; // make modular
+                if(WaveTimeManager.WAVE == 1) health = baseHp;
+                currentEnemyHp = health;
                 spawnEnemies( enemyName , 500 , 10);
-				WAVE++;
-				int timeBetweenWave = 15;
-				CURRENT_WAVE_TIME = timeBetweenWave;
+				CURRENT_WAVE_TIME = 15;
 			}
 		}
 	}
@@ -78,7 +81,8 @@ public class WaveTimeManager {
 		@Override
 		public void run() {
 			if (!(WaveTimeManager.amountSpawned >= amount)){
-                entityFactory.createEnemyEntity(enemyName);
+                System.out.println("HEALTH : " + currentEnemyHp);
+                entityFactory.createEnemyEntity(enemyName , currentEnemyHp);
 				WaveTimeManager.amountSpawned ++;
 			} else {
 			    WaveTimeManager.amountSpawned = 0;

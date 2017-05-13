@@ -42,13 +42,13 @@ public class HealthSystem extends IteratingSystem {
 		final float healthBarHeight = Assets.enemyRedHealthbarBG.getHeight();
 		final float healthBarWidth = Assets.enemyRedHealthbarBG.getWidth();
 		// getting the scale ratio
-		final float ratio = healthBarWidth / healthComp.maxHealth;
+		final double ratio = healthBarWidth / healthComp.maxHealth;
 		Sprite spriteBg = Assets.enemyRedHealthbarBG;
 		Sprite sprite = Assets.enemyGreenHealthbarBG;
 		// todo center hp bar
 		sprite.setPosition(pos.position.x, pos.position.y);
 		spriteBg.setPosition(pos.position.x, pos.position.y);
-		sprite.setSize(ratio * healthComp.health, healthBarHeight);
+		sprite.setSize((float) (ratio * healthComp.health), healthBarHeight);
 		// 100 %
 		if (healthComp.health <= healthComp.maxHealth)
 			sprite.setColor(0, 0.75f, 0, 1f);

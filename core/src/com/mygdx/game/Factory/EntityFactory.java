@@ -55,15 +55,15 @@ public class EntityFactory {
 		_entityMapper = new EntityMapper();
 	}
 
-	public void createEnemyEntity(EnemyName enemy) {
+	public void createEnemyEntity(EnemyName enemy , double health) {
 		Entity entity = null;
 		switch (enemy) {
 		case BIRD:
-			entity = createBirdEntity();
+			entity = createBirdEntity( health);
 			break;
 
 		case BLOODWORM:
-			entity = createBloodWormEntity();
+			entity = createBloodWormEntity( health);
 			break;
 		}
 		if (entity != null) {
@@ -155,7 +155,7 @@ public class EntityFactory {
 		return entity;
 	}
 
-	private Entity createBloodWormEntity() {
+	private Entity createBloodWormEntity(double health) {
 		// Components
 		Entity entity = new Entity();
 		OffsetComponent ocomp = new OffsetComponent(16, 16);
@@ -163,7 +163,7 @@ public class EntityFactory {
 		SkeletonComponent skeletonComp = new SkeletonComponent(Assets.bloodWormSkeleton);
 		PositionComponent positionComponent = new PositionComponent(
 				new Vector2(_spawnX * 32 - ocomp.offsetX, _spawnY * 32 - ocomp.offsetY));
-		HealthComponent healthComponent = new HealthComponent(100);
+		HealthComponent healthComponent = new HealthComponent(health);
 		VelocityComponent velocityComponent = new VelocityComponent(75f);
 		DirectionComponent directionComponent = new DirectionComponent();
 		AngleComponent angleComponent = new AngleComponent();
@@ -180,13 +180,13 @@ public class EntityFactory {
 		return entity;
 	}
 
-	private Entity createBirdEntity() {
+	private Entity createBirdEntity(double health) {
 		Entity entity = new Entity();
 		OffsetComponent ocomp = new OffsetComponent(16, 0);
 		PathComponent pComp = new PathComponent(true, true);
 		SkeletonComponent skeletonComp = new SkeletonComponent(Assets.birdSkeleton);
 		PositionComponent positionComponent = new PositionComponent(new Vector2(_spawnX * 32, _spawnY * 32));
-		HealthComponent healthComponent = new HealthComponent(100);
+		HealthComponent healthComponent = new HealthComponent(health);
 		VelocityComponent velocityComponent = new VelocityComponent(100f);
 		DirectionComponent directionComponent = new DirectionComponent();
 		AngleComponent angleComponent = new AngleComponent();
