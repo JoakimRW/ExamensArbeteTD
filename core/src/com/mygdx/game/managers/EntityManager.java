@@ -30,7 +30,7 @@ public class EntityManager {
 	private UIStageController uiController;
 	private Engine _ashleyEngine;
 	private WaveTimeManager _waveManager;
-	private InputHandler inputhandler;
+	private InputHandler inputhandler;//
 
 	public EntityManager(Engine ashleyEngine, SpriteBatch batch, OrthographicCamera gameCamera,
 			InputHandler inputhandler, UiView _uiView, GameStateManager gsm,EntityFactory entityFactory) {
