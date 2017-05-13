@@ -81,7 +81,6 @@ public class WaveTimeManager {
 		@Override
 		public void run() {
 			if (!(WaveTimeManager.amountSpawned >= amount)){
-                System.out.println("HEALTH : " + currentEnemyHp);
                 entityFactory.createEnemyEntity(enemyName , currentEnemyHp);
 				WaveTimeManager.amountSpawned ++;
 			} else {
