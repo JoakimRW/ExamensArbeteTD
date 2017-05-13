@@ -34,7 +34,6 @@ public class MoveToSystem extends IteratingSystem {
 	@Override
 	protected void processEntity(Entity entity, float deltaTime) {
 		PositionComponent posComp = Mappers.POSITION_M.get(entity);
-		DirectionComponent dirComp = Mappers.DIRECTION_M.get(entity);
 		PathComponent pathComp = Mappers.PATH_M.get(entity);
 		AngleComponent angleComp = Mappers.ANGLE_M.get(entity);
 		VelocityComponent velocityComp = Mappers.VELCOITY_M.get(entity);
@@ -56,8 +55,8 @@ public class MoveToSystem extends IteratingSystem {
 
 		if (pathComp.path != null) {
 			float distance = start.cpy().scl(32).dst(end.cpy().scl(32));
-			if (distance > 32) {
-				moveTo(posComp, dirComp, angleComp, deltaTime, pathComp, velocityComp);
+			if (distance > 25) {
+				moveTo(posComp, angleComp, deltaTime, pathComp, velocityComp);
 			} else {
 				entity.removeAll();
 				getEngine().removeEntity(entity);
@@ -68,7 +67,7 @@ public class MoveToSystem extends IteratingSystem {
 
 	}
 
-	private static void moveTo(PositionComponent pos, DirectionComponent dir, AngleComponent angleComp, float deltaTime,
+	private static void moveTo(PositionComponent pos , AngleComponent angleComp, float deltaTime,
 			PathComponent pathComp, VelocityComponent vel) {
 		// a xy point in the path array that the entity will go to
 		float pointX = pathComp.path.get(pathComp.path.size() - 1).getCordinates().x * 32;
@@ -86,27 +85,11 @@ public class MoveToSystem extends IteratingSystem {
 		float angleX = (float) Math.cos(Math.toRadians(angleComp.angle));
 		float angleY = (float) Math.sin(Math.toRadians(angleComp.angle));
 
-		dir.direction.x = angleX;
-		dir.direction.y = angleY;
-
-		if (dir.direction.len() > 0)
-			dir.direction = dir.direction.nor();
-
-		vel.velocity.x = dir.direction.x * vel.maxSpeed;
-		vel.velocity.y = dir.direction.y * vel.maxSpeed;
+		vel.velocity.x = angleX * vel.maxSpeed;
+		vel.velocity.y = angleY * vel.maxSpeed;
 
 		pos.position.x += vel.velocity.x * deltaTime;
 		pos.position.y += vel.velocity.y * deltaTime;
 
 	}
-	/** linear interpolation **/
-	private static float approach(float goal, float current, float deltaTime) {
-		float diffrence = goal - current;
-		if (diffrence > deltaTime)
-			return current + deltaTime;
-		if (diffrence < deltaTime)
-			return current - deltaTime;
-		return goal;
-	}
-
 }

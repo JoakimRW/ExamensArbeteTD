@@ -1,6 +1,5 @@
 package com.mygdx.game.entites.systems;
 
-import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
@@ -9,6 +8,7 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.entites.entitiycomponents.*;
+import com.mygdx.game.entites.entitiycomponents.player.PlayerComponent;
 import com.mygdx.game.managers.LevelManager;
 
 public class CameraMovementSystem extends IteratingSystem {
@@ -16,12 +16,7 @@ public class CameraMovementSystem extends IteratingSystem {
     private Camera _camera;
 
     public CameraMovementSystem(OrthographicCamera newCam) {
-        super(Family.one(DirectionComponent.class).exclude(
-                SkeletonComponent.class
-                , RenderableComponent.class
-                , PathComponent.class
-                , TextureComponent.class
-                , RenderableComponent.class).get());
+        super(Family.one(PlayerComponent.class).get());
         _camera = newCam;
     }
 
@@ -33,8 +28,8 @@ public class CameraMovementSystem extends IteratingSystem {
 
     private void moveCamera(DirectionComponent d) {
         final float cameraSpeed = 10f;
-        _camera.viewportWidth = Gdx.graphics.getWidth() / 2.3f;
-        _camera.viewportHeight = Gdx.graphics.getHeight() / 2.3f;
+        _camera.viewportWidth = Gdx.graphics.getWidth() / 2.4f;
+        _camera.viewportHeight = Gdx.graphics.getHeight() / 2.4f;
         float cameraPosX = _camera.position.x;
         float cameraPosY = _camera.position.y;
         _camera.position.set((int) cameraPosX + d.xAxis * cameraSpeed,

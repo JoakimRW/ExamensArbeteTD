@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entites.entitiycomponents.AngleComponent;
 import com.mygdx.game.entites.entitiycomponents.DirectionComponent;
@@ -17,6 +18,7 @@ import com.mygdx.game.entites.entitiycomponents.PathComponent;
 import com.mygdx.game.entites.entitiycomponents.PositionComponent;
 import com.mygdx.game.entites.entitiycomponents.RenderableComponent;
 import com.mygdx.game.entites.entitiycomponents.SkeletonComponent;
+import com.mygdx.game.entites.entitiycomponents.SpriteComponent;
 import com.mygdx.game.entites.entitiycomponents.TimeComponent;
 import com.mygdx.game.entites.entitiycomponents.VelocityComponent;
 import com.mygdx.game.entites.entitiycomponents.enemy.EnemyComponent;
@@ -82,7 +84,7 @@ public class EntityFactory {
 	public static Entity createProjectileEntity(ProjectileType projectileType, Entity startEntity,
 			Entity targetEntity , double damage) {
 		Entity entity = new Entity();
-		SkeletonComponent skeletonComponent = new SkeletonComponent(Assets.coinSkeleton); // TODO
+		SpriteComponent spriteComponent = new SpriteComponent(new Sprite(Assets.laserSmall));
 		PositionComponent positionComponent = new PositionComponent(
 				startEntity.getComponent(PositionComponent.class).position.cpy());
 		RenderableComponent renderableComponent = new RenderableComponent();
@@ -91,18 +93,19 @@ public class EntityFactory {
 		VelocityComponent velocityComponent = new VelocityComponent(600f); // TODO
 		DamageComponent damageComponent = new DamageComponent(damage); // TODO
 		ProjectileComponent projectileComponent = new ProjectileComponent();
+		OffsetComponent offsetComp = new OffsetComponent(8, 8);
 
-		skeletonComponent.skeleton.setPosition(positionComponent.position.x, positionComponent.position.y);
-		skeletonComponent.animationState.setData(Assets.coinAnimationState.getData());// TODO
+		spriteComponent.sprite.setPosition(positionComponent.position.x, positionComponent.position.y);
 		entity.add(projectileComponent) //
 				.add(destinationComponent) //
 				.add(angleComponent) //
 				.add(renderableComponent)//
 				.add(positionComponent) //
-				.add(skeletonComponent) //
+				.add(spriteComponent) //
 				.add(velocityComponent)//
+				.add(offsetComp)
 				.add(damageComponent);
-
+		Assets.laserTurretFire.play(0.01f);
 		return entity;
 	}
 

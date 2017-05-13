@@ -40,7 +40,9 @@ public class Assets {
     public static BitmapFont font20;
     public static Music laserMillenium;
     public static Sound laserTurretFire;
-
+    // laser textures
+    public static Texture laserSmall;
+    
 
     private static Texture loadTexture(String file){
         return new Texture(Gdx.files.internal(file));
@@ -55,7 +57,9 @@ public class Assets {
         // sounds
         laserTurretFire = Gdx.audio.newSound(Gdx.files.internal("towers/lasertower/fx/bubaproducer__laser-shot-silenced.wav"));
         //laserTurretFire.play(0.5f);
-
+        
+        // laser texture
+        laserSmall = new Texture(Gdx.files.internal("projectiles/lasers/laser-small.png"));
         // bloodworm
         bloodWormSkeleton = loadSkeleton("enemies/bloodworm/skeleton.atlas","enemies/bloodworm/skeleton.json");
         bloodWormAnimationState = new AnimationState(new AnimationStateData(bloodWormSkeleton.getData()));

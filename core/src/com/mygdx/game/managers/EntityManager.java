@@ -18,6 +18,7 @@ import com.mygdx.game.entites.systems.PlayerStatSystem;
 import com.mygdx.game.entites.systems.ProjectileMovementSystem;
 import com.mygdx.game.entites.systems.RenderSystem;
 import com.mygdx.game.entites.systems.ShootingSystem;
+import com.mygdx.game.entites.systems.SpriteRenderSystem;
 import com.mygdx.game.entites.systems.TowerPlacementSystem;
 import com.mygdx.game.entites.systems.TowerSelectionSystem;
 import com.mygdx.game.stages.UiView;
@@ -59,6 +60,7 @@ public class EntityManager {
 		ashleyEngine.addSystem(towerSelectSystem);
 		ashleyEngine.addSystem(moveToSystem);
 		ashleyEngine.addSystem(towerSystem);
+		ashleyEngine.addSystem(new SpriteRenderSystem(batch));
 		ashleyEngine.addSystem(renderSystem);
 		ashleyEngine.addSystem(healthSystem);
 		ashleyEngine.addSystem(playerInputSys);

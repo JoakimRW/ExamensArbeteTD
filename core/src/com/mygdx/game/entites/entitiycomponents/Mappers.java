@@ -5,9 +5,9 @@ import com.mygdx.game.entites.entitiycomponents.enemy.EnemyComponent;
 import com.mygdx.game.entites.entitiycomponents.projectile.DestinationComponent;
 import com.mygdx.game.entites.entitiycomponents.tower.*;
 
-/** call tease mappers to avoid writing them in the systems
+/** call these Mappers to avoid writing them in the systems
  *      to get component of entity do this:
- *     PositionComponent pcomp = ComponentMappers.POSITION_M.get(entity)
+ *     PositionComponent pcomp = ComponentMappers.POSITION_M.get(entity);
  * **/
 public class Mappers {
 
@@ -32,4 +32,6 @@ public class Mappers {
     public static final ComponentMapper<RangeComponent> RANGE_M = ComponentMapper.getFor(RangeComponent.class);
     public static final ComponentMapper<SpecialTowerComponent>  SPECIAL_M = ComponentMapper.getFor(SpecialTowerComponent.class);
 	public static final ComponentMapper<TargetComponent> TARGET_M = ComponentMapper.getFor(TargetComponent.class);
+	public static final ComponentMapper<SpriteComponent> SPRITE_M = ComponentMapper.getFor(SpriteComponent.class);
+	
 }
