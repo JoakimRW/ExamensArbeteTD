@@ -215,7 +215,6 @@ public class InputHandler implements InputProcessor {
 			mouseOverTintTiles();
 			ImmutableArray<Entity> towerEntitys = getAshleyEngine().getEntitiesFor(_towerFamily);
 			Entity first = towerEntitys.first();
-			first.add(new OffsetComponent(0, 0));
 			Vector3 mousePos = _gameCamera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
 			PositionComponent component = first.getComponent(PositionComponent.class);
 			component.position.x = mousePos.x;
