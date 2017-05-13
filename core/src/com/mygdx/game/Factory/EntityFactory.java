@@ -32,6 +32,8 @@ import com.mygdx.game.entites.entitiycomponents.tower.SpecialTowerComponent;
 import com.mygdx.game.entites.entitiycomponents.tower.TargetComponent;
 import com.mygdx.game.entites.entitiycomponents.tower.TowerComponent;
 import com.mygdx.game.entites.entitiycomponents.tower.TowerStatComponent;
+import com.mygdx.game.entites.entityinformation.EntityInformation;
+import com.mygdx.game.entites.entityinformation.EntityMapper;
 import com.mygdx.game.managers.LevelManager;
 import com.mygdx.game.utils.Assets;
 import com.mygdx.game.utils.Node;
@@ -46,9 +48,11 @@ public class EntityFactory {
 	private final float _endY = (LevelManager.tileEnd.getCords().y + 16) / 32;
 	private Engine _engine;
 	private Entity player;
+	private EntityMapper _entityMapper;
 
 	public EntityFactory(Engine engine) {
 		_engine = engine;
+		_entityMapper = new EntityMapper();
 	}
 
 	public void createEnemyEntity(EnemyName enemy) {
@@ -72,7 +76,7 @@ public class EntityFactory {
 
 		switch (towerType) {
 		case BASIC_LASER_TURRET:
-			Entity turretEntity = createLaserTurret(x, y);
+			Entity turretEntity = createLaserTurret(x, y,towerType);
 			_engine.addEntity(turretEntity);
 			return turretEntity;
 		default:
@@ -109,39 +113,45 @@ public class EntityFactory {
 		return entity;
 	}
 
-	private static Entity createLaserTurret(float x, float y) {
+	private Entity createLaserTurret(float x, float y, TowerType towerType) {
+		
+		System.out.println("Tower Type = " + towerType);
+		EntityInformation entityInformation = _entityMapper.getTowerInformation(towerType);
+		
+		System.out.println("EntityInformation =" + entityInformation);
+		
 		Entity entity = new Entity();
-		SkeletonComponent skeletonComponent = new SkeletonComponent(Assets.laserTowerSkeleton);
+		SkeletonComponent skeletonComponent = new SkeletonComponent(entityInformation.getSkeleton());
 		PositionComponent positionComponent = new PositionComponent(new Vector2(x, y));
 		RenderableComponent renderableComponent = new RenderableComponent();
 		AngleComponent angleComponent = new AngleComponent();
 		MouseImageComponent mouseImageComponent = new MouseImageComponent();
 		MousePositionComponent mousePositionComponent = new MousePositionComponent();
-		RangeComponent rangeComponent = new RangeComponent(100d); // TODO
+		RangeComponent rangeComponent = new RangeComponent(entityInformation.getRange()); // TODO
 		TowerComponent towerComponent = new TowerComponent();
-		TowerStatComponent towerStatComponent = new TowerStatComponent(25, "Laser Tower", TowerType.BASIC_LASER_TURRET);
+		TowerStatComponent towerStatComponent = new TowerStatComponent(entityInformation.getCost(), entityInformation.getName(), towerType);
 		SpecialTowerComponent specialTowerComponent = new SpecialTowerComponent();
 		TargetComponent targetComponent = new TargetComponent();
 		TimeComponent timeComponent = new TimeComponent(0);
-		OffsetComponent offsetComponent = new OffsetComponent(0, 0);
+		OffsetComponent offsetComponent = new OffsetComponent(entityInformation.getOffsetX(), entityInformation.getOffsetY());
 		skeletonComponent.skeleton.setPosition(x, y);
-		skeletonComponent.animationState.setData(Assets.laserTowerAnimationState.getData());
+		skeletonComponent.animationState.setData(entityInformation.getAnimationStateData());
 		entity.add(skeletonComponent)//
 				.add(mouseImageComponent) //
 				.add(mousePositionComponent)//
 				.add(positionComponent)//
-				.add(new FireRateComponent(1d , 0.1))// 10 percent bonus on upgrade
+				.add(new FireRateComponent(entityInformation.getFireRate() , 0.1))//
 				.add(positionComponent)//
-				.add(angleComponent).add(renderableComponent)//
+				.add(angleComponent)//
+				.add(renderableComponent)//
 				.add(rangeComponent)//
 				.add(specialTowerComponent)//
-				.add(new DamageComponent(20d))//
+				.add(new DamageComponent(entityInformation.getDamage()))//
 				.add(towerComponent)//
 				.add(towerStatComponent)//
 				.add(targetComponent) //
 				.add(timeComponent) //
 				.add(offsetComponent);
-		System.out.println("Laser tower Created");
 		return entity;
 	}
 

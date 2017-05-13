@@ -83,7 +83,7 @@ public abstract class LevelManager {
 		try {
 			tile = collisionLayer.getCell(x, y).getTile();
 		} catch (NullPointerException e) {
-			System.out.println(e);
+//			System.out.println(e);
 		}
 
 		if (tile != null) {
