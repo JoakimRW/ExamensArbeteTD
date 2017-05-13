@@ -64,17 +64,12 @@ public class EntityFactory {
 			System.out.println("Failed to create entity in entity factory :: cause :: entity is null");
 	}
 
-	public Entity createTowerEntity(TowerType towerType, float x, float y) {
-
-		switch (towerType) {
-		case BASIC_LASER_TURRET:
-			Entity turretEntity = createLaserTurret(x, y, towerType);
+	public void createTowerEntity(TowerType towerType, float x, float y) {
+		Entity turretEntity = createLaserTurret(x, y, towerType);
+		if (turretEntity != null) {
 			_engine.addEntity(turretEntity);
-			return turretEntity;
-		default:
+		} else
 			System.out.println("Failed to create entity in entity factory :: cause :: entity is null");
-			return null;
-		}
 	}
 
 	public static Entity createProjectileEntity(ProjectileType projectileType, Entity startEntity, Entity targetEntity,
