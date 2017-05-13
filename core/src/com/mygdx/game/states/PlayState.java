@@ -73,6 +73,7 @@ public class PlayState extends GameState {
         PAUSE = false;
         _entityManager.dispose();
         LevelManager.dispose();
+        Assets.dispose();
     }
 
 	@Override

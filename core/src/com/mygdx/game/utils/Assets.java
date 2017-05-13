@@ -135,6 +135,35 @@ public class Assets {
     	VERA_BI,
     	VERA_IT
     }
+
+    public static void dispose(){
+        enemyGreenHealthbarBG.getTexture().dispose();
+        enemyRedHealthbarBG.getTexture().dispose();
+
+        bloodWormSkeleton = null;
+        bloodWormAnimationState = null;
+
+        birdSkeleton = null;
+        birdAnimationState = null;
+
+        laserTowerSkeleton = null;
+        laserTowerAnimationState = null;
+
+        coinSkeleton = null;
+        coinAnimationState = null;
+
+        font10.dispose();
+        // public static BitmapFont font12;
+
+        font16.dispose();
+        fontVera10.dispose();
+        font24.dispose();
+        font20.dispose();
+        laserMillenium.dispose();
+        laserTurretFire.dispose();
+        // laser textures
+        laserSmall.dispose();
+    }
 }
 
 
