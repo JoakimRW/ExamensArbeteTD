@@ -176,7 +176,7 @@ public class EntityFactory {
 		PathComponent pComp = new PathComponent(true, true);
 		SkeletonComponent skeletonComp = new SkeletonComponent(Assets.birdSkeleton);
 		PositionComponent positionComponent = new PositionComponent(new Vector2(_spawnX * 32, _spawnY * 32));
-		HealthComponent healthComponent = new HealthComponent(100);
+		HealthComponent healthComponent = new HealthComponent(health);
 		VelocityComponent velocityComponent = new VelocityComponent(100f);
 		DirectionComponent directionComponent = new DirectionComponent();
 		AngleComponent angleComponent = new AngleComponent();
