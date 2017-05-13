@@ -68,7 +68,9 @@ public class AimingSystem extends IteratingSystem {
 	}
 
 	private static boolean outOfRange(Entity tower, Entity target) {
-		if (tower == null || target == null) {
+		if (tower == null || target == null || tower.getComponent(PositionComponent.class) == null
+				|| tower.getComponent(RangeComponent.class) == null
+				|| target.getComponent(PositionComponent.class) == null) {
 			return true;
 		}
 		return Mappers.POSITION_M.get(tower).position.dst(Mappers.POSITION_M.get(target).position) > Mappers.RANGE_M
