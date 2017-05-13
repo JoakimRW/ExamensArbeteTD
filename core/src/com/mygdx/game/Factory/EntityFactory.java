@@ -196,15 +196,24 @@ public class EntityFactory {
 		MoneyComponent mcomp = new MoneyComponent(moneyValue);
 		RenderableComponent rcomp = new RenderableComponent();
 		scomp.animationState.setData(Assets.coinAnimationState.getData());
-		entity.add(pcomp).add(vcomp).add(tcomp).add(scomp).add(ocomp).add(mcomp).add(rcomp);
+		entity.add(pcomp)//
+				.add(vcomp)//
+				.add(tcomp)//
+				.add(scomp)//
+				.add(ocomp)//
+				.add(mcomp)//
+				.add(rcomp);
 		_engine.addEntity(entity);
 	}
 
 	public void createPlayerEntity() {
 		// player entity
 		player = new Entity();
-		player.add(new DirectionComponent()).add(new MoneyComponent(100)).add(new HealthComponent(30))
-				.add(new PlayerComponent()).add(new DestinationComponent(null));
+		player.add(new DirectionComponent())//
+				.add(new MoneyComponent(100))//
+				.add(new HealthComponent(30))//
+				.add(new PlayerComponent())//
+				.add(new DestinationComponent(null));
 		_engine.addEntity(player);
 	}
 
