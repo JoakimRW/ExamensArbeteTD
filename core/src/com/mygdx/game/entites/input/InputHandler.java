@@ -16,7 +16,6 @@ import com.mygdx.game.entites.entitiycomponents.Families;
 import com.mygdx.game.entites.entitiycomponents.MouseImageComponent;
 import com.mygdx.game.entites.entitiycomponents.OffsetComponent;
 import com.mygdx.game.entites.entitiycomponents.PositionComponent;
-import com.mygdx.game.entites.entitiycomponents.projectile.DestinationComponent;
 import com.mygdx.game.entites.entitiycomponents.tower.TargetComponent;
 import com.mygdx.game.entites.systems.TowerPlacementSystem;
 import com.mygdx.game.managers.GameStateManager;
