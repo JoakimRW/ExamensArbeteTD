@@ -3,11 +3,11 @@ package com.mygdx.game.entites.entitiycomponents;
 import com.badlogic.ashley.core.Component;
 
 public class HealthComponent implements Component {
-	public float health = 0;
-	public int maxHealth = 0;
+	public double health = 0;
+	public double maxHealth = 0;
 	public boolean isDead = false;
 
-	public HealthComponent(int maxHealth) {
+	public HealthComponent(double maxHealth) {
 		this.health = maxHealth;
 		this.maxHealth = maxHealth;
 	}
