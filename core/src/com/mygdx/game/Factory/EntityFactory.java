@@ -186,34 +186,10 @@ public class EntityFactory {
 				.add(renderableComponent)//
 				.add(ocomp)//
 				.add(angleComponent).add(new EnemyComponent());
-		
+
 		if (information.isFlying()) {
 			entity.add(new FlyingComponent());
 		}
-		return entity;
-	}
-
-	private Entity createBirdEntity(double health) {
-		Entity entity = new Entity();
-		OffsetComponent ocomp = new OffsetComponent(16, 0);
-		PathComponent pComp = new PathComponent(true, true);
-		SkeletonComponent skeletonComp = new SkeletonComponent(Assets.birdSkeleton);
-		PositionComponent positionComponent = new PositionComponent(new Vector2(_spawnX * 32, _spawnY * 32));
-		HealthComponent healthComponent = new HealthComponent(health);
-		VelocityComponent velocityComponent = new VelocityComponent(100f);
-		DirectionComponent directionComponent = new DirectionComponent();
-		AngleComponent angleComponent = new AngleComponent();
-		RenderableComponent renderableComponent = new RenderableComponent();
-		ArrayList<Node> path = new ArrayList<>();
-		path.add(new Node(new Vector2(_spawnX, _spawnY), null, 0, 0));
-		path.add(new Node(new Vector2(_endX, _endY), null, 0, 0));
-		skeletonComp.animationState.setData(Assets.birdAnimationState.getData());
-		skeletonComp.skeleton.setPosition(_spawnX * 32, _spawnY * 32);
-		skeletonComp.animationState.setAnimation(0, "MOVING", true);
-		pComp.path = path;
-		entity.add(pComp).add(positionComponent).add(skeletonComp).add(healthComponent).add(velocityComponent)
-				.add(directionComponent).add(renderableComponent).add(ocomp).add(new FlyingComponent())
-				.add(angleComponent).add(new EnemyComponent());
 		return entity;
 	}
 
