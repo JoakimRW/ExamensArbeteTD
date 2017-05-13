@@ -15,7 +15,6 @@ import com.mygdx.game.entites.entitiycomponents.tower.DamageComponent;
 import com.mygdx.game.entites.entitiycomponents.tower.FireRateComponent;
 import com.mygdx.game.entites.entitiycomponents.tower.TowerStatComponent;
 import com.mygdx.game.entites.input.InputHandler;
-import com.mygdx.game.managers.GameStateManager;
 import com.mygdx.game.managers.LevelManager;
 import com.mygdx.game.managers.WaveTimeManager;
 import com.mygdx.game.utils.Tile;
@@ -25,7 +24,6 @@ public class EntityModel extends InputAdapter {
 
 	private WaveTimeManager waveMngr;
 	private static EntityFactory _factory;
-	private static GameStateManager _gsm;
 	private static OrthographicCamera _gameCamera;
 	private static Engine _ashleyEngine;
 	private Entity _selectedTower;
@@ -38,12 +36,11 @@ public class EntityModel extends InputAdapter {
 	private boolean isDamageGreenText;
 	private boolean isfireRateGreenText;
 
-	public EntityModel(WaveTimeManager waveMngr, EntityFactory factory, GameStateManager gsm,
-			OrthographicCamera gameCamera, Engine ashleyEngine) {
+	public EntityModel(WaveTimeManager waveMngr, EntityFactory factory, OrthographicCamera gameCamera,
+			Engine ashleyEngine) {
 
 		this.waveMngr = waveMngr;
 		_factory = factory;
-		_gsm = gsm;
 		_gameCamera = gameCamera;
 		_ashleyEngine = ashleyEngine;
 	}
@@ -56,7 +53,7 @@ public class EntityModel extends InputAdapter {
 	public static void beginTowerPlacing(TowerType towerType) {
 
 		System.out.println("TURRET TYPE =  " + towerType);
-		InputHandler.setTowerInfoForPlacement(true,  towerType);
+		InputHandler.setTowerInfoForPlacement(true, towerType);
 		Vector3 mousePos = _gameCamera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
 		_factory.createTowerEntity(towerType, mousePos.x, mousePos.y);
 

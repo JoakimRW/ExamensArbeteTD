@@ -1,5 +1,7 @@
 package com.mygdx.game.entites.entityinformation;
 
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.esotericsoftware.spine.AnimationStateData;
 import com.esotericsoftware.spine.Skeleton;
 
@@ -19,6 +21,8 @@ public class EntityInformation {
 	private float _offsetY;
 	private AnimationStateData _animationStateData;
 	private String _description;
+	private Sound _soundEffect;
+	private Sprite _projectileSprite;
 	
 	
 
@@ -132,6 +136,22 @@ public class EntityInformation {
 
 	protected void setDescription(String description) {
 		_description = description;
+	}
+
+	public Sound getSoundEffect() {
+		return _soundEffect;
+	}
+
+	protected void setSoundEffect(Sound soundEffect) {
+		_soundEffect = soundEffect;
+	}
+
+	public Sprite getProjectileSprite() {
+		return _projectileSprite;
+	}
+
+	protected void setProjectileSprite(Sprite laserSprite) {
+		_projectileSprite = laserSprite;
 	}
 
 }

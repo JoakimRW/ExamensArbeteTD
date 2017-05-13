@@ -39,7 +39,7 @@ public class EntityManager {
 
 		setEntityFactory(entityFactory);
 		_waveManager = new WaveTimeManager(getEntityFactory());
-		EntityModel _entityModel = new EntityModel(_waveManager, getEntityFactory(), gsm, gameCamera, ashleyEngine);
+		EntityModel _entityModel = new EntityModel(_waveManager, getEntityFactory(), gameCamera, ashleyEngine);
 		uiController = new UIStageController(_uiView, _entityModel, gsm);
 		getEntityFactory().createPlayerEntity();
 
@@ -47,7 +47,7 @@ public class EntityManager {
 		coinSystem = new CoinSystem(gameCamera);
 		PlayerStatSystem statSystem = new PlayerStatSystem(uiController, _entityModel);
 		TowerPlacementSystem towerSystem = new TowerPlacementSystem(batch);
-		ShootingSystem shootingSystem = new ShootingSystem();
+		ShootingSystem shootingSystem = new ShootingSystem(entityFactory);
 		ProjectileMovementSystem projectileMovementSystem = new ProjectileMovementSystem();
 		AimingSystem aimingSystem = new AimingSystem();
 		RenderSystem renderSystem = new RenderSystem(batch);

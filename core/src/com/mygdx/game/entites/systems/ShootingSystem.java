@@ -16,11 +16,13 @@ import com.mygdx.game.entites.entitiycomponents.TimeComponent;
 import com.mygdx.game.entites.entitiycomponents.enemy.EnemyComponent;
 import com.mygdx.game.entites.entitiycomponents.tower.DamageComponent;
 import com.mygdx.game.entites.entitiycomponents.tower.FireRateComponent;
-import com.mygdx.game.entites.entitiycomponents.tower.RangeComponent;
 
 public class ShootingSystem extends IteratingSystem {
-	public ShootingSystem() {
+	private EntityFactory _entityFactory;
+
+	public ShootingSystem(EntityFactory entityFactory) {
 		super(Families.TOWER);
+		_entityFactory = entityFactory;
 	}
 
 	@Override
@@ -30,7 +32,7 @@ public class ShootingSystem extends IteratingSystem {
 
 	@Override
 	protected void processEntity(Entity entity, float deltaTime) {
-		fireAtNearestEnemy(entity,deltaTime);
+		fireAtNearestEnemy(entity, deltaTime);
 	}
 
 	private void fireAtNearestEnemy(Entity towerEntity, float deltaTime) {
@@ -64,10 +66,11 @@ public class ShootingSystem extends IteratingSystem {
 		if (distance > range) {
 			return;
 		}
-		
+
 		time.time += deltaTime;
 		if (time.time > 1 / towerEntity.getComponent(FireRateComponent.class)._fireRate) {
-			getEngine().addEntity(EntityFactory.createProjectileEntity(ProjectileType.LASER, towerEntity, target , dmg.getDamage()));
+			getEngine().addEntity(
+					_entityFactory.createProjectileEntity(ProjectileType.LASER, towerEntity, target, dmg.getDamage()));
 			time.time = 0;
 		}
 	}

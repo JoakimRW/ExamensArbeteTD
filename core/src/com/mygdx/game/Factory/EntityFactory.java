@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.entites.entitiycomponents.AngleComponent;
 import com.mygdx.game.entites.entitiycomponents.DirectionComponent;
@@ -72,19 +71,21 @@ public class EntityFactory {
 			System.out.println("Failed to create entity in entity factory :: cause :: entity is null");
 	}
 
-	public static Entity createProjectileEntity(ProjectileType projectileType, Entity startEntity, Entity targetEntity,
+	public Entity createProjectileEntity(ProjectileType projectileType, Entity startEntity, Entity targetEntity,
 			double damage) {
+		EntityInformation information = _entityMapper.getProjectileInformation(projectileType);
+
 		Entity entity = new Entity();
-		SpriteComponent spriteComponent = new SpriteComponent(new Sprite(Assets.laserSmall));
+		SpriteComponent spriteComponent = new SpriteComponent(information.getProjectileSprite());
 		PositionComponent positionComponent = new PositionComponent(
 				startEntity.getComponent(PositionComponent.class).position.cpy());
 		RenderableComponent renderableComponent = new RenderableComponent();
 		AngleComponent angleComponent = new AngleComponent();
 		DestinationComponent destinationComponent = new DestinationComponent(targetEntity);
-		VelocityComponent velocityComponent = new VelocityComponent(600f); // TODO
-		DamageComponent damageComponent = new DamageComponent(damage); // TODO
+		VelocityComponent velocityComponent = new VelocityComponent((float) information.getVelocity());
+		DamageComponent damageComponent = new DamageComponent(damage);
 		ProjectileComponent projectileComponent = new ProjectileComponent();
-		OffsetComponent offsetComp = new OffsetComponent(8, 8);
+		OffsetComponent offsetComp = new OffsetComponent(information.getOffsetX(), information.getOffsetY());
 
 		spriteComponent.sprite.setPosition(positionComponent.position.x, positionComponent.position.y);
 		entity.add(projectileComponent) //
@@ -94,47 +95,43 @@ public class EntityFactory {
 				.add(positionComponent) //
 				.add(spriteComponent) //
 				.add(velocityComponent)//
-				.add(offsetComp).add(damageComponent);
-		Assets.laserTurretFire.play(0.01f);
+				.add(offsetComp)//
+				.add(damageComponent);
+		information.getSoundEffect().play(0.01f);
 		return entity;
 	}
 
 	private Entity createTurret(float x, float y, TowerType towerType) {
-
-		System.out.println("Tower Type = " + towerType);
-		EntityInformation entityInformation = _entityMapper.getTowerInformation(towerType);
-
-		System.out.println("EntityInformation =" + entityInformation);
+		EntityInformation information = _entityMapper.getTowerInformation(towerType);
 
 		Entity entity = new Entity();
-		SkeletonComponent skeletonComponent = new SkeletonComponent(entityInformation.getSkeleton());
+		SkeletonComponent skeletonComponent = new SkeletonComponent(information.getSkeleton());
 		PositionComponent positionComponent = new PositionComponent(new Vector2(x, y));
 		RenderableComponent renderableComponent = new RenderableComponent();
 		AngleComponent angleComponent = new AngleComponent();
 		MouseImageComponent mouseImageComponent = new MouseImageComponent();
 		MousePositionComponent mousePositionComponent = new MousePositionComponent();
-		RangeComponent rangeComponent = new RangeComponent(entityInformation.getRange());
+		RangeComponent rangeComponent = new RangeComponent(information.getRange());
 		TowerComponent towerComponent = new TowerComponent();
-		TowerStatComponent towerStatComponent = new TowerStatComponent(entityInformation.getCost(),
-				entityInformation.getName(), towerType);
+		TowerStatComponent towerStatComponent = new TowerStatComponent(information.getCost(), information.getName(),
+				towerType);
 		SpecialTowerComponent specialTowerComponent = new SpecialTowerComponent();
 		TargetComponent targetComponent = new TargetComponent();
 		TimeComponent timeComponent = new TimeComponent(0);
-		OffsetComponent offsetComponent = new OffsetComponent(entityInformation.getOffsetX(),
-				entityInformation.getOffsetY());
+		OffsetComponent offsetComponent = new OffsetComponent(information.getOffsetX(), information.getOffsetY());
 		skeletonComponent.skeleton.setPosition(x, y);
-		skeletonComponent.animationState.setData(entityInformation.getAnimationStateData());
+		skeletonComponent.animationState.setData(information.getAnimationStateData());
 		entity.add(skeletonComponent)//
 				.add(mouseImageComponent) //
 				.add(mousePositionComponent)//
 				.add(positionComponent)//
-				.add(new FireRateComponent(entityInformation.getFireRate(), 0.1))//
+				.add(new FireRateComponent(information.getFireRate(), 0.1))//
 				.add(positionComponent)//
 				.add(angleComponent)//
 				.add(renderableComponent)//
 				.add(rangeComponent)//
 				.add(specialTowerComponent)//
-				.add(new DamageComponent(entityInformation.getDamage()))//
+				.add(new DamageComponent(information.getDamage()))//
 				.add(towerComponent)//
 				.add(towerStatComponent)//
 				.add(targetComponent) //
@@ -180,7 +177,8 @@ public class EntityFactory {
 				.add(directionComponent)//
 				.add(renderableComponent)//
 				.add(ocomp)//
-				.add(angleComponent).add(new EnemyComponent());
+				.add(angleComponent)//
+				.add(new EnemyComponent());
 
 		if (information.isFlying()) {
 			entity.add(new FlyingComponent());

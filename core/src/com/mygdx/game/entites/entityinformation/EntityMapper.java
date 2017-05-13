@@ -14,8 +14,11 @@ public class EntityMapper {
 	Bloodworm _bloodWorm = new Bloodworm();
 	Bird _bird = new Bird();
 
+	LaserProjectile _laserProjectile = new LaserProjectile();
+
 	private Map<TowerType, EntityInformation> _towerMapper = new HashMap<>();
 	private Map<EnemyName, EntityInformation> _enemyMapper = new HashMap<>();
+	private Map<ProjectileType, EntityInformation> _projectileMapper = new HashMap<>();
 
 	public EntityMapper() {
 		_towerMapper.put(TowerType.BASIC_LASER_TURRET, _basicLaserTurret);
@@ -23,7 +26,7 @@ public class EntityMapper {
 		_enemyMapper.put(EnemyName.BLOODWORM, _bloodWorm);
 		_enemyMapper.put(EnemyName.BIRD, _bird);
 
-		System.out.println(" basic laser turret  test" + _basicLaserTurret);
+		_projectileMapper.put(ProjectileType.LASER, _laserProjectile);
 	}
 
 	public EntityInformation getTowerInformation(TowerType towerType) {
@@ -35,6 +38,6 @@ public class EntityMapper {
 	}
 
 	public EntityInformation getProjectileInformation(ProjectileType projectileType) {
-		return null;
+		return _projectileMapper.get(projectileType);
 	}
 }
