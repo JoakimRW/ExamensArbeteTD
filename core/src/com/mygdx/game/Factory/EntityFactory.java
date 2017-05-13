@@ -55,17 +55,9 @@ public class EntityFactory {
 		_entityMapper = new EntityMapper();
 	}
 
-	public void createEnemyEntity(EnemyName enemy , double health) {
+	public void createEnemyEntity(EnemyName enemy, double health) {
 		Entity entity = null;
-		switch (enemy) {
-		case BIRD:
-			entity = createBirdEntity( health);
-			break;
-
-		case BLOODWORM:
-			entity = createBloodWormEntity( health);
-			break;
-		}
+		entity = createEnemy(health, enemy);
 		if (entity != null) {
 			_engine.addEntity(entity);
 		} else
@@ -76,7 +68,7 @@ public class EntityFactory {
 
 		switch (towerType) {
 		case BASIC_LASER_TURRET:
-			Entity turretEntity = createLaserTurret(x, y,towerType);
+			Entity turretEntity = createLaserTurret(x, y, towerType);
 			_engine.addEntity(turretEntity);
 			return turretEntity;
 		default:
@@ -85,8 +77,8 @@ public class EntityFactory {
 		}
 	}
 
-	public static Entity createProjectileEntity(ProjectileType projectileType, Entity startEntity,
-			Entity targetEntity , double damage) {
+	public static Entity createProjectileEntity(ProjectileType projectileType, Entity startEntity, Entity targetEntity,
+			double damage) {
 		Entity entity = new Entity();
 		SpriteComponent spriteComponent = new SpriteComponent(new Sprite(Assets.laserSmall));
 		PositionComponent positionComponent = new PositionComponent(
@@ -107,19 +99,18 @@ public class EntityFactory {
 				.add(positionComponent) //
 				.add(spriteComponent) //
 				.add(velocityComponent)//
-				.add(offsetComp)
-				.add(damageComponent);
+				.add(offsetComp).add(damageComponent);
 		Assets.laserTurretFire.play(0.01f);
 		return entity;
 	}
 
 	private Entity createLaserTurret(float x, float y, TowerType towerType) {
-		
+
 		System.out.println("Tower Type = " + towerType);
 		EntityInformation entityInformation = _entityMapper.getTowerInformation(towerType);
-		
+
 		System.out.println("EntityInformation =" + entityInformation);
-		
+
 		Entity entity = new Entity();
 		SkeletonComponent skeletonComponent = new SkeletonComponent(entityInformation.getSkeleton());
 		PositionComponent positionComponent = new PositionComponent(new Vector2(x, y));
@@ -127,20 +118,22 @@ public class EntityFactory {
 		AngleComponent angleComponent = new AngleComponent();
 		MouseImageComponent mouseImageComponent = new MouseImageComponent();
 		MousePositionComponent mousePositionComponent = new MousePositionComponent();
-		RangeComponent rangeComponent = new RangeComponent(entityInformation.getRange()); // TODO
+		RangeComponent rangeComponent = new RangeComponent(entityInformation.getRange());
 		TowerComponent towerComponent = new TowerComponent();
-		TowerStatComponent towerStatComponent = new TowerStatComponent(entityInformation.getCost(), entityInformation.getName(), towerType);
+		TowerStatComponent towerStatComponent = new TowerStatComponent(entityInformation.getCost(),
+				entityInformation.getName(), towerType);
 		SpecialTowerComponent specialTowerComponent = new SpecialTowerComponent();
 		TargetComponent targetComponent = new TargetComponent();
 		TimeComponent timeComponent = new TimeComponent(0);
-		OffsetComponent offsetComponent = new OffsetComponent(entityInformation.getOffsetX(), entityInformation.getOffsetY());
+		OffsetComponent offsetComponent = new OffsetComponent(entityInformation.getOffsetX(),
+				entityInformation.getOffsetY());
 		skeletonComponent.skeleton.setPosition(x, y);
 		skeletonComponent.animationState.setData(entityInformation.getAnimationStateData());
 		entity.add(skeletonComponent)//
 				.add(mouseImageComponent) //
 				.add(mousePositionComponent)//
 				.add(positionComponent)//
-				.add(new FireRateComponent(entityInformation.getFireRate() , 0.1))//
+				.add(new FireRateComponent(entityInformation.getFireRate(), 0.1))//
 				.add(positionComponent)//
 				.add(angleComponent)//
 				.add(renderableComponent)//
@@ -155,28 +148,48 @@ public class EntityFactory {
 		return entity;
 	}
 
-	private Entity createBloodWormEntity(double health) {
-		// Components
+	private Entity createEnemy(double health, EnemyName enemy) {
+
+		EntityInformation information = _entityMapper.getEnemyInformation(enemy);
+
 		Entity entity = new Entity();
-		OffsetComponent ocomp = new OffsetComponent(16, 16);
-		PathComponent pComp = new PathComponent(false, false);
-		SkeletonComponent skeletonComp = new SkeletonComponent(Assets.bloodWormSkeleton);
+		OffsetComponent ocomp = new OffsetComponent(information.getOffsetX(), information.getOffsetY());
+		PathComponent pComp = new PathComponent(information.isFlying(), information.isFlying());
+		SkeletonComponent skeletonComp = new SkeletonComponent(information.getSkeleton());
 		PositionComponent positionComponent = new PositionComponent(
 				new Vector2(_spawnX * 32 - ocomp.offsetX, _spawnY * 32 - ocomp.offsetY));
 		HealthComponent healthComponent = new HealthComponent(health);
-		VelocityComponent velocityComponent = new VelocityComponent(75f);
+		VelocityComponent velocityComponent = new VelocityComponent((float) information.getVelocity());
 		DirectionComponent directionComponent = new DirectionComponent();
 		AngleComponent angleComponent = new AngleComponent();
 		RenderableComponent renderableComponent = new RenderableComponent();
-		ArrayList<Node> path = PathFinder.findPath(new Vector2(_spawnX, _spawnY), new Vector2(_endX, _endY),
-				pComp.canGoDiag, pComp.isFlying);
-		skeletonComp.animationState.setData(Assets.bloodWormAnimationState.getData());
+
+		if (information.isFlying()) {
+			ArrayList<Node> path = new ArrayList<>();
+			path.add(new Node(new Vector2(_spawnX, _spawnY), null, 0, 0));
+			path.add(new Node(new Vector2(_endX, _endY), null, 0, 0));
+			pComp.path = path;
+		} else {
+			ArrayList<Node> path = PathFinder.findPath(new Vector2(_spawnX, _spawnY), new Vector2(_endX, _endY),
+					pComp.canGoDiag, pComp.isFlying);
+			pComp.path = path;
+		}
+		skeletonComp.animationState.setData(information.getAnimationStateData());
 		skeletonComp.skeleton.setPosition(_spawnX * 32, (_spawnY) * 32);
 		skeletonComp.animationState.setAnimation(0, "MOVING", true);
-		pComp.path = path;
-		entity.add(pComp).add(positionComponent).add(skeletonComp).add(healthComponent).add(velocityComponent)
-				.add(directionComponent).add(renderableComponent).add(ocomp).add(angleComponent)
-				.add(new EnemyComponent());
+		entity.add(pComp)//
+				.add(positionComponent)//
+				.add(skeletonComp)//
+				.add(healthComponent)//
+				.add(velocityComponent)//
+				.add(directionComponent)//
+				.add(renderableComponent)//
+				.add(ocomp)//
+				.add(angleComponent).add(new EnemyComponent());
+		
+		if (information.isFlying()) {
+			entity.add(new FlyingComponent());
+		}
 		return entity;
 	}
 

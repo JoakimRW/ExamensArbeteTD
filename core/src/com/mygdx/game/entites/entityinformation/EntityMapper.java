@@ -3,30 +3,38 @@ package com.mygdx.game.entites.entityinformation;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.mygdx.game.Factory.EnemyType;
+import com.mygdx.game.Factory.EnemyName;
 import com.mygdx.game.Factory.ProjectileType;
 import com.mygdx.game.Factory.TowerType;
 
 public class EntityMapper {
 
-	BasicLaserTurret basicLaserTurret = new BasicLaserTurret();
-	private Map<TowerType,EntityInformation> mapper = new HashMap<>();
+	BasicLaserTurret _basicLaserTurret = new BasicLaserTurret();
+
+	Bloodworm _bloodWorm = new Bloodworm();
+	Bird _bird = new Bird();
+
+	private Map<TowerType, EntityInformation> _towerMapper = new HashMap<>();
+	private Map<EnemyName, EntityInformation> _enemyMapper = new HashMap<>();
 
 	public EntityMapper() {
-	mapper.put(TowerType.BASIC_LASER_TURRET,basicLaserTurret);
-	
-	System.out.println(" basic laser turret  test"+ basicLaserTurret);
+		_towerMapper.put(TowerType.BASIC_LASER_TURRET, _basicLaserTurret);
+
+		_enemyMapper.put(EnemyName.BLOODWORM, _bloodWorm);
+		_enemyMapper.put(EnemyName.BIRD, _bird);
+
+		System.out.println(" basic laser turret  test" + _basicLaserTurret);
 	}
 
 	public EntityInformation getTowerInformation(TowerType towerType) {
-		return mapper.get(towerType);
+		return _towerMapper.get(towerType);
 	}
-	
-	public static EntityInformation getEnemyInformation(EnemyType enemyType){
-		return null;
+
+	public EntityInformation getEnemyInformation(EnemyName enemyName) {
+		return _enemyMapper.get(enemyName);
 	}
-	
-	public static EntityInformation getProjectileInformation(ProjectileType projectileType){
+
+	public EntityInformation getProjectileInformation(ProjectileType projectileType) {
 		return null;
 	}
 }
