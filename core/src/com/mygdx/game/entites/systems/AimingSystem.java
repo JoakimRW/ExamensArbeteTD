@@ -4,7 +4,6 @@ import java.util.Collections;
 import java.util.HashMap;
 
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.ashley.core.EntityListener;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.math.Vector2;
@@ -22,7 +21,15 @@ public class AimingSystem extends IteratingSystem {
 
 	@Override
 	protected void processEntity(Entity entity, float deltaTime) {
-		Entity nearestEnemy = findNearestEnemy(entity);
+
+		Entity nearestEnemy = null;
+		TargetComponent targetComponent = Mappers.TARGET_M.get(entity);
+		if (targetComponent == null || outOfRange(entity, targetComponent.getTarget())) {
+			nearestEnemy = findNearestEnemy(entity);
+		} else {
+			return;
+		}
+
 		if (nearestEnemy == null || outOfRange(entity, nearestEnemy)) {
 			return;
 		}
@@ -61,6 +68,9 @@ public class AimingSystem extends IteratingSystem {
 	}
 
 	private static boolean outOfRange(Entity tower, Entity target) {
+		if (tower == null || target == null) {
+			return true;
+		}
 		return Mappers.POSITION_M.get(tower).position.dst(Mappers.POSITION_M.get(target).position) > Mappers.RANGE_M
 				.get(tower).getRange();
 	}
@@ -68,6 +78,5 @@ public class AimingSystem extends IteratingSystem {
 	private static void setNewTarget(Entity tower, Entity target) {
 		tower.getComponent(TargetComponent.class).setTarget(target);
 	}
-
 
 }
