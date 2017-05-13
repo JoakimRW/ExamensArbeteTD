@@ -63,7 +63,7 @@ public class ProjectileMovementSystem extends IteratingSystem implements EntityL
 		position.y += velocity.velocity.y * deltaTime;
 
 		if (position.dst(destination) < 5) {
-			System.out.println("distance reaced");
+			System.out.println("distance reached");
 			System.out.println("Distance to enemy : " + position.dst(destination));
 			dealDamage(projectileEntity, damage);
 		}
