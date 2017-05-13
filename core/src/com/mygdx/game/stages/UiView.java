@@ -10,12 +10,25 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.*;
+import com.mygdx.game.Factory.TowerType;
+import com.mygdx.game.entites.entityinformation.EntityMapper;
 import com.mygdx.game.managers.WaveTimeManager;
 import com.mygdx.game.states.PlayState;
 import com.mygdx.game.utils.Assets;
 
 
 public class UiView implements Screen {
+
+    // mapper info
+    private EntityMapper _mapper;
+
+    // laser tower
+    private final String basicLaserTowerName;
+    private final double basicLaserTowerFireRate;
+    private final double basicLaserTowerPrice;
+    private final double basicLaserTowerDamage;
+    private final double basicLaserTowerRange;
+    private final String basicLaserTowerDescription;
 
     private Table _rootTable;
     private Tooltip<Table> _tooltip;
@@ -59,6 +72,13 @@ public class UiView implements Screen {
     private boolean isOverUpgradeButton;
 
     public UiView(){
+        _mapper = new EntityMapper();
+        basicLaserTowerPrice = _mapper.getTowerInformation(TowerType.BASIC_LASER_TURRET).getCost();
+        basicLaserTowerFireRate = _mapper.getTowerInformation(TowerType.BASIC_LASER_TURRET).getFireRate();
+        basicLaserTowerDamage = _mapper.getTowerInformation(TowerType.BASIC_LASER_TURRET).getDamage();
+        basicLaserTowerRange = _mapper.getTowerInformation(TowerType.BASIC_LASER_TURRET).getRange();
+        basicLaserTowerDescription = _mapper.getTowerInformation(TowerType.BASIC_LASER_TURRET).getDescription();
+        basicLaserTowerName = _mapper.getTowerInformation(TowerType.BASIC_LASER_TURRET).getName();
 
     }
 
@@ -290,21 +310,22 @@ public class UiView implements Screen {
         _laserTowerIcon.addListener(_tooltip);
 
         // labels for tooltip
-        toolTip_towerName_lbl = new Label("Laser Tower",_skin , "tooltipFont" , "white");
+        toolTip_towerName_lbl = new Label(basicLaserTowerName,_skin , "tooltipFont" , "white");
         toolTip_towerName_lbl.setColor(green);
         Label toolTip_text_fireRate_lbl = new Label("Fire rate:", _skin);
-        toolTip_val_fireRate_lbl = new Label("2/s" , _skin);
+        toolTip_val_fireRate_lbl = new Label(String.format("%.1f/S",basicLaserTowerFireRate) , _skin);
         Label toolTip_text_damage_lbl = new Label("Damage:", _skin);
-        toolTip_val_damage_lbl = new Label("10",_skin);
+        toolTip_val_damage_lbl = new Label(String.format("%.0f",basicLaserTowerDamage),_skin);
         Label toolTip_text_range_lbl = new Label("Range:", _skin);
-        toolTip_val_range_lbl = new Label("20",_skin);
-        Label description = new Label("The Laser Turret fires quickly but with moderate damage.", _skin);
+        toolTip_val_range_lbl = new Label(String.format("%.0f",basicLaserTowerRange) ,_skin);
+
+        Label description = new Label(basicLaserTowerDescription , _skin);
         description.setColor(green);
         description.setWrap(true);
         Label toolTip_text_special_lbl = new Label("Special:", _skin);
         toolTip_val_special_lbl = new Label("Fast",_skin);
         Label toolTip_text_price_lbl = new Label("Price:", _skin);
-        toolTip_val_price_lbl = new Label("25",_skin);
+        toolTip_val_price_lbl = new Label( String.format( "%.0f" , basicLaserTowerPrice ),_skin);
         // Add labels to tooltip table
         _tooltipTable.defaults().grow();
         _tooltipTable.add(toolTip_towerName_lbl).align(Align.left);

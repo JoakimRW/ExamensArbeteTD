@@ -11,6 +11,7 @@ public class BasicLaserTurret extends EntityInformation {
 		setAnimationStateData(Assets.laserTowerAnimationState.getData());
 		setSkeleton(Assets.laserTowerSkeleton);
 		setCost(30d);
+		setDescription("The Laser Turret fires quickly but with moderate damage.");
 		setName("Laser Turret");
 		setOffsetX(0);
 		setOffsetY(0);
