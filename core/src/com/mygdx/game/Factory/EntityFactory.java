@@ -65,7 +65,7 @@ public class EntityFactory {
 	}
 
 	public void createTowerEntity(TowerType towerType, float x, float y) {
-		Entity turretEntity = createLaserTurret(x, y, towerType);
+		Entity turretEntity = createTurret(x, y, towerType);
 		if (turretEntity != null) {
 			_engine.addEntity(turretEntity);
 		} else
@@ -99,7 +99,7 @@ public class EntityFactory {
 		return entity;
 	}
 
-	private Entity createLaserTurret(float x, float y, TowerType towerType) {
+	private Entity createTurret(float x, float y, TowerType towerType) {
 
 		System.out.println("Tower Type = " + towerType);
 		EntityInformation entityInformation = _entityMapper.getTowerInformation(towerType);
