@@ -18,6 +18,7 @@ import com.mygdx.game.entites.systems.PlayerStatSystem;
 import com.mygdx.game.entites.systems.ProjectileMovementSystem;
 import com.mygdx.game.entites.systems.RenderSystem;
 import com.mygdx.game.entites.systems.ShootingSystem;
+import com.mygdx.game.entites.systems.SplashDamageSystem;
 import com.mygdx.game.entites.systems.SpriteRenderSystem;
 import com.mygdx.game.entites.systems.TowerPlacementSystem;
 import com.mygdx.game.entites.systems.TowerSelectionSystem;
@@ -56,20 +57,25 @@ public class EntityManager {
 		inputhandler.registerInputHandlerSystem(playerInputSys);
 		CameraMovementSystem camSys = new CameraMovementSystem(gameCamera);
 		TowerSelectionSystem towerSelectSystem = new TowerSelectionSystem(getEntityFactory(), gameCamera);
+		SpriteRenderSystem spriteRenderSystem = new SpriteRenderSystem(batch);
+		SplashDamageSystem splashDamageSystem = new SplashDamageSystem();
+		
 		ashleyEngine.addSystem(statSystem);
 		ashleyEngine.addSystem(towerSelectSystem);
 		ashleyEngine.addSystem(moveToSystem);
 		ashleyEngine.addSystem(towerSystem);
-		ashleyEngine.addSystem(new SpriteRenderSystem(batch));
+		ashleyEngine.addSystem(spriteRenderSystem);
 		ashleyEngine.addSystem(renderSystem);
 		ashleyEngine.addSystem(healthSystem);
 		ashleyEngine.addSystem(playerInputSys);
 		ashleyEngine.addSystem(camSys);
 		ashleyEngine.addSystem(coinSystem);
+		ashleyEngine.addSystem(splashDamageSystem);
 		ashleyEngine.addSystem(shootingSystem);
 		ashleyEngine.addSystem(projectileMovementSystem);
 		ashleyEngine.addSystem(aimingSystem);
-
+		
+		ashleyEngine.addEntityListener(Families.PROJECTILE,splashDamageSystem);
 		ashleyEngine.addEntityListener(Families.ENEMY, projectileMovementSystem);
 	}
 

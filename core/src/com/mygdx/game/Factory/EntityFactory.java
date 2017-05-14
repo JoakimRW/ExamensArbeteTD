@@ -17,6 +17,7 @@ import com.mygdx.game.entites.entitiycomponents.PathComponent;
 import com.mygdx.game.entites.entitiycomponents.PositionComponent;
 import com.mygdx.game.entites.entitiycomponents.RenderableComponent;
 import com.mygdx.game.entites.entitiycomponents.SkeletonComponent;
+import com.mygdx.game.entites.entitiycomponents.SplashComponent;
 import com.mygdx.game.entites.entitiycomponents.SpriteComponent;
 import com.mygdx.game.entites.entitiycomponents.TimeComponent;
 import com.mygdx.game.entites.entitiycomponents.VelocityComponent;
@@ -96,6 +97,7 @@ public class EntityFactory {
 				.add(spriteComponent) //
 				.add(velocityComponent)//
 				.add(offsetComp)//
+				.add(new SplashComponent(100))//
 				.add(damageComponent);
 		information.getSoundEffect().play(0.01f);
 		return entity;

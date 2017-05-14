@@ -33,5 +33,8 @@ public class Mappers {
     public static final ComponentMapper<SpecialTowerComponent>  SPECIAL_M = ComponentMapper.getFor(SpecialTowerComponent.class);
 	public static final ComponentMapper<TargetComponent> TARGET_M = ComponentMapper.getFor(TargetComponent.class);
 	public static final ComponentMapper<SpriteComponent> SPRITE_M = ComponentMapper.getFor(SpriteComponent.class);
+	public static final ComponentMapper<SplashComponent> SPLASH_M = ComponentMapper.getFor(SplashComponent.class);
+		// TODO Auto-generated method stub
+	
 	
 }
