@@ -94,7 +94,6 @@ public class UIStageController extends ClickListener {
 			public void clicked(InputEvent event, float x, float y) {
 				uistage.get_tooltip().hide();
 				EntityModel.beginTowerPlacing(BASIC_LASER_TURRET);
-				System.out.println("TURRET PLACEMENT STARTED");
 			}
 
 			@Override
@@ -109,6 +108,20 @@ public class UIStageController extends ClickListener {
 			public void clicked(InputEvent event, float x, float y) {
 				uistage.get_tooltip().hide();
 				EntityModel.beginTowerPlacing(PLASTMA_TOWER);
+			}
+
+			@Override
+			public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+				super.enter(event, x, y, pointer, fromActor);
+				uistage.get_tooltip().setInstant(true);
+			}
+		});
+		
+		uistage.getMissleTowerIcon().addListener(new ClickListener(){
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				uistage.get_tooltip().hide();
+				EntityModel.beginTowerPlacing(MISSILE_TURRET);
 			}
 
 			@Override

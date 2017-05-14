@@ -7,11 +7,13 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.Factory.TowerType;
 import com.mygdx.game.entites.entitiycomponents.Families;
 import com.mygdx.game.entites.entitiycomponents.Mappers;
 import com.mygdx.game.entites.entitiycomponents.PositionComponent;
 import com.mygdx.game.entites.entitiycomponents.tower.RangeComponent;
 import com.mygdx.game.entites.entitiycomponents.tower.TargetComponent;
+import com.mygdx.game.entites.entitiycomponents.tower.TowerStatComponent;
 
 public class AimingSystem extends IteratingSystem {
 

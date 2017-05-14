@@ -71,7 +71,7 @@ public class EntityFactory {
 	public void createProjectileEntity(ProjectileType projectileType, Entity startEntity, Entity targetEntity,
 			double damage) {
 		EntityInformation information = _entityMapper.getProjectileInformation(projectileType);
-
+		System.out.println(projectileType);
 		Entity entity = new Entity();
 		SpriteComponent spriteComponent = new SpriteComponent(information.getProjectileSprite());
 		PositionComponent positionComponent = new PositionComponent(
@@ -101,7 +101,6 @@ public class EntityFactory {
 
 	private void createTurret(float x, float y, TowerType towerType) {
 		EntityInformation information = _entityMapper.getTowerInformation(towerType);
-
 		Entity entity = new Entity();
 		SkeletonComponent skeletonComponent = new SkeletonComponent(information.getSkeleton());
 		PositionComponent positionComponent = new PositionComponent(new Vector2(x, y));
@@ -134,7 +133,7 @@ public class EntityFactory {
 				.add(towerStatComponent)//
 				.add(targetComponent) //
 				.add(timeComponent) //
-				.add(offsetComponent);
+				.add(offsetComponent); //
 		_engine.addEntity(entity);
 	}
 

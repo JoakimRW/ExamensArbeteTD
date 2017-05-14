@@ -1,5 +1,7 @@
 package com.mygdx.game.entites.systems;
 
+import java.util.ArrayList;
+
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.systems.IteratingSystem;
@@ -79,10 +81,12 @@ public class ShootingSystem extends IteratingSystem {
 			case PLASTMA_TOWER:
 				_entityFactory.createProjectileEntity(ProjectileType.PLASTMA, towerEntity, target, dmg.getDamage());
 				break;
+			case MISSILE_TURRET:
+				_entityFactory.createProjectileEntity(ProjectileType.MISSLE, towerEntity, target, dmg.getDamage());
+				break;
 			default:
 				break;
 			}
-			
 			
 			time.time = 0;
 		}
