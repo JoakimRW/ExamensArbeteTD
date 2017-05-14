@@ -5,7 +5,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import com.mygdx.game.Factory.EnemyName;
-import com.mygdx.game.Factory.EnemyType;
 import com.mygdx.game.Factory.EntityFactory;
 import com.mygdx.game.states.PlayState;
 
@@ -20,7 +19,6 @@ public class WaveTimeManager {
 	public static double CURRENT_WAVE_TIME_MILLIS = 0;
 	private float time = 0;
 	private float timeMs = 0;
-	private double totalTime = 0;
 	private final double baseHp = 100;
 	private double currentEnemyHp = 0;
 	private EntityFactory entityFactory;
@@ -38,7 +36,6 @@ public class WaveTimeManager {
 	public void tick(float delta){
 		if(!PlayState.START_GAME) CURRENT_WAVE_TIME = 0;
 		if(PlayState.START_GAME){
-			totalTime += delta;
 			time += delta;
 			timeMs += delta;
 			CURRENT_WAVE_TIME_MILLIS = timeMs - Math.floor(timeMs);
@@ -54,7 +51,7 @@ public class WaveTimeManager {
                 double health = currentEnemyHp * 1.15; // make modular
                 if(WaveTimeManager.WAVE == 1) health = baseHp;
                 currentEnemyHp = health;
-                spawnEnemies( enemyName , 500 , 10);
+                spawnEnemies( enemyName , 50 , 10);
 				CURRENT_WAVE_TIME = 15;
 			}
 		}
@@ -65,7 +62,7 @@ public class WaveTimeManager {
 	 * **/
 	public void spawnEnemies(EnemyName enemyName , long delayInSec , int amount){
 		Timer timer = new Timer();
-		timer.scheduleAtFixedRate(new Enemy(enemyName , amount ) , delayInSec  , 500 );
+		timer.scheduleAtFixedRate(new Enemy(enemyName , amount ) , delayInSec  , 400 );
 	}
 
 

@@ -16,6 +16,7 @@ import com.mygdx.game.entites.entitiycomponents.TimeComponent;
 import com.mygdx.game.entites.entitiycomponents.enemy.EnemyComponent;
 import com.mygdx.game.entites.entitiycomponents.tower.DamageComponent;
 import com.mygdx.game.entites.entitiycomponents.tower.FireRateComponent;
+import com.mygdx.game.entites.entitiycomponents.tower.TowerStatComponent;
 
 public class ShootingSystem extends IteratingSystem {
 	private EntityFactory _entityFactory;
@@ -36,7 +37,8 @@ public class ShootingSystem extends IteratingSystem {
 	}
 
 	private void fireAtNearestEnemy(Entity towerEntity, float deltaTime) {
-
+		// get tower type to know witch projectile to spawn
+		TowerStatComponent towerStat = Mappers.TOWER_STATS_M.get(towerEntity);
 		if (towerEntity.getComponent(MouseImageComponent.class) != null) {
 			return;
 		}
@@ -69,8 +71,19 @@ public class ShootingSystem extends IteratingSystem {
 
 		time.time += deltaTime;
 		if (time.time > 1 / towerEntity.getComponent(FireRateComponent.class)._fireRate) {
-			getEngine().addEntity(
-					_entityFactory.createProjectileEntity(ProjectileType.LASER, towerEntity, target, dmg.getDamage()));
+			
+			switch (towerStat._towerType) {
+			case BASIC_LASER_TURRET:
+				_entityFactory.createProjectileEntity(ProjectileType.LASER, towerEntity, target, dmg.getDamage());
+				break;
+			case PLASTMA_TOWER:
+				_entityFactory.createProjectileEntity(ProjectileType.PLASTMA, towerEntity, target, dmg.getDamage());
+				break;
+			default:
+				break;
+			}
+			
+			
 			time.time = 0;
 		}
 	}

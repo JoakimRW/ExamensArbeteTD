@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.*;
 import com.mygdx.game.Factory.TowerType;
 import com.mygdx.game.entites.entityinformation.EntityMapper;
@@ -33,6 +32,7 @@ public class UiView implements Screen {
     private Table _rootTable;
     private Tooltip<Table> _tooltip;
     private Image _laserTowerIcon;
+    private Image _plastmaTowerIcon;
     private TextButton _nextWaveBtn;
     private Label _next_enemy_value;
     private Label _next_wave_time_value;
@@ -230,7 +230,8 @@ public class UiView implements Screen {
         moneyStatPanel.add(moneyLabel).align(Align.right).pad(5 , 5 , 5 ,10).expand();
         towerListContainer.add(moneyStatPanel).align(Align.right).size(120 , 30).spaceBottom(2).row();
         Table grayPanel2 = createGrayPanel();
-        grayPanel2.add(_laserTowerIcon).size(32,32).pad(10).align(Align.topLeft).expand();
+        grayPanel2.add(_laserTowerIcon).size(32,32).pad(10).align(Align.topLeft);
+        grayPanel2.add(_plastmaTowerIcon).size(32,32).pad(10).align(Align.topLeft);
         towerListContainer.add(grayPanel2).prefHeight(110).expand().fill();
         return towerListContainer;
     }
@@ -301,6 +302,10 @@ public class UiView implements Screen {
         _tooltipTable.background(_skin.getDrawable("black-rectangle-hover"));
         _laserTowerIcon = new Image(_skin.getDrawable("turret-icon"));
         _laserTowerIcon.setSize(32 , 32);
+        
+        _plastmaTowerIcon = new Image(_skin.getDrawable("turret-icon"));
+        _plastmaTowerIcon.setSize(32 , 32);
+        
         _manager = new TooltipManager();
         _manager.instant();
         _manager.offsetX = 0;
@@ -308,6 +313,7 @@ public class UiView implements Screen {
         _manager.animations = false;
         _tooltip = new Tooltip<>(_tooltipTable , _manager);
         _laserTowerIcon.addListener(_tooltip);
+        _plastmaTowerIcon.addListener(_tooltip);
 
         // labels for tooltip
         toolTip_towerName_lbl = new Label(basicLaserTowerName,_skin , "tooltipFont" , "white");
@@ -461,6 +467,10 @@ public class UiView implements Screen {
 
     public Image get_laserTowerIcon() {
         return _laserTowerIcon;
+    }
+    
+    public Image getPlastmaTowerIcon(){
+    	return _plastmaTowerIcon;
     }
 
     public TextButton get_nextWaveBtn() {

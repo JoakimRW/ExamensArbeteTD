@@ -65,14 +65,10 @@ public class EntityFactory {
 	}
 
 	public void createTowerEntity(TowerType towerType, float x, float y) {
-		Entity turretEntity = createTurret(x, y, towerType);
-		if (turretEntity != null) {
-			_engine.addEntity(turretEntity);
-		} else
-			System.out.println("Failed to create entity in entity factory :: cause :: entity is null");
+		createTurret(x, y, towerType);
 	}
 
-	public Entity createProjectileEntity(ProjectileType projectileType, Entity startEntity, Entity targetEntity,
+	public void createProjectileEntity(ProjectileType projectileType, Entity startEntity, Entity targetEntity,
 			double damage) {
 		EntityInformation information = _entityMapper.getProjectileInformation(projectileType);
 
@@ -97,13 +93,13 @@ public class EntityFactory {
 				.add(spriteComponent) //
 				.add(velocityComponent)//
 				.add(offsetComp)//
-				.add(new SplashComponent(100))//
 				.add(damageComponent);
+		if(information.isSplash()) entity.add(new SplashComponent(information.getSplashRadius()));
 		information.getSoundEffect().play(0.01f);
-		return entity;
+		 _engine.addEntity(entity);
 	}
 
-	private Entity createTurret(float x, float y, TowerType towerType) {
+	private void createTurret(float x, float y, TowerType towerType) {
 		EntityInformation information = _entityMapper.getTowerInformation(towerType);
 
 		Entity entity = new Entity();
@@ -139,7 +135,7 @@ public class EntityFactory {
 				.add(targetComponent) //
 				.add(timeComponent) //
 				.add(offsetComponent);
-		return entity;
+		_engine.addEntity(entity);
 	}
 
 	private Entity createEnemy(double health, EnemyName enemy) {

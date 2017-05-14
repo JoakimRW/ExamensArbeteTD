@@ -6,12 +6,6 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntityListener;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.ashley.utils.ImmutableArray;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.math.Circle;
 import com.mygdx.game.entites.entitiycomponents.Families;
 import com.mygdx.game.entites.entitiycomponents.HealthComponent;
 import com.mygdx.game.entites.entitiycomponents.Mappers;
@@ -50,15 +44,14 @@ public class SplashDamageSystem extends IteratingSystem implements EntityListene
 				Entity enemy = enemies.get(i);
 				if(enemy.equals(targetedEnemy)) continue;
 				PositionComponent enemyPos = Mappers.POSITION_M.get(enemy);
-				
 				if(enemiesToDamage.contains(enemy)) continue;
-				
-					if(enemyPos.position.dst(splashPos.position) < splash.radius){					
+					if(enemyPos.position.dst(splashPos.position) < splash.radius){
+						// todo 
 						enemiesToDamage.add(enemy);
 					}
 			}
 			
-			System.out.println("Enemies to damage " + enemiesToDamage.size());
+			
 			
 			for(Entity enemy : enemiesToDamage){
 				HealthComponent enemyHp = Mappers.HEALTH_M.get(enemy);

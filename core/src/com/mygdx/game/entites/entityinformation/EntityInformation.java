@@ -23,6 +23,8 @@ public class EntityInformation {
 	private String _description;
 	private Sound _soundEffect;
 	private Sprite _projectileSprite;
+	private boolean _isSplash;
+	private float _splashRadius;
 	
 	
 
@@ -133,7 +135,15 @@ public class EntityInformation {
 	public String getDescription() {
 		return _description;
 	}
-
+	
+	public boolean  isSplash() {
+		return _isSplash;
+	}
+	
+	public void  setIsSplash(boolean isSplash) {
+		_isSplash = isSplash;
+	}
+	
 	protected void setDescription(String description) {
 		_description = description;
 	}
@@ -154,4 +164,11 @@ public class EntityInformation {
 		_projectileSprite = laserSprite;
 	}
 
+	public float getSplashRadius() {
+		return _splashRadius;
+	}
+	
+	public void setSplashRadius(float splashRadius) {
+		_splashRadius = splashRadius;
+	}
 }
