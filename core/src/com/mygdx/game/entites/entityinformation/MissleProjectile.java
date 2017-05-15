@@ -6,10 +6,9 @@ import com.mygdx.game.utils.Assets;
 public class MissleProjectile extends EntityInformation {
 	public MissleProjectile() {
 		setProjectileSprite(new Sprite(Assets.laserSmall));
-		setVelocity(400);
+		setVelocity(150);
 		setOffsetX(8);
 		setOffsetY(8);
-		setIsSplash(true);
 		setSoundEffect(Assets.laserTurretFire);
 	}
 }
