@@ -94,9 +94,10 @@ public class EntityFactory {
 				.add(velocityComponent)//
 				.add(offsetComp)//
 				.add(damageComponent);
-		if(information.isSplash()) entity.add(new SplashComponent(information.getSplashRadius()));
+		if (information.isSplash())
+			entity.add(new SplashComponent(information.getSplashRadius()));
 		information.getSoundEffect().play(0.01f);
-		 _engine.addEntity(entity);
+		_engine.addEntity(entity);
 	}
 
 	private void createTurret(float x, float y, TowerType towerType) {
@@ -118,6 +119,8 @@ public class EntityFactory {
 		OffsetComponent offsetComponent = new OffsetComponent(information.getOffsetX(), information.getOffsetY());
 		skeletonComponent.skeleton.setPosition(x, y);
 		skeletonComponent.animationState.setData(information.getAnimationStateData());
+		targetComponent.setMultiTarget(information.isMultiTarget());
+
 		entity.add(skeletonComponent)//
 				.add(mouseImageComponent) //
 				.add(mousePositionComponent)//

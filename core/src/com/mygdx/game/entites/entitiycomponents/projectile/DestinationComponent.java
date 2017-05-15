@@ -26,7 +26,11 @@ public class DestinationComponent implements Component {
 		if(_destinationEntity.getComponent(EnemyComponent.class) != null){
 			return "Enemy";
 		}
-		return "not enemy";
+		
+		if (_destinationEntity == null) {
+			return "null";
+		}
+		return _destinationEntity.getComponents().size() + "";
 		
 	}
 

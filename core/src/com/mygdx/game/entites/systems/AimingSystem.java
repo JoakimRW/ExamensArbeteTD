@@ -1,19 +1,20 @@
 package com.mygdx.game.entites.systems;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.Factory.TowerType;
 import com.mygdx.game.entites.entitiycomponents.Families;
 import com.mygdx.game.entites.entitiycomponents.Mappers;
 import com.mygdx.game.entites.entitiycomponents.PositionComponent;
 import com.mygdx.game.entites.entitiycomponents.tower.RangeComponent;
 import com.mygdx.game.entites.entitiycomponents.tower.TargetComponent;
-import com.mygdx.game.entites.entitiycomponents.tower.TowerStatComponent;
 
 public class AimingSystem extends IteratingSystem {
 
@@ -35,7 +36,55 @@ public class AimingSystem extends IteratingSystem {
 		if (nearestEnemy == null || outOfRange(entity, nearestEnemy)) {
 			return;
 		}
-		setNewTarget(entity, nearestEnemy);
+
+		if (targetComponent.isMultiTarget()) {
+			targetComponent.addTargets(findNearestEnemies(entity));
+		} else {
+			setNewTarget(entity, nearestEnemy);
+		}
+	}
+
+	private List<Entity> findNearestEnemies(Entity towerEntity) {
+
+		Vector2 towerPosition = towerEntity.getComponent(PositionComponent.class).position;
+
+		if (getEngine().getEntitiesFor(Families.ENEMY) == null) {
+			return null;
+		}
+
+		RangeComponent component = towerEntity.getComponent(RangeComponent.class);
+		if (component == null) {
+			return null;
+		}
+		Double range = component.getRange();
+
+		ImmutableArray<Entity> enemies = getEngine().getEntitiesFor(Families.ENEMY);
+		HashMap<Double, Entity> distanceMap = new HashMap<>();
+		for (Entity enemy : enemies) {
+			Vector2 enemyPosition = enemy.getComponent(PositionComponent.class).position;
+
+			double distance = towerPosition.dst(enemyPosition);
+
+			if (distance < range) {
+				distanceMap.put(distance, enemy);
+			}
+		}
+		if (distanceMap.isEmpty() || distanceMap.keySet().isEmpty()) {
+			return null;
+		}
+
+		Map<Double, Entity> multiDistanceList = new HashMap<>();
+
+		for (int i = 0; i < 3; i++) {// TODO
+			if (distanceMap.isEmpty() || distanceMap.keySet().isEmpty()) {
+				break;
+			}
+			Double min = Collections.min(distanceMap.keySet());
+			multiDistanceList.put(min, distanceMap.get(min));
+			distanceMap.remove(min);
+		}
+		return new ArrayList<>(multiDistanceList.values());
+
 	}
 
 	private Entity findNearestEnemy(Entity towerEntity) {

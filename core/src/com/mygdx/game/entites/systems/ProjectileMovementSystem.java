@@ -9,8 +9,11 @@ import com.mygdx.game.entites.entitiycomponents.Families;
 import com.mygdx.game.entites.entitiycomponents.HealthComponent;
 import com.mygdx.game.entites.entitiycomponents.PositionComponent;
 import com.mygdx.game.entites.entitiycomponents.VelocityComponent;
+import com.mygdx.game.entites.entitiycomponents.enemy.EnemyComponent;
 import com.mygdx.game.entites.entitiycomponents.projectile.DestinationComponent;
+import com.mygdx.game.entites.entitiycomponents.projectile.ProjectileComponent;
 import com.mygdx.game.entites.entitiycomponents.tower.DamageComponent;
+import com.mygdx.game.entites.entitiycomponents.tower.TowerComponent;
 
 public class ProjectileMovementSystem extends IteratingSystem implements EntityListener {
 
@@ -20,7 +23,7 @@ public class ProjectileMovementSystem extends IteratingSystem implements EntityL
 
 	@Override
 	protected void processEntity(Entity entity, float deltaTime) {
-		
+
 		if (entity.getComponent(DestinationComponent.class).getDestinationEntity() == null) {
 			getEngine().removeEntity(entity);
 		}
@@ -31,16 +34,15 @@ public class ProjectileMovementSystem extends IteratingSystem implements EntityL
 
 	private void moveToEnemy(Entity projectileEntity, float deltaTime) {
 
-		if (projectileEntity.getComponent(DestinationComponent.class).getDestinationEntity()
-				.getComponent(PositionComponent.class) == null) {
+		Entity destinationEntity = projectileEntity.getComponent(DestinationComponent.class).getDestinationEntity();
+		if (destinationEntity.getComponent(PositionComponent.class) == null) {
 			return;
 		}
 
 		Vector2 position = projectileEntity.getComponent(PositionComponent.class).position;
 		AngleComponent angle = projectileEntity.getComponent(AngleComponent.class);
 		VelocityComponent velocity = projectileEntity.getComponent(VelocityComponent.class);
-		Vector2 destination = projectileEntity.getComponent(DestinationComponent.class).getDestinationEntity()
-				.getComponent(PositionComponent.class).position;
+		Vector2 destination = destinationEntity.getComponent(PositionComponent.class).position;
 		double damage = projectileEntity.getComponent(DamageComponent.class).getDamage();
 
 		float destinationX = destination.x;
@@ -67,6 +69,15 @@ public class ProjectileMovementSystem extends IteratingSystem implements EntityL
 			System.out.println("Distance to enemy : " + position.dst(destination));
 			dealDamage(projectileEntity, damage);
 		}
+		if (destinationEntity == null || destinationEntity.getComponent(EnemyComponent.class) == null
+				|| destinationEntity.getComponent(TowerComponent.class) != null
+				|| destinationEntity.getComponent(ProjectileComponent.class) != null
+				|| destinationEntity.getComponents().size() == 0) {
+			System.out.println("Errant projectile removed");
+
+			getEngine().removeEntity(projectileEntity);
+			return;
+		}
 
 	}
 
@@ -79,7 +90,12 @@ public class ProjectileMovementSystem extends IteratingSystem implements EntityL
 
 	@Override
 	public void entityAdded(Entity entity) {
-		// TODO Auto-generated method stub
+		for (Entity projectile : getEntities()) {
+			if (projectile.getComponent(DestinationComponent.class).getDestinationEntity().getComponents()
+					.size() == 0) {
+				getEngine().removeEntity(projectile);
+			}
+		}
 
 	}
 
@@ -87,6 +103,11 @@ public class ProjectileMovementSystem extends IteratingSystem implements EntityL
 	public void entityRemoved(Entity entity) {
 		for (Entity projectile : getEntities()) {
 			if (projectile.getComponent(DestinationComponent.class).getDestinationEntity() == entity) {
+				getEngine().removeEntity(projectile);
+			}
+
+			if (projectile.getComponent(DestinationComponent.class).getDestinationEntity().getComponents()
+					.size() == 0) {
 				getEngine().removeEntity(projectile);
 			}
 		}

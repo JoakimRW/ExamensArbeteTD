@@ -7,8 +7,8 @@ public class MissleTurret extends EntityInformation {
 		setDamage(50d);
 		setFireRate(1);
 		setRange(150d);
-		setSplashRadius(55f);
-		setIsSplash(true);
+//		setSplashRadius(55f);
+		setIsSplash(false);
 		setAnimationStateData(Assets.laserTowerAnimationState.getData());
 		setSkeleton(Assets.laserTowerSkeleton);
 		setCost(100d);
@@ -16,5 +16,6 @@ public class MissleTurret extends EntityInformation {
 		setName("Missle Tower");
 		setOffsetX(0);
 		setOffsetY(0);
+		setMultiTarget(true);
 	}	
 }

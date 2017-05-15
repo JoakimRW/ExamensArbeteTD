@@ -25,6 +25,7 @@ public class EntityInformation {
 	private Sprite _projectileSprite;
 	private boolean _isSplash;
 	private float _splashRadius;
+	private boolean _isMultiTarget;
 	
 	
 
@@ -168,7 +169,15 @@ public class EntityInformation {
 		return _splashRadius;
 	}
 	
-	public void setSplashRadius(float splashRadius) {
+	protected void setSplashRadius(float splashRadius) {
 		_splashRadius = splashRadius;
+	}
+
+	public boolean isMultiTarget() {
+		return _isMultiTarget;
+	}
+
+	protected void setMultiTarget(boolean isMultiTarget) {
+		_isMultiTarget = isMultiTarget;
 	}
 }
