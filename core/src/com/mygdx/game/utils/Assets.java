@@ -50,10 +50,10 @@ public class Assets {
 
     public static void loadGameStageAssets() {
         // music
-        laserMillenium = Gdx.audio.newMusic(Gdx.files.internal("music/Laser Millenium.wav"));
-        //laserMillenium.setVolume(0.1f);
-        //laserMillenium.setLooping(true);
-       // laserMillenium.play();
+        laserMillenium = Gdx.audio.newMusic(Gdx.files.internal("music/Laser_Millenium.ogg"));
+        laserMillenium.setVolume(0.1f);
+        laserMillenium.setLooping(true);
+        laserMillenium.play();
         // sounds
         laserTurretFire = Gdx.audio.newSound(Gdx.files.internal("towers/lasertower/fx/bubaproducer__laser-shot-silenced.wav"));
         //laserTurretFire.play(0.5f);
