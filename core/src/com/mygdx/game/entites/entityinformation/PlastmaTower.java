@@ -8,8 +8,8 @@ public class PlastmaTower extends EntityInformation {
 		setFireRate(0.75d);
 		setRange(150d);
 		setSplashRadius(30f);
-		setAnimationStateData(Assets.laserTowerAnimationState.getData());
-		setSkeleton(Assets.laserTowerSkeleton);
+		setAnimationStateData(Assets.plastmaTowerAnimationState.getData());
+		setSkeleton(Assets.plastmaTowerSkeleton);
 		setCost(50d);
 		setDescription("The Plastma Tower does heavier damage in an area");
 		setName("Plastma Tower");

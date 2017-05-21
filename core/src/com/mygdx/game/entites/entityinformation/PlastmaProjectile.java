@@ -5,7 +5,7 @@ import com.mygdx.game.utils.Assets;
 
 public class PlastmaProjectile extends EntityInformation {
 	public PlastmaProjectile() {
-		setProjectileSprite(new Sprite(Assets.laserSmall));
+		setProjectileSprite(new Sprite(Assets.plastmaProj));
 		setVelocity(600);
 		setOffsetX(8);
 		setOffsetY(8);

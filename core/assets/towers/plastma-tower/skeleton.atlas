@@ -1,0 +1,20 @@
+
+skeleton.png
+size: 128,64
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+plastma-tower/plastma-tower-base
+  rotate: false
+  xy: 2, 2
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+plastma-tower/plastma-tower-turret
+  rotate: false
+  xy: 52, 18
+  size: 28, 32
+  orig: 48, 48
+  offset: 10, 12
+  index: -1
