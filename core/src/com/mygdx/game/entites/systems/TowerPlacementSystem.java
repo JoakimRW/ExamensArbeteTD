@@ -66,7 +66,7 @@ public class TowerPlacementSystem extends IteratingSystem {
 	private boolean isLegalPlacement() {
 
 		if (!isTowerBlockingPath(_tile)) {
-			return _tile.getType() == TileType.FLOOR;
+			return _tile.getType() == TileType.FLOOR && _tile.isPlaceable();
 		}
 		return false;
 	}

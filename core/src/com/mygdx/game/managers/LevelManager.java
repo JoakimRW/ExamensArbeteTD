@@ -75,7 +75,9 @@ public abstract class LevelManager {
 
 		createTileList();
 		tileEnd = getTile((int) endLocactions.get(0).x / 32, (int) endLocactions.get(0).y / 32);
+		tileEnd.setIsPlaceable(false);
 		tileSpawn = getTile((int) spawnLocations.get(0).x / 32, (int) spawnLocations.get(0).y / 32);
+		tileSpawn.setIsPlaceable(false);
 	}
 
 	private static boolean checkIfWall(int x, int y) {

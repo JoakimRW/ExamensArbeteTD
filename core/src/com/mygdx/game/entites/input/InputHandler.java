@@ -158,7 +158,7 @@ public class InputHandler implements InputProcessor {
 		Tile tile = getTileAtMouse();
 		if (tile != null) {
 			if (!isTowerBlockingPath(tile)) {
-				return tile.getType() == TileType.FLOOR;
+				return tile.getType() == TileType.FLOOR && tile.isPlaceable();
 			}
 		}
 		return false;

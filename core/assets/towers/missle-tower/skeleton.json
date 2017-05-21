@@ -1,8 +1,8 @@
 {
-"skeleton": { "hash": "OgY5lI0oyBDC8inHonH+E2VEHgw", "spine": "3.5.51", "width": 49.07, "height": 49.03, "images": "" },
+"skeleton": { "hash": "MuMkDnbrJHwmjUjk6N305Nql8WI", "spine": "3.5.51", "width": 42.67, "height": 42.64, "images": "" },
 "bones": [
-	{ "name": "root", "x": 1.12 },
-	{ "name": "turret", "parent": "root", "length": 5.17, "rotation": 90, "x": 0.11, "y": -0.31 }
+	{ "name": "root", "x": 1.12, "scaleX": 0.889, "scaleY": 0.888 },
+	{ "name": "turret", "parent": "root", "length": 5.17, "rotation": 90, "x": 0.11, "y": -0.31, "scaleX": 0.889, "scaleY": 0.888 }
 ],
 "slots": [
 	{ "name": "missile-tower/missle-tower-base", "bone": "root", "attachment": "missile-tower/missle-tower-base" },

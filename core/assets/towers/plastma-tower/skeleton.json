@@ -1,8 +1,8 @@
 {
-"skeleton": { "hash": "R/99kgengY78CNPQTZdKCY2rXrI", "spine": "3.5.51", "width": 48.07, "height": 48.07, "images": "" },
+"skeleton": { "hash": "XhD3Rnmh5CZ6XhQ5SUb4sRgSlMc", "spine": "3.5.51", "width": 42.72, "height": 42.72, "images": "" },
 "bones": [
-	{ "name": "root" },
-	{ "name": "turret", "parent": "root", "length": 11.03, "rotation": 90, "x": -0.15, "y": -0.08 }
+	{ "name": "root", "scaleX": 0.89, "scaleY": 0.89 },
+	{ "name": "turret", "parent": "root", "length": 11.03, "rotation": 90, "x": -0.15, "y": -0.08, "scaleX": 0.89, "scaleY": 0.89 }
 ],
 "slots": [
 	{ "name": "plastma-tower/plastma-tower-base", "bone": "root", "attachment": "plastma-tower/plastma-tower-base" },
@@ -14,7 +14,7 @@
 			"plastma-tower/plastma-tower-base": { "width": 48, "height": 48 }
 		},
 		"plastma-tower/plastma-tower-turret": {
-			"plastma-tower/plastma-tower-turret": { "x": 0.08, "y": -0.15, "scaleX": 0.886, "scaleY": 0.988, "rotation": -90.09, "width": 48, "height": 48 }
+			"plastma-tower/plastma-tower-turret": { "x": -0.35, "y": -0.15, "scaleX": 0.885, "scaleY": 0.987, "rotation": -90.09, "width": 48, "height": 48 }
 		}
 	}
 },

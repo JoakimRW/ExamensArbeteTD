@@ -11,6 +11,7 @@ public class Tile {
 	private TileType type;
 	private TiledMapTileLayer.Cell cell;
 	private Entity _entity;
+	private boolean isPlaceable = true;
 
 	public Tile(Vector2 cords, int tileWidth, int tileHeight, TileType type, TiledMapTileLayer.Cell cell) {
 		this.cords = cords;
@@ -82,5 +83,13 @@ public class Tile {
 
 	public void setEntity(Entity entity) {
 		_entity = entity;
+	}
+
+	public void setIsPlaceable(boolean b) {
+		isPlaceable = b;
+	}
+
+	public boolean isPlaceable() {
+		return isPlaceable;
 	}
 }
