@@ -3,26 +3,24 @@ package com.mygdx.game.stages;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.mygdx.game.managers.GameStateManager;
+import com.mygdx.game.utils.Assets;
 
 public class MainMenuStage extends Stage {
 
-	private Skin skin;
 
 	public MainMenuStage(final GameStateManager gsm) {
 		initMainMenu(gsm);
 	}
 
 	private void initMainMenu(final GameStateManager gsm) {
-		skin = new Skin(Gdx.files.internal("MainMenuSkin.json"));
 		Table table = new Table();
-		final TextButton button = new TextButton("New Game", skin, "default");
-		final TextButton exitButton = new TextButton("Quit Game", skin, "default");
+		final TextButton button = new TextButton("New Game", Assets.mainMenuSkin, "default");
+		final TextButton exitButton = new TextButton("Quit Game", Assets.mainMenuSkin, "default");
 		button.setSize(200f, 50f);
 
 		button.addListener(new ClickListener() {

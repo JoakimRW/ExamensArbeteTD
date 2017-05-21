@@ -11,7 +11,9 @@ import com.mygdx.game.Factory.EntityFactory;
 import com.mygdx.game.entites.entitiycomponents.HealthComponent;
 import com.mygdx.game.entites.entitiycomponents.Mappers;
 import com.mygdx.game.entites.entitiycomponents.PositionComponent;
+import com.mygdx.game.entites.entitiycomponents.enemy.EnemyComponent;
 import com.mygdx.game.managers.WaveTimeManager;
+import com.mygdx.game.states.PlayState;
 import com.mygdx.game.utils.Assets;
 
 public class HealthSystem extends IteratingSystem {
@@ -28,14 +30,20 @@ public class HealthSystem extends IteratingSystem {
 	protected void processEntity(Entity entity, float deltaTime) {
 		HealthComponent hpComp = Mappers.HEALTH_M.get(entity);
 		PositionComponent posComp = Mappers.POSITION_M.get(entity);
+		EnemyComponent enemyComp = Mappers.ENEMY_M.get(entity);
 		if (hpComp.isDead) {
 			float deathX = posComp.position.x;
 			float deathY = posComp.position.y;
 			entity.removeAll();
 			getEngine().removeEntity(entity);
+			if(enemyComp != null){
+				PlayState.CURRENT_LIVING_ENEMIES --;
+			}
 			_entityFactory.createCoinEntity(deathX, deathY, WaveTimeManager.WAVE + MathUtils.random(1));
 		}
-		drawHealthBar(hpComp, posComp);
+		if(enemyComp != null){
+			drawHealthBar(hpComp, posComp);
+		}
 	}
 
 	private void drawHealthBar(HealthComponent healthComp, PositionComponent pos) {

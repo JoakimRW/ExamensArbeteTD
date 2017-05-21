@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.esotericsoftware.spine.*;
 
 public class Assets {
@@ -50,6 +51,8 @@ public class Assets {
     public static Texture laserSmall;
 	public static Texture plastmaProj;
 	public static Texture missile;
+	public static Skin mainMenuSkin;
+	public static Skin uiSkin;
 
     
 
@@ -100,8 +103,14 @@ public class Assets {
         font16 = createFont(16 , Fonts.HEMI_HEAD);
         font20 = createFont(20,Fonts.HEMI_HEAD);
         font24 = createFont(24 ,Fonts.HEMI_HEAD);
+        // skin 
+  
         Cursor slickArrow = Gdx.graphics.newCursor(new Pixmap(Gdx.files.getFileHandle("slick_arrow-arrow.png", Files.FileType.Internal)), 0, 0);
         Gdx.graphics.setCursor(slickArrow);
+    }
+    
+    public static void loadMainMenuAssets(){
+    	 mainMenuSkin = new Skin(Gdx.files.internal("MainMenuSkin.json"));
     }
 
     /* delar upp ett spritesheet och returnerar en textureregion array för animation **/

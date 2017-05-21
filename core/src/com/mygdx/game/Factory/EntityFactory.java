@@ -35,6 +35,7 @@ import com.mygdx.game.entites.entitiycomponents.tower.TowerStatComponent;
 import com.mygdx.game.entites.entityinformation.EntityInformation;
 import com.mygdx.game.entites.entityinformation.EntityMapper;
 import com.mygdx.game.managers.LevelManager;
+import com.mygdx.game.states.PlayState;
 import com.mygdx.game.utils.Assets;
 import com.mygdx.game.utils.Node;
 import com.mygdx.game.utils.PathFinder;
@@ -141,7 +142,7 @@ public class EntityFactory {
 	}
 
 	private Entity createEnemy(double health, EnemyName enemy) {
-
+		
 		EntityInformation information = _entityMapper.getEnemyInformation(enemy);
 
 		Entity entity = new Entity();
@@ -183,6 +184,7 @@ public class EntityFactory {
 		if (information.isFlying()) {
 			entity.add(new FlyingComponent());
 		}
+		PlayState.CURRENT_LIVING_ENEMIES ++;
 		return entity;
 	}
 

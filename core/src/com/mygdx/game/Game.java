@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.managers.GameStateManager;
+import com.mygdx.game.utils.Assets;
 
 public class Game extends ApplicationAdapter {
 	SpriteBatch batch;
@@ -13,14 +14,12 @@ public class Game extends ApplicationAdapter {
 
 	private OrthographicCamera camera;
 	
-	public static final float SCALE = 2f;
-	
-	
 	
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
 		camera = new OrthographicCamera();
+		Assets.loadMainMenuAssets();
 		gsm = new GameStateManager(this);
 	}
 
@@ -39,7 +38,7 @@ public class Game extends ApplicationAdapter {
 	@Override
 	public void resize(int width, int height) {
 		
-		gsm.resize((int) (width /SCALE), (int) (height / SCALE));
+		gsm.resize(width, height);
 		
 		super.resize(width, height);
 	}
