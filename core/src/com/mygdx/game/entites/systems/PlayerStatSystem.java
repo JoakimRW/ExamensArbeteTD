@@ -8,6 +8,7 @@ import com.mygdx.game.controllers.UIStageController;
 import com.mygdx.game.entites.entitiycomponents.*;
 import com.mygdx.game.entites.entitiycomponents.projectile.DestinationComponent;
 import com.mygdx.game.entites.entitiycomponents.tower.*;
+import com.mygdx.game.states.PlayState;
 
 
 /** updates player and tower selection info stats to ui via controller */
@@ -65,7 +66,11 @@ public class PlayerStatSystem extends IteratingSystem {
         }
         
         // Player should have integer values , enemies do not
-        uiController.updateHealth((int) h.health);
+        if(h.health <= 0){
+        	PlayState.GAME_OVER = true;
+        }else{
+            uiController.updateHealth((int) h.health);
+        }  
     }
 }
 

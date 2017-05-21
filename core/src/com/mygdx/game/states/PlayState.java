@@ -10,6 +10,8 @@ import com.mygdx.game.entites.input.InputHandler;
 import com.mygdx.game.managers.EntityManager;
 import com.mygdx.game.managers.GameStateManager;
 import com.mygdx.game.managers.LevelManager;
+import com.mygdx.game.managers.WaveTimeManager;
+import com.mygdx.game.managers.GameStateManager.State;
 import com.mygdx.game.stages.UiView;
 import com.mygdx.game.utils.Assets;
 
@@ -54,7 +56,14 @@ public class PlayState extends GameState {
 
 	@Override
 	public void update(float delta) {
-
+		if(GAME_OVER){
+			System.out.println("lost game");
+			_gsm.setState(State.LOSE);
+		}
+		if(WaveTimeManager.WAVE >= 21){
+			System.out.println("won game");
+			_gsm.setState(State.WIN);
+		}
 	}
 
 	@Override
@@ -71,6 +80,7 @@ public class PlayState extends GameState {
         GAME_OVER = false;
         START_GAME = false;
         PAUSE = false;
+        Gdx.input.setInputProcessor(null);
         _entityManager.dispose();
         LevelManager.dispose();
         Assets.dispose();

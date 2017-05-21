@@ -6,9 +6,12 @@ import java.util.Stack;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.mygdx.game.Game;
 import com.mygdx.game.states.GameState;
+import com.mygdx.game.states.LoseState;
 import com.mygdx.game.states.MainMenuState;
 import com.mygdx.game.states.PlayState;
 import com.mygdx.game.states.SplashState;
+import com.mygdx.game.states.TutorialState;
+import com.mygdx.game.states.WinState;
 
 public class GameStateManager {
 
@@ -18,7 +21,7 @@ public class GameStateManager {
 	private Stack<GameState> states;
 
 	public enum State {
-		SPLASH, PLAY, MAINMENU
+		SPLASH, PLAY, MAINMENU, WIN , LOSE , TUTORIAL
 
 	}
 
@@ -73,9 +76,14 @@ public class GameStateManager {
 			return new SplashState(this);
 		case MAINMENU:
 			return new MainMenuState(this);
+		case LOSE:
+			return new LoseState(this);
+		case WIN:
+			return new WinState(this);
+		case TUTORIAL: 
+			return new TutorialState(this);
 		default:
 			break;
-
 		}
 		return null;
 	}
