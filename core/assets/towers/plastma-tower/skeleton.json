@@ -1,5 +1,5 @@
 {
-"skeleton": { "hash": "nrCN4LcCSnzhESntbzXBo3ips/w", "spine": "3.5.51", "width": 48.07, "height": 48.07, "images": "" },
+"skeleton": { "hash": "R/99kgengY78CNPQTZdKCY2rXrI", "spine": "3.5.51", "width": 48.07, "height": 48.07, "images": "" },
 "bones": [
 	{ "name": "root" },
 	{ "name": "turret", "parent": "root", "length": 11.03, "rotation": 90, "x": -0.15, "y": -0.08 }
@@ -14,7 +14,7 @@
 			"plastma-tower/plastma-tower-base": { "width": 48, "height": 48 }
 		},
 		"plastma-tower/plastma-tower-turret": {
-			"plastma-tower/plastma-tower-turret": { "x": 0.08, "y": -0.15, "rotation": -90.09, "width": 48, "height": 48 }
+			"plastma-tower/plastma-tower-turret": { "x": 0.08, "y": -0.15, "scaleX": 0.886, "scaleY": 0.988, "rotation": -90.09, "width": 48, "height": 48 }
 		}
 	}
 },

@@ -7,14 +7,14 @@ repeat: none
 plastma-tower/plastma-tower-base
   rotate: false
   xy: 2, 2
-  size: 48, 48
+  size: 44, 35
   orig: 48, 48
-  offset: 0, 0
+  offset: 2, 9
   index: -1
 plastma-tower/plastma-tower-turret
   rotate: false
-  xy: 52, 18
-  size: 28, 32
+  xy: 48, 6
+  size: 28, 31
   orig: 48, 48
   offset: 10, 12
   index: -1
