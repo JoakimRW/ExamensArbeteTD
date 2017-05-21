@@ -106,9 +106,11 @@ public abstract class LevelManager {
 	 *         otherwise returns null
 	 **/
 	public static Tile getTile(int x, int y) {
-		if (x > tiles.length - 1 || y > tiles[0].length - 1 || y < 0 || x < 0)
-			return null;
-		return tiles[x][y];
+		if(tiles != null){
+			if (!(x > tiles.length - 1 || y > tiles[0].length - 1 || y < 0 || x < 0))
+				return tiles[x][y];
+		}
+		return null;
 	}
 
 	private static void createTileList() {
