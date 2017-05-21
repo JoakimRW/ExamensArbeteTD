@@ -60,13 +60,13 @@ public class AimingSystem extends IteratingSystem {
 
 		ImmutableArray<Entity> enemies = getEngine().getEntitiesFor(Families.ENEMY);
 		HashMap<Double, Entity> distanceMap = new HashMap<>();
-		for (Entity enemy : enemies) {
-			Vector2 enemyPosition = enemy.getComponent(PositionComponent.class).position;
+		for (int i  = 0; i < enemies.size(); i++) {
+			Vector2 enemyPosition = enemies.get(i).getComponent(PositionComponent.class).position;
 
 			double distance = towerPosition.dst(enemyPosition);
 
 			if (distance < range) {
-				distanceMap.put(distance, enemy);
+				distanceMap.put(distance, enemies.get(i));
 			}
 		}
 		if (distanceMap.isEmpty() || distanceMap.keySet().isEmpty()) {
@@ -95,11 +95,11 @@ public class AimingSystem extends IteratingSystem {
 		}
 		ImmutableArray<Entity> enemies = getEngine().getEntitiesFor(Families.ENEMY);
 		HashMap<Double, Entity> distanceMap = new HashMap<>();
-		for (Entity enemy : enemies) {
-			Vector2 enemyPosition = enemy.getComponent(PositionComponent.class).position;
+		for (int i = 0; i < enemies.size(); i++) {
+			Vector2 enemyPosition = enemies.get(i).getComponent(PositionComponent.class).position;
 
 			double distance = towerPosition.dst(enemyPosition);
-			distanceMap.put(distance, enemy);
+			distanceMap.put(distance, enemies.get(i));
 		}
 		if (distanceMap.isEmpty()) {
 			return null;

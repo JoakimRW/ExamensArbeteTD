@@ -17,7 +17,6 @@ import com.mygdx.game.entites.entitiycomponents.MouseImageComponent;
 import com.mygdx.game.entites.entitiycomponents.OffsetComponent;
 import com.mygdx.game.entites.entitiycomponents.PositionComponent;
 import com.mygdx.game.entites.entitiycomponents.projectile.DestinationComponent;
-import com.mygdx.game.entites.entitiycomponents.tower.TargetComponent;
 import com.mygdx.game.entites.systems.TowerPlacementSystem;
 import com.mygdx.game.managers.GameStateManager;
 import com.mygdx.game.managers.LevelManager;
@@ -100,8 +99,8 @@ public class InputHandler implements InputProcessor {
 			if (projectiles == null) {
 				return;
 			}
-			for (Entity projectile : projectiles) {
-				System.out.println(projectile.getComponent(DestinationComponent.class));
+			for (int i = 0; i < projectiles.size(); i++) {
+				System.out.println(projectiles.get(i).getComponent(DestinationComponent.class));
 			}
 		}
 	}
