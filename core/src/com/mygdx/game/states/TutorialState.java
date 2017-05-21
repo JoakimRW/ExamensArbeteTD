@@ -4,6 +4,7 @@ import com.mygdx.game.managers.GameStateManager;
 
 public class TutorialState extends GameState {
 
+	public TutorialState(GameStateManager gsm) {
 		super(gsm);
 		// TODO Auto-generated constructor stub
 	}
