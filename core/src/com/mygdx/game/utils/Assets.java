@@ -32,6 +32,9 @@ public class Assets {
     public static Skeleton plastmaTowerSkeleton;
     public static AnimationState plastmaTowerAnimationState;
     
+	public static Skeleton missleTowerSkeleton;
+	public static AnimationState missleTowerAnimationState;
+	
     public static Skeleton coinSkeleton;
     public static AnimationState coinAnimationState;
     
@@ -46,6 +49,8 @@ public class Assets {
     // laser textures
     public static Texture laserSmall;
 	public static Texture plastmaProj;
+	public static Texture missile;
+
     
 
     private static Texture loadTexture(String file){
@@ -65,6 +70,7 @@ public class Assets {
         // laser texture
         laserSmall = new Texture(Gdx.files.internal("projectiles/lasers/laser-small.png"));
         plastmaProj = new Texture(Gdx.files.internal("projectiles/lasers/plastma-projectile.png"));
+        missile = new Texture(Gdx.files.internal("projectiles/missile/missile.png"));
         // bloodworm
         bloodWormSkeleton = loadSkeleton("enemies/bloodworm/skeleton.atlas","enemies/bloodworm/skeleton.json");
         bloodWormAnimationState = new AnimationState(new AnimationStateData(bloodWormSkeleton.getData()));
@@ -80,6 +86,9 @@ public class Assets {
         
         plastmaTowerSkeleton = loadSkeleton("towers/plastma-tower/skeleton.atlas", "towers/plastma-tower/skeleton.json");
         plastmaTowerAnimationState = new AnimationState(new AnimationStateData(plastmaTowerSkeleton.getData()));
+        
+        missleTowerSkeleton = loadSkeleton("towers/missle-tower/skeleton.atlas", "towers/missle-tower/skeleton.json");
+        missleTowerAnimationState = new AnimationState(new AnimationStateData(missleTowerSkeleton.getData()));
         // Coin
         coinSkeleton = loadSkeleton("misc/coin/skeleton.atlas", "misc/coin/skeleton.json");
         coinSkeleton.getRootBone().setScale(0.16f);

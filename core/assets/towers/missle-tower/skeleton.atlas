@@ -1,0 +1,20 @@
+
+skeleton.png
+size: 64,64
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+missile-tower/missle-tower-base
+  rotate: false
+  xy: 2, 23
+  size: 44, 35
+  orig: 48, 48
+  offset: 2, 9
+  index: -1
+missile-tower/missle-tower-turret
+  rotate: false
+  xy: 2, 2
+  size: 22, 19
+  orig: 48, 48
+  offset: 13, 14
+  index: -1
