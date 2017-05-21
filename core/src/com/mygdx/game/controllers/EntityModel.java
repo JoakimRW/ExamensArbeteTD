@@ -106,6 +106,15 @@ public class EntityModel extends InputAdapter {
 					fireRateComp._fireRate += fireRateComp.percentageIncrease * stats._towerLevel;
 					dmgComp.setDamage(dmgComp.getDamage() + dmgComp.dmgIncrease * stats._towerLevel);
 					break;
+				case PLASTMA_TOWER:	
+					fireRateComp._fireRate += fireRateComp.percentageIncrease * stats._towerLevel;
+					dmgComp.setDamage(dmgComp.getDamage() + dmgComp.dmgIncrease * stats._towerLevel);
+					break;
+					
+				case MISSILE_TURRET:
+					fireRateComp._fireRate += fireRateComp.percentageIncrease * stats._towerLevel;
+					dmgComp.setDamage(dmgComp.getDamage() + dmgComp.dmgIncrease * stats._towerLevel);
+					break;
 				default:
 					return;
 				}

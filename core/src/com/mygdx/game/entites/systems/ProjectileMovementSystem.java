@@ -90,12 +90,14 @@ public class ProjectileMovementSystem extends IteratingSystem implements EntityL
 
 	@Override
 	public void entityAdded(Entity entity) {
+		/*
 		for (Entity projectile : getEntities()) {
 			if (projectile.getComponent(DestinationComponent.class).getDestinationEntity().getComponents()
 					.size() == 0) {
 				getEngine().removeEntity(projectile);
 			}
 		}
+		*/
 
 	}
 
