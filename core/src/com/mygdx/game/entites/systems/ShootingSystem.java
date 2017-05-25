@@ -48,8 +48,9 @@ public class ShootingSystem extends IteratingSystem {
 			ArrayList<Entity> targets = targetComponent.getTargets();
 			timeComp.time += deltaTime;
 			if(targetComponent.getTarget() != null)
-				if(targetComponent.getTarget().getComponent(FlyingComponent.class) != null)
+				if(Families.FLYING.matches(targetComponent.getTarget()))
 					setTurretAngle(entity);
+			
 			if (timeComp.time > 1 / entity.getComponent(FireRateComponent.class)._fireRate) {
 				for (int i = 0; i < targets.size(); i++ ) {
 					targetComponent.setTarget(targets.get(i));
@@ -76,20 +77,10 @@ public class ShootingSystem extends IteratingSystem {
 		if (target == null || target.getComponent(EnemyComponent.class) == null) {
 			return;
 		}
-		AngleComponent angle = Mappers.ANGLE_M.get(towerEntity);
 		PositionComponent towerPos = Mappers.POSITION_M.get(towerEntity);
 		PositionComponent targetPos = Mappers.POSITION_M.get(target);
 		DamageComponent dmg = Mappers.DAMAGE_M.get(towerEntity);
 		
-		if (targetPos != null) {
-			double difX = targetPos.position.x - towerPos.position.x;
-			double difY = targetPos.position.y - towerPos.position.y;
-			// set direction
-			float angleGoal = (float) Math.toDegrees(Math.atan2(difY, difX));
-			angle.spriteAngle = MathUtils.lerpAngleDeg(angle.spriteAngle, angleGoal,
-					Gdx.graphics.getDeltaTime() + 0.2f);
-		}
-
 		double range = Mappers.RANGE_M.get(towerEntity).getRange();
 		float distance = towerPos.position.dst(targetPos.position);
 

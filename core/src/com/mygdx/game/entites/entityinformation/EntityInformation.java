@@ -26,7 +26,7 @@ public class EntityInformation {
 	private boolean _isSplash;
 	private float _splashRadius;
 	private boolean _isMultiTarget;
-	private int _maxTargets;
+	private int _maxTargets = 1;
 	
 	
 
@@ -185,5 +185,9 @@ public class EntityInformation {
 	public int getMaxTargets() {
 		// TODO Auto-generated method stub
 		return _maxTargets;
+	}
+	
+	public void setMaxTargets(int maxTargets){
+		_maxTargets = maxTargets;
 	}
 }

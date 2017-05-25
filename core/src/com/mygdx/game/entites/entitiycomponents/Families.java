@@ -13,6 +13,7 @@ public class Families {
 	public final static Family RENDERABLE = Family
 			.all(RenderableComponent.class, PositionComponent.class, SkeletonComponent.class).get();
 	public final static Family PROJECTILE = Family.one(ProjectileComponent.class).get();
-	public static Family SPRITE = Family.all(SpriteComponent.class , AngleComponent.class , PositionComponent.class ).get();
+	public final static Family SPRITE = Family.all(SpriteComponent.class , AngleComponent.class , PositionComponent.class ).get();
+	public final static Family FLYING = Family.one(FlyingComponent.class).get();
 
 }
