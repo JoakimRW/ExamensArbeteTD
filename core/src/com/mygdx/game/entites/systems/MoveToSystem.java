@@ -44,13 +44,12 @@ public class MoveToSystem extends IteratingSystem {
 				(posComp.position.y + offComp.offsetY) / 32);
 		Vector2 end = new Vector2(LevelManager.tileEnd.getCords().x / 32, LevelManager.tileEnd.getCords().y / 32);
 
-		pathComp.pathTimer += deltaTime;
+
 		// if entity isn't flying update path
 		// flying enemies doesn't have obstacles so there's no reason for it to
 		// use findPath method
-		if (pathComp.pathTimer >= 0.1f && entity.getComponent(FlyingComponent.class) == null) {
+		if (!Families.FLYING.matches(entity)) {
 			pathComp.path = PathFinder.findPath(start, end, pathComp.canGoDiag, pathComp.isFlying);
-			pathComp.pathTimer = 0;
 		}
 
 		if (pathComp.path != null) {

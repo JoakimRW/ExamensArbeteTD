@@ -12,7 +12,6 @@ import com.mygdx.game.Factory.ProjectileType;
 import com.mygdx.game.Factory.TowerType;
 import com.mygdx.game.entites.entitiycomponents.AngleComponent;
 import com.mygdx.game.entites.entitiycomponents.Families;
-import com.mygdx.game.entites.entitiycomponents.FlyingComponent;
 import com.mygdx.game.entites.entitiycomponents.Mappers;
 import com.mygdx.game.entites.entitiycomponents.MouseImageComponent;
 import com.mygdx.game.entites.entitiycomponents.PositionComponent;
@@ -41,9 +40,9 @@ public class ShootingSystem extends IteratingSystem {
 		
 		TargetComponent targetComponent = Mappers.TARGET_M.get(entity);
 		TowerStatComponent stats = Mappers.TOWER_STATS_M.get(entity);
-		setTurretAngle(entity);
+		
 		if (stats._towerType == TowerType.MISSILE_TURRET) {
-			
+			setTurretAngle(entity);
 			TimeComponent timeComp = Mappers.TIME_M.get(entity);
 			ArrayList<Entity> targets = targetComponent.getTargets();
 			timeComp.time += deltaTime;
@@ -64,6 +63,10 @@ public class ShootingSystem extends IteratingSystem {
 				timeComp.time = 0;
 			}
 		} else {
+			if(targetComponent.getTarget() != null)
+				if(Families.FLYING.matches(targetComponent.getTarget())) return;
+	
+			setTurretAngle(entity);
 			fireAtNearestEnemy(entity, deltaTime);
 		}
 	}

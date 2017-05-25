@@ -16,8 +16,6 @@ public class UIStageController extends ClickListener {
 	private UiView uistage;
 	private EntityModel model;
 	private GameStateManager _gsm;
-	private boolean _isOverUpgradeBtn;
-
 	public UIStageController(UiView uistage, EntityModel model, GameStateManager gsm) {
 		this.uistage = uistage;
 		this.model = model;
@@ -76,7 +74,6 @@ public class UIStageController extends ClickListener {
 			@Override
 			public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
 				super.exit(event, x, y, pointer, toActor);
-				hideUpgradeInfo();
 			}
 		});
 
@@ -132,13 +129,6 @@ public class UIStageController extends ClickListener {
 		});
 	}
 
-	private void showUpgradeInfo() {
-		_isOverUpgradeBtn = true;
-	}
-
-	private void hideUpgradeInfo() {
-		_isOverUpgradeBtn = false;
-	}
 
 	public void showPauseWindow() {
 		PlayState.PAUSE = true;
@@ -194,7 +184,6 @@ public class UIStageController extends ClickListener {
 
 	public void updateUpgradeInfo() {
 		if (isOverUpgradeBtn()) {
-			showUpgradeInfo();
 			if (model.isDamageGreenText())
 				uistage.getTowerSelectDamage().setColor(uistage.getGreen());
 			else
