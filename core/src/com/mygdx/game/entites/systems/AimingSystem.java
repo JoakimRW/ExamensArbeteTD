@@ -84,6 +84,7 @@ public class AimingSystem extends IteratingSystem {
 			multiDistanceList.put(min, distanceMap.get(min));
 			distanceMap.remove(min);
 		}
+		return new ArrayList<Entity>(multiDistanceList.values());
 
 	}
 
