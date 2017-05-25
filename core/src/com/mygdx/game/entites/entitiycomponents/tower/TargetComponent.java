@@ -8,14 +8,15 @@ import com.badlogic.ashley.core.Entity;
 
 public class TargetComponent implements Component {
 	private Entity target;
-	private ArrayList<Entity> targets = new ArrayList<>();
+	private ArrayList<Entity> targets;
 	private boolean isMultiTarget;
-	private int maxTargets = 1;
+	private int maxTargets;
 	
 	public TargetComponent(Entity target , boolean isMultiTarget , int maxTargets){
 		this.target = target;
 		this.isMultiTarget = isMultiTarget;
 		this.maxTargets = maxTargets;
+		targets = new ArrayList<>();
 	}
 	
 
@@ -32,8 +33,8 @@ public class TargetComponent implements Component {
 		return "target = " +target;
 	}
 
-	public void addTargets(List<Entity> target) {
-		targets.addAll(target);
+	public void addTargets(ArrayList<Entity> targets) {
+		this.targets = targets;
 	}
 
 	public ArrayList<Entity> getTargets() {
@@ -48,4 +49,15 @@ public class TargetComponent implements Component {
 		this.isMultiTarget = isMultiTarget;
 	}
 
+
+	public int getMaxTargets() {
+		return maxTargets;
+	}
+
+
+	public void setMaxTargets(int maxTargets) {
+		this.maxTargets = maxTargets;
+	}
+
+	
 }

@@ -41,21 +41,25 @@ public class ShootingSystem extends IteratingSystem {
 		
 		TargetComponent targetComponent = Mappers.TARGET_M.get(entity);
 		TowerStatComponent stats = Mappers.TOWER_STATS_M.get(entity);
-		
+		setTurretAngle(entity);
 		if (stats._towerType == TowerType.MISSILE_TURRET) {
-		
+			
 			TimeComponent timeComp = Mappers.TIME_M.get(entity);
 			ArrayList<Entity> targets = targetComponent.getTargets();
 			timeComp.time += deltaTime;
-			if(targetComponent.getTarget() != null)
-				if(Families.FLYING.matches(targetComponent.getTarget()))
-					setTurretAngle(entity);
+			
 			
 			if (timeComp.time > 1 / entity.getComponent(FireRateComponent.class)._fireRate) {
 				for (int i = 0; i < targets.size(); i++ ) {
+					
+					if(!Families.FLYING.matches(targets.get(i))) {
+						targetComponent.getTargets().remove(i);
+						System.out.println("target size " +  targets.size());
+						continue;
+					}
 					targetComponent.setTarget(targets.get(i));
-					if(targetComponent.getTarget().getComponent(FlyingComponent.class) == null) continue;
 					fireAtNearestEnemies(entity, deltaTime);
+					
 				}
 				timeComp.time = 0;
 			}
@@ -107,9 +111,6 @@ public class ShootingSystem extends IteratingSystem {
 			return;
 		}
 		
-
-
-		setTurretAngle(towerEntity);
 		double range = Mappers.RANGE_M.get(towerEntity).getRange();
 		float distance = towerPos.position.dst(targetPos.position);
 
@@ -139,8 +140,10 @@ public class ShootingSystem extends IteratingSystem {
 		AngleComponent angle = Mappers.ANGLE_M.get(tower);
 		PositionComponent towerPos = Mappers.POSITION_M.get(tower);
 		TargetComponent target = Mappers.TARGET_M.get(tower);
+		TowerStatComponent stats = Mappers.TOWER_STATS_M.get(tower);
 		
 		if (target.getTarget() != null) {
+			if(Families.FLYING.matches(target.getTarget()) && stats._towerType != TowerType.MISSILE_TURRET) return;
 			PositionComponent targetPos = Mappers.POSITION_M.get(target.getTarget());
 			if(targetPos == null) return;
 			double difX = targetPos.position.x - towerPos.position.x;

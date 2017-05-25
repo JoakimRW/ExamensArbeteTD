@@ -44,9 +44,10 @@ public class AimingSystem extends IteratingSystem {
 		}
 	}
 
-	private List<Entity> findNearestEnemies(Entity towerEntity) {
+	private ArrayList<Entity> findNearestEnemies(Entity towerEntity) {
 
 		Vector2 towerPosition = towerEntity.getComponent(PositionComponent.class).position;
+		TargetComponent targetComp = Mappers.TARGET_M.get(towerEntity);
 
 		if (getEngine().getEntitiesFor(Families.ENEMY) == null) {
 			return null;
@@ -75,7 +76,7 @@ public class AimingSystem extends IteratingSystem {
 
 		Map<Double, Entity> multiDistanceList = new HashMap<>();
 
-		for (int i = 0; i < 3; i++) {// TODO
+		for (int i = 0; i < targetComp.getMaxTargets(); i++) {
 			if (distanceMap.isEmpty() || distanceMap.keySet().isEmpty()) {
 				break;
 			}
@@ -83,7 +84,6 @@ public class AimingSystem extends IteratingSystem {
 			multiDistanceList.put(min, distanceMap.get(min));
 			distanceMap.remove(min);
 		}
-		return new ArrayList<>(multiDistanceList.values());
 
 	}
 
