@@ -10,6 +10,13 @@ public class TargetComponent implements Component {
 	private Entity target;
 	private ArrayList<Entity> targets = new ArrayList<>();
 	private boolean isMultiTarget;
+	private int maxTargets = 1;
+	
+	public TargetComponent(Entity target , boolean isMultiTarget , int maxTargets){
+		this.target = target;
+		this.isMultiTarget = isMultiTarget;
+		this.maxTargets = maxTargets;
+	}
 	
 
 	public Entity getTarget() {

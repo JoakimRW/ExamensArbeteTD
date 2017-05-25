@@ -116,7 +116,7 @@ public class EntityFactory {
 		TowerStatComponent towerStatComponent = new TowerStatComponent(information.getCost(), information.getName(),
 				towerType);
 		SpecialTowerComponent specialTowerComponent = new SpecialTowerComponent();
-		TargetComponent targetComponent = new TargetComponent();
+		TargetComponent targetComponent = new TargetComponent(null , information.isMultiTarget() , information.getMaxTargets());
 		TimeComponent timeComponent = new TimeComponent(0);
 		OffsetComponent offsetComponent = new OffsetComponent(information.getOffsetX(), information.getOffsetY());
 		skeletonComponent.skeleton.setPosition(x, y);

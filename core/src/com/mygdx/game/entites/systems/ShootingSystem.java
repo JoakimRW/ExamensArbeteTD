@@ -107,6 +107,9 @@ public class ShootingSystem extends IteratingSystem {
 		DamageComponent dmg = Mappers.DAMAGE_M.get(towerEntity);
 		Entity target = Mappers.TARGET_M.get(towerEntity).getTarget();
 		PositionComponent towerPos = Mappers.POSITION_M.get(towerEntity);
+		if (target == null || target.getComponent(EnemyComponent.class) == null) {
+			return;
+		}
 		PositionComponent targetPos = Mappers.POSITION_M.get(target);
 		
 		if (towerEntity.getComponent(MouseImageComponent.class) != null) {
@@ -114,9 +117,7 @@ public class ShootingSystem extends IteratingSystem {
 		}
 		
 
-		if (target == null || target.getComponent(EnemyComponent.class) == null) {
-			return;
-		}
+
 		setTurretAngle(towerEntity);
 		double range = Mappers.RANGE_M.get(towerEntity).getRange();
 		float distance = towerPos.position.dst(targetPos.position);
