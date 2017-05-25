@@ -97,6 +97,7 @@ public class EntityFactory {
 				.add(damageComponent);
 		if (information.isSplash())
 			entity.add(new SplashComponent(information.getSplashRadius()));
+		information.getSoundEffect().stop();
 		information.getSoundEffect().play(0.01f);
 		_engine.addEntity(entity);
 	}

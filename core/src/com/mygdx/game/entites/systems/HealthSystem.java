@@ -56,7 +56,8 @@ public class HealthSystem extends IteratingSystem {
 		// todo center hp bar
 		sprite.setPosition(pos.position.x, pos.position.y);
 		spriteBg.setPosition(pos.position.x, pos.position.y);
-		sprite.setSize((float) (ratio * healthComp.health), healthBarHeight);
+		if(healthComp.health > 0)
+			sprite.setSize((float) (ratio * healthComp.health), healthBarHeight);
 		// 100 %
 		if (healthComp.health <= healthComp.maxHealth)
 			sprite.setColor(0, 0.75f, 0, 1f);

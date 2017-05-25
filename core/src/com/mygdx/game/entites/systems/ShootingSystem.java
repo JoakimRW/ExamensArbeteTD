@@ -9,8 +9,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.MathUtils;
 import com.mygdx.game.Factory.EntityFactory;
 import com.mygdx.game.Factory.ProjectileType;
+import com.mygdx.game.Factory.TowerType;
 import com.mygdx.game.entites.entitiycomponents.AngleComponent;
 import com.mygdx.game.entites.entitiycomponents.Families;
+import com.mygdx.game.entites.entitiycomponents.FlyingComponent;
 import com.mygdx.game.entites.entitiycomponents.Mappers;
 import com.mygdx.game.entites.entitiycomponents.MouseImageComponent;
 import com.mygdx.game.entites.entitiycomponents.PositionComponent;
@@ -36,40 +38,49 @@ public class ShootingSystem extends IteratingSystem {
 
 	@Override
 	protected void processEntity(Entity entity, float deltaTime) {
+		
 		TargetComponent targetComponent = Mappers.TARGET_M.get(entity);
-		int i = 0;
-
-		if (targetComponent.isMultiTarget()) {
+		TowerStatComponent stats = Mappers.TOWER_STATS_M.get(entity);
+		
+		if (stats._towerType == TowerType.MISSILE_TURRET) {
+		
+			TimeComponent timeComp = Mappers.TIME_M.get(entity);
 			ArrayList<Entity> targets = targetComponent.getTargets();
-			for (Entity target : targets) {
-				targetComponent.setTarget(target);
-				fireAtNearestEnemies(entity, deltaTime);
+			timeComp.time += deltaTime;
+			if(targetComponent.getTarget() != null)
+				if(targetComponent.getTarget().getComponent(FlyingComponent.class) != null)
+					setTurretAngle(entity);
+			if (timeComp.time > 1 / entity.getComponent(FireRateComponent.class)._fireRate) {
+				for (int i = 0; i < targets.size(); i++ ) {
+					targetComponent.setTarget(targets.get(i));
+					if(targetComponent.getTarget().getComponent(FlyingComponent.class) == null) continue;
+					fireAtNearestEnemies(entity, deltaTime);
+				}
+				timeComp.time = 0;
 			}
-
 		} else {
-
 			fireAtNearestEnemy(entity, deltaTime);
 		}
 	}
 
 	private void fireAtNearestEnemies(Entity towerEntity, float deltaTime) {
 		// get tower type to know witch projectile to spawn
-		TowerStatComponent towerStat = Mappers.TOWER_STATS_M.get(towerEntity);
+	
 		if (towerEntity.getComponent(MouseImageComponent.class) != null) {
 			return;
 		}
+		
 		TargetComponent targetComponent = Mappers.TARGET_M.get(towerEntity);
 		Entity target = targetComponent.getTarget();
 
 		if (target == null || target.getComponent(EnemyComponent.class) == null) {
 			return;
 		}
-
 		AngleComponent angle = Mappers.ANGLE_M.get(towerEntity);
 		PositionComponent towerPos = Mappers.POSITION_M.get(towerEntity);
 		PositionComponent targetPos = Mappers.POSITION_M.get(target);
-		TimeComponent time = Mappers.TIME_M.get(towerEntity);
 		DamageComponent dmg = Mappers.DAMAGE_M.get(towerEntity);
+		
 		if (targetPos != null) {
 			double difX = targetPos.position.x - towerPos.position.x;
 			double difY = targetPos.position.y - towerPos.position.y;
@@ -85,52 +96,28 @@ public class ShootingSystem extends IteratingSystem {
 		if (distance > range) {
 			return;
 		}
+		_entityFactory.createProjectileEntity(ProjectileType.MISSLE, towerEntity, targetComponent.getTarget(), dmg.getDamage());
 
-		time.time += deltaTime;
-		if (time.time > 1 / towerEntity.getComponent(FireRateComponent.class)._fireRate) {
-
-			switch (towerStat._towerType) {
-			case MISSILE_TURRET:
-				ArrayList<Entity> targets = targetComponent.getTargets();
-
-				for (Entity entity : targets) {
-					_entityFactory.createProjectileEntity(ProjectileType.MISSLE, towerEntity, entity, dmg.getDamage());
-				}
-				break;
-			default:
-				break;
-			}
-
-			time.time = 0;
-		}
 	}
 
 	private void fireAtNearestEnemy(Entity towerEntity, float deltaTime) {
 		// get tower type to know witch projectile to spawn
 		TowerStatComponent towerStat = Mappers.TOWER_STATS_M.get(towerEntity);
+		TimeComponent time = Mappers.TIME_M.get(towerEntity);
+		DamageComponent dmg = Mappers.DAMAGE_M.get(towerEntity);
+		Entity target = Mappers.TARGET_M.get(towerEntity).getTarget();
+		PositionComponent towerPos = Mappers.POSITION_M.get(towerEntity);
+		PositionComponent targetPos = Mappers.POSITION_M.get(target);
+		
 		if (towerEntity.getComponent(MouseImageComponent.class) != null) {
 			return;
 		}
-		Entity target = Mappers.TARGET_M.get(towerEntity).getTarget();
+		
 
 		if (target == null || target.getComponent(EnemyComponent.class) == null) {
 			return;
 		}
-
-		AngleComponent angle = Mappers.ANGLE_M.get(towerEntity);
-		PositionComponent towerPos = Mappers.POSITION_M.get(towerEntity);
-		PositionComponent targetPos = Mappers.POSITION_M.get(target);
-		TimeComponent time = Mappers.TIME_M.get(towerEntity);
-		DamageComponent dmg = Mappers.DAMAGE_M.get(towerEntity);
-		if (targetPos != null) {
-			double difX = targetPos.position.x - towerPos.position.x;
-			double difY = targetPos.position.y - towerPos.position.y;
-			// set direction
-			float angleGoal = (float) Math.toDegrees(Math.atan2(difY, difX));
-			angle.spriteAngle = MathUtils.lerpAngleDeg(angle.spriteAngle, angleGoal,
-					Gdx.graphics.getDeltaTime() + 0.2f);
-		}
-
+		setTurretAngle(towerEntity);
 		double range = Mappers.RANGE_M.get(towerEntity).getRange();
 		float distance = towerPos.position.dst(targetPos.position);
 
@@ -148,14 +135,28 @@ public class ShootingSystem extends IteratingSystem {
 			case PLASTMA_TOWER:
 				_entityFactory.createProjectileEntity(ProjectileType.PLASTMA, towerEntity, target, dmg.getDamage());
 				break;
-			case MISSILE_TURRET:
-				_entityFactory.createProjectileEntity(ProjectileType.MISSLE, towerEntity, target, dmg.getDamage());
-				break;
 			default:
 				break;
 			}
 
 			time.time = 0;
+		}
+	}
+	
+	public void setTurretAngle(Entity tower){
+		AngleComponent angle = Mappers.ANGLE_M.get(tower);
+		PositionComponent towerPos = Mappers.POSITION_M.get(tower);
+		TargetComponent target = Mappers.TARGET_M.get(tower);
+		
+		if (target.getTarget() != null) {
+			PositionComponent targetPos = Mappers.POSITION_M.get(target.getTarget());
+			if(targetPos == null) return;
+			double difX = targetPos.position.x - towerPos.position.x;
+			double difY = targetPos.position.y - towerPos.position.y;
+			// set direction
+			float angleGoal = (float) Math.toDegrees(Math.atan2(difY, difX));
+			angle.spriteAngle = MathUtils.lerpAngleDeg(angle.spriteAngle, angleGoal,
+					Gdx.graphics.getDeltaTime() + 0.2f);
 		}
 	}
 }

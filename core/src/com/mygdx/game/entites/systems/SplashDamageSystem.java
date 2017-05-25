@@ -41,13 +41,12 @@ public class SplashDamageSystem extends IteratingSystem implements EntityListene
 			ImmutableArray<Entity> enemies = getEngine().getEntitiesFor(Families.ENEMY);
 			final ArrayList<Entity> enemiesToDamage = new ArrayList<>();
 			for(int i = 0; i < enemies.size() ; i++){
-				Entity enemy = enemies.get(i);
-				if(enemy.equals(targetedEnemy)) continue;
-				PositionComponent enemyPos = Mappers.POSITION_M.get(enemy);
-				if(enemiesToDamage.contains(enemy)) continue;
+				if(enemies.get(i).equals(targetedEnemy)) continue;
+				PositionComponent enemyPos = Mappers.POSITION_M.get(enemies.get(i));
+				if(enemiesToDamage.contains(enemies.get(i))) continue;
 					if(enemyPos.position.dst(splashPos.position) < splash.radius){
 						// todo 
-						enemiesToDamage.add(enemy);
+						enemiesToDamage.add(enemies.get(i));
 					}
 			}
 			
