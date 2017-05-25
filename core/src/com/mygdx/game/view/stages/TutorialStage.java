@@ -1,4 +1,4 @@
-package com.mygdx.game.stages;
+package com.mygdx.game.view.stages;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 

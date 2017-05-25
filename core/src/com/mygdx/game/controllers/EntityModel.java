@@ -14,7 +14,7 @@ import com.mygdx.game.entites.entitiycomponents.PositionComponent;
 import com.mygdx.game.entites.entitiycomponents.tower.DamageComponent;
 import com.mygdx.game.entites.entitiycomponents.tower.FireRateComponent;
 import com.mygdx.game.entites.entitiycomponents.tower.TowerStatComponent;
-import com.mygdx.game.entites.input.InputHandler;
+import com.mygdx.game.input.InputHandler;
 import com.mygdx.game.managers.LevelManager;
 import com.mygdx.game.managers.WaveTimeManager;
 import com.mygdx.game.utils.Tile;

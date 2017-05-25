@@ -5,7 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.managers.GameStateManager;
 import com.mygdx.game.managers.GameStateManager.State;
-import com.mygdx.game.stages.LoseStage;
+import com.mygdx.game.view.stages.LoseStage;
 
 public class LoseState extends GameState {
 	

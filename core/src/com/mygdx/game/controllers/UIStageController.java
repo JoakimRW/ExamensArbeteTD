@@ -8,8 +8,9 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.managers.GameStateManager;
-import com.mygdx.game.stages.UiView;
 import com.mygdx.game.states.PlayState;
+import com.mygdx.game.utils.Assets;
+import com.mygdx.game.view.stages.UiView;
 
 public class UIStageController extends ClickListener {
 
@@ -89,42 +90,43 @@ public class UIStageController extends ClickListener {
 		uistage.get_laserTowerIcon().addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				uistage.get_tooltip().hide();
+				uistage.getLaserTowerTooltip().getTooltip().hide();
 				EntityModel.beginTowerPlacing(BASIC_LASER_TURRET);
 			}
 
 			@Override
 			public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
 				super.enter(event, x, y, pointer, fromActor);
-				uistage.get_tooltip().setInstant(true);
+				System.out.println("enter laser turret icon");
+				uistage.getLaserTowerTooltip().getTooltip().setInstant(true);
 			}
 		});
-		
+		/* plastma tower icon */
 		uistage.getPlastmaTowerIcon().addListener(new ClickListener(){
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				uistage.get_tooltip().hide();
+				uistage.getPlastmaTowerTooltipTable().getTooltip().hide();
 				EntityModel.beginTowerPlacing(PLASTMA_TOWER);
 			}
 
 			@Override
 			public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
 				super.enter(event, x, y, pointer, fromActor);
-				uistage.get_tooltip().setInstant(true);
+				uistage.getPlastmaTowerTooltipTable().getManager().instant();
 			}
 		});
-		
+		/* missile tower icon */
 		uistage.getMissleTowerIcon().addListener(new ClickListener(){
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				uistage.get_tooltip().hide();
+				uistage.getMissileTowerTooltipTable().getTooltip().hide();
 				EntityModel.beginTowerPlacing(MISSILE_TURRET);
 			}
 
 			@Override
 			public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
 				super.enter(event, x, y, pointer, fromActor);
-				uistage.get_tooltip().setInstant(true);
+				uistage.getMissileTowerTooltipTable().getManager().instant();
 			}
 		});
 	}
@@ -185,15 +187,15 @@ public class UIStageController extends ClickListener {
 	public void updateUpgradeInfo() {
 		if (isOverUpgradeBtn()) {
 			if (model.isDamageGreenText())
-				uistage.getTowerSelectDamage().setColor(uistage.getGreen());
+				uistage.getTowerSelectDamage().setColor(Assets.greenColor);
 			else
 				uistage.getTowerSelectDamage().setColor(Color.WHITE);
 			if (model.isIsfireRateGreenText())
-				uistage.getTowerSelectFireRate().setColor(uistage.getGreen());
+				uistage.getTowerSelectFireRate().setColor(Assets.greenColor);
 			else
 				uistage.getTowerSelectFireRate().setColor(Color.WHITE);
 			if (model.isRangeGreenText())
-				uistage.getTowerSelectRange().setColor(uistage.getGreen());
+				uistage.getTowerSelectRange().setColor(Assets.greenColor);
 			else
 				uistage.getTowerSelectRange().setColor(Color.WHITE);
 		} else {

@@ -1,88 +1,102 @@
 atlas-ui.png
-size: 929, 682
+size: 929, 700
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 black-rectangle-hover
   rotate: false
-  xy: 743, 94
+  xy: 1, 1
   size: 174, 155
   orig: 174, 155
   offset: 0, 0
   index: -1
 button-large
   rotate: false
-  xy: 299, 1
+  xy: 176, 1
   size: 160, 60
   orig: 160, 60
   offset: 0, 0
   index: -1
 button-small
   rotate: false
-  xy: 18, 1
+  xy: 337, 1
   size: 100, 37
   orig: 100, 37
   offset: 0, 0
   index: -1
 button
   rotate: false
-  xy: 525, 1
+  xy: 438, 1
   size: 391, 92
   orig: 391, 92
   offset: 0, 0
   index: -1
 coin
   rotate: false
-  xy: 248, 1
+  xy: 830, 1
   size: 50, 46
   orig: 50, 46
   offset: 0, 0
   index: -1
 gray-panel
   rotate: false
-  xy: 1, 250
+  xy: 1, 157
   size: 400, 200
   orig: 400, 200
   offset: 0, 0
   index: -1
 heart
   rotate: false
-  xy: 460, 1
+  xy: 402, 157
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
-pause-bg
+laser-tower-icon
   rotate: false
-  xy: 1, 94
-  size: 100, 100
-  orig: 100, 100
-  offset: 0, 0
-  index: -1
-statPanel
-  rotate: false
-  xy: 119, 1
-  size: 128, 40
-  orig: 128, 40
-  offset: 0, 0
-  index: -1
-turret-icon
-  rotate: false
-  xy: 1, 1
+  xy: 467, 157
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
+missle-tower-icon
+  rotate: false
+  xy: 484, 157
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+pause-bg
+  rotate: false
+  xy: 533, 157
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+plastma-tower-icon
+  rotate: false
+  xy: 634, 157
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+statPanel
+  rotate: false
+  xy: 683, 157
+  size: 128, 40
+  orig: 128, 40
+  offset: 0, 0
+  index: -1
 ui-bg2
   rotate: false
-  xy: 102, 94
+  xy: 1, 358
   size: 640, 110
   orig: 640, 110
   offset: 0, 0
   index: -1
 uibg
   rotate: false
-  xy: 1, 451
+  xy: 1, 469
   size: 927, 230
   orig: 927, 230
   offset: 0, 0

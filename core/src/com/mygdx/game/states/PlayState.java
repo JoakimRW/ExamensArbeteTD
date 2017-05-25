@@ -6,14 +6,14 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.mygdx.game.Factory.EntityFactory;
-import com.mygdx.game.entites.input.InputHandler;
+import com.mygdx.game.input.InputHandler;
 import com.mygdx.game.managers.EntityManager;
 import com.mygdx.game.managers.GameStateManager;
 import com.mygdx.game.managers.LevelManager;
 import com.mygdx.game.managers.WaveTimeManager;
 import com.mygdx.game.managers.GameStateManager.State;
-import com.mygdx.game.stages.UiView;
 import com.mygdx.game.utils.Assets;
+import com.mygdx.game.view.stages.UiView;
 
 public class PlayState extends GameState {
 

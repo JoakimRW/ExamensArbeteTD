@@ -7,7 +7,6 @@ import com.mygdx.game.Factory.EntityFactory;
 import com.mygdx.game.controllers.EntityModel;
 import com.mygdx.game.controllers.UIStageController;
 import com.mygdx.game.entites.entitiycomponents.Families;
-import com.mygdx.game.entites.input.InputHandler;
 import com.mygdx.game.entites.systems.AimingSystem;
 import com.mygdx.game.entites.systems.CameraMovementSystem;
 import com.mygdx.game.entites.systems.CoinSystem;
@@ -22,8 +21,9 @@ import com.mygdx.game.entites.systems.SplashDamageSystem;
 import com.mygdx.game.entites.systems.SpriteRenderSystem;
 import com.mygdx.game.entites.systems.TowerPlacementSystem;
 import com.mygdx.game.entites.systems.TowerSelectionSystem;
-import com.mygdx.game.stages.UiView;
+import com.mygdx.game.input.InputHandler;
 import com.mygdx.game.states.PlayState;
+import com.mygdx.game.view.stages.UiView;
 
 public class EntityManager {
 	private final CoinSystem coinSystem;

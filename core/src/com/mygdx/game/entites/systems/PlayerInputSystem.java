@@ -7,7 +7,7 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.mygdx.game.entites.entitiycomponents.*;
 import com.mygdx.game.entites.entitiycomponents.player.PlayerComponent;
 import com.mygdx.game.entites.entitiycomponents.projectile.DestinationComponent;
-import com.mygdx.game.entites.input.InputHandlerIF;
+import com.mygdx.game.input.InputHandlerIF;
 
 public class PlayerInputSystem extends IteratingSystem implements InputHandlerIF {
 

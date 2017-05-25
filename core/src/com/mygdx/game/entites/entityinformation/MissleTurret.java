@@ -13,8 +13,8 @@ public class MissleTurret extends EntityInformation {
 		setAnimationStateData(Assets.missleTowerAnimationState.getData());
 		setSkeleton(Assets.missleTowerSkeleton);
 		setCost(100d);
-		setDescription("THe missile tower fires mutlible missles at air targets , but cannot fire at ground targets.");
-		setName("Missle Tower");
+		setDescription("The missile tower fires mutlible missles at air targets , but cannot fire at ground targets.");
+		setName("Missile Tower");
 		setOffsetX(0);
 		setOffsetY(0);
 		setMultiTarget(true);

@@ -1,4 +1,4 @@
-package com.mygdx.game.entites.input;
+package com.mygdx.game.input;
 
 import com.badlogic.ashley.core.Entity;
 

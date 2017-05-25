@@ -7,6 +7,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Cursor;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -53,6 +54,7 @@ public class Assets {
 	public static Texture missile;
 	public static Skin mainMenuSkin;
 	public static Skin uiSkin;
+	public static Color greenColor;
 
     
 
@@ -61,6 +63,8 @@ public class Assets {
     }
 
     public static void loadGameStageAssets() {
+    	// colors
+    	greenColor = new Color(0.1f , 0.8f , 0.1f,1f);
         // music
         laserMillenium = Gdx.audio.newMusic(Gdx.files.internal("music/Laser_Millenium.ogg"));
         laserMillenium.setVolume(0.1f);

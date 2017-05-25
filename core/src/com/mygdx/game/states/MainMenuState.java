@@ -2,7 +2,7 @@ package com.mygdx.game.states;
 
 import com.badlogic.gdx.Gdx;
 import com.mygdx.game.managers.GameStateManager;
-import com.mygdx.game.stages.MainMenuStage;
+import com.mygdx.game.view.stages.MainMenuStage;
 
 public class MainMenuState extends GameState {
 

@@ -1,8 +1,7 @@
-package com.mygdx.game.stages;
+package com.mygdx.game.view.stages;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -10,27 +9,21 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.*;
 import com.mygdx.game.Factory.TowerType;
-import com.mygdx.game.entites.entityinformation.EntityMapper;
 import com.mygdx.game.managers.WaveTimeManager;
 import com.mygdx.game.states.PlayState;
 import com.mygdx.game.utils.Assets;
+import com.mygdx.game.view.tooltip.LaserTowerTooltipTable;
+import com.mygdx.game.view.tooltip.MissileTowerTooltipTable;
+import com.mygdx.game.view.tooltip.PlastmaTowerTooltipTable;
+import com.mygdx.game.view.tooltip.TooltipTable;
 
 
 public class UiView implements Screen {
 
-    // mapper info
-    private EntityMapper _mapper;
 
     // laser tower
-    private final String basicLaserTowerName;
-    private final double basicLaserTowerFireRate;
-    private final double basicLaserTowerPrice;
-    private final double basicLaserTowerDamage;
-    private final double basicLaserTowerRange;
-    private final String basicLaserTowerDescription;
 
     private Table _rootTable;
-    private Tooltip<Table> _tooltip;
     private Image _laserTowerIcon;
     private Image _plastmaTowerIcon;
     private Image _missleTurretIcon;
@@ -44,15 +37,6 @@ public class UiView implements Screen {
     private Label healthLabel;
     private Label moneyLabel;
 
-    // tooltip for tower
-    private Table _tooltipTable;
-    private TooltipManager _manager;
-    private Label toolTip_towerName_lbl;
-    private Label toolTip_val_fireRate_lbl;
-    private Label toolTip_val_damage_lbl;
-    private Label toolTip_val_range_lbl;
-    private Label toolTip_val_special_lbl;
-    private Label toolTip_val_price_lbl;
     // pause window
     private Window _pauseWindow;
 
@@ -70,33 +54,30 @@ public class UiView implements Screen {
     private TextButton _resumeButton;
     private TextButton _mainMenuButton;
     private Table uiPanel;
-    private Color green;
     private boolean isOverUpgradeButton;
 
-    public UiView(){
-        _mapper = new EntityMapper();
-        basicLaserTowerPrice = _mapper.getTowerInformation(TowerType.BASIC_LASER_TURRET).getCost();
-        basicLaserTowerFireRate = _mapper.getTowerInformation(TowerType.BASIC_LASER_TURRET).getFireRate();
-        basicLaserTowerDamage = _mapper.getTowerInformation(TowerType.BASIC_LASER_TURRET).getDamage();
-        basicLaserTowerRange = _mapper.getTowerInformation(TowerType.BASIC_LASER_TURRET).getRange();
-        basicLaserTowerDescription = _mapper.getTowerInformation(TowerType.BASIC_LASER_TURRET).getDescription();
-        basicLaserTowerName = _mapper.getTowerInformation(TowerType.BASIC_LASER_TURRET).getName();
+	private LaserTowerTooltipTable _laserTowerTooltipTable;
+	private PlastmaTowerTooltipTable _plastmaTowerTooltipTable;
+	private MissileTowerTooltipTable _missileTowerTooltipTable;
+	
 
+    public UiView(){
+    	
     }
 
     @Override
     public void show() {
-        // colors for fonts
-        green = new Color(0.1f , 0.8f , 0.1f,1f);
         OrthographicCamera _uiCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         _uiStage = new Stage(new ScreenViewport(_uiCamera));
         // create skin
         _skin = createSkin();
+        
         // create pause window
         createPauseWindow();
         // create tooltip
-        createTooltipTable();
-
+        _laserTowerTooltipTable = new LaserTowerTooltipTable(_skin, TowerType.BASIC_LASER_TURRET);
+        _plastmaTowerTooltipTable = new PlastmaTowerTooltipTable(_skin, TowerType.PLASTMA_TOWER);
+        _missileTowerTooltipTable = new MissileTowerTooltipTable(_skin, TowerType.MISSILE_TURRET);
         // root table
         _rootTable = createRootTable();
         // PANEL that show info about the selected tower
@@ -120,7 +101,7 @@ public class UiView implements Screen {
         _uiStage.addActor(_pauseWindow);
     }
 
-    private Table createUiPanel() {
+	private Table createUiPanel() {
         Table uiPanel = new Table(_skin);
         uiPanel.setBackground("ui-bg2");
         return uiPanel;
@@ -154,7 +135,7 @@ public class UiView implements Screen {
         Table leftTowerSelectSection = new Table(_skin);
             // tower name
             _towerSelectName = new Label("",_skin);
-            _towerSelectName.setColor(green);
+            _towerSelectName.setColor(Assets.greenColor);
         Table name = createStatPanel();
 
         name.add(_towerSelectName).pad(0 , 10,  0 ,10).align(Align.left).expand().fill();
@@ -232,6 +213,12 @@ public class UiView implements Screen {
         moneyStatPanel.add(moneyLabel).align(Align.right).pad(5 , 5 , 5 ,10).expand();
         towerListContainer.add(moneyStatPanel).align(Align.right).size(120 , 30).spaceBottom(2).row();
         Table grayPanel2 = createGrayPanel();
+        _laserTowerIcon = new Image(_skin , "laser-tower-icon");
+        _plastmaTowerIcon = new Image(_skin , "plastma-tower-icon");
+        _missleTurretIcon = new Image(_skin,"missle-tower-icon");
+        _laserTowerIcon.addListener(_laserTowerTooltipTable.getTooltip());
+        _plastmaTowerIcon.addListener(_plastmaTowerTooltipTable.getTooltip());
+        _missleTurretIcon.addListener(_missileTowerTooltipTable.getTooltip());
         grayPanel2.add(_laserTowerIcon).size(32,32).pad(10).align(Align.topLeft).expand();
         grayPanel2.add(_plastmaTowerIcon).size(32,32).pad(10).align(Align.topLeft).expand();
         grayPanel2.add(_missleTurretIcon).size(32, 32).pad(10).align(Align.topLeft).expand();
@@ -299,69 +286,7 @@ public class UiView implements Screen {
         _pauseWindow.add(root);
     }
 
-    private void createTooltipTable(){
-        // tooltip stuff
-        _tooltipTable = new Table(_skin);
-        _tooltipTable.background(_skin.getDrawable("black-rectangle-hover"));
-        _laserTowerIcon = new Image(_skin.getDrawable("turret-icon"));
-        _laserTowerIcon.setSize(32 , 32);
-        
-        _plastmaTowerIcon = new Image(_skin.getDrawable("turret-icon"));
-        _plastmaTowerIcon.setSize(32 , 32);
-        
-        _missleTurretIcon = new Image(_skin.getDrawable("turret-icon"));
-        _missleTurretIcon.setSize(32 , 32);
-        
-        _manager = new TooltipManager();
-        _manager.instant();
-        _manager.offsetX = 0;
-        _manager.offsetY = 0;
-        _manager.animations = false;
-        _tooltip = new Tooltip<>(_tooltipTable , _manager);
-        _laserTowerIcon.addListener(_tooltip);
-        _plastmaTowerIcon.addListener(_tooltip);
-        _missleTurretIcon.addListener(_tooltip);
-
-        // labels for tooltip
-        toolTip_towerName_lbl = new Label(basicLaserTowerName,_skin , "tooltipFont" , "white");
-        toolTip_towerName_lbl.setColor(green);
-        Label toolTip_text_fireRate_lbl = new Label("Fire rate:", _skin);
-        toolTip_val_fireRate_lbl = new Label(String.format("%.1f/S",basicLaserTowerFireRate) , _skin);
-        Label toolTip_text_damage_lbl = new Label("Damage:", _skin);
-        toolTip_val_damage_lbl = new Label(String.format("%.0f",basicLaserTowerDamage),_skin);
-        Label toolTip_text_range_lbl = new Label("Range:", _skin);
-        toolTip_val_range_lbl = new Label(String.format("%.0f",basicLaserTowerRange) ,_skin);
-
-        Label description = new Label(basicLaserTowerDescription , _skin);
-        description.setColor(green);
-        description.setWrap(true);
-        Label toolTip_text_special_lbl = new Label("Special:", _skin);
-        toolTip_val_special_lbl = new Label("Fast",_skin);
-        Label toolTip_text_price_lbl = new Label("Price:", _skin);
-        toolTip_val_price_lbl = new Label( String.format( "%.0f" , basicLaserTowerPrice ),_skin);
-        // Add labels to tooltip table
-        _tooltipTable.defaults().grow();
-        _tooltipTable.add(toolTip_towerName_lbl).align(Align.left);
-        _tooltipTable.row();
-        _tooltipTable.add(toolTip_text_fireRate_lbl).align(Align.left);
-        _tooltipTable.add(toolTip_val_fireRate_lbl).align(Align.right);
-        _tooltipTable.row();
-        _tooltipTable.add(toolTip_text_damage_lbl).align(Align.left);
-        _tooltipTable.add(toolTip_val_damage_lbl).align(Align.right);
-        _tooltipTable.row();
-        _tooltipTable.add(toolTip_text_range_lbl).align(Align.left);
-        _tooltipTable.add(toolTip_val_range_lbl).align(Align.right);
-        _tooltipTable.row();
-        _tooltipTable.add(toolTip_text_special_lbl).align(Align.left);
-        _tooltipTable.add(toolTip_val_special_lbl).align(Align.right);
-        _tooltipTable.row();
-        _tooltipTable.add(description).align(Align.left).colspan(2);
-        _tooltipTable.row();
-        _tooltipTable.add(toolTip_text_price_lbl).align(Align.left);
-        _tooltipTable.add(toolTip_val_price_lbl).align(Align.right);
-        _tooltipTable.pad(8);
-        _tooltipTable.align(Align.left);
-    }
+    
 
     @Override
     public void render(float delta) {
@@ -448,29 +373,24 @@ public class UiView implements Screen {
 
     public Label get_nextWaveTimeValue() {return _next_wave_time_value;}
 
-    public Label gettoolTip_towerName_lbl() {return toolTip_towerName_lbl;}
-
-    public Label gettoolTip_val_fireRate_lbl() {return toolTip_val_fireRate_lbl;}
-
-    public Label getToolTip_val_damage_lbl() {return toolTip_val_damage_lbl;}
-
-    public Label getToolTip_val_range_lbl() {return toolTip_val_range_lbl;}
-
-    public Label getToolTip_val_special_lbl() {return toolTip_val_special_lbl;}
-
-    public Label getToolTip_val_price_lbl() {return toolTip_val_price_lbl;}
 
     public Stage getStage(){
         return _uiStage;
     }
 
-    public Table getTooltipTable() {
-        return _tooltipTable;
+    public TooltipTable getLaserTowerTooltip() {
+        return _laserTowerTooltipTable;
     }
+    
+    public PlastmaTowerTooltipTable getPlastmaTowerTooltipTable() {
+		return _plastmaTowerTooltipTable;
+	}
 
-    public Tooltip<Table> get_tooltip() {
-        return _tooltip;
-    }
+
+	public MissileTowerTooltipTable getMissileTowerTooltipTable() {
+		return _missileTowerTooltipTable;
+	}
+
 
     public Image get_laserTowerIcon() {
         return _laserTowerIcon;
@@ -508,16 +428,8 @@ public class UiView implements Screen {
         return _uiStage;
     }
 
-    public Table get_tooltipTable() {
-        return _tooltipTable;
-    }
-
     public Table getTowerSelectPanel() {
         return _towerSelectPanel;
-    }
-
-    public TooltipManager get_manager() {
-        return _manager;
     }
 
     public Label getMoneyLabel() { return moneyLabel; }
@@ -528,10 +440,6 @@ public class UiView implements Screen {
 
     public Label getHealthLabel() {
         return healthLabel;
-    }
-
-    public Color getGreen() {
-        return green;
     }
 
     public boolean isOverUpgradeButton() {
