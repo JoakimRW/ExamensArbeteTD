@@ -22,11 +22,11 @@ import com.mygdx.game.utils.TileType;
 
 public class EntityModel extends InputAdapter {
 
-	private WaveTimeManager waveMngr;
 	private static EntityFactory _factory;
 	private static OrthographicCamera _gameCamera;
 	private static Engine _ashleyEngine;
 	private Entity _selectedTower;
+	private String nextEnemy;
 
 	// upgrade info
 	private double upgradeRange = 0;
@@ -38,8 +38,6 @@ public class EntityModel extends InputAdapter {
 
 	public EntityModel(WaveTimeManager waveMngr, EntityFactory factory, OrthographicCamera gameCamera,
 			Engine ashleyEngine) {
-
-		this.waveMngr = waveMngr;
 		_factory = factory;
 		_gameCamera = gameCamera;
 		_ashleyEngine = ashleyEngine;
@@ -66,10 +64,13 @@ public class EntityModel extends InputAdapter {
 	public Entity getSelectedTower() {
 		return _selectedTower;
 	}
-
-	public String getNextWave() {
-		return waveMngr.getEnemyName() != null ? waveMngr.getEnemyName().toString() : "";
+	public void setNextEnemy(String nextEnemy){
+		this.nextEnemy = nextEnemy;
 	}
+	public String getNextEnemy() {
+		return nextEnemy;
+	}
+	
 
 	public void sellSelectedTower() {
 		if (_selectedTower != null) {

@@ -1,6 +1,7 @@
 package com.mygdx.game.managers;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -12,6 +13,8 @@ import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.Factory.EnemyName;
+import com.mygdx.game.states.PlayState;
 import com.mygdx.game.utils.Tile;
 import com.mygdx.game.utils.TileType;
 
@@ -35,6 +38,7 @@ public abstract class LevelManager {
 	private static ShapeRenderer shapeRenderer = new ShapeRenderer();
 	public static Tile tileSpawn;
 	public static Tile tileEnd;
+	public static ArrayList<EnemyName> waveList;
 
 	/**
 	 * Loads the level and inits all the public variables for this class
@@ -78,6 +82,7 @@ public abstract class LevelManager {
 		tileEnd.setIsPlaceable(false);
 		tileSpawn = getTile((int) spawnLocations.get(0).x / 32, (int) spawnLocations.get(0).y / 32);
 		tileSpawn.setIsPlaceable(false);
+		createWaveList();
 	}
 
 	private static boolean checkIfWall(int x, int y) {
@@ -192,6 +197,15 @@ public abstract class LevelManager {
 				}
 				shapeRenderer.end();
 			}
+		}
+	}
+	
+	private static void createWaveList(){
+		waveList = new ArrayList<>();
+		for(int i = 0; i < PlayState.MAX_WAVES; i++){
+			final int rand = new Random().nextInt(EnemyName.values().length);
+			EnemyName enemyName = EnemyName.values()[rand];
+			waveList.add(enemyName);
 		}
 	}
 

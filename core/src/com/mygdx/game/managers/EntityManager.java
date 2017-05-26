@@ -23,7 +23,7 @@ import com.mygdx.game.entites.systems.TowerPlacementSystem;
 import com.mygdx.game.entites.systems.TowerSelectionSystem;
 import com.mygdx.game.input.InputHandler;
 import com.mygdx.game.states.PlayState;
-import com.mygdx.game.view.stages.UiView;
+import com.mygdx.game.view.stages.UiStage;
 
 public class EntityManager {
 	private final CoinSystem coinSystem;
@@ -34,16 +34,16 @@ public class EntityManager {
 	private InputHandler inputhandler;//
 
 	public EntityManager(Engine ashleyEngine, SpriteBatch batch, OrthographicCamera gameCamera,
-			InputHandler inputhandler, UiView _uiView, GameStateManager gsm,EntityFactory entityFactory) {
+			InputHandler inputhandler, UiStage _uiStage, GameStateManager gsm,EntityFactory entityFactory) {
 		this._ashleyEngine = ashleyEngine;
 		this.inputhandler = inputhandler;
 
 		setEntityFactory(entityFactory);
-		_waveManager = new WaveTimeManager(getEntityFactory());
+		
 		EntityModel _entityModel = new EntityModel(_waveManager, getEntityFactory(), gameCamera, ashleyEngine);
-		uiController = new UIStageController(_uiView, _entityModel, gsm);
+		uiController = new UIStageController(_uiStage , _entityModel, gsm);
 		getEntityFactory().createPlayerEntity();
-
+		_waveManager = new WaveTimeManager(getEntityFactory() , uiController);
 		MoveToSystem moveToSystem = new MoveToSystem(gameCamera);
 		coinSystem = new CoinSystem(gameCamera);
 		PlayerStatSystem statSystem = new PlayerStatSystem(uiController, _entityModel);

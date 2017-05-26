@@ -23,7 +23,7 @@ import com.mygdx.game.view.tooltip.PlastmaTowerTooltipTable;
 import com.mygdx.game.view.tooltip.TooltipTable;
 
 
-public class UiView implements Screen {
+public class UiStage extends Stage {
 
 
     // laser tower
@@ -38,7 +38,6 @@ public class UiView implements Screen {
     private Label _next_wave_time_value;
     private Skin _skin;
     private TextureAtlas _atlas;
-    private Stage _uiStage;
     private Label healthLabel;
     private Label moneyLabel;
 
@@ -66,45 +65,43 @@ public class UiView implements Screen {
 	private MissileTowerTooltipTable _missileTowerTooltipTable;
 	
 
-    public UiView(){
-    	
+    public UiStage(){
+    	 OrthographicCamera _uiCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+         this.setViewport(new ScreenViewport(_uiCamera));
+         // create skin
+         _skin = createSkin();
+         
+         // create pause window
+         createPauseWindow();
+         // create tooltip
+         _laserTowerTooltipTable = new LaserTowerTooltipTable(_skin, TowerType.BASIC_LASER_TURRET);
+         _plastmaTowerTooltipTable = new PlastmaTowerTooltipTable(_skin, TowerType.PLASTMA_TOWER);
+         _missileTowerTooltipTable = new MissileTowerTooltipTable(_skin, TowerType.MISSILE_TURRET);
+         // root table
+         _rootTable = createRootTable();
+         // PANEL that show info about the selected tower
+         // add to root
+         Table leftSection = createLeftSection();
+         Table midSection = createMidSection();
+         Table rightSection = createRightSection();
+         uiPanel = createUiPanel();
+         uiPanel.add(leftSection).size(328,175).expand().align(Align.bottomRight).pad(3);
+         uiPanel.add(midSection).fill().align(Align.center).pad(3,3,3,3);
+         uiPanel.add(rightSection).size(355,175).expand().align(Align.bottomLeft).pad(3);
+         _rootTable.add(uiPanel)
+                 .align(Align.center)
+                 .fill(true , true)
+                 .minWidth(leftSection.getPrefWidth() + midSection.getPrefWidth() + rightSection.getPrefWidth() + 50);
+         // align stuff
+         _rootTable.align(Align.bottom);
+         // add root table to stage
+         this.addActor(_rootTable);
+         _pauseWindow.setSize(Gdx.graphics.getWidth() , Gdx.graphics.getHeight());
+         this.addActor(_pauseWindow);
+         this.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
 
-    @Override
-    public void show() {
-        OrthographicCamera _uiCamera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        _uiStage = new Stage(new ScreenViewport(_uiCamera));
-        // create skin
-        _skin = createSkin();
-        
-        // create pause window
-        createPauseWindow();
-        // create tooltip
-        _laserTowerTooltipTable = new LaserTowerTooltipTable(_skin, TowerType.BASIC_LASER_TURRET);
-        _plastmaTowerTooltipTable = new PlastmaTowerTooltipTable(_skin, TowerType.PLASTMA_TOWER);
-        _missileTowerTooltipTable = new MissileTowerTooltipTable(_skin, TowerType.MISSILE_TURRET);
-        // root table
-        _rootTable = createRootTable();
-        // PANEL that show info about the selected tower
-        // add to root
-        Table leftSection = createLeftSection();
-        Table midSection = createMidSection();
-        Table rightSection = createRightSection();
-        uiPanel = createUiPanel();
-        uiPanel.add(leftSection).size(328,175).expand().align(Align.bottomRight).pad(3);
-        uiPanel.add(midSection).fill().align(Align.center).pad(3,3,3,3);
-        uiPanel.add(rightSection).size(355,175).expand().align(Align.bottomLeft).pad(3);
-        _rootTable.add(uiPanel)
-                .align(Align.center)
-                .fill(true , true)
-                .minWidth(leftSection.getPrefWidth() + midSection.getPrefWidth() + rightSection.getPrefWidth() + 50);
-        // align stuff
-        _rootTable.align(Align.bottom);
-        // add root table to stage
-        _uiStage.addActor(_rootTable);
-        _pauseWindow.setSize(Gdx.graphics.getWidth() , Gdx.graphics.getHeight());
-        _uiStage.addActor(_pauseWindow);
-    }
+
 
 	private Table createUiPanel() {
         Table uiPanel = new Table(_skin);
@@ -294,43 +291,31 @@ public class UiView implements Screen {
     
 
     @Override
-    public void render(float delta) {
-        getStage().act(delta);
+    public void act(float delta) {
+    	super.act(delta);
         isOverUpgradeButton = _upgradeBtn.isOver();
         if (PlayState.START_GAME) _next_wave_time_value.setText(String.format("%d : %.0f",WaveTimeManager.CURRENT_WAVE_TIME ,  WaveTimeManager.CURRENT_WAVE_TIME_MILLIS * 100));
-        getStage().draw();
     }
-
+    
     @Override
+    public void draw(){
+    	super.draw();
+    }
+   
+
     public void resize(int width, int height) {
         _rootTable.setWidth(Gdx.graphics.getWidth());
         _pauseWindow.setSize(Gdx.graphics.getWidth() , Gdx.graphics.getHeight());
-        _uiStage.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
+        this.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), true);
     }
 
-    @Override
-    public void pause() {
 
-    }
 
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void hide() {
-
-    }
-
-    @Override
     public void dispose() {
         _atlas.dispose();
         _skin.dispose();
-        _uiStage.dispose();
+        this.dispose();
     }
-
-
 
     /** getters **/
     public Table getRoot(){
@@ -380,7 +365,7 @@ public class UiView implements Screen {
 
 
     public Stage getStage(){
-        return _uiStage;
+        return this;
     }
 
     public TooltipTable getLaserTowerTooltip() {
@@ -429,9 +414,6 @@ public class UiView implements Screen {
         return _atlas;
     }
 
-    public Stage get_uiStage() {
-        return _uiStage;
-    }
 
     public Table getTowerSelectPanel() {
         return _towerSelectPanel;

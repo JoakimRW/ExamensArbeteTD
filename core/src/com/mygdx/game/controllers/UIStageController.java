@@ -10,14 +10,14 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.managers.GameStateManager;
 import com.mygdx.game.states.PlayState;
 import com.mygdx.game.utils.Assets;
-import com.mygdx.game.view.stages.UiView;
+import com.mygdx.game.view.stages.UiStage;
 
 public class UIStageController extends ClickListener {
 
-	private UiView uistage;
+	private UiStage uistage;
 	private EntityModel model;
 	private GameStateManager _gsm;
-	public UIStageController(UiView uistage, EntityModel model, GameStateManager gsm) {
+	public UIStageController(UiStage uistage, EntityModel model, GameStateManager gsm) {
 		this.uistage = uistage;
 		this.model = model;
 		_gsm = gsm;
@@ -33,9 +33,7 @@ public class UIStageController extends ClickListener {
 				if (!PlayState.START_GAME) {
 					PlayState.START_GAME = true;
 					uistage.get_nextWaveBtn().setText("Next Wave");
-					updateNextEnemyText();
 				} else {
-					updateNextEnemyText();
 					EntityModel.startNextWave();
 				}
 			}
@@ -176,12 +174,12 @@ public class UIStageController extends ClickListener {
 		uistage.getMoneyLabel().setText(String.valueOf(money));
 	}
 
-	public void updateNextEnemyText() {
-		uistage.get_next_enemy_value().setText(model.getNextWave());
-	}
-
 	public boolean isOverUpgradeBtn() {
 		return uistage.isOverUpgradeButton();
+	}
+	
+	public void updateNextEnemyText(String nextEnemy){
+		uistage.get_next_enemy_value().setText(nextEnemy);
 	}
 
 	public void updateUpgradeInfo() {

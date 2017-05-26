@@ -13,7 +13,7 @@ import com.mygdx.game.managers.LevelManager;
 import com.mygdx.game.managers.WaveTimeManager;
 import com.mygdx.game.managers.GameStateManager.State;
 import com.mygdx.game.utils.Assets;
-import com.mygdx.game.view.stages.UiView;
+import com.mygdx.game.view.stages.UiStage;
 
 public class PlayState extends GameState {
 
@@ -22,7 +22,7 @@ public class PlayState extends GameState {
 	public static boolean PAUSE = false;
 	public static int CURRENT_LIVING_ENEMIES = 0;
 	public static int MAX_WAVES = 20;
-	private final UiView _uiView;
+	private UiStage _uiStage;
 	private EntityManager _entityManager;
 	private OrthographicCamera _gameCamera;
 	private OrthogonalTiledMapRenderer _renderer;
@@ -37,14 +37,13 @@ public class PlayState extends GameState {
 		EntityFactory entityFactory = new EntityFactory(ashleyEngine);
 		InputHandler inputhandler = new InputHandler(_gameCamera,entityFactory,gsm,ashleyEngine);
 		// behöver deklarera uiview här för att registrera inputprocessor
-		_uiView = new UiView();
-		_uiView.show();
-		_entityManager = new EntityManager(ashleyEngine, _batch, _gameCamera, inputhandler, _uiView, gsm, entityFactory);
+		_uiStage = new UiStage();
+		_entityManager = new EntityManager(ashleyEngine, _batch, _gameCamera, inputhandler, _uiStage, gsm, entityFactory);
 
 		InputMultiplexer multi = new InputMultiplexer();
 
 
-		multi.addProcessor(_uiView.getStage());
+		multi.addProcessor(_uiStage.getStage());
 		multi.addProcessor(inputhandler);
 		Gdx.input.setInputProcessor(multi);
 
@@ -52,12 +51,13 @@ public class PlayState extends GameState {
 
 	@Override
 	public void resize(int w, int h) {
-		_uiView.resize(w, h);
+		_uiStage.resize(w, h);
 		_gameCamera.setToOrtho(false, w, h);
 	}
 
 	@Override
 	public void update(float delta) {
+		
 		if(GAME_OVER){
 			System.out.println("lost game");
 			_gsm.setState(State.LOSE);
@@ -73,8 +73,9 @@ public class PlayState extends GameState {
 		_renderer.setView(_gameCamera);
 		_renderer.render();
 		_batch.setProjectionMatrix(_gameCamera.combined);
+		_uiStage.getStage().act(Gdx.graphics.getDeltaTime());
 		_entityManager.update(Gdx.graphics.getDeltaTime());
-		_uiView.render(Gdx.graphics.getDeltaTime());
+		_uiStage.draw();
 	}
 
 	@Override
