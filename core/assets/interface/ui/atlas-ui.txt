@@ -59,30 +59,30 @@ laser-tower-icon
   orig: 16, 16
   offset: 0, 0
   index: -1
-missle-tower-icon
+missile-tower-icon
   rotate: false
   xy: 484, 157
-  size: 48, 48
-  orig: 48, 48
+  size: 32, 32
+  orig: 32, 32
   offset: 0, 0
   index: -1
 pause-bg
   rotate: false
-  xy: 533, 157
+  xy: 517, 157
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 plastma-tower-icon
   rotate: false
-  xy: 634, 157
-  size: 48, 48
-  orig: 48, 48
+  xy: 618, 157
+  size: 32, 35
+  orig: 32, 35
   offset: 0, 0
   index: -1
 statPanel
   rotate: false
-  xy: 683, 157
+  xy: 651, 157
   size: 128, 40
   orig: 128, 40
   offset: 0, 0

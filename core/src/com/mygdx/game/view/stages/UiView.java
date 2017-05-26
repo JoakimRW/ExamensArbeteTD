@@ -215,7 +215,7 @@ public class UiView implements Screen {
         Table grayPanel2 = createGrayPanel();
         _laserTowerIcon = new Image(_skin , "laser-tower-icon");
         _plastmaTowerIcon = new Image(_skin , "plastma-tower-icon");
-        _missleTurretIcon = new Image(_skin,"missle-tower-icon");
+        _missleTurretIcon = new Image(_skin,"missile-tower-icon");
         _laserTowerIcon.addListener(_laserTowerTooltipTable.getTooltip());
         _plastmaTowerIcon.addListener(_plastmaTowerTooltipTable.getTooltip());
         _missleTurretIcon.addListener(_missileTowerTooltipTable.getTooltip());
