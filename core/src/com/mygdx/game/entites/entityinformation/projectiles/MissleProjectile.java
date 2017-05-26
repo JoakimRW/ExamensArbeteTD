@@ -1,6 +1,7 @@
-package com.mygdx.game.entites.entityinformation;
+package com.mygdx.game.entites.entityinformation.projectiles;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.mygdx.game.entites.entityinformation.EntityInformation;
 import com.mygdx.game.utils.Assets;
 
 public class MissleProjectile extends EntityInformation {

@@ -213,7 +213,7 @@ public class EntityFactory {
 		// player entity
 		player = new Entity();
 		player.add(new DirectionComponent())//
-				.add(new MoneyComponent(100))//
+				.add(new MoneyComponent(250))//
 				.add(new HealthComponent(30))//
 				.add(new PlayerComponent())//
 				.add(new DestinationComponent(null));

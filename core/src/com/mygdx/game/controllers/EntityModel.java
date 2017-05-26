@@ -14,6 +14,8 @@ import com.mygdx.game.entites.entitiycomponents.PositionComponent;
 import com.mygdx.game.entites.entitiycomponents.tower.DamageComponent;
 import com.mygdx.game.entites.entitiycomponents.tower.FireRateComponent;
 import com.mygdx.game.entites.entitiycomponents.tower.TowerStatComponent;
+import com.mygdx.game.entites.entityinformation.EntityInformation;
+import com.mygdx.game.entites.entityinformation.EntityMapper;
 import com.mygdx.game.input.InputHandler;
 import com.mygdx.game.managers.LevelManager;
 import com.mygdx.game.managers.WaveTimeManager;
@@ -49,12 +51,14 @@ public class EntityModel extends InputAdapter {
 
 	/** when player has pressed a tower icon this method is called **/
 	public static void beginTowerPlacing(TowerType towerType) {
-
-		System.out.println("TURRET TYPE =  " + towerType);
-		InputHandler.setTowerInfoForPlacement(true, towerType);
-		Vector3 mousePos = _gameCamera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
-		_factory.createTowerEntity(towerType, mousePos.x, mousePos.y);
-
+		EntityMapper mapper = new EntityMapper();
+		EntityInformation info = mapper.getTowerInformation(towerType);
+		//_factory.getPlayer().getComponent(MoneyComponent.class).money;
+		if(info.getCost() <= _factory.getPlayer().getComponent(MoneyComponent.class).money){
+			InputHandler.setTowerInfoForPlacement(true, towerType);
+			Vector3 mousePos = _gameCamera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+			_factory.createTowerEntity(towerType, mousePos.x, mousePos.y);
+		}
 	}
 
 	public void setSelectedTower(Entity entity) {
@@ -97,7 +101,7 @@ public class EntityModel extends InputAdapter {
 			// _selectedTower.getComponent(RangeComponent.class);
 			TowerStatComponent stats = _selectedTower.getComponent(TowerStatComponent.class);
 
-			int playerMoney = _factory.getPlayer().getComponent(MoneyComponent.class).money;
+			double playerMoney = _factory.getPlayer().getComponent(MoneyComponent.class).money;
 			int upgradePrice = (int) stats._upgradePrice;
 			TowerType towerType = stats._towerType;
 

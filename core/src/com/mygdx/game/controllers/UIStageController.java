@@ -170,8 +170,8 @@ public class UIStageController extends ClickListener {
 		uistage.getHealthLabel().setText(String.valueOf(health));
 	}
 
-	public void setPlayerMoney(int money) {
-		uistage.getMoneyLabel().setText(String.valueOf(money));
+	public void setPlayerMoney(double money) {
+		uistage.getMoneyLabel().setText(String.format("%.0f",money));
 	}
 
 	public boolean isOverUpgradeBtn() {

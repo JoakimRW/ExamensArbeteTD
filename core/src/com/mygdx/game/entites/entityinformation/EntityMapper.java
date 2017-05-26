@@ -6,6 +6,14 @@ import java.util.Map;
 import com.mygdx.game.Factory.EnemyName;
 import com.mygdx.game.Factory.ProjectileType;
 import com.mygdx.game.Factory.TowerType;
+import com.mygdx.game.entites.entityinformation.enemies.Bird;
+import com.mygdx.game.entites.entityinformation.enemies.Bloodworm;
+import com.mygdx.game.entites.entityinformation.projectiles.LaserProjectile;
+import com.mygdx.game.entites.entityinformation.projectiles.MissleProjectile;
+import com.mygdx.game.entites.entityinformation.projectiles.PlastmaProjectile;
+import com.mygdx.game.entites.entityinformation.towers.BasicLaserTurret;
+import com.mygdx.game.entites.entityinformation.towers.MissleTurret;
+import com.mygdx.game.entites.entityinformation.towers.PlastmaTower;
 
 public class EntityMapper {
 

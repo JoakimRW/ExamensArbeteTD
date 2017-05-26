@@ -13,10 +13,12 @@ import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.Factory.EntityFactory;
 import com.mygdx.game.Factory.TowerType;
 import com.mygdx.game.entites.entitiycomponents.Families;
+import com.mygdx.game.entites.entitiycomponents.MoneyComponent;
 import com.mygdx.game.entites.entitiycomponents.MouseImageComponent;
 import com.mygdx.game.entites.entitiycomponents.OffsetComponent;
 import com.mygdx.game.entites.entitiycomponents.PositionComponent;
 import com.mygdx.game.entites.entitiycomponents.projectile.DestinationComponent;
+import com.mygdx.game.entites.entitiycomponents.tower.TowerStatComponent;
 import com.mygdx.game.entites.systems.TowerPlacementSystem;
 import com.mygdx.game.managers.GameStateManager;
 import com.mygdx.game.managers.LevelManager;
@@ -191,6 +193,7 @@ public class InputHandler implements InputProcessor {
 			tile.setEntity(first);
 			getAshleyEngine().getSystem(TowerPlacementSystem.class).tintTile(null);
 			InputHandler.setPlacementMode(false);
+			_ef.getPlayer().getComponent(MoneyComponent.class).money -= first.getComponent(TowerStatComponent.class)._buyCost;
 		}
 	}
 

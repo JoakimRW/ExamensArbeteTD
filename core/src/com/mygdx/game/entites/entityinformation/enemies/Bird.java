@@ -1,5 +1,6 @@
-package com.mygdx.game.entites.entityinformation;
+package com.mygdx.game.entites.entityinformation.enemies;
 
+import com.mygdx.game.entites.entityinformation.EntityInformation;
 import com.mygdx.game.utils.Assets;
 
 public class Bird extends EntityInformation {
@@ -10,7 +11,7 @@ public class Bird extends EntityInformation {
 		setFlying(true);
 		setSkeleton(Assets.birdSkeleton);
 		setAnimationStateData(Assets.birdAnimationState.getData());
-		setVelocity(100);
-		setHp(100);
+		setVelocity(70);
+		setHp(20);
 	}
 }
