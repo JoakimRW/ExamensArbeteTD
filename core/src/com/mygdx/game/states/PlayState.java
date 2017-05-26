@@ -51,20 +51,27 @@ public class PlayState extends GameState {
 
 	@Override
 	public void resize(int w, int h) {
+	
 		_uiStage.resize(w, h);
 		_gameCamera.setToOrtho(false, w, h);
 	}
 
 	@Override
 	public void update(float delta) {
-		
 		if(GAME_OVER){
-			System.out.println("lost game");
 			_gsm.setState(State.LOSE);
+			WaveTimeManager.WAVE = 0;
+	        GAME_OVER = false;
+	        START_GAME = false;
+	        PAUSE = false;
 		}
 		if(WaveTimeManager.WAVE == MAX_WAVES && CURRENT_LIVING_ENEMIES <= 0){
 			System.out.println("won game");
 			_gsm.setState(State.WIN);
+			WaveTimeManager.WAVE = 0;
+	        GAME_OVER = false;
+	        START_GAME = false;
+	        PAUSE = false;
 		}
 	}
 
@@ -80,10 +87,6 @@ public class PlayState extends GameState {
 
 	@Override
 	public void dispose() {
-		WaveTimeManager.WAVE = 0;
-        GAME_OVER = false;
-        START_GAME = false;
-        PAUSE = false;
         Gdx.input.setInputProcessor(null);
         _entityManager.dispose();
         LevelManager.dispose();
