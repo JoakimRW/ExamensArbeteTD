@@ -7,8 +7,14 @@ import com.badlogic.ashley.systems.IteratingSystem;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.entites.entitiycomponents.*;
-import com.mygdx.game.entites.entitiycomponents.enemy.EnemyComponent;
+import com.mygdx.game.entites.entitiycomponents.AngleComponent;
+import com.mygdx.game.entites.entitiycomponents.Families;
+import com.mygdx.game.entites.entitiycomponents.HealthComponent;
+import com.mygdx.game.entites.entitiycomponents.Mappers;
+import com.mygdx.game.entites.entitiycomponents.OffsetComponent;
+import com.mygdx.game.entites.entitiycomponents.PathComponent;
+import com.mygdx.game.entites.entitiycomponents.PositionComponent;
+import com.mygdx.game.entites.entitiycomponents.VelocityComponent;
 import com.mygdx.game.entites.entitiycomponents.player.PlayerComponent;
 import com.mygdx.game.managers.LevelManager;
 import com.mygdx.game.states.PlayState;
@@ -39,8 +45,7 @@ public class MoveToSystem extends IteratingSystem {
 		AngleComponent angleComp = Mappers.ANGLE_M.get(entity);
 		VelocityComponent velocityComp = Mappers.VELCOITY_M.get(entity);
 		OffsetComponent offComp = Mappers.OFFSET_M.get(entity);
-		EnemyComponent ecomp = Mappers.ENEMY_M.get(entity);
-
+		
 		Vector2 start = new Vector2((posComp.position.x + offComp.offsetX) / 32,
 				(posComp.position.y + offComp.offsetY) / 32);
 		Vector2 end = new Vector2(LevelManager.tileEnd.getCords().x / 32, LevelManager.tileEnd.getCords().y / 32);

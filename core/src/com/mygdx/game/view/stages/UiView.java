@@ -5,9 +5,14 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.viewport.*;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.Factory.TowerType;
 import com.mygdx.game.managers.WaveTimeManager;
 import com.mygdx.game.states.PlayState;
@@ -219,10 +224,10 @@ public class UiView implements Screen {
         _laserTowerIcon.addListener(_laserTowerTooltipTable.getTooltip());
         _plastmaTowerIcon.addListener(_plastmaTowerTooltipTable.getTooltip());
         _missleTurretIcon.addListener(_missileTowerTooltipTable.getTooltip());
-        grayPanel2.add(_laserTowerIcon).size(32,32).pad(10).align(Align.topLeft).expand();
-        grayPanel2.add(_plastmaTowerIcon).size(32,32).pad(10).align(Align.topLeft).expand();
-        grayPanel2.add(_missleTurretIcon).size(32, 32).pad(10).align(Align.topLeft).expand();
-        towerListContainer.add(grayPanel2).prefHeight(110).expand().fill();
+        grayPanel2.add(_laserTowerIcon).size(32,32).pad(10).align(Align.topLeft);
+        grayPanel2.add(_plastmaTowerIcon).size(32,32).pad(10).align(Align.topLeft);
+        grayPanel2.add(_missleTurretIcon).size(32, 32).pad(10).align(Align.topLeft).expand(32,32);
+        towerListContainer.add(grayPanel2);
         return towerListContainer;
     }
 
