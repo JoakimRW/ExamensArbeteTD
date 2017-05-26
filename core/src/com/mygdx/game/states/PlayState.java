@@ -80,6 +80,7 @@ public class PlayState extends GameState {
 
 	@Override
 	public void dispose() {
+		WaveTimeManager.WAVE = 0;
         GAME_OVER = false;
         START_GAME = false;
         PAUSE = false;
