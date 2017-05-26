@@ -6,7 +6,7 @@ public class BasicLaserTurret extends EntityInformation {
 	
 	public BasicLaserTurret() {
 		setDamage(20d);
-		setFireRate(1d);
+		setFireRate(1.5d);
 		setRange(100d);
 		setAnimationStateData(Assets.laserTowerAnimationState.getData());
 		setSkeleton(Assets.laserTowerSkeleton);

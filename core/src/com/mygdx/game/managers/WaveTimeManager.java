@@ -35,7 +35,7 @@ public class WaveTimeManager {
 	
 	public void tick(float delta){
 		if(!PlayState.START_GAME) CURRENT_WAVE_TIME = 0;
-		if(PlayState.START_GAME){
+		if(PlayState.START_GAME &&  WAVE < PlayState.MAX_WAVES){
 			time += delta;
 			timeMs += delta;
 			CURRENT_WAVE_TIME_MILLIS = timeMs - Math.floor(timeMs);
@@ -48,6 +48,7 @@ public class WaveTimeManager {
 				final int rand = new Random().nextInt(EnemyName.values().length);
 				enemyName = EnemyName.values()[rand];
                 WAVE++;
+                System.out.println("Wave: " + WAVE + " / " + PlayState.MAX_WAVES);
                 double health = currentEnemyHp * 1.15; // make modular
                 if(WaveTimeManager.WAVE == 1) health = baseHp;
                 currentEnemyHp = health;

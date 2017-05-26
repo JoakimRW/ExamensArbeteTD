@@ -1,20 +1,20 @@
 
 skeleton.png
-size: 32,32
+size: 64,32
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-lvl1/base
+laser-tower/laser-tower-base
   rotate: false
   xy: 2, 2
-  size: 14, 11
-  orig: 16, 16
+  size: 27, 25
+  orig: 29, 29
   offset: 1, 2
   index: -1
-lvl1/turret
-  rotate: false
-  xy: 2, 15
-  size: 14, 13
-  orig: 16, 16
-  offset: 1, 3
+laser-tower/laser-tower-turret
+  rotate: true
+  xy: 31, 3
+  size: 24, 26
+  orig: 29, 29
+  offset: 2, 3
   index: -1

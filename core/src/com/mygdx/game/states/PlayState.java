@@ -21,6 +21,7 @@ public class PlayState extends GameState {
 	public static boolean START_GAME = false;
 	public static boolean PAUSE = false;
 	public static int CURRENT_LIVING_ENEMIES = 0;
+	public static int MAX_WAVES = 20;
 	private final UiView _uiView;
 	private EntityManager _entityManager;
 	private OrthographicCamera _gameCamera;
@@ -61,7 +62,7 @@ public class PlayState extends GameState {
 			System.out.println("lost game");
 			_gsm.setState(State.LOSE);
 		}
-		if(WaveTimeManager.WAVE >= 20 && CURRENT_LIVING_ENEMIES <= 0){
+		if(WaveTimeManager.WAVE == MAX_WAVES && CURRENT_LIVING_ENEMIES <= 0){
 			System.out.println("won game");
 			_gsm.setState(State.WIN);
 		}

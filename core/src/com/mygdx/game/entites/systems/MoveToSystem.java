@@ -11,6 +11,7 @@ import com.mygdx.game.entites.entitiycomponents.*;
 import com.mygdx.game.entites.entitiycomponents.enemy.EnemyComponent;
 import com.mygdx.game.entites.entitiycomponents.player.PlayerComponent;
 import com.mygdx.game.managers.LevelManager;
+import com.mygdx.game.states.PlayState;
 import com.mygdx.game.utils.PathFinder;
 
 public class MoveToSystem extends IteratingSystem {
@@ -59,8 +60,9 @@ public class MoveToSystem extends IteratingSystem {
 			} else {
 				entity.removeAll();
 				getEngine().removeEntity(entity);
-                if (ecomp != null)
-				player.getComponent(HealthComponent.class).health--;
+                PlayState.CURRENT_LIVING_ENEMIES --;
+                System.out.println("Enemies left: " + PlayState.CURRENT_LIVING_ENEMIES);
+                player.getComponent(HealthComponent.class).health--;    	
 			}
 		}
 
