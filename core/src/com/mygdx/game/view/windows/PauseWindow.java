@@ -15,8 +15,8 @@ public class PauseWindow extends Window {
 		super(title, skin);
         this.setVisible(false);
         Table root = new Table(skin);
-        _resumeButton = new TextButton("Resume",Assets.mainMenuSkin);
-        _mainMenuButton = new TextButton("Main Menu",Assets.mainMenuSkin);
+        _resumeButton = new TextButton("Resume",Assets._skin , "regular");
+        _mainMenuButton = new TextButton("Main Menu",Assets._skin , "regular");
         root.add(_resumeButton).padBottom(10).row();
         root.add(_mainMenuButton);
         this.add(root);

@@ -47,7 +47,7 @@ public class WinState extends GameState {
 
 	@Override
 	public void dispose() {
-		winStage.dispose();
+		
 	}
 
 	@Override

@@ -29,7 +29,7 @@ public class RightSection extends Table {
 		this.setSkin(skin);
         Table grayPanel = new GrayPanel(skin);
         _towerSelectPanel = new Table(skin);
-        healthLabel = new Label("",skin , "statPanelFont" , "white");
+        healthLabel = new Label("",skin , "font20" , "white");
         Image heart = new Image(skin,"heart");
         // stats panels that show hp , and money
         Table healthStatPanel = new StatPanel(skin);
@@ -51,7 +51,7 @@ public class RightSection extends Table {
         Table upgrade = new StatPanel(skin);
         upgrade.add(_towerSelectUpgradePrice).expand().align(Align.right).pad(10);
         // upgrade label and value
-        Label towerSelectSellText = new Label("Sell",skin,"default");
+        Label towerSelectSellText = new Label("Sell",skin,"font20","white");
         _towerSelectSellPrice = new Label("",skin );
         Table sell = new StatPanel(skin);
         sell.add(_towerSelectSellPrice).expand().align(Align.right).pad(10);
@@ -105,7 +105,7 @@ public class RightSection extends Table {
         _towerSelectPanel.add(leftTowerSelectSection).expand().fill();
         _towerSelectPanel.add(towerInfoSection).expand().fill();
         grayPanel.add(_towerSelectPanel).expand().fill();
-        this.add(grayPanel);
+        this.add(grayPanel).padTop(2f);
         _towerSelectPanel.setVisible(false);
 	}
 

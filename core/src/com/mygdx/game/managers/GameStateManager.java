@@ -9,6 +9,7 @@ import com.mygdx.game.states.GameState;
 import com.mygdx.game.states.LoseState;
 import com.mygdx.game.states.MainMenuState;
 import com.mygdx.game.states.PlayState;
+import com.mygdx.game.states.SettingsState;
 import com.mygdx.game.states.SplashState;
 import com.mygdx.game.states.TutorialState;
 import com.mygdx.game.states.WinState;
@@ -21,7 +22,7 @@ public class GameStateManager {
 	private Stack<GameState> states;
 
 	public enum State {
-		SPLASH, PLAY, MAINMENU, WIN , LOSE , TUTORIAL
+		SPLASH, PLAY, MAINMENU, WIN , LOSE , TUTORIAL, SETTINGS
 
 	}
 
@@ -82,6 +83,8 @@ public class GameStateManager {
 			return new WinState(this);
 		case TUTORIAL: 
 			return new TutorialState(this);
+		case SETTINGS: 
+			return new SettingsState(this);
 		default:
 			break;
 		}

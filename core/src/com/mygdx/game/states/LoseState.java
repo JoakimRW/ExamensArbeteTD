@@ -50,7 +50,7 @@ public class LoseState extends GameState {
 
 	@Override
 	public void dispose() {
-		loseStage.dispose();
+		
 	}
 
 	@Override

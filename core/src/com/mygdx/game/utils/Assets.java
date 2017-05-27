@@ -41,22 +41,21 @@ public class Assets {
     public static AnimationState coinAnimationState;
     
     public static BitmapFont font10;
-   // public static BitmapFont font12;
+    public static BitmapFont font12;
     public static BitmapFont font16;
     public static BitmapFont fontVera10;
     public static BitmapFont font24;
     public static BitmapFont font20;
+    
     public static Music laserMillenium;
     public static Sound laserTurretFire;
     // laser textures
     public static Texture laserSmall;
 	public static Texture plastmaProj;
 	public static Texture missile;
-	public static Skin mainMenuSkin;
+	public static Skin _skin;
 	public static Skin uiSkin;
 	public static Color greenColor;
-
-    
 
     private static Texture loadTexture(String file){
         return new Texture(Gdx.files.internal(file));
@@ -101,20 +100,32 @@ public class Assets {
         coinSkeleton.getRootBone().setScale(0.16f);
         coinAnimationState = new AnimationState(new AnimationStateData(coinSkeleton.getData()));
         // fonts
-        fontVera10 = createFont(12 , Fonts.VERA);
-        font10 = createFont(12 , Fonts.HEMI_HEAD);
-        //font12 = createFont(12 , Fonts.HEMI_HEAD);
-        font16 = createFont(16 , Fonts.HEMI_HEAD);
-        font20 = createFont(20,Fonts.HEMI_HEAD);
-        font24 = createFont(24 ,Fonts.HEMI_HEAD);
         // skin 
   
         Cursor slickArrow = Gdx.graphics.newCursor(new Pixmap(Gdx.files.getFileHandle("slick_arrow-arrow.png", Files.FileType.Internal)), 0, 0);
         Gdx.graphics.setCursor(slickArrow);
     }
     
-    public static void loadMainMenuAssets(){
-    	 mainMenuSkin = new Skin(Gdx.files.internal("MainMenuSkin.json"));
+    public static void createSkin(){
+        fontVera10 = createFont(12 , Fonts.VERA);
+        font10 = createFont(12 , Fonts.HEMI_HEAD);
+        font12 = createFont(12 , Fonts.HEMI_HEAD);
+        font16 = createFont(16 , Fonts.HEMI_HEAD);
+        font20 = createFont(20,Fonts.HEMI_HEAD);
+        font24 = createFont(24 ,Fonts.HEMI_HEAD);
+        Skin skin = new Skin();
+        TextureAtlas atlas = new TextureAtlas("interface/ui/atlas-ui.txt");
+        skin.addRegions(atlas);
+        
+        skin.add("font10", Assets.font10);
+        skin.add("fontVera10", Assets.fontVera10);
+        skin.add("font12", Assets.font12);
+        skin.add("default-font", Assets.font16);
+        skin.add("font20", Assets.font20);
+        skin.add("font24", Assets.font24);
+        
+        skin.load(Gdx.files.internal("interface/ui/uiSkin.json"));
+        _skin = skin;
     }
 
     /* delar upp ett spritesheet och returnerar en textureregion array för animation **/
@@ -182,13 +193,6 @@ public class Assets {
         coinSkeleton = null;
         coinAnimationState = null;
 
-        font10.dispose();
-        // public static BitmapFont font12;
-
-        font16.dispose();
-        fontVera10.dispose();
-        font24.dispose();
-        font20.dispose();
         laserMillenium.dispose();
         laserTurretFire.dispose();
         // laser textures

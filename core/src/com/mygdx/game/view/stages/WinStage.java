@@ -22,10 +22,10 @@ public class WinStage extends Stage {
 	private void initWinStage() {
 		getCamera().position.set(Gdx.graphics.getWidth() / 2 , Gdx.graphics.getHeight() / 2 , 0);
 		getCamera().update();
-		Label youWinLabel = new Label("You Won!" , Assets.mainMenuSkin);
-		playAgainBtn = new TextButton("Play Again", Assets.mainMenuSkin);
-		mainMenuBtn = new TextButton("Main Menu", Assets.mainMenuSkin);
-		Table container = new Table(Assets.mainMenuSkin);
+		Label youWinLabel = new Label("You Won!" , Assets._skin);
+		playAgainBtn = new TextButton("Play Again", Assets._skin);
+		mainMenuBtn = new TextButton("Main Menu", Assets._skin);
+		Table container = new Table(Assets._skin);
 		youWinLabel.setColor(Color.GREEN);
 		container.add(youWinLabel).spaceBottom(100).row();
 		container.add(playAgainBtn).align(Align.left).spaceBottom(20).row();

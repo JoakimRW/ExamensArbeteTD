@@ -9,7 +9,12 @@ import com.mygdx.game.managers.GameStateManager;
 import com.mygdx.game.utils.Assets;
 
 public class Game extends ApplicationAdapter {
+	public static final String TITLE = "Mars Tower Defense";
 	SpriteBatch batch;
+	public static float VOLUME_MUSIC = .5f;
+	public static float VOLUME_SOUNDFX = .5f;
+	public static boolean isMuted;
+	public static boolean isFullscreen;
 	private GameStateManager gsm;
 
 	private OrthographicCamera camera;
@@ -19,7 +24,7 @@ public class Game extends ApplicationAdapter {
 	public void create () {
 		batch = new SpriteBatch();
 		camera = new OrthographicCamera();
-		Assets.loadMainMenuAssets();
+		Assets.createSkin();
 		gsm = new GameStateManager(this);
 	}
 

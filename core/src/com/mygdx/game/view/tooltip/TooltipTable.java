@@ -115,22 +115,22 @@ public abstract class TooltipTable extends Table {
 	        this.getTooltip().setInstant(true);
 
 	        // labels for tooltip
-	        Label towerNameLbl = new Label(towerName, skin , "tooltipFont" , "white");
+	        Label towerNameLbl = new Label(towerName, skin , "font24" , "white");
 	        towerNameLbl.setColor(Assets.greenColor);
-	        Label fireRateText = new Label("Fire rate:", skin);
-	        Label fireRateLbl = new Label(String.format("%.1f/S",fireRate) , skin);
-	        Label damageText = new Label("Damage:", skin);
-	        Label damageLbl = new Label(String.format("%.0f",damage),skin);
-	        Label rangeText = new Label("Range:", skin);
-	        Label rangeLbl = new Label(String.format("%.0f",range) ,skin);
-	        Label descriptionLbl = new Label(description , skin);
+	        Label fireRateText = new Label("Fire rate:", skin , "default-font" , "white");
+	        Label fireRateLbl = new Label(String.format("%.1f/S",fireRate) , skin , "default-font" , "white");
+	        Label damageText = new Label("Damage:", skin , "default-font" , "white");
+	        Label damageLbl = new Label(String.format("%.0f",damage),skin , "default-font" , "white");
+	        Label rangeText = new Label("Range:", skin , "default-font" , "white");
+	        Label rangeLbl = new Label(String.format("%.0f",range) ,skin , "default-font" , "white");
+	        Label descriptionLbl = new Label(description , skin , "default-font" , "white");
 	  
 	        descriptionLbl.setColor(Assets.greenColor);
 	        descriptionLbl.setWrap(true);
-	        Label specialText = new Label("Special:", skin);
-	        Label specialLbl = new Label(special,skin);
-	        Label priceText = new Label("Price:", skin);
-	        Label priceLbl = new Label( String.format( "%.0f" , price ),skin);
+	        Label specialText = new Label("Special:", skin , "default-font" , "white");
+	        Label specialLbl = new Label(special,skin , "default-font" , "white");
+	        Label priceText = new Label("Price:", skin , "default-font" , "white");
+	        Label priceLbl = new Label( String.format( "%.0f" , price ),skin , "default-font" , "white");
 	        // Add labels to tooltip table
 	        this.defaults().grow();
 	        this.add(towerNameLbl).align(Align.left);
@@ -159,10 +159,6 @@ public abstract class TooltipTable extends Table {
 		return tooltip;
 	}
 	
-	public void setTooltip(){
-		
-	}
-
 	public TooltipManager getManager() {
 		return manager;
 	}

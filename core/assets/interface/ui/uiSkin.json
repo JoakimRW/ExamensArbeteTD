@@ -5,19 +5,25 @@
   },
 
   "com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle": {
-    "default": { "font": "default-font" , "fontColor":"white"},
-    "green-font": { "font": "default-font" , "fontColor":"green"},
-    "statpanel": { "font": "default-font" , "fontColor":"white" , "background":"statPanel"}
+    "default": { "font": "font20" , "fontColor":"white"},
+    "green-font": { "font": "font20" , "fontColor":"green"},
+    "statpanel": { "font": "font20" , "fontColor":"white" , "background":"statPanel"}
   }	,
   "com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle": {
-    "default": {"font": "default-font" , "up":"button-large" , "down" : "button-large", "pressedOffsetX":1, "pressedOffsetY":-1}
+    "default": {"font": "font20" , "up":"button-large" , "down" : "button-large", "pressedOffsetX":1, "pressedOffsetY":-1},
+    "regular": {"font": "font24"}
   },
   "com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle": {
-    "default": {"label": {"font": "tooltipFont"}, "background": "black-rectangle-hover"}
+    "default": {"label": {"font": "font20"}, "background": "black-rectangle-hover"}
   },
 
   "com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle": {
-    "default":{"background":"pause-bg","titleFont":"default-font"}
+    "default":{"background":"pause-bg","titleFont":"font20"}
   }
+  , 
+  	  "com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle": {
+  		"default-horizontal": {"background": "slider-bg", "knob": "knob", "knobOver": "knob", "knobDown": "knob", "disabledKnob": "knob" },
+  		"default-vertical" : { "background": "slider-bg", "knob": "knob", "knobOver": "knob", "knobDown": "knob", "disabledKnob": "knob" }
+	}	
 
 }

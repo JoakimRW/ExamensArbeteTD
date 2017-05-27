@@ -3,11 +3,15 @@ package com.mygdx.game.view.stages;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Value;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.mygdx.game.Game;
 import com.mygdx.game.managers.GameStateManager;
+import com.mygdx.game.managers.GameStateManager.State;
 import com.mygdx.game.utils.Assets;
 
 public class MainMenuStage extends Stage {
@@ -19,10 +23,10 @@ public class MainMenuStage extends Stage {
 
 	private void initMainMenu(final GameStateManager gsm) {
 		Table table = new Table();
-		final TextButton button = new TextButton("New Game", Assets.mainMenuSkin, "default");
-		final TextButton exitButton = new TextButton("Quit Game", Assets.mainMenuSkin, "default");
-		button.setSize(200f, 50f);
-
+		final Label title = new Label(Game.TITLE , Assets._skin , "font24" , "green");
+		final TextButton button = new TextButton("New Game", Assets._skin, "regular");
+		final TextButton settingsBtn = new TextButton("Settings", Assets._skin, "regular");
+		final TextButton exitButton = new TextButton("Quit Game", Assets._skin, "regular");
 		button.addListener(new ClickListener() {
 
 			@Override
@@ -32,7 +36,12 @@ public class MainMenuStage extends Stage {
 			}
 
 		});
-
+		settingsBtn.addListener(new ClickListener(){
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				gsm.setState(State.SETTINGS);
+			}
+		});
 		exitButton.addListener(new ClickListener() {
 
 			@Override
@@ -41,15 +50,17 @@ public class MainMenuStage extends Stage {
 			}
 
 		});
+		
+		
+		table.align(Align.center);
+		table.add(title).padBottom(Gdx.graphics.getHeight() / 4).align(Align.top).row();
 
-		table.setWidth(this.getWidth());
-		table.align(Align.center | Align.top);
-		table.setPosition(0, Gdx.graphics.getHeight());
-		table.padTop(30);
-		table.add(button).padBottom(30f);
+		table.add(button).align(Align.left).padBottom(30f);
 		table.row();
-		table.add(exitButton);
-
+		table.add(settingsBtn).align(Align.left).padBottom(30f);
+		table.row();
+		table.add(exitButton).align(Align.left);
+		table.setFillParent(true);
 		this.addActor(table);
 	}
 
@@ -60,7 +71,6 @@ public class MainMenuStage extends Stage {
 
 	@Override
 	public void draw() {
-		this.getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		super.draw();
 	}
 

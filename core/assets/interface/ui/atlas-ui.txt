@@ -52,37 +52,51 @@ heart
   orig: 64, 64
   offset: 0, 0
   index: -1
-laser-tower-icon
+knob
   rotate: false
   xy: 467, 157
+  size: 9, 8
+  orig: 9, 8
+  offset: 0, 0
+  index: -1
+laser-tower-icon
+  rotate: false
+  xy: 477, 157
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 missile-tower-icon
   rotate: false
-  xy: 500, 157
+  xy: 510, 157
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 pause-bg
   rotate: false
-  xy: 533, 157
+  xy: 543, 157
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 plastma-tower-icon
   rotate: false
-  xy: 634, 157
+  xy: 644, 157
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
+slider-bg
+  rotate: false
+  xy: 677, 157
+  size: 100, 6
+  orig: 100, 6
+  offset: 0, 0
+  index: -1
 statPanel
   rotate: false
-  xy: 667, 157
+  xy: 778, 157
   size: 128, 40
   orig: 128, 40
   offset: 0, 0

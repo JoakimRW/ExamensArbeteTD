@@ -27,7 +27,7 @@ public class LeftSection extends Table {
 		
         Table moneyStatPanel = new StatPanel(skin);
         Image coin = new Image(skin , "coin");
-        moneyLabel = new Label("",skin , "statPanelFont" , "white");
+        moneyLabel = new Label("",skin , "font20" , "white");
         moneyStatPanel.add(coin).pad(5).align(Align.left).expand().size(23 , 21);
         moneyStatPanel.add(moneyLabel).align(Align.right).pad(5 , 5 , 5 ,10).expand();
         this.add(moneyStatPanel).align(Align.right).size(120 , 30).spaceBottom(2).row();
