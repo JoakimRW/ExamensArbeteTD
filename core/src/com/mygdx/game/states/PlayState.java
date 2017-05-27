@@ -21,7 +21,7 @@ public class PlayState extends GameState {
 	public static boolean START_GAME = false;
 	public static boolean PAUSE = false;
 	public static int CURRENT_LIVING_ENEMIES = 0;
-	public static int MAX_WAVES = 20;
+	public static final int MAX_WAVES = 20;
 	private UiStage _uiStage;
 	private EntityManager _entityManager;
 	private OrthographicCamera _gameCamera;
@@ -88,6 +88,7 @@ public class PlayState extends GameState {
     }
 	
 	public void reset(){
+		CURRENT_LIVING_ENEMIES = 0;
         GAME_OVER = false;
         START_GAME = false;
         PAUSE = false;
