@@ -50,7 +50,7 @@ public class EntityModel extends InputAdapter {
 	}
 
 	/** when player has pressed a tower icon this method is called **/
-	public static void beginTowerPlacing(TowerType towerType) {
+	public static boolean beginTowerPlacing(TowerType towerType) {
 		EntityMapper mapper = new EntityMapper();
 		EntityInformation info = mapper.getTowerInformation(towerType);
 		//_factory.getPlayer().getComponent(MoneyComponent.class).money;
@@ -58,7 +58,9 @@ public class EntityModel extends InputAdapter {
 			InputHandler.setTowerInfoForPlacement(true, towerType);
 			Vector3 mousePos = _gameCamera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
 			_factory.createTowerEntity(towerType, mousePos.x, mousePos.y);
+			return true;
 		}
+		return false;
 	}
 
 	public void setSelectedTower(Entity entity) {

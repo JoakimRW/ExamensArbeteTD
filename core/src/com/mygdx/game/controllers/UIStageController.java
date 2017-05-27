@@ -89,7 +89,7 @@ public class UIStageController  {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				uistage.getUiPanel().getLeftSection().getlaserTowerTooltipTable().getTooltip().hide();
-				EntityModel.beginTowerPlacing(TowerType.BASIC_LASER_TURRET);
+				if(!EntityModel.beginTowerPlacing(TowerType.BASIC_LASER_TURRET)) uistage.showErrorMessagePanel("Not enough credits!", 0.25f, 1.5f, 0.5f);
 			}
 
 			@Override
@@ -104,8 +104,8 @@ public class UIStageController  {
 		uistage.getUiPanel().getLeftSection().getPlastmaTowerIcon().addListener(new ClickListener(){
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				uistage.getUiPanel().getLeftSection().getPlastmaTowerTooltipTable().getTooltip().hide();
-				EntityModel.beginTowerPlacing(TowerType.PLASTMA_TOWER);
+
+				if(!EntityModel.beginTowerPlacing(TowerType.PLASTMA_TOWER)) uistage.showErrorMessagePanel("Not enough credits!", 0.25f, 1.5f, 0.5f);
 			}
 
 			@Override
@@ -120,7 +120,7 @@ public class UIStageController  {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				uistage.getUiPanel().getLeftSection().getMissileTowerTooltipTable().getTooltip().hide();
-				EntityModel.beginTowerPlacing(TowerType.MISSILE_TURRET);
+				if(!EntityModel.beginTowerPlacing(TowerType.MISSILE_TURRET)) uistage.showErrorMessagePanel("Not enough credits!", 0.25f, 1.5f, 0.5f);
 			}
 
 			@Override
