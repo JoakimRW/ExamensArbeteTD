@@ -1,18 +1,17 @@
 package com.mygdx.game.controllers;
 
-import static com.mygdx.game.Factory.TowerType.*;
-
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.mygdx.game.Factory.TowerType;
 import com.mygdx.game.managers.GameStateManager;
 import com.mygdx.game.states.PlayState;
 import com.mygdx.game.utils.Assets;
 import com.mygdx.game.view.stages.UiStage;
 
-public class UIStageController extends ClickListener {
+public class UIStageController  {
 
 	private UiStage uistage;
 	private EntityModel model;
@@ -27,12 +26,12 @@ public class UIStageController extends ClickListener {
 
 	private void initListeners() {
 		/* Start game button / start next wave **/
-		uistage.get_nextWaveBtn().addListener(new ClickListener() {
+		uistage.getUiPanel().getMidSection().getNextWaveBtn().addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				if (!PlayState.START_GAME) {
 					PlayState.START_GAME = true;
-					uistage.get_nextWaveBtn().setText("Next Wave");
+					uistage.getUiPanel().getMidSection().getNextWaveBtn().setText("Next Wave");
 				} else {
 					EntityModel.startNextWave();
 				}
@@ -49,14 +48,14 @@ public class UIStageController extends ClickListener {
 			}
 		});
 		/* resume button in pause mode */
-		uistage.getResumeButton().addListener(new ClickListener() {
+		uistage.getPauseWindow().getResumeButton().addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				hidePauseWindow();
 			}
 		});
 		/* Main menu button in pause mode */
-		uistage.getMainMenuButton().addListener(new ClickListener() {
+		uistage.getPauseWindow().getMainMenuButton().addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				_gsm.setState(GameStateManager.State.MAINMENU);
@@ -64,7 +63,8 @@ public class UIStageController extends ClickListener {
 		});
 
 		/* upgrade selected tower */
-		uistage.getUpgradeBtn().addListener(new ClickListener() {
+		
+		uistage.getUiPanel().getRightSection().getUpgradeBtn().addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				model.upgradeSelectedTower();
@@ -77,7 +77,7 @@ public class UIStageController extends ClickListener {
 		});
 
 		/* sell selected tower */
-		uistage.getSellBtn().addListener(new ClickListener() {
+		uistage.getUiPanel().getRightSection().getSellBtn().addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				model.sellSelectedTower();
@@ -85,70 +85,73 @@ public class UIStageController extends ClickListener {
 		});
 
 		/* laser tower icon */
-		uistage.get_laserTowerIcon().addListener(new ClickListener() {
+		uistage.getUiPanel().getLeftSection().getLaserTowerIcon().addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				uistage.getLaserTowerTooltip().getTooltip().hide();
-				EntityModel.beginTowerPlacing(BASIC_LASER_TURRET);
+				uistage.getUiPanel().getLeftSection().getlaserTowerTooltipTable().getTooltip().hide();
+				EntityModel.beginTowerPlacing(TowerType.BASIC_LASER_TURRET);
 			}
 
 			@Override
 			public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
 				super.enter(event, x, y, pointer, fromActor);
 				System.out.println("enter laser turret icon");
-				uistage.getLaserTowerTooltip().getTooltip().setInstant(true);
+				uistage.getUiPanel().getLeftSection().getlaserTowerTooltipTable().getTooltip().setInstant(true);
 			}
 		});
+		
 		/* plastma tower icon */
-		uistage.getPlastmaTowerIcon().addListener(new ClickListener(){
+		uistage.getUiPanel().getLeftSection().getPlastmaTowerIcon().addListener(new ClickListener(){
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				uistage.getPlastmaTowerTooltipTable().getTooltip().hide();
-				EntityModel.beginTowerPlacing(PLASTMA_TOWER);
+				uistage.getUiPanel().getLeftSection().getPlastmaTowerTooltipTable().getTooltip().hide();
+				EntityModel.beginTowerPlacing(TowerType.PLASTMA_TOWER);
 			}
 
 			@Override
 			public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
 				super.enter(event, x, y, pointer, fromActor);
-				uistage.getPlastmaTowerTooltipTable().getManager().instant();
+				uistage.getUiPanel().getLeftSection().getPlastmaTowerTooltipTable().getManager().instant();
 			}
 		});
+		
 		/* missile tower icon */
-		uistage.getMissleTowerIcon().addListener(new ClickListener(){
+		uistage.getUiPanel().getLeftSection().getMissleTurretIcon().addListener(new ClickListener(){
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				uistage.getMissileTowerTooltipTable().getTooltip().hide();
-				EntityModel.beginTowerPlacing(MISSILE_TURRET);
+				uistage.getUiPanel().getLeftSection().getMissileTowerTooltipTable().getTooltip().hide();
+				EntityModel.beginTowerPlacing(TowerType.MISSILE_TURRET);
 			}
 
 			@Override
 			public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
 				super.enter(event, x, y, pointer, fromActor);
-				uistage.getMissileTowerTooltipTable().getManager().instant();
+				uistage.getUiPanel().getLeftSection().getMissileTowerTooltipTable().getManager().instant();
 			}
 		});
+		
 	}
 
 
 	public void showPauseWindow() {
 		PlayState.PAUSE = true;
-		uistage.get_pauseWindow().setVisible(true);
+		uistage.getPauseWindow().setVisible(true);
 	}
 
 	/** hides pause window and sets pause equals to false* */
 	public void hidePauseWindow() {
 		PlayState.PAUSE = false;
-		uistage.get_pauseWindow().setVisible(false);
+		uistage.getPauseWindow().setVisible(false);
 	}
 
 	/** hides towerSelection panels **/
 	public void hideTowerSelectionPanel() {
-		uistage.getTowerSelectPanel().setVisible(false);
+		uistage.getUiPanel().getRightSection().getTowerSelectPanel().setVisible(false);
 	}
 
 	/** shows towerSelection panels **/
 	public void showTowerSelectionPanel() {
-		uistage.getTowerSelectPanel().setVisible(true);
+		uistage.getUiPanel().getRightSection().getTowerSelectPanel().setVisible(true);
 	}
 
 	/**
@@ -156,50 +159,50 @@ public class UIStageController extends ClickListener {
 	 **/
 	public void setTowerSelectionInfo(String towerName, double sellPrice, double upgradePrice, double fireRate,
 			double damage, double range, String special) {
-		uistage.getTowerSelectName().setText(towerName);
-		uistage.getTowerSelectSellPrice().setText(String.valueOf((int) sellPrice));
-		uistage.getTowerSelectUpgradePrice().setText(String.valueOf((int) upgradePrice));
-		uistage.getTowerSelectFireRate().setText(String.format("%.1f", fireRate));
-		uistage.getTowerSelectDamage().setText(String.valueOf((int) damage));
-		uistage.getTowerSelectRange().setText(String.valueOf((int) range));
-		uistage.getTowerSelectSpecial().setText(special);
+		uistage.getUiPanel().getRightSection().getTowerSelectName().setText(towerName);
+		uistage.getUiPanel().getRightSection().getTowerSelectSellPrice().setText(String.valueOf((int) sellPrice));
+		uistage.getUiPanel().getRightSection().getTowerSelectUpgradePrice().setText(String.valueOf((int) upgradePrice));
+		uistage.getUiPanel().getRightSection().getTowerSelectFireRate().setText(String.format("%.1f", fireRate));
+		uistage.getUiPanel().getRightSection().getTowerSelectDamage().setText(String.valueOf((int) damage));
+		uistage.getUiPanel().getRightSection().getTowerSelectRange().setText(String.valueOf((int) range));
+		uistage.getUiPanel().getRightSection().getTowerSelectSpecial().setText(special);
 		showTowerSelectionPanel();
 	}
 
 	public void updateHealth(int health) {
-		uistage.getHealthLabel().setText(String.valueOf(health));
+		uistage.getUiPanel().getRightSection().getHealthLabel().setText(String.valueOf(health));
 	}
 
 	public void setPlayerMoney(double money) {
-		uistage.getMoneyLabel().setText(String.format("%.0f",money));
+		uistage.getUiPanel().getLeftSection().getMoneyLabel().setText(String.format("%.0f",money));
 	}
 
 	public boolean isOverUpgradeBtn() {
-		return uistage.isOverUpgradeButton();
+		return uistage.getUiPanel().getRightSection().isOverUpgradeButton();
 	}
 	
 	public void updateNextEnemyText(String nextEnemy){
-		uistage.get_next_enemy_value().setText(nextEnemy);
+		uistage.getUiPanel().getMidSection().getnextEnemyValue().setText(nextEnemy);
 	}
 
 	public void updateUpgradeInfo() {
 		if (isOverUpgradeBtn()) {
 			if (model.isDamageGreenText())
-				uistage.getTowerSelectDamage().setColor(Assets.greenColor);
+				uistage.getUiPanel().getRightSection().getTowerSelectDamage().setColor(Assets.greenColor);
 			else
-				uistage.getTowerSelectDamage().setColor(Color.WHITE);
+				uistage.getUiPanel().getRightSection().getTowerSelectDamage().setColor(Color.WHITE);
 			if (model.isIsfireRateGreenText())
-				uistage.getTowerSelectFireRate().setColor(Assets.greenColor);
+				uistage.getUiPanel().getRightSection().getTowerSelectFireRate().setColor(Assets.greenColor);
 			else
-				uistage.getTowerSelectFireRate().setColor(Color.WHITE);
+				uistage.getUiPanel().getRightSection().getTowerSelectFireRate().setColor(Color.WHITE);
 			if (model.isRangeGreenText())
-				uistage.getTowerSelectRange().setColor(Assets.greenColor);
+				uistage.getUiPanel().getRightSection().getTowerSelectRange().setColor(Assets.greenColor);
 			else
-				uistage.getTowerSelectRange().setColor(Color.WHITE);
+				uistage.getUiPanel().getRightSection().getTowerSelectRange().setColor(Color.WHITE);
 		} else {
-			uistage.getTowerSelectRange().setColor(Color.WHITE);
-			uistage.getTowerSelectFireRate().setColor(Color.WHITE);
-			uistage.getTowerSelectDamage().setColor(Color.WHITE);
+			uistage.getUiPanel().getRightSection().getTowerSelectFireRate().setColor(Color.WHITE);
+			uistage.getUiPanel().getRightSection().getTowerSelectRange().setColor(Color.WHITE);
+			uistage.getUiPanel().getRightSection().getTowerSelectDamage().setColor(Color.WHITE);
 		}
 	}
 }

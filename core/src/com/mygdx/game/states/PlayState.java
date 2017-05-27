@@ -36,17 +36,14 @@ public class PlayState extends GameState {
 		_gameCamera = new OrthographicCamera();
 		EntityFactory entityFactory = new EntityFactory(ashleyEngine);
 		InputHandler inputhandler = new InputHandler(_gameCamera,entityFactory,gsm,ashleyEngine);
-		// behöver deklarera uiview här för att registrera inputprocessor
 		_uiStage = new UiStage();
 		_entityManager = new EntityManager(ashleyEngine, _batch, _gameCamera, inputhandler, _uiStage, gsm, entityFactory);
 
 		InputMultiplexer multi = new InputMultiplexer();
 
-
-		multi.addProcessor(_uiStage.getStage());
+		multi.addProcessor(_uiStage);
 		multi.addProcessor(inputhandler);
 		Gdx.input.setInputProcessor(multi);
-
 	}
 
 	@Override
@@ -80,7 +77,7 @@ public class PlayState extends GameState {
 		_renderer.setView(_gameCamera);
 		_renderer.render();
 		_batch.setProjectionMatrix(_gameCamera.combined);
-		_uiStage.getStage().act(Gdx.graphics.getDeltaTime());
+		_uiStage.act(Gdx.graphics.getDeltaTime());
 		_entityManager.update(Gdx.graphics.getDeltaTime());
 		_uiStage.draw();
 	}
