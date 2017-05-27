@@ -64,7 +64,7 @@ public class ShootingSystem extends IteratingSystem {
 			}
 		} else {
 			if(targetComponent.getTarget() != null)
-				if(Families.FLYING.matches(targetComponent.getTarget())) return;
+				if(Families.FLYING.matches(targetComponent.getTarget())  && stats._towerType == TowerType.PLASTMA_TOWER) return;
 	
 			setTurretAngle(entity);
 			fireAtNearestEnemy(entity, deltaTime);
@@ -146,7 +146,6 @@ public class ShootingSystem extends IteratingSystem {
 		TowerStatComponent stats = Mappers.TOWER_STATS_M.get(tower);
 		
 		if (target.getTarget() != null) {
-			if(Families.FLYING.matches(target.getTarget()) && stats._towerType != TowerType.MISSILE_TURRET) return;
 			PositionComponent targetPos = Mappers.POSITION_M.get(target.getTarget());
 			if(targetPos == null) return;
 			double difX = targetPos.position.x - towerPos.position.x;
