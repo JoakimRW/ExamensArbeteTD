@@ -58,17 +58,13 @@ public class PlayState extends GameState {
 		if(GAME_OVER){
 			_gsm.setState(State.LOSE);
 			WaveTimeManager.WAVE = 0;
-	        GAME_OVER = false;
-	        START_GAME = false;
-	        PAUSE = false;
+			reset();
 		}
 		if(WaveTimeManager.WAVE == MAX_WAVES && CURRENT_LIVING_ENEMIES <= 0){
 			System.out.println("won game");
 			_gsm.setState(State.WIN);
 			WaveTimeManager.WAVE = 0;
-	        GAME_OVER = false;
-	        START_GAME = false;
-	        PAUSE = false;
+			reset();
 		}
 	}
 
@@ -84,11 +80,18 @@ public class PlayState extends GameState {
 
 	@Override
 	public void dispose() {
+		reset();
         Gdx.input.setInputProcessor(null);
         _entityManager.dispose();
         LevelManager.dispose();
         Assets.dispose();
     }
+	
+	public void reset(){
+        GAME_OVER = false;
+        START_GAME = false;
+        PAUSE = false;
+	}
 
 	@Override
 	public void pause() {
