@@ -143,8 +143,7 @@ public class ShootingSystem extends IteratingSystem {
 		AngleComponent angle = Mappers.ANGLE_M.get(tower);
 		PositionComponent towerPos = Mappers.POSITION_M.get(tower);
 		TargetComponent target = Mappers.TARGET_M.get(tower);
-		TowerStatComponent stats = Mappers.TOWER_STATS_M.get(tower);
-		
+	
 		if (target.getTarget() != null) {
 			PositionComponent targetPos = Mappers.POSITION_M.get(target.getTarget());
 			if(targetPos == null) return;

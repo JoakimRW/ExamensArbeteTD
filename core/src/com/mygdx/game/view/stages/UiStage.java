@@ -90,6 +90,7 @@ public class UiStage extends Stage {
     @Override
     public void act(float delta) {
     	super.act(delta);
+    	uiPanel.getRightSection().setIsOverUpgradeButton(uiPanel.getRightSection().getUpgradeBtn().isOver());
     	uiPanel.getMidSection().getCurrentWave().setText(String.valueOf(WaveTimeManager.WAVE));
         if (PlayState.START_GAME) uiPanel.getMidSection().getNextWaveTimeValue().setText(String.format("%d : %.0f",WaveTimeManager.CURRENT_WAVE_TIME ,  WaveTimeManager.CURRENT_WAVE_TIME_MILLIS * 100));
     }

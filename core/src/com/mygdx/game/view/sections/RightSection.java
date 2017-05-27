@@ -152,6 +152,10 @@ public class RightSection extends Table {
 	public Label getTowerSelectSpecial() {
 		return _towerSelectSpecial;
 	}
+	
+	public void setIsOverUpgradeButton(boolean isOverUpgradeButton){
+		this.isOverUpgradeBtn = isOverUpgradeButton;
+	}
 
 	public boolean isOverUpgradeButton() {
 		// TODO Auto-generated method stub
