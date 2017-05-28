@@ -1,30 +1,30 @@
 package com.mygdx.game.states;
 
 import com.mygdx.game.managers.GameStateManager;
+import com.mygdx.game.view.stages.TutorialStage;
 
 public class TutorialState extends GameState {
-
+	
+	private TutorialStage _tutorialStage;
+	
 	public TutorialState(GameStateManager gsm) {
 		super(gsm);
-		// TODO Auto-generated constructor stub
+		_tutorialStage = new TutorialStage();
 	}
 
 	@Override
 	public void resize(int w, int h) {
-		// TODO Auto-generated method stub
-
+		_tutorialStage.getViewport().update(w, h);
 	}
 
 	@Override
 	public void update(float delta) {
-		// TODO Auto-generated method stub
-
+		_tutorialStage.act(delta);
 	}
 
 	@Override
 	public void render() {
-		// TODO Auto-generated method stub
-
+		_tutorialStage.draw();
 	}
 
 	@Override

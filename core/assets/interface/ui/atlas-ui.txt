@@ -1,116 +1,151 @@
 atlas-ui.png
-size: 929, 721
+size: 944, 729
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 black-rectangle-hover
   rotate: false
-  xy: 733, 1
+  xy: 743, 141
   size: 174, 155
   orig: 174, 155
   offset: 0, 0
   index: -1
 button-large
   rotate: false
-  xy: 572, 1
+  xy: 1, 48
   size: 160, 60
   orig: 160, 60
   offset: 0, 0
   index: -1
 button-small
   rotate: false
-  xy: 342, 1
+  xy: 626, 1
   size: 100, 37
   orig: 100, 37
   offset: 0, 0
   index: -1
 button
   rotate: false
-  xy: 1, 157
+  xy: 552, 48
   size: 391, 92
   orig: 391, 92
   offset: 0, 0
   index: -1
 coin
   rotate: false
-  xy: 125, 1
+  xy: 856, 1
   size: 50, 46
   orig: 50, 46
   offset: 0, 0
   index: -1
 gray-panel
   rotate: false
-  xy: 393, 157
+  xy: 1, 297
   size: 400, 200
   orig: 400, 200
   offset: 0, 0
   index: -1
 heart
   rotate: false
-  xy: 176, 1
+  xy: 292, 48
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+keyA
+  rotate: false
+  xy: 422, 48
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+keyD
+  rotate: false
+  xy: 487, 48
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+keyESC
+  rotate: false
+  xy: 227, 48
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+keyS
+  rotate: false
+  xy: 357, 48
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+keyW
+  rotate: false
+  xy: 162, 48
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 knob
   rotate: false
-  xy: 1, 1
+  xy: 502, 1
   size: 24, 24
   orig: 24, 24
   offset: 0, 0
   index: -1
 laser-tower-icon
   rotate: false
-  xy: 92, 1
+  xy: 527, 1
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 missile-tower-icon
   rotate: false
-  xy: 26, 1
+  xy: 560, 1
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 pause-bg
   rotate: false
-  xy: 241, 1
+  xy: 1, 141
   size: 100, 100
   orig: 100, 100
   offset: 0, 0
   index: -1
 plastma-tower-icon
   rotate: false
-  xy: 59, 1
+  xy: 593, 1
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 slider-bg
   rotate: false
-  xy: 1, 358
+  xy: 1, 1
   size: 500, 20
   orig: 500, 20
   offset: 0, 0
   index: -1
 statPanel
   rotate: false
-  xy: 443, 1
+  xy: 727, 1
   size: 128, 40
   orig: 128, 40
   offset: 0, 0
   index: -1
 ui-bg2
   rotate: false
-  xy: 1, 379
+  xy: 102, 141
   size: 640, 110
   orig: 640, 110
   offset: 0, 0
   index: -1
 uibg
   rotate: false
-  xy: 1, 490
+  xy: 1, 498
   size: 927, 230
   orig: 927, 230
   offset: 0, 0

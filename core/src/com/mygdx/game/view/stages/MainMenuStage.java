@@ -24,6 +24,7 @@ public class MainMenuStage extends Stage {
 		Table table = new Table();
 		final Label title = new Label(Game.TITLE , Assets._skin , "fontVeraRg24" , "green");
 		final TextButton button = new TextButton("New Game", Assets._skin, "menu");
+		final TextButton tutorialButton = new TextButton("How to Play", Assets._skin, "menu");
 		final TextButton settingsBtn = new TextButton("Settings", Assets._skin, "menu");
 		final TextButton exitButton = new TextButton("Quit Game", Assets._skin, "menu");
 		button.addListener(new ClickListener() {
@@ -50,15 +51,26 @@ public class MainMenuStage extends Stage {
 
 		});
 		
+		tutorialButton.addListener(new ClickListener(){
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				super.clicked(event, x, y);
+				gsm.setState(State.TUTORIAL);
+			}
+		});
+		
 		
 		table.align(Align.center);
 		table.add(title).padBottom(Gdx.graphics.getHeight() / 4).align(Align.top).row();
 
 		table.add(button).align(Align.left).padBottom(30f);
 		table.row();
+		table.add(tutorialButton).align(Align.left).padBottom(30f);
+		table.row();
 		table.add(settingsBtn).align(Align.left).padBottom(30f);
 		table.row();
-		table.add(exitButton).align(Align.left);
+		table.add(exitButton).align(Align.left).padBottom(30f);
+		table.row();
 		table.setFillParent(true);
 		this.addActor(table);
 	}
