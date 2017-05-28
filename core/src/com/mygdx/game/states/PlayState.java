@@ -89,6 +89,7 @@ public class PlayState extends GameState {
 	
 	public void reset(){
 		CURRENT_LIVING_ENEMIES = 0;
+		WaveTimeManager.WAVE = 0;
         GAME_OVER = false;
         START_GAME = false;
         PAUSE = false;

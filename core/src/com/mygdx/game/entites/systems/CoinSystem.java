@@ -40,9 +40,9 @@ public class CoinSystem extends IteratingSystem {
 		pcomp.position.y += vcomp.maxSpeed * deltaTime;
         batch.begin();
 		batch.setProjectionMatrix(camera.combined);
-		Assets.fontVera10.getData().setScale(0.5f);
-		Assets.fontVera10.setColor(1,0.9f,0,1);
-		Assets.fontVera10.draw(batch , String.format("+%.0f" , mcomp.money),pcomp.position.x + 21 , pcomp.position.y + ocomp.offsetY + 1);
+		Assets.fontVeraRg10.getData().setScale(0.5f);
+		Assets.fontVeraRg10.setColor(1,0.9f,0,1);
+		Assets.fontVeraRg10.draw(batch , String.format("+%.0f" , mcomp.money),pcomp.position.x + 21 , pcomp.position.y + ocomp.offsetY + 1);
 		batch.end();
 		// despawn coin when it has reach its lifetime
 		if (tcomp.time > tcomp.lifeTime) {

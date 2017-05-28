@@ -19,8 +19,8 @@ public class SettingsPanel extends Table {
 		_soundFxSlider = new Slider(0, 1f, 0.01f, false, Assets._skin);
 		_musicVolSlider.setValue(Game.VOLUME_MUSIC);
 		_soundFxSlider.setValue(Game.VOLUME_SOUNDFX);
-		Label musicLbl = new Label("Music" , Assets._skin , "fontVera20" , "white");
-		Label sfxLbl = new Label("Sound Effects" , Assets._skin , "fontVera20" , "white");
+		Label musicLbl = new Label("Music" , Assets._skin , "fontVeraRg20" , "white");
+		Label sfxLbl = new Label("Sound Effects" , Assets._skin , "fontVeraRg20" , "white");
 		this.add(musicLbl).align(Align.left).row();
 		this.add(_musicVolSlider).spaceBottom(20f).row();
 		this.add(sfxLbl).align(Align.left).row();

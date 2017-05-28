@@ -115,7 +115,7 @@ public abstract class TooltipTable extends Table {
 	        this.getTooltip().setInstant(true);
 
 	        // labels for tooltip
-	        Label towerNameLbl = new Label(towerName, skin , "font24" , "white");
+	        Label towerNameLbl = new Label(towerName, skin , "fontVeraRg24" , "white");
 	        towerNameLbl.setColor(Assets.greenColor);
 	        Label fireRateText = new Label("Fire rate:", skin , "default-font" , "white");
 	        Label fireRateLbl = new Label(String.format("%.1f/S",fireRate) , skin , "default-font" , "white");

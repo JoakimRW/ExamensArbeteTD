@@ -34,4 +34,5 @@ public class UIPanel extends Table {
 	public RightSection getRightSection() {
 		return _rightSection;
 	}
+	
 }

@@ -27,7 +27,7 @@ public class LeftSection extends Table {
 		
         Table moneyStatPanel = new StatPanel(skin);
         Image coin = new Image(skin , "coin");
-        moneyLabel = new Label("",skin , "font20" , "white");
+        moneyLabel = new Label("",skin , "fontHemi20" , "white");
         moneyStatPanel.add(coin).pad(5).align(Align.left).expand().size(23 , 21);
         moneyStatPanel.add(moneyLabel).align(Align.right).pad(5 , 5 , 5 ,10).expand();
         this.add(moneyStatPanel).align(Align.right).size(120 , 30).spaceBottom(2).row();
@@ -46,7 +46,7 @@ public class LeftSection extends Table {
         grayPanel.add(_laserTowerIcon).size(32,32).pad(10).align(Align.topLeft);
         grayPanel.add(_plastmaTowerIcon).size(32,32).pad(10).align(Align.topLeft);
         grayPanel.add(_missleTurretIcon).size(32, 32).pad(10).align(Align.topLeft).expand(32,32);
-        this.add(grayPanel);
+        this.add(grayPanel).expand();
 	}
 
 

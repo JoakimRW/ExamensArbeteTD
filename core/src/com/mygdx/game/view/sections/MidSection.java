@@ -22,14 +22,14 @@ public class MidSection extends Table {
         Table nextWaveTable = new StatPanel(skin);
         Table buttonContainer = new Table(skin);
         // labels
-        Label waveText = new Label("Wave:", skin , "font20" , "white");
-        Label nextEnemyText = new Label("Next Enemy", skin, "font20", "white");
-        _currentWave = new Label("0",skin , "font20" , "white");
-        Label maxWaves = new Label(" / " + PlayState.MAX_WAVES , skin , "font20" , "white");
-        _next_enemy_value = new Label("",skin , "font20","white");
+        Label waveText = new Label("Wave:", skin , "fontHemi20" , "white");
+        Label nextEnemyText = new Label("Next Enemy", skin, "fontHemi20", "white");
+        _currentWave = new Label("0",skin , "fontHemi20" , "white");
+        Label maxWaves = new Label(" / " + PlayState.MAX_WAVES , skin , "fontHemi20" , "white");
+        _next_enemy_value = new Label("",skin , "fontHemi20","white");
         
-        Label nextWaveTimeText = new Label("In:", skin, "font20", "white");
-        _next_wave_time_value = new Label("",skin , "font20","white");
+        Label nextWaveTimeText = new Label("In:", skin, "fontHemi20", "white");
+        _next_wave_time_value = new Label("",skin , "fontHemi20","white");
         // buttons
         _nextWaveBtn = new TextButton("START",skin);
         // tables

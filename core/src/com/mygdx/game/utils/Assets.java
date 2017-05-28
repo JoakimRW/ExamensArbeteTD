@@ -40,14 +40,7 @@ public class Assets {
 	
     public static Skeleton coinSkeleton;
     public static AnimationState coinAnimationState;
-    
-    public static BitmapFont font10;
-    public static BitmapFont font12;
-    public static BitmapFont font16;
-    public static BitmapFont fontVera10;
-    public static BitmapFont font24;
-    public static BitmapFont fontVera24;
-    public static BitmapFont font20;
+   
     
     public static Music laserMillenium;
     public static Sound laserTurretFire;
@@ -58,9 +51,20 @@ public class Assets {
 	public static Skin _skin;
 	public static Skin uiSkin;
 	public static Color greenColor;
-	private static Object fontVera20;
-	private static Object fontVera16;
-
+	
+	public static BitmapFont fontVeraRg10;
+	public static BitmapFont fontHemi10;
+	public static BitmapFont fontHemi12;
+	public static BitmapFont fontHemi16;
+	public static BitmapFont fontVeraBd16;
+	public static BitmapFont fontHemi20;
+	public static BitmapFont fontVeraBd20;
+	public static BitmapFont fontHemi24;
+	public static BitmapFont fontVeraRg24;
+	public static BitmapFont fontVeraBd24;
+	public static BitmapFont fontVeraRg20;
+	public static BitmapFont fontHemi18;
+	
     private static Texture loadTexture(String file){
         return new Texture(Gdx.files.internal(file));
     }
@@ -111,29 +115,37 @@ public class Assets {
     }
     
     public static void createSkin(){
-        fontVera10 = createFont(12 , Fonts.VERA);
-        font10 = createFont(12 , Fonts.HEMI_HEAD);
-        font12 = createFont(12 , Fonts.HEMI_HEAD);
-        font16 = createFont(16 , Fonts.HEMI_HEAD);
-        fontVera16 = createFont(16, Fonts.VERA_BD);
-        font20 = createFont(20,Fonts.HEMI_HEAD);
-        fontVera20 = createFont(20, Fonts.VERA_BD);
-        font24 = createFont(24 ,Fonts.HEMI_HEAD);
-        fontVera24 = createFont(24, Fonts.VERA_BD);
+        
+        
+        fontHemi10 = createFont(10 , Fonts.HEMI_HEAD);
+        fontHemi12 = createFont(12 , Fonts.HEMI_HEAD);
+        fontHemi16 = createFont(16 , Fonts.HEMI_HEAD);
+        fontHemi18 = createFont(18, Fonts.HEMI_HEAD);
+        
+        fontVeraRg10 = createFont(10 , Fonts.VERA);
+        fontVeraBd16 = createFont(16, Fonts.VERA_BD);
+        fontHemi20 = createFont(20,Fonts.HEMI_HEAD);
+        fontVeraRg20 = createFont(20, Fonts.VERA);
+        fontVeraBd20 = createFont(20, Fonts.VERA_BD);
+        fontHemi24 = createFont(24 ,Fonts.HEMI_HEAD);
+        fontVeraRg24 = createFont(24, Fonts.VERA);
+        fontVeraBd24 = createFont(24, Fonts.VERA_BD);
         Skin skin = new Skin();
         TextureAtlas atlas = new TextureAtlas("interface/ui/atlas-ui.txt");
         skin.addRegions(atlas);
         
-        skin.add("font10", Assets.font10);
-        skin.add("fontVera10", Assets.fontVera10);
-        skin.add("font12", Assets.font12);
-        skin.add("default-font", Assets.font16);
-        skin.add("fontVera16", Assets.fontVera16);
-        skin.add("font20", Assets.font20);
-        skin.add("fontVera20", Assets.fontVera20);
-        skin.add("font24", Assets.font24);
-        skin.add("fontVera24", Assets.fontVera24);
-        
+        skin.add("fontVeraRg10", Assets.fontVeraRg10);
+        skin.add("fontHemi10", Assets.fontHemi10);
+        skin.add("fontHemi12", Assets.fontHemi12);
+        skin.add("default-font", Assets.fontHemi16);
+        skin.add("fontVeraBd16", Assets.fontVeraBd16);
+        skin.add("fontHemi18", Assets.fontHemi18);
+        skin.add("fontHemi20", Assets.fontHemi20);
+        skin.add("fontVeraBd20", Assets.fontVeraBd20);
+        skin.add("fontVeraRg20", fontVeraRg20);
+        skin.add("fontHemi24", Assets.fontHemi24);
+        skin.add("fontVeraRg24", Assets.fontVeraRg24);
+        skin.add("fontVeraBd24", Assets.fontVeraBd24);
         skin.load(Gdx.files.internal("interface/ui/uiSkin.json"));
         _skin = skin;
     }

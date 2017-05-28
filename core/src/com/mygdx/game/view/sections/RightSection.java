@@ -29,7 +29,7 @@ public class RightSection extends Table {
 		this.setSkin(skin);
         Table grayPanel = new GrayPanel(skin);
         _towerSelectPanel = new Table(skin);
-        healthLabel = new Label("",skin , "font20" , "white");
+        healthLabel = new Label("",skin , "fontHemi20" , "white");
         Image heart = new Image(skin,"heart");
         // stats panels that show hp , and money
         Table healthStatPanel = new StatPanel(skin);
@@ -39,34 +39,35 @@ public class RightSection extends Table {
 
         // table to contain tower operations
         Table leftTowerSelectSection = new Table(skin);
+        
             // tower name
-            _towerSelectName = new Label("",skin);
+            _towerSelectName = new Label("",skin , "fontHemi18" , "white");
             _towerSelectName.setColor(Assets.greenColor);
         Table name = new StatPanel(skin);
 
         name.add(_towerSelectName).pad(0 , 10,  0 ,10).align(Align.left).expand().fill();
             // sell label and value
-        Label towerSelectUpgradeText = new Label("Upgrade",skin);
-        _towerSelectUpgradePrice = new Label("",skin );
+        Label towerSelectUpgradeText = new Label("Upgrade",skin , "fontHemi18" , "white");
+        _towerSelectUpgradePrice = new Label("",skin , "fontHemi18" , "white" );
         Table upgrade = new StatPanel(skin);
-        upgrade.add(_towerSelectUpgradePrice).expand().align(Align.right).pad(10);
+        upgrade.add(_towerSelectUpgradePrice).expandX().align(Align.right).pad(10);
         // upgrade label and value
-        Label towerSelectSellText = new Label("Sell",skin,"font20","white");
-        _towerSelectSellPrice = new Label("",skin );
+        Label towerSelectSellText = new Label("Sell",skin,"fontHemi18","white");
+        _towerSelectSellPrice = new Label("",skin , "fontHemi18" , "white" );
         Table sell = new StatPanel(skin);
-        sell.add(_towerSelectSellPrice).expand().align(Align.right).pad(10);
+        sell.add(_towerSelectSellPrice).height(28f).expandX().align(Align.right).pad(10);
         // sell button
         _sellBtn = new TextButton("Sell",skin);
         // upgrade button
         _upgradeBtn = new TextButton("Upgrade",skin);
         leftTowerSelectSection.pad(5);
-        leftTowerSelectSection.add(name).align(Align.left).expand().fill().colspan(2).pad(0).row();
-        leftTowerSelectSection.add(towerSelectSellText).align(Align.left);
-        leftTowerSelectSection.add(sell).align(Align.right).width(60).pad(0).row();
-        leftTowerSelectSection.add(towerSelectUpgradeText).align(Align.left);
-        leftTowerSelectSection.add(upgrade).align(Align.right).width(60).pad(0).row();
-        leftTowerSelectSection.add(_sellBtn).height(35).width(60).align(Align.left).spaceRight(5);
-        leftTowerSelectSection.add(_upgradeBtn).height(35).width(75).align(Align.left);
+        leftTowerSelectSection.add(name).height(30f).align(Align.topLeft).expand().fill().colspan(2).pad(0).row();
+        leftTowerSelectSection.add(towerSelectSellText).align(Align.topLeft);
+        leftTowerSelectSection.add(sell).height(28f).align(Align.right).width(60).pad(0).row();
+        leftTowerSelectSection.add(towerSelectUpgradeText).align(Align.topLeft);
+        leftTowerSelectSection.add(upgrade).height(28f).align(Align.right).width(60).pad(0).row();
+        leftTowerSelectSection.add(_sellBtn).height(30).width(60).align(Align.bottomLeft).padTop(10).spaceRight(5);
+        leftTowerSelectSection.add(_upgradeBtn).height(30).width(75).align(Align.bottomLeft);
         leftTowerSelectSection.align(Align.bottomLeft);
         leftTowerSelectSection.left();
         // right select section	
@@ -77,36 +78,37 @@ public class RightSection extends Table {
         // table to contain tower information
         Table towerInfoSection = new Table(skin);
         // fire rate text then value
-        Label fireRate = new Label("Fire rate",skin);
-        _towerSelectFireRate = new Label("",skin);
-        fireRateTblRow.add(_towerSelectFireRate).align(Align.right).expand().padRight(10);
+        Label fireRate = new Label("Fire rate",skin , "fontHemi18" , "white");
+        _towerSelectFireRate = new Label("",skin , "fontHemi18" , "white" );
+        fireRateTblRow.add(_towerSelectFireRate).expand().align(Align.right).padRight(10);
         // damage text and then value
-        Label damage = new Label("Damage",skin);
-        _towerSelectDamage = new Label("",skin);
-        dmgTblRow.add(_towerSelectDamage).align(Align.right).expand().padRight(10);
+        Label damage = new Label("Damage",skin , "fontHemi18" , "white");
+        _towerSelectDamage = new Label("",skin , "fontHemi18" , "white");
+        dmgTblRow.add(_towerSelectDamage).align(Align.right).expandX().padRight(10);
         // range text and then value
-        Label range = new Label("Range",skin);
-        _towerSelectRange = new Label("",skin);
-        rangeTblRow.add(_towerSelectRange).align(Align.right).expand().padRight(10);
+        Label range = new Label("Range",skin , "fontHemi18" , "white");
+        _towerSelectRange = new Label("",skin , "fontHemi18" , "white");
+        rangeTblRow.add(_towerSelectRange).align(Align.right).expandX().padRight(10);
         // special text the value
-        Label special = new Label("Special",skin);
-        _towerSelectSpecial = new Label("",skin);
-        specialTblrow.add(_towerSelectSpecial).align(Align.right).expand().padRight(10);
+        Label special = new Label("Special",skin , "fontHemi18" , "white");
+        _towerSelectSpecial = new Label("",skin , "fontHemi18" , "white");
+        specialTblrow.add(_towerSelectSpecial).align(Align.right).expandX().padRight(10);
         // add widgets to tower info section
         towerInfoSection.add(fireRate).align(Align.left).spaceRight(5);
-        towerInfoSection.add(fireRateTblRow).align(Align.right).row();
+        towerInfoSection.add(fireRateTblRow).height(28f).align(Align.right).padRight(5).row();
         towerInfoSection.add(damage).align(Align.left).spaceRight(5);
-        towerInfoSection.add(dmgTblRow).align(Align.right).row();
+        towerInfoSection.add(dmgTblRow).height(28f).align(Align.right).padRight(5).row();
         towerInfoSection.add(range).align(Align.left).spaceRight(5);
-        towerInfoSection.add(rangeTblRow).align(Align.right).row();
+        towerInfoSection.add(rangeTblRow).height(28f).align(Align.right).padRight(5).row();
         towerInfoSection.add(special).align(Align.left).spaceRight(5);
-        towerInfoSection.add(specialTblrow).align(Align.right).row();
+        towerInfoSection.add(specialTblrow).height(28f).align(Align.right).padRight(5).row();
         // add left and right container for tower select
         _towerSelectPanel.add(leftTowerSelectSection).expand().fill();
-        _towerSelectPanel.add(towerInfoSection).expand().fill();
+        _towerSelectPanel.add(towerInfoSection).align(Align.topLeft).padTop(5);
         grayPanel.add(_towerSelectPanel).expand().fill();
-        this.add(grayPanel).padTop(2f);
-        _towerSelectPanel.setVisible(false);
+        this.add(grayPanel);
+        _towerSelectPanel.setVisible(true);
+        
 	}
 
 	public Table getTowerSelectPanel() {

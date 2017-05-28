@@ -5,21 +5,21 @@
   },
 
   "com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle": {
-    "default": { "font": "font20" , "fontColor":"white"},
-    "green-font": { "font": "font20" , "fontColor":"green"},
-    "statpanel": { "font": "font20" , "fontColor":"white" , "background":"statPanel"}
+    "default": { "font": "fontVeraRg20" , "fontColor":"white"},
+    "green-font": { "font": "fontVeraRg24" , "fontColor":"green"},
+    "statpanel": { "font": "fontVeraRg20" , "fontColor":"white" , "background":"statPanel"}
   }	,
   "com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle": {
-    "default": {"font": "font20" , "up":"button-large" , "down" : "button-large", "pressedOffsetX":1, "pressedOffsetY":-1},
-    "regular": {"font": "font24"} ,
-    "menu": {"font": "fontVera24"}
+    "default": {"font": "fontHemi18" , "up":"button-large" , "down" : "button-large", "pressedOffsetX":1, "pressedOffsetY":-1},
+    "regular": {"font": "fontVeraRg20"} ,
+    "menu": {"font": "fontVeraRg24"}
   },
   "com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle": {
-    "default": {"label": {"font": "font20"}, "background": "black-rectangle-hover"}
+    "default": {"label": {"font": "fontVeraRg20"}, "background": "black-rectangle-hover"}
   },
 
   "com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle": {
-    "default":{"background":"pause-bg","titleFont":"font20"}
+    "default":{"background":"pause-bg","titleFont":"fontVeraRg20"}
   }
   , 
   	  "com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle": {

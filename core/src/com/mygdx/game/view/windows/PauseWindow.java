@@ -20,7 +20,6 @@ public class PauseWindow extends Window {
 
 	public PauseWindow(String title, Skin skin) {
 		super(title, skin);
-		this.debug();
         this.setVisible(false);
         primaryMenu = new Table(skin);
         settingsPanel = new SettingsPanel(skin);
