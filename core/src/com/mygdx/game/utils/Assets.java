@@ -17,6 +17,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.esotericsoftware.spine.*;
+import com.mygdx.game.Game;
 
 public class Assets {
 	public static Sprite enemyGreenHealthbarBG;
@@ -45,6 +46,7 @@ public class Assets {
     public static BitmapFont font16;
     public static BitmapFont fontVera10;
     public static BitmapFont font24;
+    public static BitmapFont fontVera24;
     public static BitmapFont font20;
     
     public static Music laserMillenium;
@@ -56,6 +58,8 @@ public class Assets {
 	public static Skin _skin;
 	public static Skin uiSkin;
 	public static Color greenColor;
+	private static Object fontVera20;
+	private static Object fontVera16;
 
     private static Texture loadTexture(String file){
         return new Texture(Gdx.files.internal(file));
@@ -66,7 +70,7 @@ public class Assets {
     	greenColor = new Color(0.1f , 0.8f , 0.1f,1f);
         // music
         laserMillenium = Gdx.audio.newMusic(Gdx.files.internal("music/Laser_Millenium.ogg"));
-        laserMillenium.setVolume(0.1f);
+        laserMillenium.setVolume(Game.VOLUME_MUSIC);
         laserMillenium.setLooping(true);
         laserMillenium.play();
         // sounds
@@ -111,8 +115,11 @@ public class Assets {
         font10 = createFont(12 , Fonts.HEMI_HEAD);
         font12 = createFont(12 , Fonts.HEMI_HEAD);
         font16 = createFont(16 , Fonts.HEMI_HEAD);
+        fontVera16 = createFont(16, Fonts.VERA_BD);
         font20 = createFont(20,Fonts.HEMI_HEAD);
+        fontVera20 = createFont(20, Fonts.VERA_BD);
         font24 = createFont(24 ,Fonts.HEMI_HEAD);
+        fontVera24 = createFont(24, Fonts.VERA_BD);
         Skin skin = new Skin();
         TextureAtlas atlas = new TextureAtlas("interface/ui/atlas-ui.txt");
         skin.addRegions(atlas);
@@ -121,8 +128,11 @@ public class Assets {
         skin.add("fontVera10", Assets.fontVera10);
         skin.add("font12", Assets.font12);
         skin.add("default-font", Assets.font16);
+        skin.add("fontVera16", Assets.fontVera16);
         skin.add("font20", Assets.font20);
+        skin.add("fontVera20", Assets.fontVera20);
         skin.add("font24", Assets.font24);
+        skin.add("fontVera24", Assets.fontVera24);
         
         skin.load(Gdx.files.internal("interface/ui/uiSkin.json"));
         _skin = skin;
@@ -175,6 +185,10 @@ public class Assets {
     	VERA_BD,
     	VERA_BI,
     	VERA_IT
+    }
+    
+    public static void updateMusicVolume(){
+    	laserMillenium.setVolume(Game.VOLUME_MUSIC);
     }
 
     public static void dispose(){

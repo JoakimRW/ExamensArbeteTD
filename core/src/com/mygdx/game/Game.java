@@ -11,8 +11,8 @@ import com.mygdx.game.utils.Assets;
 public class Game extends ApplicationAdapter {
 	public static final String TITLE = "Mars Tower Defense";
 	SpriteBatch batch;
-	public static float VOLUME_MUSIC = .5f;
-	public static float VOLUME_SOUNDFX = .5f;
+	public static float VOLUME_MUSIC = .1f;
+	public static float VOLUME_SOUNDFX = .1f;
 	public static boolean isMuted;
 	public static boolean isFullscreen;
 	private GameStateManager gsm;

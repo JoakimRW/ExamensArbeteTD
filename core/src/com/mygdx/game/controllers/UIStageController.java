@@ -4,7 +4,9 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.mygdx.game.Game;
 import com.mygdx.game.Factory.TowerType;
 import com.mygdx.game.managers.GameStateManager;
 import com.mygdx.game.states.PlayState;
@@ -54,6 +56,39 @@ public class UIStageController  {
 				hidePauseWindow();
 			}
 		});
+		
+		uistage.getPauseWindow().getSettingsButton().addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				uistage.getPauseWindow().showSettings();
+			}
+		});
+		
+		uistage.getPauseWindow().getSettingsPanel().getMusicVolSlider().addListener(new ChangeListener() {
+
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				Assets.laserMillenium.setVolume(uistage.getPauseWindow().getSettingsPanel().getMusicVolSlider().getValue());
+			}
+		
+		});
+		
+		uistage.getPauseWindow().getSettingsPanel().getSoundFxSlider().addListener(new ChangeListener() {
+
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				Game.VOLUME_SOUNDFX = uistage.getPauseWindow().getSettingsPanel().getSoundFxSlider().getValue();
+			}
+		
+		});
+		
+		uistage.getPauseWindow().getOkButton().addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				uistage.getPauseWindow().showMenu();;
+			}
+		});
+		
 		/* Main menu button in pause mode */
 		uistage.getPauseWindow().getMainMenuButton().addListener(new ClickListener() {
 			@Override

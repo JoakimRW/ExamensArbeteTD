@@ -22,10 +22,10 @@ public class MainMenuStage extends Stage {
 
 	private void initMainMenu(final GameStateManager gsm) {
 		Table table = new Table();
-		final Label title = new Label(Game.TITLE , Assets._skin , "font24" , "green");
-		final TextButton button = new TextButton("New Game", Assets._skin, "regular");
-		final TextButton settingsBtn = new TextButton("Settings", Assets._skin, "regular");
-		final TextButton exitButton = new TextButton("Quit Game", Assets._skin, "regular");
+		final Label title = new Label(Game.TITLE , Assets._skin , "fontVera24" , "green");
+		final TextButton button = new TextButton("New Game", Assets._skin, "menu");
+		final TextButton settingsBtn = new TextButton("Settings", Assets._skin, "menu");
+		final TextButton exitButton = new TextButton("Quit Game", Assets._skin, "menu");
 		button.addListener(new ClickListener() {
 
 			@Override

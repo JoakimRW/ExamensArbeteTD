@@ -17,7 +17,7 @@ public class MainMenuState extends GameState {
 
 	@Override
 	public void resize(int w, int h) {
-
+		_stage.getViewport().update(w, h);
 	}
 
 	@Override

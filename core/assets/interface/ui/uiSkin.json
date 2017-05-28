@@ -11,7 +11,8 @@
   }	,
   "com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle": {
     "default": {"font": "font20" , "up":"button-large" , "down" : "button-large", "pressedOffsetX":1, "pressedOffsetY":-1},
-    "regular": {"font": "font24"}
+    "regular": {"font": "font24"} ,
+    "menu": {"font": "fontVera24"}
   },
   "com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle": {
     "default": {"label": {"font": "font20"}, "background": "black-rectangle-hover"}

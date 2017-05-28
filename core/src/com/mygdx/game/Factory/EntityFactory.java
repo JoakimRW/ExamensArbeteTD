@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.Game;
 import com.mygdx.game.entites.entitiycomponents.AngleComponent;
 import com.mygdx.game.entites.entitiycomponents.DirectionComponent;
 import com.mygdx.game.entites.entitiycomponents.FlyingComponent;
@@ -98,7 +99,7 @@ public class EntityFactory {
 		if (information.isSplash())
 			entity.add(new SplashComponent(information.getSplashRadius()));
 		information.getSoundEffect().stop();
-		information.getSoundEffect().play(0.01f);
+		information.getSoundEffect().play(Game.VOLUME_SOUNDFX);
 		_engine.addEntity(entity);
 	}
 
