@@ -30,7 +30,7 @@ public class LoseStage extends Stage {
 	private void initLoseStage() {
 		getCamera().position.set(Gdx.graphics.getWidth() / 2 , Gdx.graphics.getHeight() / 2 , 0);
 		getCamera().update();
-		Label youLoseLbl = new Label("You lost" , Assets._skin , "fontVeraRg24" ,"white");
+		Label youLoseLbl = new Label("You lost" , Assets._skin , "fontVeraBd24" ,"white");
 		playAgainBtn = new TextButton("Play Again", Assets._skin , "menu");
 		mainMenuBtn = new TextButton("Main Menu", Assets._skin ,  "menu");
 		Table container = new Table(Assets._skin);

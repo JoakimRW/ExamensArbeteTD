@@ -22,7 +22,7 @@ public class MainMenuStage extends Stage {
 
 	private void initMainMenu(final GameStateManager gsm) {
 		Table table = new Table();
-		final Label title = new Label(Game.TITLE , Assets._skin , "fontVeraRg24" , "green");
+		final Label title = new Label(Game.TITLE , Assets._skin , "fontVeraBd24" , "green");
 		final TextButton button = new TextButton("New Game", Assets._skin, "menu");
 		final TextButton tutorialButton = new TextButton("How to Play", Assets._skin, "menu");
 		final TextButton settingsBtn = new TextButton("Settings", Assets._skin, "menu");

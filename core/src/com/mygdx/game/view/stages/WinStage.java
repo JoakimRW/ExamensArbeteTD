@@ -22,7 +22,7 @@ public class WinStage extends Stage {
 	private void initWinStage() {
 		getCamera().position.set(Gdx.graphics.getWidth() / 2 , Gdx.graphics.getHeight() / 2 , 0);
 		getCamera().update();
-		Label youWinLabel = new Label("You Won!" , Assets._skin , "fontVera24" , "white");
+		Label youWinLabel = new Label("You Won!" , Assets._skin , "fontVeraBd24" , "white");
 		playAgainBtn = new TextButton("Play Again", Assets._skin , "menu");
 		mainMenuBtn = new TextButton("Main Menu", Assets._skin , "menu");
 		Table container = new Table(Assets._skin);
