@@ -53,7 +53,6 @@ public class ShootingSystem extends IteratingSystem {
 					
 					if(!Families.FLYING.matches(targets.get(i))) {
 						targetComponent.getTargets().remove(i);
-						System.out.println("target size " +  targets.size());
 						continue;
 					}
 					targetComponent.setTarget(targets.get(i));

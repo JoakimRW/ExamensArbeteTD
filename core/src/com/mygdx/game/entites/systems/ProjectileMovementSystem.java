@@ -65,16 +65,13 @@ public class ProjectileMovementSystem extends IteratingSystem implements EntityL
 		position.y += velocity.velocity.y * deltaTime;
 
 		if (position.dst(destination) < 5) {
-			System.out.println("distance reached");
-			System.out.println("Distance to enemy : " + position.dst(destination));
+
 			dealDamage(projectileEntity, damage);
 		}
 		if (destinationEntity == null || destinationEntity.getComponent(EnemyComponent.class) == null
 				|| destinationEntity.getComponent(TowerComponent.class) != null
 				|| destinationEntity.getComponent(ProjectileComponent.class) != null
 				|| destinationEntity.getComponents().size() == 0) {
-			System.out.println("Errant projectile removed");
-
 			getEngine().removeEntity(projectileEntity);
 			return;
 		}
@@ -82,7 +79,6 @@ public class ProjectileMovementSystem extends IteratingSystem implements EntityL
 	}
 
 	private void dealDamage(Entity projectileEntity, double damage) {
-		System.out.println("Damage dealt : " + damage);
 		projectileEntity.getComponent(DestinationComponent.class).getDestinationEntity()
 				.getComponent(HealthComponent.class).takeDamage(damage);
 		getEngine().removeEntity(projectileEntity);

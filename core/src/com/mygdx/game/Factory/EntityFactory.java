@@ -73,7 +73,6 @@ public class EntityFactory {
 	public void createProjectileEntity(ProjectileType projectileType, Entity startEntity, Entity targetEntity,
 			double damage) {
 		EntityInformation information = _entityMapper.getProjectileInformation(projectileType);
-		System.out.println(projectileType);
 		Entity entity = new Entity();
 		SpriteComponent spriteComponent = new SpriteComponent(information.getProjectileSprite());
 		PositionComponent positionComponent = new PositionComponent(
