@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.Game;
 import com.mygdx.game.managers.GameStateManager;
 import com.mygdx.game.managers.GameStateManager.State;
@@ -21,6 +22,11 @@ public class MainMenuStage extends Stage {
 	}
 
 	private void initMainMenu(final GameStateManager gsm) {
+		this.setViewport(new ScreenViewport(getCamera()));
+		
+		getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		getViewport().apply(true);
+		
 		Table table = new Table();
 		final Label title = new Label(Game.TITLE , Assets._skin , "fontVeraBd24" , "green");
 		final TextButton button = new TextButton("New Game", Assets._skin, "menu");

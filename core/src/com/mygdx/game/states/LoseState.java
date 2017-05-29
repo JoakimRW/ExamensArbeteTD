@@ -35,6 +35,7 @@ public class LoseState extends GameState {
 	@Override
 	public void resize(int w, int h) {
 		loseStage.getViewport().update(w, h);
+		loseStage.getViewport().apply(true);
 	}
 
 	@Override

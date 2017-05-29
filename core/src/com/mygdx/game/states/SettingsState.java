@@ -43,7 +43,8 @@ public class SettingsState extends GameState {
 
 	@Override
 	public void resize(int w, int h) {
-		settingsStage.getViewport().update(w, h);	
+		settingsStage.getViewport().update(w, h);
+		settingsStage.getViewport().apply(true);
 	}
 
 	@Override

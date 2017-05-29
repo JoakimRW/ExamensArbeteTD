@@ -32,7 +32,8 @@ public class WinState extends GameState {
 
 	@Override
 	public void resize(int w, int h) {
-		
+		winStage.getViewport().update(w, h);
+		winStage.getViewport().apply(true);
 	}
 
 	@Override

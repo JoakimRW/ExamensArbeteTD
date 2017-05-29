@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.utils.Assets;
 
 public class LoseStage extends Stage {
@@ -28,8 +29,11 @@ public class LoseStage extends Stage {
 	}
 	
 	private void initLoseStage() {
-		getCamera().position.set(Gdx.graphics.getWidth() / 2 , Gdx.graphics.getHeight() / 2 , 0);
-		getCamera().update();
+		
+		setViewport(new ScreenViewport(getCamera()));
+		getViewport().update(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		getViewport().apply(true);
+		
 		Label youLoseLbl = new Label("You lost" , Assets._skin , "fontVeraBd24" ,"white");
 		playAgainBtn = new TextButton("Play Again", Assets._skin , "menu");
 		mainMenuBtn = new TextButton("Main Menu", Assets._skin ,  "menu");
@@ -39,6 +43,7 @@ public class LoseStage extends Stage {
 		container.add(playAgainBtn).align(Align.left).spaceBottom(20).row();
 		container.add(mainMenuBtn).align(Align.left);
 		container.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		container.setFillParent(true);
 		addActor(container);
 	}
 
